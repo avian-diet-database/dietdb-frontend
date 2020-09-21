@@ -2,6 +2,7 @@ import React from "react";
 
 export interface DesignSearchBarProps {
   queryMatches: string[];
+  queryType: string;
   onQueryInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -12,7 +13,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
         <input
           className="input is-primary"
           type="text"
-          placeholder={`Search our database...`}
+          placeholder={`Search our ${props.queryType} database...`}
           onChange={props.onQueryInputChange}
         />
       </div>

@@ -1,21 +1,15 @@
 import { useState, useEffect } from "react";
 import { DesignSearchBar } from "../design/DesignSearchBar";
 
-interface QueryState {
+interface LogicSearchBarProps {
   queryType: string;
+  queryOptions: string[];
 }
 
-export const LogicSearchBar = () => {
+export const LogicSearchBar = (props: LogicSearchBarProps) => {
   // --- STATE --- //
   // Basic queryoptions state for now. This will eventually be:
   //  - A call to the backend for a list options
-  const [queryOptions, updateQueryOptions] = useState([
-    "apple",
-    "apricot",
-    "avacado",
-    "banana",
-    "plum",
-  ]);
   // Simple state for query string and possible matches.
   const [queryString, updateQueryString] = useState("");
   const [queryMatches, updateQueryMatches] = useState([""]);
@@ -26,7 +20,7 @@ export const LogicSearchBar = () => {
   useEffect(() => {
     if (queryString !== "") {
       updateQueryMatches(
-        queryOptions.filter(
+        props.queryOptions.filter(
           (element: string) =>
             element.toLowerCase().indexOf(queryString.toLowerCase()) > -1
         )
@@ -34,7 +28,7 @@ export const LogicSearchBar = () => {
     } else {
       updateQueryMatches([]);
     }
-  }, [queryString, queryOptions, updateQueryMatches]);
+  }, [queryString, props.queryOptions, updateQueryMatches]);
 
   // --- UPDATE HANDLERS --- //
   // When the user changes their query, update the query string.
@@ -43,6 +37,7 @@ export const LogicSearchBar = () => {
   };
 
   return DesignSearchBar({
+    queryType: props.queryType,
     queryMatches: queryMatches,
     onQueryInputChange: onQueryInputChange,
   });

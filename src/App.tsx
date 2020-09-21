@@ -8,7 +8,14 @@ function App() {
     <div className="App">
       <div>
         <header className="App-header">
-          <LogicSearchBar />
+          <LogicSearchBar
+            queryType="fruit"
+            queryOptions={["apple", "banana", "apricot", "plantain"]}
+          />
+          <LogicSearchBar
+            queryType="vegetable"
+            queryOptions={["cucumber", "spinach", "onion", "okra"]}
+          />
         </header>
       </div>
     </div>
