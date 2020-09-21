@@ -1,7 +1,7 @@
-import React from 'react';
-import '..\\node_modules\\bulma\\css\\bulma.min.css';
-import "./App.css"
-import { LogicSearchBar } from './components/logic/LogicSearchBar';
+import React from "react";
+import "..\\node_modules\\bulma\\css\\bulma.min.css";
+import "./css/App.css";
+import { LogicSearchBar } from "./components/logic/LogicSearchBar";
 
 function App() {
   return (

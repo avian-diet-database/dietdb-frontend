@@ -1,22 +1,24 @@
 import React from "react";
 
 export interface DesignSearchBarProps {
-    queryState: string
-    dispatchQueryState: React.DispatchWithoutAction;
+  queryMatches: string[];
+  onQueryInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const DesignSearchBar = (props: DesignSearchBarProps) => {
-
-    return (
-        <div className="field has-addons">
-            <div className="control">
-                <input className="input is-primary" type="text" placeholder={`Search our database...`} />
-            </div>
-            <div className="control">
-                <button className="button" onClick={props.dispatchQueryState} >{props.queryState} </button>
-            </div>
-        </div>
-    )
-
-}
-
+  return (
+    <div className="field">
+      <div className="control">
+        <input
+          className="input is-primary"
+          type="text"
+          placeholder={`Search our database...`}
+          onChange={props.onQueryInputChange}
+        />
+      </div>
+      {props.queryMatches.map((name: string) => {
+        return <div> {name} </div>;
+      })}
+    </div>
+  );
+};
