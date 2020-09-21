@@ -22,9 +22,9 @@ export const LogicSearchBar = () => {
 
   // --- EFFECTS --- //
   // When query string or options update, refresh the autocompleted list.
-  //  - This may be slow with large queryOptions. o(n) right now.
+  //  - This may be slow with large queryOptions. o(n*avgStrLen) right now.
   useEffect(() => {
-    if (queryString != "") {
+    if (queryString !== "") {
       updateQueryMatches(
         queryOptions.filter(
           (element: string) =>

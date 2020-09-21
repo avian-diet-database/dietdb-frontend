@@ -1,14 +1,16 @@
 import React from "react";
-import "..\\node_modules\\bulma\\css\\bulma.min.css";
-import "./css/App.css";
 import { LogicSearchBar } from "./components/logic/LogicSearchBar";
+import "./css/App.css";
+import "..\\node_modules\\bulma\\css\\bulma.css";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <LogicSearchBar />
-      </header>
+      <div>
+        <header className="App-header">
+          <LogicSearchBar />
+        </header>
+      </div>
     </div>
   );
 }

@@ -17,7 +17,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
         />
       </div>
       {props.queryMatches.map((name: string) => {
-        return <div> {name} </div>;
+        return <div key={name}> {name} </div>;
       })}
     </div>
   );
