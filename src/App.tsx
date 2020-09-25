@@ -10,20 +10,20 @@ function App() {
   * 
   *   
   *  
-  *  --> LogicSearchBar: {changeActiveItem, queryType}
+  *  --> LogicSearchBar: {changeActiveItem, queryType} --> DesignSearchBar: {queryMatches, queryType, onQueryInputChange}
   *       |      queryString     | 
   *       |   updateQueryString  |         
-  *       |     queryMatches     |  --> DesignSearchBar: {queryMatches, queryType, onQueryInputChange}      
+  *       |     queryMatches     |        
   *       |  updateQueryMatches  | 
   *       |  onQueryInputChange  | 
   *       |______________________|
   * 
-  *  --> LogicItem: {activeItem}
-  *       |       itemData       |  --> LogicGraph: {unknown}
-  *       |    updateItemData    |      |     unknown     |  --> DesignGraph: {}
-  *       |       filterX        |      |_________________| 
-  *       |    onFilterXChange   |  
-  *       |______________________|  --> DesignItem: {itemData, onFilterXChange}
+  *  --> LogicItem: {activeItem}    --> DesignItem: {itemData, onFilterXChange}
+  *       |       itemData       |                           --> LogicGraph: {graphType} --> DesignGraph: {graphData, loading}
+  *       |    updateItemData    |                              |    graphData    |  
+  *       |       filterX        |                              |     loading     | 
+  *       |    onFilterXChange   |                              |      error      |
+  *       |______________________|                              |_________________|
   * 
   *   --> DesignFooter: {}
   *      
