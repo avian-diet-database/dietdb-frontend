@@ -1,0 +1,28 @@
+{
+  "data": {
+    "preys": [
+      {
+        "order": "Caryophyllales",
+        "items": "0.3638",
+        "wt_or_vol": "NA",
+        "occurence": "0.2142",
+        "unspecified": "NA"
+      },
+      {
+        "order": "Unid. Magnoliopsida",
+        "items": "0.5338",
+        "wt_or_vol": "0.351",
+        "occurence": "0.124",
+        "unspecified": "NA"
+      },
+      {
+        "order": "Unid. Magnoliopsida",
+        "items": "0.5338",
+        "wt_or_vol": "0.351",
+        "occurence": "0.124",
+        "unspecified": "NA"
+      }
+    ],
+    "sources": ["source1", "source2", "source3"]
+  }
+}

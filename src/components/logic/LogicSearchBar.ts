@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { DesignSearchBar } from "../design/DesignSearchBar";
 
 interface LogicSearchBarProps {
+  // In test cases, fruit/vegetable.
   queryType: string;
+  // An array of string options to match queries with.
   queryOptions: string[];
 }
 
