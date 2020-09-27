@@ -1,7 +1,9 @@
 import React from "react";
 import { LogicSearchBar } from "./components/logic/LogicSearchBar";
+import { LogicButton } from "./components/logic/LogicButton";
 import "./css/App.css";
 import "..\\node_modules\\bulma\\css\\bulma.css";
+import { LogicHeader } from "./components/logic/LogicHeader";
 
 function App() {
   /* App state needed: 
@@ -32,6 +34,8 @@ function App() {
     <div className="App">
       <div>
         <header className="App-header">
+          <LogicButton/>
+          <LogicHeader/>
           <LogicSearchBar
             queryType="fruit"
             queryOptions={["apple", "banana", "apricot", "plantain"]}
