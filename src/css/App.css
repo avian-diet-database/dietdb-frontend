@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+#contactInfo {
+  border-bottom-style: dotted;
+}
+
+#titleInfo {
+  font-size: 60px;
+}

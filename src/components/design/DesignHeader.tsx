@@ -6,7 +6,7 @@ interface DesignHeaderProps {
 
 export const DesignHeader = () => {
     return (
-        <section className="hero is-primary is-large has-text-centered">
+        <section className="hero is-primary is-small has-text-centered">
             <div className="hero-body">
                 <div className="container">
                     <h1 className="title" id="titleInfo">

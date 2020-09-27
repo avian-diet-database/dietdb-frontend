@@ -4,6 +4,8 @@ import { LogicButton } from "./components/logic/LogicButton";
 import "./css/App.css";
 import "..\\node_modules\\bulma\\css\\bulma.css";
 import { LogicHeader } from "./components/logic/LogicHeader";
+import { LogicFooter } from "./components/logic/LogicFooter";
+import { LogicHomeButton } from "./components/logic/LogicHomeButton";
 
 function App() {
   /* App state needed: 
@@ -44,6 +46,8 @@ function App() {
             queryType="vegetable"
             queryOptions={["cucumber", "spinach", "onion", "okra"]}
           />
+          <LogicFooter/>
+          <LogicHomeButton/>
         </header>
       </div>
     </div>
