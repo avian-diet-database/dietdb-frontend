@@ -6,17 +6,14 @@ interface DesignFooterProps {
 
 export const DesignFooter = () => {
     return (
-        <section className="hero is-primary is-small has-text-centered">
+        <section className="hero is-small has-text-centered">
             <div className="hero-body">
                 <div className="container">
-                    <h1 className="title" id="titleInfo">
+                    <h1 className="is-text-white" id="footerInfo">
                         About + Contact Information
                     </h1>
                     <div className="section container">
-                        <h2 className="subtitle" id="subtitleInfo">
-                            Description
-                        </h2>
-                        <p>
+                        <p className="is-text-white">
                             The Avian Database Project, envisioned by Professor Allen Hurlbert
                             of UNC’s Department of Biology, provides user-friendly access
                             to the data Prof. Hurlbert and his team collect on avian diet
@@ -43,7 +40,7 @@ export const DesignFooter = () => {
                             , and graphical data summaries.
                         </p>
                     </div>
-                    <h2 className="subtitle columns" id="contactInfo">
+                    <h2 className="columns is-text-white" id="contactInfo">
                         <p className="column">
                             hurlbert@bio.unc.edu
                         </p>

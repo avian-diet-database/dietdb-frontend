@@ -11,7 +11,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
     <div className="field">
       <div className="control">
         <input
-          className="input is-primary"
+          className="input is-primary is-large"
           type="text"
           placeholder={`Search our ${props.queryType} database...`}
           onChange={props.onQueryInputChange}

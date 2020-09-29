@@ -8,12 +8,12 @@ export const DesignButton = () => {
     return (
         <section className="section">
             <div className="container">
-                <div className="button">
-                    <a href="main.html">
+                <div className="field">
+                    <div className="button">
                         <p id="buttonText">
-                            About + Contact Information
+                            About!
                         </p>
-                    </a>
+                    </div>
                 </div>
             </div>
         </section>
