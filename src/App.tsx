@@ -37,15 +37,15 @@ function App() {
   return (
     <div className="App">
       <div>
-        <div className="level">
-          <div className="level-left">
-            <img src={logo} alt="bird logo" id="birdLogo" />
-          </div>
-          <div className="level-right">
-            <LogicButton />
-          </div>
-        </div>
         <header className="App-header">
+          <div className="level">
+            <div className="level-left">
+              <img src={logo} alt="bird logo" id="birdLogo" />
+            </div>
+            <div className="level-right">
+              <LogicButton />
+            </div>
+          </div>
           <LogicHeader />
           <div className="columns">
             <div className="column">
@@ -61,9 +61,9 @@ function App() {
               />
             </div>
           </div>
-          <LogicFooter />
         </header>
         <LogicHomeButton />
+        <LogicFooter />
       </div>
     </div>
   );
