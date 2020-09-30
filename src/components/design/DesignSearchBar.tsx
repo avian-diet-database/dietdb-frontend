@@ -8,18 +8,28 @@ export interface DesignSearchBarProps {
 
 export const DesignSearchBar = (props: DesignSearchBarProps) => {
   return (
-    <div className="field">
-      <div className="control">
-        <input
-          className="input is-primary is-large"
-          type="text"
-          placeholder={`Search our ${props.queryType} database...`}
-          onChange={props.onQueryInputChange}
-        />
+    <div className="">
+      <div className="field">
+        <div className="control">
+          <input
+            className="input is-primary is-large"
+            type="text"
+            placeholder={`Search our ${props.queryType} database...`}
+            onChange={props.onQueryInputChange}
+          />
+        </div>
       </div>
-      {props.queryMatches.map((name: string) => {
-        return <div key={name}> {name} </div>;
-      })}
+      <div className="">
+        <div className="">
+          {props.queryMatches.map((name: string) => {
+            return (
+              <div className="media" key={name}>
+                <div className="media-content">{name}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };

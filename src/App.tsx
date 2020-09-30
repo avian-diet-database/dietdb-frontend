@@ -9,32 +9,31 @@ import { LogicHomeButton } from "./components/logic/LogicHomeButton";
 import { createBrotliDecompress } from "zlib";
 import logo from "./components/images/bird.png";
 
-
 function App() {
-  /* App state needed: 
-  *   activeItem -> string: Active bird/prey being viewed.
-  *   updateActiveItem -> func: Change the bird/prey being viewed.
-  * 
-  *   
-  *  
-  *  --> LogicSearchBar: {changeActiveItem, queryType} --> DesignSearchBar: {queryMatches, queryType, onQueryInputChange}
-  *       |      queryString     | 
-  *       |   updateQueryString  |         
-  *       |     queryMatches     |        
-  *       |  updateQueryMatches  | 
-  *       |  onQueryInputChange  | 
-  *       |______________________|
-  * 
-  *  --> LogicItem: {activeItem}    --> DesignItem: {itemData, onFilterXChange}
-  *       |       itemData       |                           --> LogicGraph: {graphType} --> DesignGraph: {graphData, loading}
-  *       |    updateItemData    |                              |    graphData    |  
-  *       |       filterX        |                              |     loading     | 
-  *       |    onFilterXChange   |                              |      error      |
-  *       |______________________|                              |_________________|
-  * 
-  *   --> DesignFooter: {}
-  *      
-  */
+  /* App state needed:
+   *   activeItem -> string: Active bird/prey being viewed.
+   *   updateActiveItem -> func: Change the bird/prey being viewed.
+   *
+   *
+   *
+   *  --> LogicSearchBar: {changeActiveItem, queryType} --> DesignSearchBar: {queryMatches, queryType, onQueryInputChange}
+   *       |      queryString     |
+   *       |   updateQueryString  |
+   *       |     queryMatches     |
+   *       |  updateQueryMatches  |
+   *       |  onQueryInputChange  |
+   *       |______________________|
+   *
+   *  --> LogicItem: {activeItem}    --> DesignItem: {itemData, onFilterXChange}
+   *       |       itemData       |                           --> LogicGraph: {graphType} --> DesignGraph: {graphData, loading}
+   *       |    updateItemData    |                              |    graphData    |
+   *       |       filterX        |                              |     loading     |
+   *       |    onFilterXChange   |                              |      error      |
+   *       |______________________|                              |_________________|
+   *
+   *   --> DesignFooter: {}
+   *
+   */
   return (
     <div className="App">
       <div>
