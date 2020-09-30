@@ -8,7 +8,7 @@ export interface DesignSearchBarProps {
 
 export const DesignSearchBar = (props: DesignSearchBarProps) => {
   return (
-    <div className="">
+    <div className="section">
       <div className="field">
         <div className="control">
           <input
