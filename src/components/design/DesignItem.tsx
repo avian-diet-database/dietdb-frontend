@@ -1,11 +1,11 @@
-import React from 'react';
-
+import React from "react";
+import { Prey } from "../../types/Prey";
 interface DesignItemProps {
-    itemData: any
+  prey: Prey[];
+  sources: string[];
 }
 
 export const DesignItem = (props: DesignItemProps) => {
-    return (
-        <div>Hello world</div>
-    )
-}
+  return <div>Hello world</div>;
+};
+

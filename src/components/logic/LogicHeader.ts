@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { DesignHeader } from "../design/DesignHeader";
 
 interface LogicHeaderProps {

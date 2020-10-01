@@ -1,21 +1,16 @@
 import React from 'react';
 
 interface DesignButtonProps {
-    itemData: any
+    buttonText: string;
+    onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-export const DesignButton = () => {
+export const DesignButton = (props: DesignButtonProps) => {
     return (
-        <section className="section">
-            <div className="container">
-                <div className="field">
-                    <div className="button">
-                        <p id="buttonText">
-                            About!
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div className="field">
+            <button className="button" onClick={props.onClick}>
+                {props.buttonText}
+            </button>
+        </div>
     )
 }
