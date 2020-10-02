@@ -37,6 +37,9 @@ function App() {
           <nav className="navbar">
             <div className="container">
               <div className="navbar-brand">
+                <div className="navbar-item">
+                  {/* <h1 className="title is-2"> {activeItem} </h1> */}
+                </div>
                 <span className="navbar-burger burger" data-target="navbarMenuHeroA">
                   <span></span>
                   <span></span>
