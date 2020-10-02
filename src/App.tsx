@@ -3,6 +3,7 @@ import { LogicSearchBar } from "./components/logic/LogicSearchBar";
 import { LogicButton } from "./components/logic/LogicButton"
 import { LogicHeader } from "./components/logic/LogicHeader";
 import { LogicFooter } from "./components/logic/LogicFooter";
+import { LogicCriteria } from "./components/logic/LogicCriteria";
 
 function App() {
   /* App state needed:
