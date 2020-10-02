@@ -1,7 +1,6 @@
 import React from "react";
 import { LogicSearchBar } from "./components/logic/LogicSearchBar";
 import { LogicButton } from "./components/logic/LogicButton"
-import "..\\node_modules\\bulma\\css\\bulma.css";
 import { LogicHeader } from "./components/logic/LogicHeader";
 import { LogicFooter } from "./components/logic/LogicFooter";
 
