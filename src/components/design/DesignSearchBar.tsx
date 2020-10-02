@@ -13,7 +13,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
         <div className="field">
           <div className="control">
             <input
-              className="input is-dark is-large is-rounded"
+              className="input is-secondary is-large is-rounded"
               type="text"
               placeholder={`Search our ${props.queryType} database...`}
               onChange={props.onQueryInputChange}

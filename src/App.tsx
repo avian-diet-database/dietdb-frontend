@@ -1,5 +1,6 @@
 import React from "react";
 import { LogicSearchBar } from "./components/logic/LogicSearchBar";
+import { LogicButton } from "./components/logic/LogicButton"
 import "./css/App.css";
 import "..\\node_modules\\bulma\\css\\bulma.css";
 import { LogicHeader } from "./components/logic/LogicHeader";
@@ -32,7 +33,7 @@ function App() {
    */
   return (
     <div>
-      <section className="hero is-fullheight is-link">
+      <section className="hero is-fullheight is-primary">
         <div className="hero-head">
           <nav className="navbar">
             <div className="container">
@@ -55,12 +56,7 @@ function App() {
                     Documentation
             </a>
                   <span className="navbar-item">
-                    <a className="button is-link is-inverted">
-                      <span className="icon">
-                        <i className="fab fa-github"></i>
-                      </span>
-                      <span>Github</span>
-                    </a>
+                    <LogicButton className="button is-primary is-inverted" buttonText="Github" onClick={() => { }} />
                   </span>
                 </div>
               </div>
