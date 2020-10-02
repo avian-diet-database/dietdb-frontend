@@ -31,31 +31,65 @@ function App() {
    *
    */
   return (
-    <div className="App">
-      <div>
-        <section className="hero is-fullheight is-link">
-          <div className="hero-body">
+    <div>
+      <section className="hero is-fullheight is-link">
+        <div className="hero-head">
+          <nav className="navbar">
             <div className="container">
-              <LogicHeader />
-              <div className="columns">
-                <div className="column">
-                  <LogicSearchBar
-                    queryType="fruit"
-                    queryOptions={["apple", "banana", "apricot", "plantain"]}
-                  />
-                </div>
-                <div className="column">
-                  <LogicSearchBar
-                    queryType="vegetable"
-                    queryOptions={["cucumber", "spinach", "onion", "okra"]}
-                  />
+              <div className="navbar-brand">
+                <span className="navbar-burger burger" data-target="navbarMenuHeroA">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+              </div>
+              <div id="navbarMenuHeroA" className="navbar-menu">
+                <div className="navbar-end">
+                  <a className="navbar-item is-active">
+                    Home
+            </a>
+                  <a className="navbar-item">
+                    Examples
+            </a>
+                  <a className="navbar-item">
+                    Documentation
+            </a>
+                  <span className="navbar-item">
+                    <a className="button is-link is-inverted">
+                      <span className="icon">
+                        <i className="fab fa-github"></i>
+                      </span>
+                      <span>Github</span>
+                    </a>
+                  </span>
                 </div>
               </div>
             </div>
+          </nav>
+        </div>
+        <div className="hero-body">
+          <div className="container has-text-centered ">
+            <div className="section">
+              <LogicHeader />
+            </div>
+            <div className="columns">
+              <div className="column is-4 is-offset-2">
+                <LogicSearchBar
+                  queryType="fruit"
+                  queryOptions={["apple", "banana", "apricot", "plantain"]}
+                />
+              </div>
+              <div className="column is-4">
+                <LogicSearchBar
+                  queryType="vegetable"
+                  queryOptions={["cucumber", "spinach", "onion", "okra"]}
+                />
+              </div>
+            </div>
           </div>
-        </section>
-        <LogicFooter />
-      </div>
+        </div>
+      </section>
+      <LogicFooter />
     </div>
   );
 }

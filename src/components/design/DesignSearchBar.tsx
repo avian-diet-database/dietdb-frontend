@@ -13,7 +13,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
         <div className="field">
           <div className="control">
             <input
-              className="input is-secondary is-large is-rounded"
+              className="input is-dark is-large is-rounded"
               type="text"
               placeholder={`Search our ${props.queryType} database...`}
               onChange={props.onQueryInputChange}
@@ -24,7 +24,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
           <div className="dropdown-content">
             {props.queryMatches.map((name: string) => {
               return (
-                <div key={name} className="dropdown-item">{name}</div>
+                <div key={name} className="dropdown-item is-size-5 has-text-left">{name}</div>
               );
             })} </div> : null
         }
