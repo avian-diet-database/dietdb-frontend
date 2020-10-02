@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { LogicSearchBar } from "./components/logic/LogicSearchBar";
 import { LogicButton } from "./components/logic/LogicButton"
 import { LogicHeader } from "./components/logic/LogicHeader";
@@ -29,6 +29,7 @@ function App() {
    *   --> DesignFooter: {}
    *
    */
+  const [activeItem, setActiveItem] = useState("")
   return (
     <div>
       <section className="hero is-fullheight is-primary">
@@ -71,12 +72,16 @@ function App() {
                 <LogicSearchBar
                   queryType="fruit"
                   queryOptions={["apple", "banana", "apricot", "plantain"]}
+                  activeItem={activeItem}
+                  setActiveItem={setActiveItem}
                 />
               </div>
               <div className="column is-4">
                 <LogicSearchBar
                   queryType="vegetable"
                   queryOptions={["cucumber", "spinach", "onion", "okra"]}
+                  activeItem={activeItem}
+                  setActiveItem={setActiveItem}
                 />
               </div>
             </div>

@@ -6,6 +6,10 @@ interface LogicSearchBarProps {
   queryType: string;
   // An array of string options to match queries with.
   queryOptions: string[];
+  // A callback for updating the selected item.
+  setActiveItem: React.Dispatch<React.SetStateAction<string>>;
+  // The active item.
+  activeItem: string;
 }
 
 export const LogicSearchBar = (props: LogicSearchBarProps) => {
@@ -38,9 +42,15 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
     updateQueryString(event.target.value);
   };
 
+  const onItemSelect = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    props.setActiveItem(() => { return event.currentTarget.textContent || "" });
+  }
+
   return DesignSearchBar({
     queryType: props.queryType,
+    activeItem: props.activeItem,
     queryMatches: queryMatches,
     onQueryInputChange: onQueryInputChange,
+    onItemSelect: onItemSelect
   });
 };
