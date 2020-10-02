@@ -4,6 +4,8 @@ export interface DesignSearchBarProps {
   queryMatches: string[];
   queryType: string;
   onQueryInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onItemSelect: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+  activeItem: string;
 }
 
 export const DesignSearchBar = (props: DesignSearchBarProps) => {
@@ -24,7 +26,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
           <div className="dropdown-content">
             {props.queryMatches.map((name: string) => {
               return (
-                <div key={name} className="dropdown-item is-size-5 has-text-left">{name}</div>
+                <a key={name} onClick={props.onItemSelect} className={"dropdown-item is-size-5 has-text-left" + (props.activeItem === name ? " is-active" : "")}>{name}</a>
               );
             })} </div> : null
         }
