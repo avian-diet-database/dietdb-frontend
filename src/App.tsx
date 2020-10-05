@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { LogicSearchBar } from "./components/logic/LogicSearchBar";
-import { LogicHeader } from "./components/logic/LogicHeader";
+import { LogicHome } from "./components/logic/LogicHome"
 import { LogicFooter } from "./components/logic/LogicFooter";
 
 function App() {
@@ -65,57 +64,7 @@ function App() {
             </div>
           </nav>
         </div>
-        <div className="hero-body">
-          <div className="container has-text-centered ">
-            <div className="section">
-              <LogicHeader />
-            </div>
-            <div className="section">
-              <div className="level">
-                <div className="level-item">
-                  <p className="content is-size-3" >
-                    What does
-                    </p>
-                </div>
-                <div className="level-item">
-                  <LogicSearchBar
-                    queryType="fruit"
-                    queryOptions={["apple", "banana", "apricot", "plantain"]}
-                    activeItem={activeItem}
-                    updateActiveItem={setActiveItem}
-                  />
-                </div>
-                <div className="level-item">
-                  <p className="content is-size-3" >
-                    eat?
-                    </p>
-                </div>
-              </div>
-            </div>
-            <div className="section">
-              <div className="level">
-                <div className="level-item">
-                  <p className="content is-size-3" >
-                    What eats
-                    </p>
-                </div>
-                <div className="level-item">
-                  <LogicSearchBar
-                    queryType="fruit"
-                    queryOptions={["apple", "banana", "apricot", "plantain"]}
-                    activeItem={activeItem}
-                    updateActiveItem={setActiveItem}
-                  />
-                </div>
-                <div className="level-item">
-                  <p className="content is-size-3" >
-                    ?
-                    </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <LogicHome activeItem={activeItem} setActiveItem={setActiveItem} />
       </section>
       <LogicFooter />
     </div>
