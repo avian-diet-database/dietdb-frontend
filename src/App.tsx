@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { LogicHome } from "./components/logic/LogicHome"
 import { LogicFooter } from "./components/logic/LogicFooter";
+import { LogicItem } from "./components/logic/LogicItem";
 
 function App() {
   /* App state needed:
@@ -64,7 +65,11 @@ function App() {
             </div>
           </nav>
         </div>
-        <LogicHome activeItem={activeItem} setActiveItem={setActiveItem} />
+        {/* Here, render the home if activeItem is "", and otherwise
+         render the item page for it. */ }
+        {activeItem === ""
+          ? <LogicHome activeItem={activeItem} setActiveItem={setActiveItem} />
+          : <LogicItem activeItem={activeItem} itemType={"nunya"} />}
       </section>
       <LogicFooter />
     </div>
