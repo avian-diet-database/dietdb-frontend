@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { LogicSearchBar } from "./components/logic/LogicSearchBar";
-import { LogicButton } from "./components/logic/LogicButton"
 import { LogicHeader } from "./components/logic/LogicHeader";
 import { LogicFooter } from "./components/logic/LogicFooter";
-import { LogicCriteria } from "./components/logic/LogicCriteria";
 
 function App() {
   /* App state needed:
    *   activeItem -> string: Active bird/prey being viewed.
    *   updateActiveItem -> func: Change the bird/prey being viewed.
-   *
+   *   activePage -> string: Active page component being viewed.
+   *   updateActivePage
    *
    *
    *  --> LogicSearchBar: {changeActiveItem, queryType} --> DesignSearchBar: {queryMatches, queryType, onQueryInputChange}
@@ -39,7 +38,6 @@ function App() {
             <div className="container">
               <div className="navbar-brand">
                 <div className="navbar-item">
-                  {/* <h1 className="title is-2"> {activeItem} </h1> */}
                 </div>
                 <span className="navbar-burger burger" data-target="navbarMenuHeroA">
                   <span></span>
@@ -59,7 +57,8 @@ function App() {
                     Documentation
             </a>
                   <span className="navbar-item">
-                    <LogicButton className="button is-primary is-inverted" buttonText="Github" onClick={() => { }} />
+                    <a href="https://github.com/hurlbertlab/dietdatabase"
+                      className="button is-primary is-inverted"> Github </a>
                   </span>
                 </div>
               </div>
@@ -71,22 +70,48 @@ function App() {
             <div className="section">
               <LogicHeader />
             </div>
-            <div className="columns">
-              <div className="column is-4 is-offset-2">
-                <LogicSearchBar
-                  queryType="fruit"
-                  queryOptions={["apple", "banana", "apricot", "plantain"]}
-                  activeItem={activeItem}
-                  setActiveItem={setActiveItem}
-                />
+            <div className="section">
+              <div className="level">
+                <div className="level-item">
+                  <p className="content is-size-3" >
+                    What does
+                    </p>
+                </div>
+                <div className="level-item">
+                  <LogicSearchBar
+                    queryType="fruit"
+                    queryOptions={["apple", "banana", "apricot", "plantain"]}
+                    activeItem={activeItem}
+                    updateActiveItem={setActiveItem}
+                  />
+                </div>
+                <div className="level-item">
+                  <p className="content is-size-3" >
+                    eat?
+                    </p>
+                </div>
               </div>
-              <div className="column is-4">
-                <LogicSearchBar
-                  queryType="vegetable"
-                  queryOptions={["cucumber", "spinach", "onion", "okra"]}
-                  activeItem={activeItem}
-                  setActiveItem={setActiveItem}
-                />
+            </div>
+            <div className="section">
+              <div className="level">
+                <div className="level-item">
+                  <p className="content is-size-3" >
+                    What eats
+                    </p>
+                </div>
+                <div className="level-item">
+                  <LogicSearchBar
+                    queryType="fruit"
+                    queryOptions={["apple", "banana", "apricot", "plantain"]}
+                    activeItem={activeItem}
+                    updateActiveItem={setActiveItem}
+                  />
+                </div>
+                <div className="level-item">
+                  <p className="content is-size-3" >
+                    ?
+                    </p>
+                </div>
               </div>
             </div>
           </div>

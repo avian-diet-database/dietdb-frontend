@@ -7,7 +7,7 @@ interface LogicSearchBarProps {
   // An array of string options to match queries with.
   queryOptions: string[];
   // A callback for updating the selected item.
-  setActiveItem: React.Dispatch<React.SetStateAction<string>>;
+  updateActiveItem: React.Dispatch<React.SetStateAction<string>>;
   // The active item.
   activeItem: string;
 }
@@ -43,7 +43,7 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
   };
 
   const onItemSelect = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    props.setActiveItem(() => { return event.currentTarget.textContent || "" });
+    props.updateActiveItem(() => { return event.currentTarget.textContent || "" });
   }
 
   return DesignSearchBar({

@@ -17,7 +17,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
             <input
               className="input is-secondary is-large is-rounded"
               type="text"
-              placeholder={`Search our ${props.queryType} database...`}
+              placeholder={`...`}
               onChange={props.onQueryInputChange}
             />
           </div>
