@@ -3,6 +3,7 @@ import { LogicHome } from "./components/logic/LogicHome"
 import { LogicFooter } from "./components/logic/LogicFooter";
 import { LogicItem } from "./components/logic/LogicItem";
 import { LogicCriteria } from "./components/logic/LogicCriteria";
+import { LogicDropdown } from "./components/logic/LogicDropdown";
 
 function App() {
   /* App state needed:
