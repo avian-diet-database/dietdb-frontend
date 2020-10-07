@@ -1200,7 +1200,7 @@ table th {
   .title:not(.is-spaced) + .subtitle {
     margin-top: -1.25rem; }
   .title.is-1 {
-    font-size: 3rem; }
+    font-size: 6rem; }
   .title.is-2 {
     font-size: 2.5rem; }
   .title.is-3 {
@@ -1225,7 +1225,7 @@ table th {
   .subtitle:not(.is-spaced) + .title {
     margin-top: -1.25rem; }
   .subtitle.is-1 {
-    font-size: 3rem; }
+    font-size: 6rem; }
   .subtitle.is-2 {
     font-size: 2.5rem; }
   .subtitle.is-3 {
@@ -4201,7 +4201,7 @@ a.navbar-item,
       display: flex; } }
 
 .is-size-1 {
-  font-size: 3rem !important; }
+  font-size: 6rem !important; }
 
 .is-size-2 {
   font-size: 2.5rem !important; }
@@ -4223,7 +4223,7 @@ a.navbar-item,
 
 @media screen and (max-width: 768px) {
   .is-size-1-mobile {
-    font-size: 3rem !important; }
+    font-size: 6rem !important; }
   .is-size-2-mobile {
     font-size: 2.5rem !important; }
   .is-size-3-mobile {
@@ -4239,7 +4239,7 @@ a.navbar-item,
 
 @media screen and (min-width: 769px), print {
   .is-size-1-tablet {
-    font-size: 3rem !important; }
+    font-size: 6rem !important; }
   .is-size-2-tablet {
     font-size: 2.5rem !important; }
   .is-size-3-tablet {
@@ -4255,7 +4255,7 @@ a.navbar-item,
 
 @media screen and (max-width: 1023px) {
   .is-size-1-touch {
-    font-size: 3rem !important; }
+    font-size: 6rem !important; }
   .is-size-2-touch {
     font-size: 2.5rem !important; }
   .is-size-3-touch {
@@ -4271,7 +4271,7 @@ a.navbar-item,
 
 @media screen and (min-width: 1024px) {
   .is-size-1-desktop {
-    font-size: 3rem !important; }
+    font-size: 6rem !important; }
   .is-size-2-desktop {
     font-size: 2.5rem !important; }
   .is-size-3-desktop {
@@ -4628,3 +4628,66 @@ button.dropdown-item {
   display: block;
   height: 1px;
   margin: 0.5rem 0; }
+
+.tile {
+  align-items: stretch;
+  display: block;
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-height: min-content; }
+  .tile.is-ancestor {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+    margin-top: -0.75rem; }
+    .tile.is-ancestor:last-child {
+      margin-bottom: -0.75rem; }
+    .tile.is-ancestor:not(:last-child) {
+      margin-bottom: 0.75rem; }
+  .tile.is-child {
+    margin: 0 !important; }
+  .tile.is-parent {
+    padding: 0.75rem; }
+  .tile.is-vertical {
+    flex-direction: column; }
+    .tile.is-vertical > .tile.is-child:not(:last-child) {
+      margin-bottom: 1.5rem !important; }
+  @media screen and (min-width: 769px), print {
+    .tile:not(.is-child) {
+      display: flex; }
+    .tile.is-1 {
+      flex: none;
+      width: 8.33333%; }
+    .tile.is-2 {
+      flex: none;
+      width: 16.66667%; }
+    .tile.is-3 {
+      flex: none;
+      width: 25%; }
+    .tile.is-4 {
+      flex: none;
+      width: 33.33333%; }
+    .tile.is-5 {
+      flex: none;
+      width: 41.66667%; }
+    .tile.is-6 {
+      flex: none;
+      width: 50%; }
+    .tile.is-7 {
+      flex: none;
+      width: 58.33333%; }
+    .tile.is-8 {
+      flex: none;
+      width: 66.66667%; }
+    .tile.is-9 {
+      flex: none;
+      width: 75%; }
+    .tile.is-10 {
+      flex: none;
+      width: 83.33333%; }
+    .tile.is-11 {
+      flex: none;
+      width: 91.66667%; }
+    .tile.is-12 {
+      flex: none;
+      width: 100%; } }

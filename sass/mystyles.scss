@@ -19,6 +19,7 @@ $primary: $carolina-blue;
 $link: #FFB350;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
+$size-1: 6rem;
 
 // Update some of Bulma's component variables
 $body-background-color: $beige-lighter;
@@ -29,6 +30,7 @@ $input-shadow: none;
 // Import only what you need from Bulma
 // Nah homie import everything
 // If we could optimize this though that would help build size
+@import "../node_modules/bulma/bulma.sass";
 @import "../node_modules/bulma/sass/utilities/_all.sass";
 @import "../node_modules/bulma/sass/base/_all.sass";
 @import "../node_modules/bulma/sass/elements/button.sass";
@@ -44,3 +46,4 @@ $input-shadow: none;
 @import "../node_modules/bulma/sass/elements/content.sass";
 @import "../node_modules/bulma/sass/layout/footer.sass";
 @import "../node_modules/bulma/sass/components/dropdown.sass";
+@import "../node_modules/bulma/sass/grid/tiles.sass";

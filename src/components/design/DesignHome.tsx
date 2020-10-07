@@ -12,7 +12,7 @@ export const DesignHome = (props: DesignHomeProps) => {
     return (
         <div className="hero-body">
             <div className="container has-text-centered ">
-                <div className="section">
+                <div className="section column">
                     <LogicHeader />
                 </div>
                 <div className="section">

@@ -6,7 +6,7 @@ interface DesignCriteriaProps {
 export const DesignCriteria = () => {
     return (
         <div className="tile is-parent">
-            <article className="tile is-5 notification is-link is-vertical has-text-centered">
+            <div className="tile is-5 notification is-link is-vertical has-text-centered">
                 <p className="subtitle is-size-4">
                     From  <u>1980</u>  to  <u>2010</u>  in <u>all regions</u> over the span
                     of <u>all 4 seaons</u>, the data includes <u>all metrics</u> 
@@ -15,7 +15,7 @@ export const DesignCriteria = () => {
                 <div className="section">
                     <p className="title is-size-1">The yellow eagle eats:</p>
                 </div>
-            </article>
+            </div>
         </div>
     );
 };
