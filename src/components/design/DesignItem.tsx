@@ -1,14 +1,16 @@
 import React from "react";
 import { Prey } from "../../types/Prey";
-interface DesignItemProps {
-  prey: Prey[];
-  sources: string[];
+import { CriteriaController } from "../../types/CriteriaController"
+export interface DesignItemProps {
+  prey: Prey[]
+  sources: string[]
+  controller: CriteriaController
 }
 
 export const DesignItem = (props: DesignItemProps) => {
   return <div>
     {props.prey.map(item =>
-      <div> {item.wt_or_vol} </div>
+      <div> {item.taxon} </div>
     )}
   </div>;
 };

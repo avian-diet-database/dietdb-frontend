@@ -36,7 +36,7 @@ function App() {
    *   --> DesignFooter: {}
    *
    */
-  const [activeItem, setActiveItem] = useState("")
+  const [activeItem, updateActiveItem] = useState("")
   function itemTypeReducer(state: string, action: ItemTypeAction) {
     switch (action.type) {
       case ItemType.PREY:
@@ -87,7 +87,7 @@ function App() {
         {/* Here, render the home if activeItem is "", and otherwise
           render the item page for it. */ }
         {activeItem === ""
-          ? <LogicHome activeItem={activeItem} setActiveItem={setActiveItem} dispatchActiveItemType={dispatchActiveItemType} />
+          ? <LogicHome activeItem={activeItem} setActiveItem={updateActiveItem} dispatchActiveItemType={dispatchActiveItemType} />
           : <LogicItem activeItem={activeItem} itemType={activeItemType} />}
       </section>
       <LogicFooter

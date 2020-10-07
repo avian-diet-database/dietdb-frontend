@@ -6,3 +6,4 @@ export interface Prey {
   occurence: string
   unspecified: string
 }
+
