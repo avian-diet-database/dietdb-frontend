@@ -1,8 +1,9 @@
 import React from "react";
+import { ItemType } from "../../App"
 
 export interface DesignSearchBarProps {
   queryMatches: string[];
-  queryType: string;
+  queryType: ItemType;
   onQueryInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onItemSelect: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
   activeItem: string;

@@ -6,6 +6,10 @@ interface DesignItemProps {
 }
 
 export const DesignItem = (props: DesignItemProps) => {
-  return <div>Hello world</div>;
+  return <div>
+    {props.prey.map(item =>
+      <div> {item.wt_or_vol} </div>
+    )}
+  </div>;
 };
 

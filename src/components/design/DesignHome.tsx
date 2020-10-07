@@ -2,10 +2,12 @@
 import React from "react";
 import { LogicSearchBar } from "../logic/LogicSearchBar"
 import { LogicHeader } from "../logic/LogicHeader"
+import { ItemType, ItemTypeAction } from "../../App"
 
-interface DesignHomeProps {
+export interface DesignHomeProps {
     activeItem: string;
     setActiveItem: React.Dispatch<React.SetStateAction<string>>;
+    dispatchActiveItemType: React.Dispatch<ItemTypeAction>;
 }
 
 export const DesignHome = (props: DesignHomeProps) => {
@@ -24,10 +26,11 @@ export const DesignHome = (props: DesignHomeProps) => {
                         </div>
                         <div className="level-item">
                             <LogicSearchBar
-                                queryType="fruit"
-                                queryOptions={["apple", "banana", "apricot", "plantain"]}
+                                queryType={ItemType.PREDATOR}
+                                queryOptions={["Bald Eagle"]}
                                 activeItem={props.activeItem}
                                 updateActiveItem={props.setActiveItem}
+                                dispatchActiveItemType={props.dispatchActiveItemType}
                             />
                         </div>
                         <div className="level-item">
@@ -46,10 +49,11 @@ export const DesignHome = (props: DesignHomeProps) => {
                         </div>
                         <div className="level-item">
                             <LogicSearchBar
-                                queryType="fruit"
+                                queryType={ItemType.PREY}
                                 queryOptions={["apple", "banana", "apricot", "plantain"]}
                                 activeItem={props.activeItem}
                                 updateActiveItem={props.setActiveItem}
+                                dispatchActiveItemType={props.dispatchActiveItemType}
                             />
                         </div>
                         <div className="level-item">

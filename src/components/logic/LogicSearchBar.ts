@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
 import { DesignSearchBar } from "../design/DesignSearchBar";
+import { ItemType, ItemTypeAction } from "../../App"
 
-interface LogicSearchBarProps {
+export interface LogicSearchBarProps {
   // In test cases, fruit/vegetable.
-  queryType: string;
+  queryType: ItemType;
   // An array of string options to match queries with.
   queryOptions: string[];
   // A callback for updating the selected item.
   updateActiveItem: React.Dispatch<React.SetStateAction<string>>;
   // The active item.
   activeItem: string;
+  // Dispatcher for active item type.
+  dispatchActiveItemType: React.Dispatch<ItemTypeAction>;
 }
 
 export const LogicSearchBar = (props: LogicSearchBarProps) => {
@@ -34,16 +37,17 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
     } else {
       updateQueryMatches([]);
     }
-  }, [queryString, props.queryOptions, updateQueryMatches]);
+  }, [queryString, props.queryOptions, updateQueryMatches])
 
   // --- UPDATE HANDLERS --- //
   // When the user changes their query, update the query string.
   const onQueryInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    updateQueryString(event.target.value);
+    updateQueryString(event.target.value)
   };
 
   const onItemSelect = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    props.updateActiveItem(() => { return event.currentTarget.textContent || "" });
+    props.updateActiveItem(() => { return event.currentTarget.textContent || "" })
+    props.dispatchActiveItemType({ type: props.queryType })
   }
 
   return DesignSearchBar({
