@@ -52,9 +52,9 @@ export const LogicItem = (props: LogicItemProps) => {
   //Pass the data to the design.
   console.log(loading, error, data);
   if (data) {
-    return DesignItem({ prey: data.getPreyOf, sources: [], controller });
+    return DesignItem({ prey: data.getPreyOf, sources: [], controller, activeItem: props.activeItem });
   } else {
-    return DesignItem({ prey: [], sources: [], controller });
+    return DesignItem({ prey: [], sources: [], controller, activeItem: props.activeItem });
   }
 };
 
