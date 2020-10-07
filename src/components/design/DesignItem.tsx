@@ -14,7 +14,7 @@ export const DesignItem = (props: DesignItemProps) => {
     <LogicCriteria controller={props.controller} activeItem={props.activeItem} />
     <div>
       {props.prey.map(item =>
-        <div> {item.taxon} </div>
+        <div key={item.wt_or_vol}> {item.taxon} </div>
       )}
     </div>
   </div>;
