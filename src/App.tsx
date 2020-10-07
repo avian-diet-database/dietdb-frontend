@@ -73,13 +73,7 @@ function App() {
           ? <LogicHome activeItem={activeItem} setActiveItem={setActiveItem} />
           : <LogicItem activeItem={activeItem} itemType={"nunya"} />}
       </section>
-      <LogicCriteria
-        startYear={1980}
-        endYear={2010}
-        region="all regions"
-        seasons="all 4 seasons"
-        metrics="all metrics"
-        level="order"
+      <LogicFooter
       />
     </div>
   );
