@@ -1,6 +1,9 @@
 import React from 'react';
 
 interface DesignDropdownProps {
+    criteriaTitle : string;
+    criteriaOptions : string[];
+    //onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 export const DesignDropdown = (props: DesignDropdownProps) => {
@@ -8,7 +11,7 @@ export const DesignDropdown = (props: DesignDropdownProps) => {
         <div className="dropdown is-active">
             <div className="dropdown-trigger">
                 <button className="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                    <span>Year (or any other criteria)</span>
+                    <span>{props.criteriaTitle}</span>
                     <span className="icon is-small">
                         <i className="fas fa-angle-down" aria-hidden="true"></i>
                     </span>
