@@ -12,11 +12,9 @@ export interface DesignItemProps {
 export const DesignItem = (props: DesignItemProps) => {
   return <div>
     <LogicCriteria controller={props.controller} activeItem={props.activeItem} />
-    <div>
-      {props.prey.map(item =>
-        <div key={item.wt_or_vol}> {item.taxon} </div>
-      )}
-    </div>
+    {props.prey.map(item =>
+      <div key={props.prey.indexOf(item)}> {item.taxon} </div>
+    )}
   </div>;
 };
 
