@@ -21,11 +21,7 @@ export const DesignItem = (props: DesignItemProps) => {
           <LogicCriteria controller={props.controller} />
         </div>
         <div className="column is-6">
-          <div className="content has-text-centered">
-            {props.prey.map(item =>
-              <div key={props.prey.indexOf(item)}> {item.taxon} </div>
-            )}
-          </div>
+          <LogicTable prey={props.prey} />
         </div>
       </div>
     </div>

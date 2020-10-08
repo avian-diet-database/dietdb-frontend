@@ -3,6 +3,8 @@ import { CriteriaController } from "../../types/CriteriaController"
 import { GET_PREDATOR_OF, GET_PREY_OF } from "../../gql/queries"
 import { useQuery } from "@apollo/client"
 import { useState } from "react"
+import { DesignLoadingPage } from "../design/DesignLoadingPage";
+import { DesignErrorPage } from "../design/DesignErrorPage";
 
 interface LogicItemProps {
   activeItem: string;
@@ -51,10 +53,8 @@ export const LogicItem = (props: LogicItemProps) => {
   //Because this is where the fetching the actual data happens, this is where filtering needs to happen as well.
   //Pass the data to the design.
   console.log(loading, error, data);
-  if (data) {
-    return DesignItem({ prey: data.getPreyOf, sources: [], controller });
-  } else {
-    return DesignItem({ prey: [], sources: [], controller });
-  }
+  if (loading) return DesignLoadingPage()
+  if (error) return DesignErrorPage()
+  return DesignItem({ prey: data.getPreyOf, sources: [], controller })
 };
 

@@ -1,22 +1,21 @@
 import React from 'react';
+import { Prey } from '../../types/Prey';
 
 interface DesignTableProps {
-    list:JSX.Element[];
+    prey: Prey[]
 }
 
-export const DesignTable = (props:DesignTableProps) => {
-    let tableBody = [];
-    for(let i in props.list) {
-        tableBody.push(
-        <tr>
-            <th>{props.list[i]}</th>
-            <td>Items1</td>
-            <td>Weight1</td>
-            <td>Unspecified1</td>
-            <td>Occurrence1</td>
-        </tr>
-        )
-    }
+export const DesignTable = (props: DesignTableProps) => {
+    let tableBody =
+        props.prey.map(item => {
+            return <tr key={props.prey.indexOf(item)}>
+                <th>{item.taxon}</th>
+                <td>{item.items}</td>
+                <td>{item.wt_or_vol}</td>
+                <td>{item.occurence}</td>
+                <td>{item.unspecified}</td>
+            </tr>
+        });
     return (
         <table className="table">
             <thead>
@@ -24,8 +23,8 @@ export const DesignTable = (props:DesignTableProps) => {
                     <th>Taxon</th>
                     <th>Items</th>
                     <th>Weight or Volume</th>
-                    <th>Unspecified</th>
                     <th>Occurrence</th>
+                    <th>Unspecified</th>
                 </tr>
             </thead>
             <tfoot>
@@ -33,8 +32,8 @@ export const DesignTable = (props:DesignTableProps) => {
                     <th>Taxon</th>
                     <th>Items</th>
                     <th>Weight or Volume</th>
-                    <th>Unspecified</th>
                     <th>Occurrence</th>
+                    <th>Unspecified</th>
                 </tr>
             </tfoot>
             <tbody>
