@@ -31,4 +31,3 @@ export const DesignItem = (props: DesignItemProps) => {
     </div>)
     ;
 };
-
