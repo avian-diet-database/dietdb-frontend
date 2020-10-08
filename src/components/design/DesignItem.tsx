@@ -15,7 +15,6 @@ export interface DesignItemProps {
 
 
 export const DesignItem = (props: DesignItemProps) => {
-<<<<<<< HEAD
   let nameList = props.prey.map(item =>
     <div key={item.wt_or_vol}> {item.taxon} </div>
   );
@@ -31,13 +30,5 @@ export const DesignItem = (props: DesignItemProps) => {
       </div>
     </div>)
     ;
-=======
-  return <div>
-    <LogicCriteria controller={props.controller} activeItem={props.activeItem} />
-    {props.prey.map(item =>
-      <div key={props.prey.indexOf(item)}> {item.taxon} </div>
-    )}
-  </div>;
->>>>>>> 423bf6bf3707fd444e2299f5149e1e311015d9b5
 };
 
