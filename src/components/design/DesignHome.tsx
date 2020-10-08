@@ -14,7 +14,7 @@ export const DesignHome = (props: DesignHomeProps) => {
     return (
         <div className="hero-body">
             <div className="container has-text-centered ">
-                <div className="section column">
+                <div className="section ">
                     <LogicHeader />
                 </div>
                 <div className="section">

@@ -2,7 +2,6 @@ import { DesignCriteria } from "../design/DesignCriteria";
 import { CriteriaController } from "../../types/CriteriaController"
 
 interface LogicCriteriaProps {
-    activeItem: string
     controller: CriteriaController
 }
 
@@ -28,7 +27,6 @@ export const LogicCriteria = (props: LogicCriteriaProps) => {
     };
 
     return DesignCriteria({
-        activeItem: props.activeItem,
         onStartYearChange: onStartYearChange,
         onEndYearChange: onEndYearChange,
         onRegionChange: onRegionChange,

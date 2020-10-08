@@ -6,15 +6,23 @@ export interface DesignItemProps {
   prey: Prey[]
   sources: string[]
   controller: CriteriaController
-  activeItem: string
 }
 
 export const DesignItem = (props: DesignItemProps) => {
-  return <div>
-    <LogicCriteria controller={props.controller} activeItem={props.activeItem} />
-    {props.prey.map(item =>
-      <div key={props.prey.indexOf(item)}> {item.taxon} </div>
-    )}
+  return <div className="hero-body">
+    <div className="section">
+      <div className="columns">
+        <div className="column is-6">
+          <LogicCriteria controller={props.controller} />
+        </div>
+        <div className="column is-6">
+          <div className="content has-text-centered">
+            {props.prey.map(item =>
+              <div key={props.prey.indexOf(item)}> {item.taxon} </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>;
 };
-
