@@ -12,7 +12,7 @@ export interface DesignHomeProps {
 
 export const DesignHome = (props: DesignHomeProps) => {
     return (
-        <div className="hero-body">
+        <div className="">
             <div className="container has-text-centered ">
                 <div className="section ">
                     <LogicHeader />
@@ -22,7 +22,7 @@ export const DesignHome = (props: DesignHomeProps) => {
                         <div className="level-item">
                             <p className="content is-size-3" >
                                 What does
-                    </p>
+                            </p>
                         </div>
                         <div className="level-item">
                             <LogicSearchBar

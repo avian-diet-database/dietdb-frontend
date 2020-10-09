@@ -52,11 +52,11 @@ function App() {
     <div>
       <section className="hero is-fullheight is-primary">
         <div className="hero-head">
-          <nav className="navbar">
+          <nav className="navbar is-size-6">
+          <figure className="image is-96x96"><img src="../eagle_fish_silhouette.png"></img></figure>
             <div className="container">
               <div className="navbar-brand">
                 <div className="navbar-item">
-                  {activeItemType}
                 </div>
                 <span className="navbar-burger burger" data-target="navbarMenuHeroA">
                   <span></span>
@@ -68,13 +68,13 @@ function App() {
                 <div className="navbar-end">
                   <a className="navbar-item is-active">
                     Home
-            </a>
+                  </a>
                   <a className="navbar-item">
                     Examples
-            </a>
+                  </a>
                   <a className="navbar-item">
                     Documentation
-            </a>
+                  </a>
                   <span className="navbar-item">
                     <a href="https://github.com/hurlbertlab/dietdatabase"
                       className="button is-primary is-inverted"> Github </a>
@@ -90,7 +90,7 @@ function App() {
           ? <LogicHome activeItem={activeItem} setActiveItem={updateActiveItem} dispatchActiveItemType={dispatchActiveItemType} />
           : <LogicItem activeItem={activeItem} itemType={activeItemType} />}
       </section>
-      <LogicFooter/>
+      <LogicFooter />
     </div>
   );
 }

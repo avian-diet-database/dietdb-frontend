@@ -15,7 +15,7 @@ export const DesignCriteria = (props: DesignCriteriaProps) => {
     let endYear = ["1910", "1920", "1930", "1940", "1950", "1960", "1970", "1980", "1990", "2020"];
     let region = ["North America", "South America", "Asia", "Africa", "Australia"];
     let season = ["Winter", "Spring", "Summer", "Fall"];
-    let metrics = ["% Occurrence", "% By item", "% By Weight/Volume"];
+    let metrics = ["Occurrence", "% By item", "% By Wt/Vol"];
     let level = ["Order", "Kingdom", "Phylum", "Class", "Family", "Genus", "Species"];
     return (
         <div className="box hero is-link">
