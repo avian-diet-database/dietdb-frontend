@@ -1,9 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Nunito:400,700");
-.table .is-scrollable tbody {
-  overflow-y: scroll;
-  width: auto;
-  position: absolute; }
-
 /*! bulma.io v0.9.1 | MIT License | github.com/jgthms/bulma */
 /* Bulma Utilities */
 @keyframes spinAround {

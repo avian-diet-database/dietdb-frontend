@@ -1,11 +1,10 @@
 import { DesignItem } from "../design/DesignItem";
 import { CriteriaController } from "../../types/CriteriaController"
-import { GET_PREDATOR_OF, GET_PREY_OF } from "../../gql/queries"
-import { useQuery } from "@apollo/client"
-import { useState } from "react"
+// import { GET_PREDATOR_OF, GET_PREY_OF } from "../../gql/queries"
+// import { useQuery } from "@apollo/client"
 import { useStartYear, useEndYear, useRegion, useSeasons, useMetrics, useLevel } from "./CiteriaHooks"
-import { DesignLoadingPage } from "../design/DesignLoadingPage";
-import { DesignErrorPage } from "../design/DesignErrorPage";
+// import { DesignLoadingPage } from "../design/DesignLoadingPage";
+// import { DesignErrorPage } from "../design/DesignErrorPage";
 
 interface LogicItemProps {
   activeItem: string;
@@ -17,7 +16,7 @@ export const LogicItem = (props: LogicItemProps) => {
   // Incorporate all the options here, need lots of useStates to manage these. 
   const [startYear, updateStartYear, startYearOptions] = useStartYear();
   const [endYear, updateEndYear, endYearOptions] = useEndYear();
-  const [seasons, updateSeasons, seasonsOptions] = useSeasons();
+  const [season, updateSeason, seasonOptions] = useSeasons();
   const [region, updateRegion, regionOptions] = useRegion();
   const [metrics, updateMetrics, metricsOptions] = useMetrics();
   const [level, updateLevel, levelOptions] = useLevel();
@@ -30,9 +29,9 @@ export const LogicItem = (props: LogicItemProps) => {
     updateEndYear,
     endYearOptions,
 
-    seasons,
-    updateSeasons,
-    seasonsOptions: seasonsOptions,
+    season,
+    updateSeason,
+    seasonOptions,
 
     region,
     updateRegion,
@@ -48,26 +47,25 @@ export const LogicItem = (props: LogicItemProps) => {
   }
 
   //Fetch the data for the active item.
-  const query = props.itemType === "Predator" ? GET_PREY_OF : GET_PREDATOR_OF
-  const options = {
-    variables: {
-      name: props.activeItem,
-      startYear: parseInt(startYear.value),
-      endYear: parseInt(endYear.value),
-      seasons: seasons.value,
-      region: region.value,
-      metrics: metrics.value,
-      level: "prey_" + level.value
-    }
-  }
-  console.log(options);
-  const { loading, error, data } = useQuery(query, options)
+  // const query = props.itemType === "Predator" ? GET_PREY_OF : GET_PREDATOR_OF
+  // const options = {
+  //   variables: {
+  //     name: props.activeItem,
+  //     startYear: parseInt(startYear.value),
+  //     endYear: parseInt(endYear.value),
+  //     seasons: seasons.value,
+  //     region: region.value,
+  //     metrics: metrics.value,
+  //     level: "prey_" + level.value
+  //   }
+  // }
+  // console.log(options);
+  // const { loading, error, data } = useQuery(query, options)
 
-  //Because this is where the fetching the actual data happens, this is where filtering needs to happen as well.
-  //Pass the data to the design.
-  console.log(loading, error, data);
-  if (loading) return DesignLoadingPage()
-  if (error) return DesignErrorPage()
-  return DesignItem({ prey: data.getPreyOf, sources: [], controller })
+  // //Because this is where the fetching the actual data happens, this is where filtering needs to happen as well.
+  // //Pass the data to the design.
+  // if (loading) return DesignLoadingPage()
+  // if (error) return DesignErrorPage()
+  return DesignItem({ activeItem: props.activeItem, itemType: props.itemType, sources: [], controller })
 };
 

@@ -1,7 +1,13 @@
 import { gql } from "@apollo/client"
 
 export const GET_PREY_OF = gql`
-    query($name:String!, $level:String, $metrics:String, $startYear: Int, $endYear: Int, $season: String, $region: String) {
+    query($name:String!, 
+          $level:String,
+          $metrics:String,
+          $startYear: String,
+          $endYear: String,
+          $season: String,
+          $region: String) {
             getPreyOf(predatorName: $name,
                       preyLevel: $level,
                       dietType: $metrics,
@@ -13,7 +19,7 @@ export const GET_PREY_OF = gql`
                 items
                 taxon
                 wt_or_vol
-                occurence
+                occurrence
                 unspecified
         }
     }
@@ -31,7 +37,7 @@ export const GET_PREDATOR_OF = gql`
                 items
                 taxon
                 wt_or_vol
-                occurence
+                occurrence
                 unspecified
         }
     }

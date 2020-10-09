@@ -17,6 +17,7 @@ export const DesignTable = (props: DesignTableProps) => {
       </tr>
     );
   });
+
   return (
     <div className="">
       <table className="table is-scrollable">

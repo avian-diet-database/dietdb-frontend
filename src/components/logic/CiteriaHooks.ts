@@ -75,6 +75,7 @@ export function useRegion(): [CriteriaState, React.Dispatch<string>, string[]] {
         "Florida",
         "Colorado",
         "Arizona",
+        "Mexico"
     ]
     function reducer(state: CriteriaState, action: string) {
         if (options.includes(action)) {

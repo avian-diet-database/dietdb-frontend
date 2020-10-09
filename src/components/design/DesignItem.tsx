@@ -1,10 +1,11 @@
 import React from "react";
-import { Prey } from "../../types/Prey";
+// import { Prey } from "../../types/Prey";
 import { CriteriaController } from "../../types/CriteriaController"
 import { LogicCriteria } from "../logic/LogicCriteria";
 import { LogicTable } from "../logic/LogicTable";
 export interface DesignItemProps {
-  prey: Prey[]
+  activeItem: string
+  itemType: string
   sources: string[]
   controller: CriteriaController
 }
@@ -19,7 +20,7 @@ export const DesignItem = (props: DesignItemProps) => {
           <LogicCriteria controller={props.controller} />
         </div>
         <div className="column is-6">
-          <LogicTable prey={props.prey} />
+          <LogicTable activeItem={props.activeItem} itemType={props.itemType} controller={props.controller} />
         </div>
       </div>
     </div>

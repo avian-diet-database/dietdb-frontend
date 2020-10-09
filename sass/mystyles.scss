@@ -27,17 +27,6 @@ $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 
-.table {
-    & .is-scrollable
-    {
-        tbody {
-            overflow-y: scroll;
-            width: auto;
-            position: absolute;
-        }
-    }
-}
-
 // Import only what you need from Bulma
 // Nah homie import everything
 // If we could optimize this though that would help build size

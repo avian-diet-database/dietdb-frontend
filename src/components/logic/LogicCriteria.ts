@@ -23,7 +23,7 @@ export const LogicCriteria = (props: LogicCriteriaProps) => {
         props.controller.updateMetrics(event.target.value)
     };
     const onSeasonsChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        props.controller.updateSeasons(event.target.value)
+        props.controller.updateSeason(event.target.value)
     };
 
     return DesignCriteria({
@@ -38,6 +38,6 @@ export const LogicCriteria = (props: LogicCriteriaProps) => {
         onMetricsChange: onMetricsChange,
         metricsOptions: props.controller.metricsOptions,
         onSeasonsChange: onSeasonsChange,
-        seasonsOptions: props.controller.seasonsOptions
+        seasonsOptions: props.controller.seasonOptions
     });
 }
