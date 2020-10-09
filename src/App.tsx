@@ -90,8 +90,7 @@ function App() {
           ? <LogicHome activeItem={activeItem} setActiveItem={updateActiveItem} dispatchActiveItemType={dispatchActiveItemType} />
           : <LogicItem activeItem={activeItem} itemType={activeItemType} />}
       </section>
-      <LogicFooter
-      />
+      <LogicFooter/>
     </div>
   );
 }

@@ -18,7 +18,7 @@ export const DesignTable = (props: DesignTableProps) => {
     );
   });
   return (
-    <div className="box">
+    <div className="">
       <table className="table">
         <thead>
           <tr>
