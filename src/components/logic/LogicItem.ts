@@ -3,6 +3,7 @@ import { CriteriaController } from "../../types/CriteriaController"
 import { GET_PREDATOR_OF, GET_PREY_OF } from "../../gql/queries"
 import { useQuery } from "@apollo/client"
 import { useState } from "react"
+import { useStartYear, useEndYear, useRegion, useSeasons, useMetrics, useLevel } from "./CiteriaHooks"
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { DesignErrorPage } from "../design/DesignErrorPage";
 
@@ -14,25 +15,36 @@ interface LogicItemProps {
 export const LogicItem = (props: LogicItemProps) => {
 
   // Incorporate all the options here, need lots of useStates to manage these. 
-  const [startYear, updateStartYear] = useState("")
-  const [endYear, updateEndYear] = useState("")
-  const [seasons, updateSeasons] = useState("")
-  const [region, updateRegion] = useState("")
-  const [metrics, updateMetrics] = useState("")
-  const [level, updateLevel] = useState("")
+  const [startYear, updateStartYear, startYearOptions] = useStartYear();
+  const [endYear, updateEndYear, endYearOptions] = useEndYear();
+  const [seasons, updateSeasons, seasonsOptions] = useSeasons();
+  const [region, updateRegion, regionOptions] = useRegion();
+  const [metrics, updateMetrics, metricsOptions] = useMetrics();
+  const [level, updateLevel, levelOptions] = useLevel();
   const controller: CriteriaController = {
-    startYear: startYear,
-    updateStartYear: updateStartYear,
-    endYear: endYear,
-    updateEndYear: updateEndYear,
-    seasons: seasons,
-    updateSeasons: updateSeasons,
-    region: region,
-    updateRegion: updateRegion,
-    metrics: metrics,
-    updateMetrics: updateMetrics,
-    level: level,
-    updateLevel: updateLevel
+    startYear,
+    updateStartYear,
+    startYearOptions,
+
+    endYear,
+    updateEndYear,
+    endYearOptions,
+
+    seasons,
+    updateSeasons,
+    seasonsOptions: seasonsOptions,
+
+    region,
+    updateRegion,
+    regionOptions,
+
+    metrics,
+    updateMetrics,
+    metricsOptions,
+
+    level,
+    updateLevel,
+    levelOptions
   }
 
   //Fetch the data for the active item.
@@ -40,14 +52,15 @@ export const LogicItem = (props: LogicItemProps) => {
   const options = {
     variables: {
       name: props.activeItem,
-      startYear: startYear,
-      endYear: endYear,
-      seasons: seasons,
-      region: region,
-      metrics: metrics,
-      level: level
+      startYear: parseInt(startYear.value),
+      endYear: parseInt(endYear.value),
+      seasons: seasons.value,
+      region: region.value,
+      metrics: metrics.value,
+      level: "prey_" + level.value
     }
   }
+  console.log(options);
   const { loading, error, data } = useQuery(query, options)
 
   //Because this is where the fetching the actual data happens, this is where filtering needs to happen as well.

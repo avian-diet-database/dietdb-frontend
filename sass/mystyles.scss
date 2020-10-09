@@ -27,6 +27,17 @@ $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 
+.table {
+    & .is-scrollable
+    {
+        tbody {
+            overflow-y: scroll;
+            width: auto;
+            position: absolute;
+        }
+    }
+}
+
 // Import only what you need from Bulma
 // Nah homie import everything
 // If we could optimize this though that would help build size
@@ -45,5 +56,3 @@ $input-shadow: none;
 @import "../node_modules/bulma/sass/helpers/typography.sass";
 @import "../node_modules/bulma/sass/elements/content.sass";
 @import "../node_modules/bulma/sass/layout/footer.sass";
-@import "../node_modules/bulma/sass/components/dropdown.sass";
-@import "../node_modules/bulma/sass/grid/tiles.sass";

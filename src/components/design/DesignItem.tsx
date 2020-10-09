@@ -3,8 +3,6 @@ import { Prey } from "../../types/Prey";
 import { CriteriaController } from "../../types/CriteriaController"
 import { LogicCriteria } from "../logic/LogicCriteria";
 import { LogicTable } from "../logic/LogicTable";
-import { LogicLoadingPage } from "../logic/LogicLoadingPage";
-import { LogicErrorPage } from "../logic/LogicErrorPage";
 export interface DesignItemProps {
   prey: Prey[]
   sources: string[]

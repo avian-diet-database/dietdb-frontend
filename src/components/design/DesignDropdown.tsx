@@ -1,7 +1,6 @@
 import React from 'react';
 
 interface DesignDropdownProps {
-    criteriaTitle: string;
     criteriaOptions: string[];
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }

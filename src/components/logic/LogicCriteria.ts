@@ -28,10 +28,16 @@ export const LogicCriteria = (props: LogicCriteriaProps) => {
 
     return DesignCriteria({
         onStartYearChange: onStartYearChange,
+        startYearOptions: props.controller.startYearOptions,
         onEndYearChange: onEndYearChange,
+        endYearOptions: props.controller.endYearOptions,
         onRegionChange: onRegionChange,
+        regionOptions: props.controller.regionOptions,
         onLevelChange: onLevelChange,
+        levelOptions: props.controller.levelOptions,
         onMetricsChange: onMetricsChange,
-        onSeasonsChange: onSeasonsChange
+        metricsOptions: props.controller.metricsOptions,
+        onSeasonsChange: onSeasonsChange,
+        seasonsOptions: props.controller.seasonsOptions
     });
 }

@@ -1,14 +1,22 @@
+import { CriteriaState } from "../components/logic/CiteriaHooks"
+
 export interface CriteriaController {
-    startYear: string
-    endYear: string
-    region: string
-    seasons: string
-    metrics: string
-    level: string
-    updateStartYear: React.Dispatch<React.SetStateAction<string>>
-    updateEndYear: React.Dispatch<React.SetStateAction<string>>
-    updateRegion: React.Dispatch<React.SetStateAction<string>>
-    updateSeasons: React.Dispatch<React.SetStateAction<string>>
-    updateMetrics: React.Dispatch<React.SetStateAction<string>>
-    updateLevel: React.Dispatch<React.SetStateAction<string>>
+    startYear: CriteriaState
+    endYear: CriteriaState
+    region: CriteriaState
+    seasons: CriteriaState
+    metrics: CriteriaState
+    level: CriteriaState
+    startYearOptions: string[]
+    endYearOptions: string[]
+    regionOptions: string[]
+    seasonsOptions: string[]
+    metricsOptions: string[]
+    levelOptions: string[]
+    updateStartYear: React.Dispatch<string>
+    updateEndYear: React.Dispatch<string>
+    updateRegion: React.Dispatch<string>
+    updateSeasons: React.Dispatch<string>
+    updateMetrics: React.Dispatch<string>
+    updateLevel: React.Dispatch<string>
 }

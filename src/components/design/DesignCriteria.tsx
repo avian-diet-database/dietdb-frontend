@@ -3,29 +3,29 @@ import { LogicDropdown } from "../logic/LogicDropdown"
 
 interface DesignCriteriaProps {
     onStartYearChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
+    startYearOptions: string[]
     onEndYearChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
+    endYearOptions: string[]
     onRegionChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
+    regionOptions: string[]
     onLevelChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
+    levelOptions: string[]
     onMetricsChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
+    metricsOptions: string[]
     onSeasonsChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
+    seasonsOptions: string[]
 }
 
 export const DesignCriteria = (props: DesignCriteriaProps) => {
-    let startYear = ["1900", "1910", "1920", "1930", "1940", "1950", "1960", "1970", "1980", "1990"];
-    let endYear = ["1910", "1920", "1930", "1940", "1950", "1960", "1970", "1980", "1990", "2020"];
-    let region = ["North America", "South America", "Asia", "Africa", "Australia"];
-    let season = ["Winter", "Spring", "Summer", "Fall"];
-    let metrics = ["% Occurrence", "% By item", "% By Weight/Volume"];
-    let level = ["Order", "Kingdom", "Phylum", "Class", "Family", "Genus", "Species"];
     return (
         <div className="box hero is-link">
             <div className="content is-7 has-text-centered">
                 Modify the table by changing the criteria below!!!
             </div>
             <div className="content has-text-centered is-size-4">
-                From  <LogicDropdown criteriaTitle="Start Year" criteriaOptions={startYear} onChange={props.onStartYearChange} />  to  <LogicDropdown criteriaTitle="End Year" criteriaOptions={endYear} onChange={props.onEndYearChange} /> in <LogicDropdown criteriaTitle="Regions" criteriaOptions={region} onChange={props.onRegionChange} /> over
-                        the span of <LogicDropdown criteriaTitle="Seasons" criteriaOptions={season} onChange={props.onSeasonsChange} />, the data includes <LogicDropdown criteriaTitle="Metrics" criteriaOptions={metrics} onChange={props.onMetricsChange} /> and
-                        is summarized at the level of <LogicDropdown criteriaTitle="Level" criteriaOptions={level} onChange={props.onLevelChange} />.
+                From  <LogicDropdown criteriaOptions={props.startYearOptions} onChange={props.onStartYearChange} />  to  <LogicDropdown criteriaOptions={props.endYearOptions} onChange={props.onEndYearChange} /> in <LogicDropdown criteriaOptions={props.regionOptions} onChange={props.onRegionChange} /> over
+                        the span of <LogicDropdown criteriaOptions={props.seasonsOptions} onChange={props.onSeasonsChange} />, the data includes <LogicDropdown criteriaOptions={props.metricsOptions} onChange={props.onMetricsChange} /> and
+                        is summarized at the level of <LogicDropdown criteriaOptions={props.levelOptions} onChange={props.onLevelChange} />.
             </div>
         </div>
     );
