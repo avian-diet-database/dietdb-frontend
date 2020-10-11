@@ -1,4 +1,6 @@
 import { useReducer } from "react"
+import { useQuery } from "@apollo/client"
+import { GET_REGIONS_PRED } from "../../gql/queries"
 export interface CriteriaState {
     // type: The string the user sees in the select element's options.
     // value: The string that the backend understands.
@@ -90,25 +92,23 @@ export function useSeasons(): [CriteriaState, React.Dispatch<string>, string[]] 
     return [state, dispatch, options]
 }
 
-export function useRegion(): [CriteriaState, React.Dispatch<string>, string[]] {
-    const options = [
-        "Florida",
-        "Colorado",
-        "Arizona",
-        "Mexico"
-    ]
+export function useRegion(activeItem: string): [CriteriaState, React.Dispatch<string>, string[]] {
+    const options = {
+        variables: {
+            name: activeItem
+        }
+    }
+    const { loading, error, data } = useQuery(GET_REGIONS_PRED, options)
     function reducer(state: CriteriaState, action: string) {
-        if (options.includes(action)) {
-            // In this case, no mapping is done. The backend accepts capitalized strings
-            return {
-                type: action, value: action
-            }
-        } else {
-            return state
+        // In this case, no mapping is done. The options come straight from the backend.
+        return {
+            type: action, value: action
         }
     }
     const [state, dispatch] = useReducer(reducer, { type: "Florida", value: "Florida" });
-    return [state, dispatch, options]
+    if (loading) return [state, dispatch, []]
+    if (error) return [state, dispatch, []]
+    return [state, dispatch, data.getRegionsPred]
 }
 
 export function useMetrics(): [CriteriaState, React.Dispatch<string>, string[]] {
