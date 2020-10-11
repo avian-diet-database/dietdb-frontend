@@ -67,3 +67,8 @@ export const RECORDS_PER_SEASON = gql`
         }
     }
 `
+export const GET_REGIONS_PRED = gql`
+    query($name: String!) {
+        getRegionsPred(name:$name)
+    }
+`

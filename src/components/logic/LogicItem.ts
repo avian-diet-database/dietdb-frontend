@@ -17,7 +17,7 @@ export const LogicItem = (props: LogicItemProps) => {
   const [startYear, updateStartYear, startYearOptions] = useStartYear();
   const [endYear, updateEndYear, endYearOptions] = useEndYear();
   const [season, updateSeason, seasonOptions] = useSeasons();
-  const [region, updateRegion, regionOptions] = useRegion();
+  const [region, updateRegion, regionOptions] = useRegion(props.activeItem);
   const [metrics, updateMetrics, metricsOptions] = useMetrics();
   const [level, updateLevel, levelOptions] = useLevel();
   // The CriteriaController is just a convenient container object to hold all this state.
