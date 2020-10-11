@@ -1,12 +1,14 @@
 import React from "react";
 import { ItemType } from "../../App"
+import { DebounceInput } from "react-debounce-input"
 
 export interface DesignSearchBarProps {
-  queryMatches: string[];
-  queryType: ItemType;
-  onQueryInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onItemSelect: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
-  activeItem: string;
+  queryMatches: string[]
+  queryType: ItemType
+  placeholder: string
+  onQueryInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onItemSelect: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
+  activeItem: string
 }
 
 export const DesignSearchBar = (props: DesignSearchBarProps) => {
@@ -15,10 +17,10 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
       <div className="container">
         <div className="field">
           <div className="control">
-            <input
+            <DebounceInput
               className="input is-secondary is-large is-rounded"
               type="text"
-              placeholder={`...`}
+              placeholder={props.placeholder}
               onChange={props.onQueryInputChange}
             />
           </div>

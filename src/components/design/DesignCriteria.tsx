@@ -19,9 +19,6 @@ interface DesignCriteriaProps {
 export const DesignCriteria = (props: DesignCriteriaProps) => {
     return (
         <div className="box hero is-link">
-            <div className="content is-7 has-text-centered">
-                Modify the table by changing the criteria below!!!
-            </div>
             <div className="content has-text-centered is-size-4">
                 From  <LogicDropdown criteriaOptions={props.startYearOptions} onChange={props.onStartYearChange} />  to  <LogicDropdown criteriaOptions={props.endYearOptions} onChange={props.onEndYearChange} /> in <LogicDropdown criteriaOptions={props.regionOptions} onChange={props.onRegionChange} /> over
                         the span of <LogicDropdown criteriaOptions={props.seasonsOptions} onChange={props.onSeasonsChange} />, the data includes <LogicDropdown criteriaOptions={props.metricsOptions} onChange={props.onMetricsChange} /> and

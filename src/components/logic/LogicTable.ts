@@ -26,9 +26,8 @@ export const LogicTable = (props: LogicTableProps) => {
             level: props.controller.level.value
         }
     }
-    console.log(options);
+
     const { loading, error, data } = useQuery(query, options)
-    console.log(loading, error, data);
 
     //Because this is where the fetching the actual data happens, this is where filtering needs to happen as well.
     //Pass the data to the design.

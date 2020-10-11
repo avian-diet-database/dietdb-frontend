@@ -25,7 +25,13 @@ export const GET_PREY_OF = gql`
     }
 `
 export const GET_PREDATOR_OF = gql`
-    query($name:String!, $level:String, $metrics:String, $startYear: String, $endYear: String, $season: String, $region: String) {
+    query($name:String!, 
+          $level:String,
+          $metrics:String,
+          $startYear: String,
+          $endYear: String,
+          $season: String,
+          $region: String) {
             getPredatorOf(preyName: $name,
                       predatorLevel: $level,
                       dietType: $metrics,
@@ -40,5 +46,11 @@ export const GET_PREDATOR_OF = gql`
                 occurrence
                 unspecified
         }
+    }
+`
+
+export const GET_AUTOCOMPLETE = gql`
+    query($input: String!) {
+        getAutocomplete(input: $input)
     }
 `

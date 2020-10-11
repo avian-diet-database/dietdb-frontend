@@ -55,7 +55,7 @@ export function useSeasons(): [CriteriaState, React.Dispatch<string>, string[]] 
         "Summer",
         "Fall",
         "Winter",
-        "Unspecified"
+        "All"
     ]
     function reducer(state: CriteriaState, action: string) {
         if (options.includes(action)) {
@@ -66,7 +66,7 @@ export function useSeasons(): [CriteriaState, React.Dispatch<string>, string[]] 
             return state
         }
     }
-    const [state, dispatch] = useReducer(reducer, { type: "Unspecified", value: "unspecified" });
+    const [state, dispatch] = useReducer(reducer, { type: "All", value: "unspecified" });
     return [state, dispatch, options]
 }
 
@@ -91,7 +91,7 @@ export function useRegion(): [CriteriaState, React.Dispatch<string>, string[]] {
 }
 
 export function useMetrics(): [CriteriaState, React.Dispatch<string>, string[]] {
-    const options = ["% By Occurrence", "% By Items", "% By Weight/Volume", "Unspecified"];
+    const options = ["% By Occurrence", "% By Items", "% By Weight/Volume", "All"];
     function reducer(state: CriteriaState, action: string) {
         if (options.includes(action)) {
             switch (action) {
@@ -102,13 +102,13 @@ export function useMetrics(): [CriteriaState, React.Dispatch<string>, string[]] 
                 case "% By Weight/Volume":
                     return { type: action, value: "wt_or_vol" }
                 default:
-                    return { type: "Unspecified", value: "unspecified" }
+                    return { type: "All", value: "unspecified" }
             }
         } else {
             return state
         }
     }
-    const [state, dispatch] = useReducer(reducer, { type: "Unspecified", value: "unspecified" });
+    const [state, dispatch] = useReducer(reducer, { type: "All", value: "unspecified" });
     return [state, dispatch, options]
 }
 
