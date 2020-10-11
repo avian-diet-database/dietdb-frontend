@@ -49,8 +49,21 @@ export const GET_PREDATOR_OF = gql`
     }
 `
 
-export const GET_AUTOCOMPLETE = gql`
+export const GET_AUTOCOMPLETE_PREY = gql`
     query($input: String!) {
-        getAutocomplete(input: $input)
+        getAutocompletePrey(input: $input)
+    }
+`
+export const GET_AUTOCOMPLETE_PRED = gql`
+    query($input: String!) {
+        getAutocompletePred(input: $input)
+    }
+`
+export const RECORDS_PER_SEASON = gql`
+    query($name: String!) {
+        getRecordsPerSeason(name: $name) {
+            x
+            y
+        }
     }
 `

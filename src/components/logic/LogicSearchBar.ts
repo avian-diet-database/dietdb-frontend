@@ -17,7 +17,7 @@ export interface LogicSearchBarProps {
 
 export const LogicSearchBar = (props: LogicSearchBarProps) => {
 
-  const [queryMatches, updateQueryString] = useAutocomplete()
+  const [queryMatches, updateQueryString] = useAutocomplete(props.queryType)
 
   // --- UPDATE HANDLERS --- //
   // When the user changes their query, update the query string.

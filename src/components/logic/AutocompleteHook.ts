@@ -1,8 +1,9 @@
 import { useQuery } from "@apollo/client";
 import { useState, Dispatch, SetStateAction } from "react"
-import { GET_AUTOCOMPLETE } from "../../gql/queries"
+import { GET_AUTOCOMPLETE_PRED, GET_AUTOCOMPLETE_PREY } from "../../gql/queries"
+import { ItemType } from "../../App"
 
-export function useAutocomplete(): [string[], Dispatch<SetStateAction<string>>] {
+export function useAutocomplete(itemType: ItemType): [string[], Dispatch<SetStateAction<string>>] {
 
     // The user's input. The actual data isn't important beyond this hook.
     const [queryString, updateQueryString] = useState("");
@@ -17,8 +18,10 @@ export function useAutocomplete(): [string[], Dispatch<SetStateAction<string>>] 
     }
     // Query the backend. This will have to be changed to be either
     // Predator or Prey.
+    const query = itemType === ItemType.PREDATOR ? GET_AUTOCOMPLETE_PRED : GET_AUTOCOMPLETE_PREY
+    const { loading, error, data } = useQuery(query, options)
+    console.log(loading, error, data)
 
-    const { loading, error, data } = useQuery(GET_AUTOCOMPLETE, options)
 
     // If the data is loading, there was an error, or the query string was
     // the empty string, return the empty list.
@@ -27,6 +30,7 @@ export function useAutocomplete(): [string[], Dispatch<SetStateAction<string>>] 
     if (queryString.length < 1) return [[], updateQueryString]
 
     // The data must be valid, so return it.
-    const queryMatches: string[] = data.getAutocomplete
+
+    const queryMatches: string[] = itemType === ItemType.PREDATOR ? data.getAutocompletePred : data.getAutocompletePrey
     return [queryMatches, updateQueryString];
 }
