@@ -1,8 +1,15 @@
 import { useReducer } from "react"
 export interface CriteriaState {
+    // type: The string the user sees in the select element's options.
+    // value: The string that the backend understands.
+    // This object serves as a pseudo-map from user-friendly to backend-friendly. 
     type: string, value: string
 }
+// these could be cleaned up by implementing default behavior and then
+// initializing them with calling the reducer, inciting its default
+// behavior.
 export function useStartYear(): [CriteriaState, React.Dispatch<string>, string[]] {
+    // The user-friendly optins.
     const options = [
         "1900",
         "1910",
@@ -15,6 +22,8 @@ export function useStartYear(): [CriteriaState, React.Dispatch<string>, string[]
         "1980",
         "1990",
     ]
+    // Map user-friendly to backend-friendly
+    // For start and end year, there isn't any mapping to be done really.
     function reducer(state: CriteriaState, action: string) {
         if (options.includes(action)) {
             return { type: action, value: action }
@@ -22,9 +31,12 @@ export function useStartYear(): [CriteriaState, React.Dispatch<string>, string[]
             return state
         }
     }
+    // Initialize with 1900.
     const [state, dispatch] = useReducer(reducer, { type: "1900", value: "1900" });
     return [state, dispatch, options]
 }
+
+// Same as start year pretty much.
 export function useEndYear(): [CriteriaState, React.Dispatch<string>, string[]] {
     const options = [
         "1910",
@@ -49,6 +61,7 @@ export function useEndYear(): [CriteriaState, React.Dispatch<string>, string[]] 
     return [state, dispatch, options]
 }
 
+
 export function useSeasons(): [CriteriaState, React.Dispatch<string>, string[]] {
     const options = [
         "Spring",
@@ -59,8 +72,15 @@ export function useSeasons(): [CriteriaState, React.Dispatch<string>, string[]] 
     ]
     function reducer(state: CriteriaState, action: string) {
         if (options.includes(action)) {
-            return {
-                type: action, value: action.toLowerCase()
+            switch (action) {
+                // All becomes unspecified
+                case "All":
+                    return { type: action, value: "unspecified" }
+                // But in all other cases, just take the lowercase versions.
+                default:
+                    return {
+                        type: action, value: action.toLowerCase()
+                    }
             }
         } else {
             return state
@@ -79,6 +99,7 @@ export function useRegion(): [CriteriaState, React.Dispatch<string>, string[]] {
     ]
     function reducer(state: CriteriaState, action: string) {
         if (options.includes(action)) {
+            // In this case, no mapping is done. The backend accepts capitalized strings
             return {
                 type: action, value: action
             }

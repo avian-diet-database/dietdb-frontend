@@ -13,13 +13,14 @@ interface LogicItemProps {
 
 export const LogicItem = (props: LogicItemProps) => {
 
-  // Incorporate all the options here, need lots of useStates to manage these. 
+  // Use the custom hooks to instantiate these variables.
   const [startYear, updateStartYear, startYearOptions] = useStartYear();
   const [endYear, updateEndYear, endYearOptions] = useEndYear();
   const [season, updateSeason, seasonOptions] = useSeasons();
   const [region, updateRegion, regionOptions] = useRegion();
   const [metrics, updateMetrics, metricsOptions] = useMetrics();
   const [level, updateLevel, levelOptions] = useLevel();
+  // The CriteriaController is just a convenient container object to hold all this state.
   const controller: CriteriaController = {
     startYear,
     updateStartYear,
@@ -46,26 +47,6 @@ export const LogicItem = (props: LogicItemProps) => {
     levelOptions
   }
 
-  //Fetch the data for the active item.
-  // const query = props.itemType === "Predator" ? GET_PREY_OF : GET_PREDATOR_OF
-  // const options = {
-  //   variables: {
-  //     name: props.activeItem,
-  //     startYear: parseInt(startYear.value),
-  //     endYear: parseInt(endYear.value),
-  //     seasons: seasons.value,
-  //     region: region.value,
-  //     metrics: metrics.value,
-  //     level: "prey_" + level.value
-  //   }
-  // }
-  // console.log(options);
-  // const { loading, error, data } = useQuery(query, options)
-
-  // //Because this is where the fetching the actual data happens, this is where filtering needs to happen as well.
-  // //Pass the data to the design.
-  // if (loading) return DesignLoadingPage()
-  // if (error) return DesignErrorPage()
   return DesignItem({ activeItem: props.activeItem, itemType: props.itemType, sources: [], controller })
 };
 

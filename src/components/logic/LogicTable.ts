@@ -28,7 +28,7 @@ export const LogicTable = (props: LogicTableProps) => {
     }
 
     const { loading, error, data } = useQuery(query, options)
-    //Because this is where the fetching the actual data happens, this is where filtering needs to happen as well.
+
     //Pass the data to the design.
     if (loading) return DesignLoadingPage()
     if (error) return DesignErrorPage()
