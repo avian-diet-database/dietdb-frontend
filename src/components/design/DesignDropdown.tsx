@@ -8,7 +8,7 @@ interface DesignDropdownProps {
 
 export const DesignDropdown = (props: DesignDropdownProps) => {
     return (
-        <div className="select is-secondary">
+        <div className="select is-secondary is-small">
             <select onChange={props.onChange}>
                 {props.criteriaOptions.map(option => <option key={option}>{option}</option>)}
             </select>

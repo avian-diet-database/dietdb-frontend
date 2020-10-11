@@ -67,3 +67,7 @@ export const DesignHome = (props: DesignHomeProps) => {
         </div>
     );
 };
+
+
+//          <figure className="image is-40x40 column is-one-fifth"><img src="../eagle_fish_silhouette.png"></img></figure>
+//          <figure className="image is-40x40 column is-one-fifth"><img src="../bird_caterpillar_silhouette.png"></img></figure>
