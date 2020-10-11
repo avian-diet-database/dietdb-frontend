@@ -53,10 +53,11 @@ function App() {
       <section className="hero is-fullheight is-primary">
         <div className="hero-head">
           <nav className="navbar is-size-6">
-          <figure className="image is-96x96"><img src="../eagle_fish_silhouette.png"></img></figure>
+            <figure className="image is-96x96"><img src="../eagle_fish_silhouette.png"></img></figure>
             <div className="container">
               <div className="navbar-brand">
                 <div className="navbar-item">
+                  <h1 className="title" > {activeItem} </h1>
                 </div>
                 <span className="navbar-burger burger" data-target="navbarMenuHeroA">
                   <span></span>

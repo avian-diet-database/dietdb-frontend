@@ -12,7 +12,7 @@ export interface DesignHomeProps {
 
 export const DesignHome = (props: DesignHomeProps) => {
     return (
-        <div className="">
+        <div className="hero-body">
             <div className="container has-text-centered ">
                 <div className="section ">
                     <LogicHeader />
@@ -27,10 +27,10 @@ export const DesignHome = (props: DesignHomeProps) => {
                         <div className="level-item">
                             <LogicSearchBar
                                 queryType={ItemType.PREDATOR}
-                                queryOptions={["Bald Eagle"]}
                                 activeItem={props.activeItem}
                                 updateActiveItem={props.setActiveItem}
                                 dispatchActiveItemType={props.dispatchActiveItemType}
+                                placeholder="Enter a predator name here"
                             />
                         </div>
                         <div className="level-item">
@@ -50,10 +50,10 @@ export const DesignHome = (props: DesignHomeProps) => {
                         <div className="level-item">
                             <LogicSearchBar
                                 queryType={ItemType.PREY}
-                                queryOptions={["apple", "banana", "apricot", "plantain"]}
                                 activeItem={props.activeItem}
                                 updateActiveItem={props.setActiveItem}
                                 dispatchActiveItemType={props.dispatchActiveItemType}
+                                placeholder="Enter a prey name here"
                             />
                         </div>
                         <div className="level-item">

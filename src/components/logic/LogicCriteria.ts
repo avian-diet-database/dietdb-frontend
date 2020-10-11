@@ -7,6 +7,7 @@ interface LogicCriteriaProps {
 
 
 export const LogicCriteria = (props: LogicCriteriaProps) => {
+    // Define change-event handlers for the design componenent.
     const onStartYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         props.controller.updateStartYear(event.target.value)
     };
@@ -23,15 +24,21 @@ export const LogicCriteria = (props: LogicCriteriaProps) => {
         props.controller.updateMetrics(event.target.value)
     };
     const onSeasonsChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        props.controller.updateSeasons(event.target.value)
+        props.controller.updateSeason(event.target.value)
     };
 
     return DesignCriteria({
         onStartYearChange: onStartYearChange,
+        startYearOptions: props.controller.startYearOptions,
         onEndYearChange: onEndYearChange,
+        endYearOptions: props.controller.endYearOptions,
         onRegionChange: onRegionChange,
+        regionOptions: props.controller.regionOptions,
         onLevelChange: onLevelChange,
+        levelOptions: props.controller.levelOptions,
         onMetricsChange: onMetricsChange,
-        onSeasonsChange: onSeasonsChange
+        metricsOptions: props.controller.metricsOptions,
+        onSeasonsChange: onSeasonsChange,
+        seasonsOptions: props.controller.seasonOptions
     });
 }

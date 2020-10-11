@@ -1,43 +1,23 @@
-import { useState, useEffect } from "react";
 import { DesignSearchBar } from "../design/DesignSearchBar";
 import { ItemType, ItemTypeAction } from "../../App"
+import { useAutocomplete } from "./AutocompleteHook"
 
 export interface LogicSearchBarProps {
   // In test cases, fruit/vegetable.
-  queryType: ItemType;
-  // An array of string options to match queries with.
-  queryOptions: string[];
+  queryType: ItemType
   // A callback for updating the selected item.
-  updateActiveItem: React.Dispatch<React.SetStateAction<string>>;
+  updateActiveItem: React.Dispatch<React.SetStateAction<string>>
   // The active item.
-  activeItem: string;
+  activeItem: string
   // Dispatcher for active item type.
-  dispatchActiveItemType: React.Dispatch<ItemTypeAction>;
+  dispatchActiveItemType: React.Dispatch<ItemTypeAction>
+  // Placeholder for input
+  placeholder: string
 }
 
 export const LogicSearchBar = (props: LogicSearchBarProps) => {
-  // --- STATE --- //
-  // Basic queryoptions state for now. This will eventually be:
-  //  - A call to the backend for a list options
-  // Simple state for query string and possible matches.
-  const [queryString, updateQueryString] = useState("");
-  const [queryMatches, updateQueryMatches] = useState([""]);
 
-  // --- EFFECTS --- //
-  // When query string or options update, refresh the autocompleted list.
-  //  - This may be slow with large queryOptions. o(n*avgStrLen) right now.
-  useEffect(() => {
-    if (queryString !== "") {
-      updateQueryMatches(
-        props.queryOptions.filter(
-          (element: string) =>
-            element.toLowerCase().indexOf(queryString.toLowerCase()) > -1
-        )
-      );
-    } else {
-      updateQueryMatches([]);
-    }
-  }, [queryString, props.queryOptions, updateQueryMatches])
+  const [queryMatches, updateQueryString] = useAutocomplete()
 
   // --- UPDATE HANDLERS --- //
   // When the user changes their query, update the query string.
@@ -55,6 +35,7 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
     activeItem: props.activeItem,
     queryMatches: queryMatches,
     onQueryInputChange: onQueryInputChange,
-    onItemSelect: onItemSelect
+    onItemSelect: onItemSelect,
+    placeholder: props.placeholder
   });
 };
