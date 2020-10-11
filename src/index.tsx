@@ -9,12 +9,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-class Doc extends React.Component{
-  componentDidMount(){
-    document.title = "Avian Bird Database"
-  }
-}
-
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
