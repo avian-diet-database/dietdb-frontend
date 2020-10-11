@@ -19,8 +19,8 @@ export const DesignTable = (props: DesignTableProps) => {
   });
 
   return (
-    <div className="" id="queryTable">
-      <table className="table">
+    <div className="">
+      <table className="table" id="queryTable">
         <thead>
           <tr>
             <th>Taxon</th>
@@ -30,6 +30,10 @@ export const DesignTable = (props: DesignTableProps) => {
             <th>Unspecified</th>
           </tr>
         </thead>
+        <tbody>{tableBody}</tbody>
+        <tbody>{tableBody}</tbody>
+        <tbody>{tableBody}</tbody>
+        <tbody>{tableBody}</tbody>
         <tfoot>
           <tr>
             <th>Taxon</th>
@@ -39,7 +43,6 @@ export const DesignTable = (props: DesignTableProps) => {
             <th>Unspecified</th>
           </tr>
         </tfoot>
-        <tbody>{tableBody}</tbody>
       </table>
     </div>
   );
