@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState } from "react";
 import { LogicHome } from "./components/logic/LogicHome"
 import { LogicFooter } from "./components/logic/LogicFooter";
 import { LogicItem } from "./components/logic/LogicItem";

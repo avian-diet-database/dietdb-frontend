@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client"
 import { GET_PREY_OF_SOURCES } from "../../gql/queries"
 import { DesignLoadingPage } from "../design/DesignLoadingPage"
-import { DesignErrorPage } from "../design/DesignErrorPage"
+import { LogicErrorPage } from "../logic/LogicErrorPage"
 import { DesignSources } from "../design/DesignSources"
 import { ItemType } from "../../App"
 
@@ -19,6 +19,6 @@ export const LogicSources = (props: LogicSourceProps) => {
     const query = props.itemType === ItemType.PREDATOR ? GET_PREY_OF_SOURCES : GET_PREY_OF_SOURCES
     const { loading, error, data } = useQuery(query, options)
     if (loading) return DesignLoadingPage()
-    if (error) return DesignErrorPage()
+    if (error) return LogicErrorPage({ hint: "general" })
     return DesignSources({ sources: data.getPreyOfSources })
 }
