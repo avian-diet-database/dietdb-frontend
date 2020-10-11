@@ -3,8 +3,8 @@ import { CriteriaController } from "../../types/CriteriaController"
 import { GET_PREDATOR_OF, GET_PREY_OF } from "../../gql/queries"
 import { useQuery } from "@apollo/client"
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
-import { DesignErrorPage } from "../design/DesignErrorPage";
 import { ItemType } from "../../App"
+import { LogicErrorPage } from "./LogicErrorPage";
 
 interface LogicTableProps {
     controller: CriteriaController
@@ -32,6 +32,6 @@ export const LogicTable = (props: LogicTableProps) => {
 
     //Pass the data to the design.
     if (loading) return DesignLoadingPage()
-    if (error) return DesignErrorPage()
+    if (error) return LogicErrorPage({ hint: "general" })
     return DesignTable({ prey: data.getPreyOf });
 }
