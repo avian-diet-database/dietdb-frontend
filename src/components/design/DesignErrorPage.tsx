@@ -1,6 +1,7 @@
 import React from 'react';
 
 interface DesignErrorPageProps {
+    queryMessage:string;
 }
 
 export const DesignErrorPage = () => {

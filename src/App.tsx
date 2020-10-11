@@ -50,7 +50,7 @@ function App() {
   const [activeItemType, dispatchActiveItemType] = useReducer(itemTypeReducer, "null")
   return (
     <div>
-      <section className="hero is-fullheight is-primary">
+      <section className="hero is-primary">
         <div className="hero-head">
           <nav className="navbar is-size-6">
             <figure className="image is-96x96"><img src="../eagle_fish_silhouette.png"></img></figure>

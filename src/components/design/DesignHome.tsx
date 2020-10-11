@@ -18,13 +18,13 @@ export const DesignHome = (props: DesignHomeProps) => {
                     <LogicHeader />
                 </div>
                 <div className="section">
-                    <div className="level">
-                        <div className="level-item">
+                    <div className="columns">
+                        <div className="column">
                             <p className="content is-size-3" >
                                 What does
                             </p>
                         </div>
-                        <div className="level-item">
+                        <div className="column">
                             <LogicSearchBar
                                 queryType={ItemType.PREDATOR}
                                 activeItem={props.activeItem}
@@ -33,21 +33,21 @@ export const DesignHome = (props: DesignHomeProps) => {
                                 placeholder="Enter a predator name here"
                             />
                         </div>
-                        <div className="level-item">
+                        <div className="column">
                             <p className="content is-size-3" >
                                 eat?
                     </p>
                         </div>
                     </div>
                 </div>
-                <div className="section">
-                    <div className="level">
-                        <div className="level-item">
+                <div className="section container">
+                    <div className="columns">
+                        <div className="column">
                             <p className="content is-size-3" >
                                 What eats
-                    </p>
+                            </p>
                         </div>
-                        <div className="level-item">
+                        <div className="column">
                             <LogicSearchBar
                                 queryType={ItemType.PREY}
                                 activeItem={props.activeItem}
@@ -56,10 +56,10 @@ export const DesignHome = (props: DesignHomeProps) => {
                                 placeholder="Enter a prey name here"
                             />
                         </div>
-                        <div className="level-item">
+                        <div className="column">
                             <p className="content is-size-3" >
                                 ?
-                    </p>
+                            </p>
                         </div>
                     </div>
                 </div>

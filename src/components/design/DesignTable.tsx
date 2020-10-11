@@ -19,8 +19,8 @@ export const DesignTable = (props: DesignTableProps) => {
   });
 
   return (
-    <div className="">
-      <table className="table is-scrollable">
+    <div className="" id="queryTable">
+      <table className="table">
         <thead>
           <tr>
             <th>Taxon</th>
