@@ -1,5 +1,5 @@
 import { DesignSearchBar } from "../design/DesignSearchBar";
-import { ItemType, ItemTypeAction } from "../../App"
+import { ItemType } from "../../App"
 import { useAutocomplete } from "./AutocompleteHook"
 
 export interface LogicSearchBarProps {
@@ -10,7 +10,7 @@ export interface LogicSearchBarProps {
   // The active item.
   activeItem: string
   // Dispatcher for active item type.
-  dispatchActiveItemType: React.Dispatch<ItemTypeAction>
+  updateItemType: React.Dispatch<React.SetStateAction<ItemType>>
   // Placeholder for input
   placeholder: string
 }
@@ -27,7 +27,7 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
 
   const onItemSelect = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     props.updateActiveItem(() => { return event.currentTarget.textContent || "" })
-    props.dispatchActiveItemType({ type: props.queryType })
+    props.updateItemType(props.queryType)
   }
 
   return DesignSearchBar({

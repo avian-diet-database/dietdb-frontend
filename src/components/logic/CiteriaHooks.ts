@@ -70,19 +70,12 @@ export function useSeasons(): [CriteriaState, React.Dispatch<string>, string[]] 
         "Summer",
         "Fall",
         "Winter",
-        "All"
+        "Unspecified"
     ]
     function reducer(state: CriteriaState, action: string) {
         if (options.includes(action)) {
-            switch (action) {
-                // All becomes unspecified
-                case "All":
-                    return { type: action, value: "unspecified" }
-                // But in all other cases, just take the lowercase versions.
-                default:
-                    return {
-                        type: action, value: action.toLowerCase()
-                    }
+            return {
+                type: action, value: action.toLowerCase()
             }
         } else {
             return state
@@ -101,18 +94,27 @@ export function useRegion(activeItem: string): [CriteriaState, React.Dispatch<st
     const { loading, error, data } = useQuery(GET_REGIONS_PRED, options)
     function reducer(state: CriteriaState, action: string) {
         // In this case, no mapping is done. The options come straight from the backend.
-        return {
-            type: action, value: action
+        if (data.getRegionsPred.includes(action)) {
+            return {
+                type: action, value: action
+            }
+        } else {
+            return state
         }
     }
-    const [state, dispatch] = useReducer(reducer, { type: "Florida", value: "Florida" });
+    const initial = {
+        type: data === undefined ? "null" : data.getRegionsPred[0],
+        value: data === undefined ? "null" : data.getRegionsPred[0]
+
+    }
+    const [state, dispatch] = useReducer(reducer, initial);
     if (loading) return [state, dispatch, []]
     if (error) return [state, dispatch, []]
     return [state, dispatch, data.getRegionsPred]
 }
 
 export function useMetrics(): [CriteriaState, React.Dispatch<string>, string[]] {
-    const options = ["% By Occurrence", "% By Items", "% By Weight/Volume", "All"];
+    const options = ["% By Occurrence", "% By Items", "% By Weight/Volume", "Unspecified"];
     function reducer(state: CriteriaState, action: string) {
         if (options.includes(action)) {
             switch (action) {
@@ -123,7 +125,7 @@ export function useMetrics(): [CriteriaState, React.Dispatch<string>, string[]] 
                 case "% By Weight/Volume":
                     return { type: action, value: "wt_or_vol" }
                 default:
-                    return { type: "All", value: "unspecified" }
+                    return { type: "Unspecified", value: "unspecified" }
             }
         } else {
             return state

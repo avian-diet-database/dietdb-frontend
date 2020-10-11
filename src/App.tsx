@@ -5,10 +5,8 @@ import { LogicItem } from "./components/logic/LogicItem";
 
 export enum ItemType {
   PREY,
-  PREDATOR
-}
-export interface ItemTypeAction {
-  type: ItemType
+  PREDATOR,
+  NA
 }
 function App() {
   /* App state needed:
@@ -37,17 +35,7 @@ function App() {
    *
    */
   const [activeItem, updateActiveItem] = useState("")
-  function itemTypeReducer(state: string, action: ItemTypeAction) {
-    switch (action.type) {
-      case ItemType.PREY:
-        return "Prey";
-      case ItemType.PREDATOR:
-        return "Predator";
-      default:
-        return "null";
-    }
-  }
-  const [activeItemType, dispatchActiveItemType] = useReducer(itemTypeReducer, "null")
+  const [itemType, updateItemType] = useState(ItemType.NA)
   return (
     <div>
       <section className="hero is-primary">
@@ -88,8 +76,8 @@ function App() {
         {/* Here, render the home if activeItem is "", and otherwise
           render the item page for it. */ }
         {activeItem === ""
-          ? <LogicHome activeItem={activeItem} setActiveItem={updateActiveItem} dispatchActiveItemType={dispatchActiveItemType} />
-          : <LogicItem activeItem={activeItem} itemType={activeItemType} />}
+          ? <LogicHome activeItem={activeItem} setActiveItem={updateActiveItem} updateItemType={updateItemType} />
+          : <LogicItem activeItem={activeItem} itemType={itemType} />}
       </section>
       <LogicFooter />
     </div>

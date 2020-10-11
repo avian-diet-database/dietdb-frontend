@@ -2,12 +2,12 @@
 import React from "react";
 import { LogicSearchBar } from "../logic/LogicSearchBar"
 import { LogicHeader } from "../logic/LogicHeader"
-import { ItemType, ItemTypeAction } from "../../App"
+import { ItemType } from "../../App"
 
 export interface DesignHomeProps {
     activeItem: string;
     setActiveItem: React.Dispatch<React.SetStateAction<string>>;
-    dispatchActiveItemType: React.Dispatch<ItemTypeAction>;
+    updateItemType: React.Dispatch<React.SetStateAction<ItemType>>;
 }
 
 export const DesignHome = (props: DesignHomeProps) => {
@@ -29,7 +29,7 @@ export const DesignHome = (props: DesignHomeProps) => {
                                 queryType={ItemType.PREDATOR}
                                 activeItem={props.activeItem}
                                 updateActiveItem={props.setActiveItem}
-                                dispatchActiveItemType={props.dispatchActiveItemType}
+                                updateItemType={props.updateItemType}
                                 placeholder="Enter a predator name here"
                             />
                         </div>
@@ -52,7 +52,7 @@ export const DesignHome = (props: DesignHomeProps) => {
                                 queryType={ItemType.PREY}
                                 activeItem={props.activeItem}
                                 updateActiveItem={props.setActiveItem}
-                                dispatchActiveItemType={props.dispatchActiveItemType}
+                                updateItemType={props.updateItemType}
                                 placeholder="Enter a prey name here"
                             />
                         </div>

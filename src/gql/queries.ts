@@ -72,3 +72,16 @@ export const GET_REGIONS_PRED = gql`
         getRegionsPred(name:$name)
     }
 `
+export const GET_PREY_OF_SOURCES = gql`
+    query($name: String!) {
+        getPreyOfSources(predatorName:$name)
+    }
+`
+export const GET_NUM_RECORDS_AND_STUDIES = gql`
+    query($name: String!) {
+        getNumRecordsAndStudies(name:$name){
+            studies
+            records
+        }
+    }
+`

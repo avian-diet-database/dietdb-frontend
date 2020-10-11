@@ -20,7 +20,6 @@ export function useAutocomplete(itemType: ItemType): [string[], Dispatch<SetStat
     // Predator or Prey.
     const query = itemType === ItemType.PREDATOR ? GET_AUTOCOMPLETE_PRED : GET_AUTOCOMPLETE_PREY
     const { loading, error, data } = useQuery(query, options)
-    console.log(loading, error, data)
 
 
     // If the data is loading, there was an error, or the query string was

@@ -4,17 +4,18 @@ import { GET_PREDATOR_OF, GET_PREY_OF } from "../../gql/queries"
 import { useQuery } from "@apollo/client"
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { DesignErrorPage } from "../design/DesignErrorPage";
+import { ItemType } from "../../App"
 
 interface LogicTableProps {
     controller: CriteriaController
-    itemType: string
+    itemType: ItemType
     activeItem: string
 }
 
 export const LogicTable = (props: LogicTableProps) => {
 
     //Fetch the data for the active item.
-    const query = props.itemType === "Predator" ? GET_PREY_OF : GET_PREDATOR_OF
+    const query = props.itemType === ItemType.PREDATOR ? GET_PREY_OF : GET_PREDATOR_OF
     const options = {
         variables: {
             name: props.activeItem,
