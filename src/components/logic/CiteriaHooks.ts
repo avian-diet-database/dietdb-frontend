@@ -45,7 +45,7 @@ export function useEndYear(): [CriteriaState, React.Dispatch<string>, string[]] 
             return state
         }
     }
-    const [state, dispatch] = useReducer(reducer, { type: "2020", value: "2020" });
+    const [state, dispatch] = useReducer(reducer, { type: "1910", value: "1910" });
     return [state, dispatch, options]
 }
 
@@ -66,7 +66,7 @@ export function useSeasons(): [CriteriaState, React.Dispatch<string>, string[]] 
             return state
         }
     }
-    const [state, dispatch] = useReducer(reducer, { type: "All", value: "unspecified" });
+    const [state, dispatch] = useReducer(reducer, { type: "Spring", value: "spring" });
     return [state, dispatch, options]
 }
 
@@ -108,12 +108,12 @@ export function useMetrics(): [CriteriaState, React.Dispatch<string>, string[]] 
             return state
         }
     }
-    const [state, dispatch] = useReducer(reducer, { type: "All", value: "unspecified" });
+    const [state, dispatch] = useReducer(reducer, { type: "% By Occurrence", value: "occurrence" });
     return [state, dispatch, options]
 }
 
 export function useLevel(): [CriteriaState, React.Dispatch<string>, string[]] {
-    const options = ["Suborder", "Scientific_Name", "Order", "Kingdom", "Phylum", "Class", "Family", "Genus", "Species"];
+    const options = ["Scientific_Name", "Suborder", "Order", "Kingdom", "Phylum", "Class", "Family", "Genus", "Species"];
     function reducer(state: CriteriaState, action: string) {
         if (options.includes(action)) {
             return { type: action, value: action.toLowerCase() }
