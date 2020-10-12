@@ -18,7 +18,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
         <div className="field">
           <div className="control">
             <DebounceInput
-              className="input is-secondary is-large is-rounded"
+              className="input is-dark is-large"
               type="text"
               placeholder={props.placeholder}
               onChange={props.onQueryInputChange}

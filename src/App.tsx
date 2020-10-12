@@ -45,7 +45,7 @@ function App() {
             <div className="container">
               <div className="navbar-brand">
                 <div className="navbar-item">
-                  <h1 className="title" > {activeItem} </h1>
+                  <h1 className="title" > {activeItem}{itemType === ItemType.NA ? "" : itemType === ItemType.PREDATOR ? " as Predator" : " as Prey"}</h1>
                 </div>
                 <span className="navbar-burger burger" data-target="navbarMenuHeroA">
                   <span></span>
@@ -55,7 +55,7 @@ function App() {
               </div>
               <div id="navbarMenuHeroA" className="navbar-menu">
                 <div className="navbar-end">
-                  <a onClick={() => { updateActiveItem("") }} className="navbar-item is-active">
+                  <a onClick={() => { updateActiveItem(""); updateItemType(ItemType.NA) }} className={"navbar-item " + (activeItem === "" ? "is-active" : "")}>
                     Home
                   </a>
                   <a className="navbar-item">

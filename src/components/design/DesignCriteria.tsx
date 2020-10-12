@@ -18,8 +18,8 @@ interface DesignCriteriaProps {
 
 export const DesignCriteria = (props: DesignCriteriaProps) => {
     return (
-        <div className="box hero is-link">
-            <div className="content has-text-centered is-size-4">
+        <div className="box has-background-light">
+            <div className="content has-text-dark has-text-centered is-size-4">
                 From  <LogicDropdown criteriaOptions={props.startYearOptions} onChange={props.onStartYearChange} />  to  <LogicDropdown criteriaOptions={props.endYearOptions} onChange={props.onEndYearChange} /> in <LogicDropdown criteriaOptions={props.regionOptions} onChange={props.onRegionChange} /> over
                         the span of <LogicDropdown criteriaOptions={props.seasonsOptions} onChange={props.onSeasonsChange} />, the data includes <LogicDropdown criteriaOptions={props.metricsOptions} onChange={props.onMetricsChange} /> and
                         is summarized at the level of <LogicDropdown criteriaOptions={props.levelOptions} onChange={props.onLevelChange} />.

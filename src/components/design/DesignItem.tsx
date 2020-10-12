@@ -21,16 +21,20 @@ export const DesignItem = (props: DesignItemProps) => {
     <div className="section">
       <div className="columns">
         <div className="column is-6">
-          <div className="content">
-            {props.numStudies} total studies
+          <div className="notification is-light has-text-dark">
+            <div className="content has-text-centered is-size-2">
+              {props.numStudies} total studies
+            </div>
           </div>
           <LogicCriteria controller={props.controller} />
           <LogicGraph graphType={LogicGraphTypes.RECORDS_PER_SEASON} activeItem={props.activeItem} />
           <LogicSources activeItem={props.activeItem} itemType={props.itemType} />
         </div>
         <div className="column is-6">
-          <div className="content">
-            {props.numRecords} total records
+          <div className="notification is-light has-text-dark">
+            <div className="content has-text-centered is-size-2">
+              {props.numRecords} total records
+            </div>
           </div>
           <LogicTable activeItem={props.activeItem} itemType={props.itemType} controller={props.controller} />
         </div>

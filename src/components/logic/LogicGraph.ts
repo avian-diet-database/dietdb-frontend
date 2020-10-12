@@ -32,7 +32,7 @@ export const LogicGraph = (props: LogicGraphProps) => {
     const { loading, error, data } = useQuery(query, options)
 
     if (loading) return DesignLoadingPage();
-    if (error) return LogicErrorPage({hint:"general"});
-    return DesignGraph({ data: data.getRecordsPerSeason })
+    if (error) return LogicErrorPage({ hint: "general" });
+    return DesignGraph({ data: data.getRecordsPerSeason, title: "Records Per Season" })
 
 }

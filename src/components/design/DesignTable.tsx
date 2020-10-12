@@ -19,8 +19,8 @@ export const DesignTable = (props: DesignTableProps) => {
   });
 
   return (
-    <div className="table-container" id="queryTable">
-      <table className="table is-fullwidth" >
+    <div className="box has-background-light has-text-dark" id="queryTable">
+      <table className="table is-fullwidth has-background-light has-text-dark" >
         <thead>
           <tr>
             <th>Taxon</th>
