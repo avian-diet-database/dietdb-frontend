@@ -1,6 +1,4 @@
 #queryTable{
     height:450px;
-    display: flex;
     overflow-y: scroll;
-    flex-direction: column;
 }

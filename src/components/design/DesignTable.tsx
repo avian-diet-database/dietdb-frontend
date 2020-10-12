@@ -9,7 +9,7 @@ export const DesignTable = (props: DesignTableProps) => {
   let tableBody = props.prey.map((item) => {
     return (
       <tr key={props.prey.indexOf(item)}>
-        <th>{item.taxon}</th>
+        <td>{item.taxon}</td>
         <td>{item.items}</td>
         <td>{item.wt_or_vol}</td>
         <td>{item.occurence}</td>
@@ -19,8 +19,8 @@ export const DesignTable = (props: DesignTableProps) => {
   });
 
   return (
-    <div className="">
-      <table className="table" id="queryTable">
+    <div className="table-container" id="queryTable">
+      <table className="table is-fullwidth" >
         <thead>
           <tr>
             <th>Taxon</th>
@@ -30,9 +30,6 @@ export const DesignTable = (props: DesignTableProps) => {
             <th>Unspecified</th>
           </tr>
         </thead>
-        <tbody>{tableBody}</tbody>
-        <tbody>{tableBody}</tbody>
-        <tbody>{tableBody}</tbody>
         <tbody>{tableBody}</tbody>
         <tfoot>
           <tr>

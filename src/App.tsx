@@ -55,7 +55,7 @@ function App() {
               </div>
               <div id="navbarMenuHeroA" className="navbar-menu">
                 <div className="navbar-end">
-                  <a className="navbar-item is-active">
+                  <a onClick={() => { updateActiveItem("") }} className="navbar-item is-active">
                     Home
                   </a>
                   <a className="navbar-item">
