@@ -19,7 +19,7 @@ export const DesignTable = (props: DesignTableProps) => {
   });
 
   return (
-    <div className="box has-background-light has-text-dark" id="queryTable">
+    <div className="box has-background-light is-scrollable has-text-dark" >
       <table className="table is-fullwidth has-background-light has-text-dark" >
         <thead>
           <tr>

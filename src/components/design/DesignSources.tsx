@@ -4,9 +4,9 @@ export interface DesignSourcesProps {
 }
 
 export const DesignSources = (props: DesignSourcesProps) => {
-    return <div>
+    return <div className="box has-background-light has-text-dark is-scrollable">
         {props.sources.map((source) => {
-            return <div key={props.sources.indexOf(source)}> {source} </div>
+            return <div className="block" key={props.sources.indexOf(source)}> {source} </div>
         })}
     </div>
 }

@@ -15,7 +15,7 @@ export interface DesignItemProps {
 }
 
 
-
+// Note: these columns are lazy and unfriendly to mobile.
 export const DesignItem = (props: DesignItemProps) => {
   return <div className="hero-body">
     <div className="section">
@@ -28,7 +28,6 @@ export const DesignItem = (props: DesignItemProps) => {
           </div>
           <LogicCriteria controller={props.controller} />
           <LogicGraph graphType={LogicGraphTypes.RECORDS_PER_SEASON} activeItem={props.activeItem} />
-          <LogicSources activeItem={props.activeItem} itemType={props.itemType} />
         </div>
         <div className="column is-6">
           <div className="notification is-light has-text-dark">
@@ -37,6 +36,7 @@ export const DesignItem = (props: DesignItemProps) => {
             </div>
           </div>
           <LogicTable activeItem={props.activeItem} itemType={props.itemType} controller={props.controller} />
+          <LogicSources activeItem={props.activeItem} itemType={props.itemType} />
         </div>
       </div>
     </div>

@@ -40,7 +40,7 @@ function App() {
     <div>
       <section className="hero is-primary">
         <div className="hero-head">
-          <nav className="navbar is-size-6">
+          <nav className="navbar is-size-6 has-text-light">
             <figure className="image is-96x96"><img src="../eagle_fish_silhouette.png"></img></figure>
             <div className="container">
               <div className="navbar-brand">
