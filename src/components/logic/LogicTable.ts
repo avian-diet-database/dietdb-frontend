@@ -6,6 +6,7 @@ import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { ItemType } from "../../App"
 import { LogicErrorPage } from "./LogicErrorPage";
 
+
 interface LogicTableProps {
     controller: CriteriaController
     itemType: ItemType
@@ -34,4 +35,4 @@ export const LogicTable = (props: LogicTableProps) => {
     if (loading) return DesignLoadingPage()
     if (error) return LogicErrorPage({ hint: "general" })
     return DesignTable({ prey: data.getPreyOf });
-}
+};

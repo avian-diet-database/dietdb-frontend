@@ -41,7 +41,6 @@ export const DesignItem = (props: DesignItemProps) => {
             </div>
           </div>
           <LogicTable activeItem={props.activeItem} itemType={props.itemType} controller={props.controller} />
-          <DesignDownload csvData={[]} fileName={"avianDietTable"}/>
           <LogicSources activeItem={props.activeItem} itemType={props.itemType} />
         </div>
       </div>
