@@ -67,6 +67,22 @@ export const RECORDS_PER_SEASON = gql`
         }
     }
 `
+export const RECORDS_PER_DIET_TYPE = gql`
+    query($name: String!) {
+        getRecordsPerDietType(name: $name) {
+            x
+            y
+        }
+    }
+`
+export const RECORDS_PER_DECADE = gql`
+    query($name: String!) {
+        getRecordsPerDecade(name: $name) {
+            x
+            y
+        }
+    }
+`
 export const GET_REGIONS_PRED = gql`
     query($name: String!) {
         getRegionsPred(name:$name)

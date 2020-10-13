@@ -28,6 +28,8 @@ export const DesignItem = (props: DesignItemProps) => {
           </div>
           <LogicCriteria controller={props.controller} />
           <LogicGraph graphType={LogicGraphTypes.RECORDS_PER_SEASON} activeItem={props.activeItem} />
+          <LogicGraph graphType={LogicGraphTypes.RECORDS_PER_DECADE} activeItem={props.activeItem} />
+          <LogicGraph graphType={LogicGraphTypes.RECORDS_PER_DIET_TYPE} activeItem={props.activeItem} />
         </div>
         <div className="column is-6">
           <div className="notification is-light has-text-dark">

@@ -41,16 +41,16 @@ export function useStartYear(): [CriteriaState, React.Dispatch<string>, string[]
 // Same as start year pretty much.
 export function useEndYear(): [CriteriaState, React.Dispatch<string>, string[]] {
     const options = [
-        "1910",
-        "1920",
-        "1930",
-        "1940",
-        "1950",
-        "1960",
-        "1970",
-        "1980",
+        "2020",
         "1990",
-        "2020"
+        "1980",
+        "1970",
+        "1960",
+        "1950",
+        "1940",
+        "1930",
+        "1920",
+        "1910"
     ]
     function reducer(state: CriteriaState, action: string) {
         if (options.includes(action)) {
@@ -59,13 +59,14 @@ export function useEndYear(): [CriteriaState, React.Dispatch<string>, string[]] 
             return state
         }
     }
-    const [state, dispatch] = useReducer(reducer, { type: "1910", value: "1910" });
+    const [state, dispatch] = useReducer(reducer, { type: "2020", value: "2020" });
     return [state, dispatch, options]
 }
 
 
 export function useSeasons(): [CriteriaState, React.Dispatch<string>, string[]] {
     const options = [
+        "All",
         "Spring",
         "Summer",
         "Fall",
@@ -81,7 +82,7 @@ export function useSeasons(): [CriteriaState, React.Dispatch<string>, string[]] 
             return state
         }
     }
-    const [state, dispatch] = useReducer(reducer, { type: "Spring", value: "spring" });
+    const [state, dispatch] = useReducer(reducer, { type: "All", value: "all" });
     return [state, dispatch, options]
 }
 
@@ -102,19 +103,14 @@ export function useRegion(activeItem: string): [CriteriaState, React.Dispatch<st
             return state
         }
     }
-    const initial = {
-        type: data === undefined ? "null" : data.getRegionsPred[0],
-        value: data === undefined ? "null" : data.getRegionsPred[0]
-
-    }
-    const [state, dispatch] = useReducer(reducer, initial);
+    const [state, dispatch] = useReducer(reducer, { type: "All", value: "all" });
     if (loading) return [state, dispatch, []]
     if (error) return [state, dispatch, []]
-    return [state, dispatch, data.getRegionsPred]
+    return [state, dispatch, ["All", ...data.getRegionsPred]]
 }
 
 export function useMetrics(): [CriteriaState, React.Dispatch<string>, string[]] {
-    const options = ["% By Occurrence", "% By Items", "% By Weight/Volume", "Unspecified"];
+    const options = ["All", "% By Occurrence", "% By Items", "% By Weight/Volume", "Unspecified"];
     function reducer(state: CriteriaState, action: string) {
         if (options.includes(action)) {
             switch (action) {
@@ -124,14 +120,16 @@ export function useMetrics(): [CriteriaState, React.Dispatch<string>, string[]] 
                     return { type: action, value: "items" }
                 case "% By Weight/Volume":
                     return { type: action, value: "wt_or_vol" }
+                case "Unspecified":
+                    return { type: action, value: "unspecified" }
                 default:
-                    return { type: "Unspecified", value: "unspecified" }
+                    return { type: "All", value: "all" }
             }
         } else {
             return state
         }
     }
-    const [state, dispatch] = useReducer(reducer, { type: "% By Occurrence", value: "occurrence" });
+    const [state, dispatch] = useReducer(reducer, { type: "All", value: "all" });
     return [state, dispatch, options]
 }
 
