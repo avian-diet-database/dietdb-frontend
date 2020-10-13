@@ -1,18 +1,16 @@
 import React from 'react';
 
 interface DesignErrorPageProps {
+    errorMessage:string
 }
 
-export const DesignErrorPage = (message:string) => {
+export const DesignErrorPage = (props:DesignErrorPageProps) => {
     return (
         <div className="hero-body">
             <div className="container">
                 <h1 className="title">
-                    Uh no, you have reached the error page :(
+                    {props.errorMessage}
                 </h1>
-                <h2 className="subtitle">
-                    {message}
-                </h2>
             </div>
         </div>
     )

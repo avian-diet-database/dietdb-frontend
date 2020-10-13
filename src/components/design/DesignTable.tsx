@@ -1,5 +1,7 @@
 import React from "react";
+import { LogicErrorPage } from "../logic/LogicErrorPage";
 import { DesignDownload } from "./DesignDownload";
+import { DesignErrorPage } from "./DesignErrorPage";
 
 interface DesignTableProps {
   prey: any[];
@@ -7,7 +9,9 @@ interface DesignTableProps {
 
 export const DesignTable = (props: DesignTableProps) => {
   if (props.prey.length < 1) {
-    return <div></div>
+    return <div>
+      <LogicErrorPage errorMessage={"The following query returned no results"}/>
+    </div>
   }
 
   return (

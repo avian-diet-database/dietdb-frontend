@@ -33,6 +33,6 @@ export const LogicTable = (props: LogicTableProps) => {
 
     //Pass the data to the design.
     if (loading) return DesignLoadingPage()
-    if (error) return LogicErrorPage({ hint: "general" })
+    if (error) return LogicErrorPage({ errorMessage: "Uh no, an error has occurred :( please return to homepage!" })
     return DesignTable({ prey: data.getPreyOf });
 };
