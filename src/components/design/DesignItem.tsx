@@ -6,6 +6,9 @@ import { LogicTable } from "../logic/LogicTable";
 import { LogicGraph, LogicGraphTypes } from "../logic/LogicGraph"
 import { LogicSources } from "../logic/LogicSources"
 import { ItemType } from "../../App"
+import { LogicButton } from "../logic/LogicButton";
+import { LogicHome } from "../logic/LogicHome";
+import { DesignDownload } from "./DesignDownload";
 export interface DesignItemProps {
   activeItem: string
   itemType: ItemType
@@ -38,6 +41,7 @@ export const DesignItem = (props: DesignItemProps) => {
             </div>
           </div>
           <LogicTable activeItem={props.activeItem} itemType={props.itemType} controller={props.controller} />
+          <DesignDownload csvData={[]} fileName={"avianDietTable"}/>
           <LogicSources activeItem={props.activeItem} itemType={props.itemType} />
         </div>
       </div>
