@@ -1,12 +1,10 @@
 import React from "react";
-import { Prey } from "../../types/Prey";
 
 interface DesignTableProps {
   prey: any[];
 }
 
 export const DesignTable = (props: DesignTableProps) => {
-  console.log(Object.keys(props.prey))
   if (props.prey.length < 1) {
     return <div></div>
   }
@@ -22,7 +20,7 @@ export const DesignTable = (props: DesignTableProps) => {
           </tr>
         </thead>
         <tbody>{props.prey.map(item => {
-          return <tr> {Object.keys(item).map(datum => {
+          return <tr key={props.prey.indexOf(item)}>{Object.keys(item).map(datum => {
             return <td key={datum}> {item[datum]}</td>
           })}</tr>
         })}</tbody>
