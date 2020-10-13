@@ -95,6 +95,11 @@ export function useRegion(activeItem: string): [CriteriaState, React.Dispatch<st
     const { loading, error, data } = useQuery(GET_REGIONS_PRED, options)
     function reducer(state: CriteriaState, action: string) {
         // In this case, no mapping is done. The options come straight from the backend.
+        if (action === "All") {
+            return {
+                type: action, value: action.toLowerCase()
+            }
+        }
         if (data.getRegionsPred.includes(action)) {
             return {
                 type: action, value: action
