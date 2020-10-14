@@ -30,7 +30,7 @@ export const DesignHome = (props: DesignHomeProps) => {
                                 activeItem={props.activeItem}
                                 updateActiveItem={props.setActiveItem}
                                 updateItemType={props.updateItemType}
-                                placeholder="Enter a predator name here"
+                                placeholder="Enter a predator name"
                             />
                         </div>
                         <div className="column">
@@ -53,7 +53,7 @@ export const DesignHome = (props: DesignHomeProps) => {
                                 activeItem={props.activeItem}
                                 updateActiveItem={props.setActiveItem}
                                 updateItemType={props.updateItemType}
-                                placeholder="Enter a prey name here"
+                                placeholder="Enter a prey name"
                             />
                         </div>
                         <div className="column">

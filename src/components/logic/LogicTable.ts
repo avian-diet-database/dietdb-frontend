@@ -6,6 +6,7 @@ import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { ItemType } from "../../App";
 import { LogicErrorPage } from "./LogicErrorPage";
 
+
 interface LogicTableProps {
   controller: CriteriaController;
   itemType: ItemType;
@@ -31,8 +32,8 @@ export const LogicTable = (props: LogicTableProps) => {
   const { loading, error, data } = useQuery(query, options);
 
   //Pass the data to the design.
-  if (loading) return DesignLoadingPage();
-  if (error) return LogicErrorPage({ hint: "general" });
+  if (loading) return DesignLoadingPage()
+  if (error) return LogicErrorPage({ errorMessage: "Uh no, an error has occurred :( please return to homepage!" })
   const arr =
     props.itemType === ItemType.PREDATOR ? data.getPreyOf : data.getPredatorOf;
   return DesignTable({ data: arr });

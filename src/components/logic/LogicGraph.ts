@@ -43,7 +43,7 @@ export const LogicGraph = (props: LogicGraphProps) => {
     }
     const { loading, error, data } = useQuery(query, options)
     if (loading) return DesignLoadingPage();
-    if (error) return LogicErrorPage({ hint: "general" })
+    if (error) return LogicErrorPage({ errorMessage: "Uh no, an error has occurred: " + error.message })
     let graphData
     switch (props.graphType) {
         case (LogicGraphTypes.RECORDS_PER_SEASON):
@@ -61,7 +61,7 @@ export const LogicGraph = (props: LogicGraphProps) => {
     }
 
     if (loading) return DesignLoadingPage();
-    if (error) return LogicErrorPage({ hint: "general" })
+    if (error) return LogicErrorPage({ errorMessage: "Uh no, an error has occurred :( please return to homepage!" })
     return DesignGraph({ data: graphData, title: title })
 
 }
