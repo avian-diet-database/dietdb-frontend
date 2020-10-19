@@ -1,10 +1,9 @@
-import { DesignDropdown } from "../design/DesignDropdown";
+import {DesignDropdown} from "../design/DesignDropdown";
 
 interface LogicDropdownProps {
-    criteriaOptions: string[]
-    onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
+  criteriaOptions: string[]
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-export const LogicDropdown = (props: LogicDropdownProps) => {
-    return DesignDropdown(props);
-}
+export const LogicDropdown =
+    (props: LogicDropdownProps) => { return DesignDropdown(props);}

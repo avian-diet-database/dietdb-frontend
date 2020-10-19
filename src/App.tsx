@@ -14,25 +14,6 @@ function App() {
    *   updateActiveItem -> func: Change the bird/prey being viewed.
    *   activePage -> string: Active page component being viewed.
    *   updateActivePage
-   *
-   *
-   *  --> LogicSearchBar: {changeActiveItem, queryType} --> DesignSearchBar: {queryMatches, queryType, onQueryInputChange}
-   *       |      queryString     |
-   *       |   updateQueryString  |
-   *       |     queryMatches     |
-   *       |  updateQueryMatches  |
-   *       |  onQueryInputChange  |
-   *       |______________________|
-   *
-   *  --> LogicItem: {activeItem}    --> DesignItem: {itemData, onFilterXChange}
-   *       |       itemData       |                           --> LogicGraph: {graphType} --> DesignGraph: {graphData, loading}
-   *       |    updateItemData    |                              |    graphData    |
-   *       |       filterX        |                              |     loading     |
-   *       |    onFilterXChange   |                              |      error      |
-   *       |______________________|                              |_________________|
-   *
-   *   --> DesignFooter: {}
-   *
    */
   const [activeItem, updateActiveItem] = useState("")
   const [itemType, updateItemType] = useState(ItemType.NA)
@@ -45,7 +26,6 @@ function App() {
             <div className="container">
               <div className="navbar-brand">
                 <div className="navbar-item">
-                  <h1 className="title" > {activeItem}{itemType === ItemType.NA ? "" : itemType === ItemType.PREDATOR ? " as Predator" : " as Prey"}</h1>
                 </div>
                 <span className="navbar-burger burger" data-target="navbarMenuHeroA">
                   <span></span>
@@ -75,6 +55,7 @@ function App() {
         </div>
         {/* Here, render the home if activeItem is "", and otherwise
           render the item page for it. */ }
+        <h1 className="title" > {itemType === ItemType.NA ? "" : itemType === ItemType.PREDATOR ? `The ${activeItem} eats:` : `The ${activeItem} is eaten by: `}</h1>
         {activeItem === ""
           ? <LogicHome activeItem={activeItem} setActiveItem={updateActiveItem} updateItemType={updateItemType} />
           : <LogicItem activeItem={activeItem} itemType={itemType} />}

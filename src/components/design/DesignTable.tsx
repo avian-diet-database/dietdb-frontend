@@ -1,7 +1,6 @@
 import React from "react";
 import { LogicErrorPage } from "../logic/LogicErrorPage";
 import { DesignDownload } from "./DesignDownload";
-import { DesignErrorPage } from "./DesignErrorPage";
 
 interface DesignTableProps {
   data: any[];
@@ -15,8 +14,13 @@ export const DesignTable = (props: DesignTableProps) => {
   }
 
   return (
-    <div>
-      <div className="box has-background-light is-scrollable has-text-dark" >
+    <div className="message is-dark">
+      <div className="message-header">
+        Data
+        <DesignDownload csvData={downloadData(props.data)} fileName={"avianDietTable"} />
+      </div>
+      <div className="message-body has-background-light">
+      <div className="has-background-light is-scrollable has-text-dark" >
         <table className="table is-fullwidth has-background-light has-text-dark" >
           <thead>
             <tr>
@@ -40,7 +44,7 @@ export const DesignTable = (props: DesignTableProps) => {
         </table>
       </div>
       <div>
-        <DesignDownload csvData={downloadData(props.data)} fileName={"avianDietTable"} />
+      </div>
       </div>
     </div>
   );
