@@ -1,14 +1,9 @@
-import React, { useState } from "react";
-import { LogicHome } from "./components/logic/LogicHome"
-import { LogicFooter } from "./components/logic/LogicFooter";
-import { LogicItem } from "./components/logic/LogicItem";
+import React, {useState } from "react";
+import{LogicHome} from "./components/logic/LogicHome";
+import{LogicFooter} from "./components/logic/LogicFooter";
+import{LogicItem} from "./components/logic/LogicItem";
 
-export enum ItemType {
-  PREY,
-  PREDATOR,
-  NA
-}
-function App() {
+export enum ItemType { PREY, PREDATOR, NA } function App() {
   /* App state needed:
    *   activeItem -> string: Active bird/prey being viewed.
    *   updateActiveItem -> func: Change the bird/prey being viewed.
@@ -55,7 +50,6 @@ function App() {
         </div>
         {/* Here, render the home if activeItem is "", and otherwise
           render the item page for it. */ }
-        <h1 className="title" > {itemType === ItemType.NA ? "" : itemType === ItemType.PREDATOR ? `The ${activeItem} eats:` : `The ${activeItem} is eaten by: `}</h1>
         {activeItem === ""
           ? <LogicHome activeItem={activeItem} setActiveItem={updateActiveItem} updateItemType={updateItemType} />
           : <LogicItem activeItem={activeItem} itemType={itemType} />}
