@@ -9,6 +9,7 @@ import { ItemType } from "../../App"
 import { LogicButton } from "../logic/LogicButton";
 import { LogicHome } from "../logic/LogicHome";
 import { DesignDownload } from "./DesignDownload";
+import { DesignMap } from "./DesignMap";
 export interface DesignItemProps {
   activeItem: string
   itemType: ItemType
