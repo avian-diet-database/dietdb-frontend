@@ -139,9 +139,12 @@ export function useMetrics(): [CriteriaState, React.Dispatch<string>, string[]] 
 }
 
 export function useLevel(): [CriteriaState, React.Dispatch<string>, string[]] {
-    const options = ["Scientific_Name", "Suborder", "Order", "Kingdom", "Phylum", "Class", "Family", "Genus", "Species"];
+    const options = ["Suborder", "Order", "Kingdom", "Phylum", "Class", "Family", "Genus", "Species"];
     function reducer(state: CriteriaState, action: string) {
         if (options.includes(action)) {
+            if (action === "Species") {
+                return { type: action, value: "scientific_name" }
+            }
             return { type: action, value: action.toLowerCase() }
         } else {
             return state

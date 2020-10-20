@@ -9,8 +9,8 @@ interface DesignDownloadProps {
 export const DesignDownload = (props: DesignDownloadProps) => {
     return (
         <div className="field">
-            <button className="button">
-                <CSVLink className="has-text-primary"data={props.csvData} filename={"avianDietTable.csv"}>Download Query Table</CSVLink>
+            <button className="button is-dark is-inverted">
+                <CSVLink style={{textDecoration: 'none'}} data={props.csvData} filename={"avianDietTable.csv"}>Download Query Table</CSVLink>
             </button>
         </div>
     )

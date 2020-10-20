@@ -1,39 +1,22 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import { LogicHome } from "./components/logic/LogicHome"
 import { LogicFooter } from "./components/logic/LogicFooter";
 import { LogicItem } from "./components/logic/LogicItem";
 import { DesignMap } from "./components/design/DesignMap";
+=======
+import React, {useState } from "react";
+import{LogicHome} from "./components/logic/LogicHome";
+import{LogicFooter} from "./components/logic/LogicFooter";
+import{LogicItem} from "./components/logic/LogicItem";
+>>>>>>> d461563f7016192674dc6a957f904a3c255396d2
 
-export enum ItemType {
-  PREY,
-  PREDATOR,
-  NA
-}
-function App() {
+export enum ItemType { PREY, PREDATOR, NA } function App() {
   /* App state needed:
    *   activeItem -> string: Active bird/prey being viewed.
    *   updateActiveItem -> func: Change the bird/prey being viewed.
    *   activePage -> string: Active page component being viewed.
    *   updateActivePage
-   *
-   *
-   *  --> LogicSearchBar: {changeActiveItem, queryType} --> DesignSearchBar: {queryMatches, queryType, onQueryInputChange}
-   *       |      queryString     |
-   *       |   updateQueryString  |
-   *       |     queryMatches     |
-   *       |  updateQueryMatches  |
-   *       |  onQueryInputChange  |
-   *       |______________________|
-   *
-   *  --> LogicItem: {activeItem}    --> DesignItem: {itemData, onFilterXChange}
-   *       |       itemData       |                           --> LogicGraph: {graphType} --> DesignGraph: {graphData, loading}
-   *       |    updateItemData    |                              |    graphData    |
-   *       |       filterX        |                              |     loading     |
-   *       |    onFilterXChange   |                              |      error      |
-   *       |______________________|                              |_________________|
-   *
-   *   --> DesignFooter: {}
-   *
    */
   const [activeItem, updateActiveItem] = useState("")
   const [itemType, updateItemType] = useState(ItemType.NA)
@@ -46,7 +29,6 @@ function App() {
             <div className="container">
               <div className="navbar-brand">
                 <div className="navbar-item">
-                  <h1 className="title" > {activeItem}{itemType === ItemType.NA ? "" : itemType === ItemType.PREDATOR ? " as Predator" : " as Prey"}</h1>
                 </div>
                 <span className="navbar-burger burger" data-target="navbarMenuHeroA">
                   <span></span>
