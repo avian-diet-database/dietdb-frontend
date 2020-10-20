@@ -107,3 +107,18 @@ export const GET_NUM_RECORDS_AND_STUDIES = gql`
     }
   }
 `;
+export const GET_MAP_DATA = gql`
+  query(
+    $name: String!
+    $metrics: String
+    $startYear: String
+    $endYear: String
+    $seasons: String
+    $region: String
+  ) {
+    getMapData(predatorName: $name, dietType: $metrics, startYear: $startYear, endYear: $endYear, season: $seasons, region: $region) {
+	    region
+	    count
+    }
+  }
+`;

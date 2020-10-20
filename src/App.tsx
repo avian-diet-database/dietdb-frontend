@@ -1,15 +1,7 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-import { LogicHome } from "./components/logic/LogicHome"
-import { LogicFooter } from "./components/logic/LogicFooter";
-import { LogicItem } from "./components/logic/LogicItem";
-import { DesignMap } from "./components/design/DesignMap";
-=======
 import React, {useState } from "react";
 import{LogicHome} from "./components/logic/LogicHome";
 import{LogicFooter} from "./components/logic/LogicFooter";
 import{LogicItem} from "./components/logic/LogicItem";
->>>>>>> d461563f7016192674dc6a957f904a3c255396d2
 
 export enum ItemType { PREY, PREDATOR, NA } function App() {
   /* App state needed:

@@ -2,7 +2,7 @@ import React from 'react';
 import USAMap from "react-usa-map";
 
 interface DesignMapProps {
-    activeItem:string;
+    data:any[]
 }
 
 export const numToColor = (count:number) => {
@@ -60,7 +60,6 @@ export const DesignMap = (props:DesignMapProps) => {
         <div className="App">
             <p className="is-size-3">
                 Number of Studies Per State
-                {props.activeItem}
             </p>
             <USAMap customize={customConfig()}/>
         </div>
