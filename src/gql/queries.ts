@@ -66,16 +66,48 @@ export const GET_AUTOCOMPLETE_PRED = gql`
   }
 `;
 export const RECORDS_PER_SEASON = gql`
-  query($name: String!) {
-    getRecordsPerSeason(name: $name) {
+  query(
+    $name: String!
+    $level: String
+    $metrics: String
+    $startYear: String
+    $endYear: String
+    $season: String
+    $region: String
+) {
+    getRecordsPerSeason(
+      predatorName: $name
+      preyLevel: $level
+      dietType: $metrics
+      startYear: $startYear
+      endYear: $endYear
+      season: $season
+      region: $region
+) {
       x
       y
     }
   }
 `;
 export const RECORDS_PER_DIET_TYPE = gql`
-  query($name: String!) {
-    getRecordsPerDietType(name: $name) {
+  query(
+    $name: String!
+    $level: String
+    $metrics: String
+    $startYear: String
+    $endYear: String
+    $season: String
+    $region: String
+) {
+    getRecordsPerDietType(
+      predatorName: $name
+      preyLevel: $level
+      dietType: $metrics
+      startYear: $startYear
+      endYear: $endYear
+      season: $season
+      region: $region
+) {
       x
       y
     }
@@ -116,9 +148,16 @@ export const GET_MAP_DATA = gql`
     $seasons: String
     $region: String
   ) {
-    getMapData(predatorName: $name, dietType: $metrics, startYear: $startYear, endYear: $endYear, season: $seasons, region: $region) {
-	    region
-	    count
+    getMapData(
+      predatorName: $name
+      dietType: $metrics
+      startYear: $startYear
+      endYear: $endYear
+      season: $seasons
+      region: $region
+    ) {
+      region
+      count
     }
   }
 `;
