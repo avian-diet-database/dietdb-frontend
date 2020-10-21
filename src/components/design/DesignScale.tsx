@@ -1,13 +1,19 @@
-import React from "react"
-import {ContinuousColorLegend} from 'react-vis';
+import React from "react";
+import { ContinuousColorLegend } from "react-vis";
+import "../../../node_modules/react-vis/dist/style.css";
 
-export interface DesignScaleProps {
-}
+export interface DesignScaleProps {}
 
 export const DesignScale = () => {
-    return (
-    <div className="">
-        <ContinuousColorLegend startTitle={"0 record"} midTitle={"35 records"} endTitle={"70 records"}startColor={"white"} midColor={"ffae1a"} endColor={"#b15900"} width={100} height = {100}/>
-    </div>
-    )
-}
+  return (
+    <ContinuousColorLegend
+      width={300}
+      startTitle={"0"}
+      midTitle={"35"}
+      endTitle={"70"}
+      startColor={"#ffffff"}
+      endColor={"#b15900"}
+    />
+  );
+};
+
