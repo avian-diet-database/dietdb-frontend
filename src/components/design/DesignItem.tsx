@@ -11,6 +11,7 @@ import { LogicHome } from "../logic/LogicHome";
 import { DesignDownload } from "./DesignDownload";
 import { DesignMap } from "./DesignMap";
 import { LogicMap } from "../logic/LogicMap";
+import { DesignScale } from "./DesignScale";
 export interface DesignItemProps {
   activeItem: string
   itemType: ItemType
