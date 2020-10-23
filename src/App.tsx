@@ -64,7 +64,6 @@ function App() {
             </div>
           </nav>
         </div>
-        {activeItem}
         {/* Here, render the home if activeItem is "", and otherwise
           render the item page for it. */}
         {activeItem === "" ? (
