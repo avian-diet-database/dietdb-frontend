@@ -17,6 +17,7 @@ export interface DesignItemProps {
 
 // Note: these columns are lazy and unfriendly to mobile.
 export const DesignItem = (props: DesignItemProps) => {
+  let isPredator = props.itemType == ItemType.PREDATOR;
   return (
     <div className="hero-body">
       <div className="section">
@@ -28,21 +29,25 @@ export const DesignItem = (props: DesignItemProps) => {
               </div>
             </div>
             <LogicCriteria controller={props.controller} />
-            <LogicGraph
-              graphType={LogicGraphTypes.RECORDS_PER_SEASON}
-              activeItem={props.activeItem}
-              controller={props.controller}
-            />
-            <LogicGraph
-              graphType={LogicGraphTypes.RECORDS_PER_DECADE}
-              activeItem={props.activeItem}
-              controller={props.controller}
-            />
-            <LogicGraph
-              graphType={LogicGraphTypes.RECORDS_PER_DIET_TYPE}
-              activeItem={props.activeItem}
-              controller={props.controller}
-            />
+            {isPredator ? (
+              <div>
+                <LogicGraph
+                  graphType={LogicGraphTypes.RECORDS_PER_SEASON}
+                  activeItem={props.activeItem}
+                  controller={props.controller}
+                />
+                <LogicGraph
+                  graphType={LogicGraphTypes.RECORDS_PER_DECADE}
+                  activeItem={props.activeItem}
+                  controller={props.controller}
+                />
+                <LogicGraph
+                  graphType={LogicGraphTypes.RECORDS_PER_DIET_TYPE}
+                  activeItem={props.activeItem}
+                  controller={props.controller}
+                />
+              </div>
+            ) : null}
           </div>
           <div className="column is-6">
             <div className="notification is-light has-text-dark">
@@ -55,13 +60,15 @@ export const DesignItem = (props: DesignItemProps) => {
               itemType={props.itemType}
               controller={props.controller}
             />
-            <LogicSources
-              activeItem={props.activeItem}
-              itemType={props.itemType}
-            />
+            {isPredator ? (
+              <LogicSources
+                activeItem={props.activeItem}
+                itemType={props.itemType}
+              />
+            ) : null}
           </div>
         </div>
-        <LogicMap activeItem={props.activeItem} />
+        {isPredator ? <LogicMap activeItem={props.activeItem} /> : null}
       </div>
     </div>
   );

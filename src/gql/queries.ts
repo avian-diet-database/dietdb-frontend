@@ -72,18 +72,16 @@ export const RECORDS_PER_SEASON = gql`
     $metrics: String
     $startYear: String
     $endYear: String
-    $season: String
     $region: String
-) {
+  ) {
     getRecordsPerSeason(
       predatorName: $name
       preyLevel: $level
       dietType: $metrics
       startYear: $startYear
       endYear: $endYear
-      season: $season
       region: $region
-) {
+    ) {
       x
       y
     }
@@ -93,29 +91,39 @@ export const RECORDS_PER_DIET_TYPE = gql`
   query(
     $name: String!
     $level: String
-    $metrics: String
     $startYear: String
     $endYear: String
     $season: String
     $region: String
-) {
+  ) {
     getRecordsPerDietType(
       predatorName: $name
       preyLevel: $level
-      dietType: $metrics
       startYear: $startYear
       endYear: $endYear
       season: $season
       region: $region
-) {
+    ) {
       x
       y
     }
   }
 `;
 export const RECORDS_PER_DECADE = gql`
-  query($name: String!) {
-    getRecordsPerDecade(name: $name) {
+  query(
+    $name: String!
+    $level: String
+    $metrics: String
+    $season: String
+    $region: String
+  ) {
+    getRecordsPerDecade(
+      predatorName: $name
+      preyLevel: $level
+      dietType: $metrics
+      season: $season
+      region: $region
+    ) {
       x
       y
     }

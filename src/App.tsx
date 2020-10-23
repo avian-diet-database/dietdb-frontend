@@ -50,8 +50,6 @@ function App() {
                   >
                     Home
                   </a>
-                  <a className="navbar-item">Examples</a>
-                  <a className="navbar-item">Documentation</a>
                   <span className="navbar-item">
                     <a
                       href="https://github.com/hurlbertlab/dietdatabase"

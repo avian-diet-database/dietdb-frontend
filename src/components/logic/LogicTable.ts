@@ -5,7 +5,9 @@ import { useQuery } from "@apollo/client";
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { ItemType } from "../../App";
 import { LogicErrorPage } from "./LogicErrorPage";
-
+import { useTable, TableSort, TableActionType } from "./TableSorting";
+import { TableController } from "../../types/TableController";
+import { useEffect } from "react";
 
 interface LogicTableProps {
   controller: CriteriaController;
@@ -31,11 +33,70 @@ export const LogicTable = (props: LogicTableProps) => {
 
   const { loading, error, data } = useQuery(query, options);
 
-  //Pass the data to the design.
-  if (loading) return DesignLoadingPage()
-  if (error) return LogicErrorPage({ errorMessage: "Uh no, an error has occurred :( please return to homepage!" })
-  const arr =
-    props.itemType === ItemType.PREDATOR ? data.getPreyOf : data.getPredatorOf;
-  return DesignTable({ data: arr });
-};
+  const [tableData, dispatchTableAction] = useTable([]);
 
+  useEffect(() => {
+    if (data) {
+      const arr =
+        props.itemType === ItemType.PREDATOR
+          ? data.getPreyOf
+          : data.getPredatorOf;
+      dispatchTableAction({ type: TableActionType.UPDTE, payload: arr });
+    }
+  }, [data]);
+
+  //Pass the data to the design.
+  if (loading) return DesignLoadingPage();
+  if (error)
+    return LogicErrorPage({
+      errorMessage:
+        "Uh no, an error has occurred :( please return to homepage!",
+    });
+
+  // Need to initialize the array but updating hte payload here creates an inf loop
+  const controller: TableController = {
+    handleTaxonClick: () => {
+      tableData.sort === TableSort.TAXON
+        ? dispatchTableAction({
+            type: TableActionType.TOGGLEDIR,
+            payload: null,
+          })
+        : dispatchTableAction({ type: TableActionType.TAXON, payload: null });
+    },
+    handleItemsClick: () => {
+      tableData.sort === TableSort.ITEMS
+        ? dispatchTableAction({
+            type: TableActionType.TOGGLEDIR,
+            payload: null,
+          })
+        : dispatchTableAction({ type: TableActionType.ITEMS, payload: null });
+    },
+    handleWtVolClick: () => {
+      tableData.sort === TableSort.WTVOL
+        ? dispatchTableAction({
+            type: TableActionType.TOGGLEDIR,
+            payload: null,
+          })
+        : dispatchTableAction({ type: TableActionType.WTVOL, payload: null });
+    },
+    handleOccurClick: () => {
+      console.log("handling occurr click");
+      tableData.sort === TableSort.OCCUR
+        ? dispatchTableAction({
+            type: TableActionType.TOGGLEDIR,
+            payload: null,
+          })
+        : dispatchTableAction({ type: TableActionType.OCCUR, payload: null });
+    },
+    handleUnspcClick: () => {
+      tableData.sort === TableSort.UNSPC
+        ? dispatchTableAction({
+            type: TableActionType.TOGGLEDIR,
+            payload: null,
+          })
+        : dispatchTableAction({ type: TableActionType.UNSPC, payload: null });
+    },
+  };
+
+  return DesignTable({ data: tableData.rows, controller });
+};
