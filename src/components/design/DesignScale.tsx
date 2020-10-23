@@ -8,9 +8,9 @@ export const DesignScale = () => {
   return (
     <ContinuousColorLegend
       width={300}
-      startTitle={"0"}
-      midTitle={"35"}
-      endTitle={"70"}
+      startTitle={"0 Studies"}
+      midTitle={"35 Studies"}
+      endTitle={"70+ Studies"}
       startColor={"#ffffff"}
       endColor={"#b15900"}
     />
