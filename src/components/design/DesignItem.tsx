@@ -21,13 +21,13 @@ export const DesignItem = (props: DesignItemProps) => {
   return (
     <div className="hero-body">
       <div className="section">
+        <div className="notification is-light has-text-dark">
+          <div className="content has-text-centered is-size-2">
+            {props.numRecords} records from {props.numStudies} total studies
+          </div>
+        </div>
         <div className="columns">
           <div className="column is-6">
-            <div className="notification is-light has-text-dark">
-              <div className="content has-text-centered is-size-2">
-                {props.numStudies} total studies
-              </div>
-            </div>
             <LogicCriteria controller={props.controller} />
             {isPredator ? (
               <div>
@@ -50,11 +50,6 @@ export const DesignItem = (props: DesignItemProps) => {
             ) : null}
           </div>
           <div className="column is-6">
-            <div className="notification is-light has-text-dark">
-              <div className="content has-text-centered is-size-2">
-                {props.numRecords} total records
-              </div>
-            </div>
             <LogicTable
               activeItem={props.activeItem}
               itemType={props.itemType}
