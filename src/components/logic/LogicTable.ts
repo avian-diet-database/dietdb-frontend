@@ -98,5 +98,16 @@ export const LogicTable = (props: LogicTableProps) => {
     },
   };
 
-  return DesignTable({ data: tableData.rows, controller });
+  let arr = tableData.rows.map((prey: any) => {
+    let items = prey.items === null ? null : prey.items.substring(0, 4) + "%";
+    let wt_or_vol =
+      prey.wt_or_vol === null ? null : prey.wt_or_vol.substring(0, 4) + "%";
+    let unspecified =
+      prey.unspecified === null ? null : prey.unspecified.substring(0, 4) + "%";
+    let occurrence =
+      prey.occurrence === null ? null : prey.occurrence.substring(0, 4) + "%";
+    return { ...prey, items, wt_or_vol, occurrence, unspecified };
+  });
+
+  return DesignTable({ data: arr, controller });
 };
