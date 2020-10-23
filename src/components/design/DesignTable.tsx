@@ -35,7 +35,7 @@ export const DesignTable = (props: DesignTableProps) => {
               <tr>
                 <th>
                   <button
-                    className="button is-primary"
+                    className="button is-dark is-inverted"
                     onClick={props.controller.handleItemsClick}
                   >
                     <span>Item</span>
@@ -46,7 +46,7 @@ export const DesignTable = (props: DesignTableProps) => {
                 </th>
                 <th>
                   <button
-                    className="button is-primary"
+                    className="button is-dark is-inverted"
                     onClick={props.controller.handleTaxonClick}
                   >
                     <span>Taxon</span>
@@ -57,7 +57,7 @@ export const DesignTable = (props: DesignTableProps) => {
                 </th>
                 <th>
                   <button
-                    className="button is-primary"
+                    className="button is-dark is-inverted"
                     onClick={props.controller.handleWtVolClick}
                   >
                     <span>Weight/Volume</span>
@@ -68,7 +68,7 @@ export const DesignTable = (props: DesignTableProps) => {
                 </th>
                 <th>
                   <button
-                    className="button is-primary"
+                    className="button is-dark is-inverted"
                     onClick={props.controller.handleOccurClick}
                   >
                     <span>Occurrence</span>
@@ -79,7 +79,7 @@ export const DesignTable = (props: DesignTableProps) => {
                 </th>
                 <th>
                   <button
-                    className="button is-primary"
+                    className="button is-dark is-inverted"
                     onClick={props.controller.handleUnspcClick}
                   >
                     <span>Unspecified</span>
