@@ -29,6 +29,13 @@ export const DesignItem = (props: DesignItemProps) => {
         <div className="columns">
           <div className="column is-6">
             <LogicCriteria controller={props.controller} />
+            <LogicTable
+              activeItem={props.activeItem}
+              itemType={props.itemType}
+              controller={props.controller}
+            />
+          </div>
+          <div className="column is-6">
             {isPredator ? (
               <div>
                 <LogicGraph
@@ -49,21 +56,17 @@ export const DesignItem = (props: DesignItemProps) => {
               </div>
             ) : null}
           </div>
-          <div className="column is-6">
-            <LogicTable
+        </div>
+        {isPredator ? (
+          <div>
+            {" "}
+            <LogicMap activeItem={props.activeItem} />
+            <LogicSources
               activeItem={props.activeItem}
               itemType={props.itemType}
-              controller={props.controller}
             />
-            {isPredator ? (
-              <LogicSources
-                activeItem={props.activeItem}
-                itemType={props.itemType}
-              />
-            ) : null}
           </div>
-        </div>
-        {isPredator ? <LogicMap activeItem={props.activeItem} /> : null}
+        ) : null}
       </div>
     </div>
   );
