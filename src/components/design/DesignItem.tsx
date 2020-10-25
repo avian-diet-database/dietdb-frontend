@@ -51,22 +51,27 @@ export const DesignItem = (props: DesignItemProps) => {
           </div>
           <div className="column is-6">
             {isPredator ? (
-              <div>
-                <LogicGraph
-                  graphType={LogicGraphTypes.RECORDS_PER_SEASON}
-                  activeItem={props.activeItem}
-                  controller={props.controller}
-                />
-                <LogicGraph
-                  graphType={LogicGraphTypes.RECORDS_PER_DECADE}
-                  activeItem={props.activeItem}
-                  controller={props.controller}
-                />
-                <LogicGraph
-                  graphType={LogicGraphTypes.RECORDS_PER_DIET_TYPE}
-                  activeItem={props.activeItem}
-                  controller={props.controller}
-                />
+              <div className="columns">
+                <div className="column">
+                  <LogicGraph
+                    graphType={LogicGraphTypes.RECORDS_PER_SEASON}
+                    activeItem={props.activeItem}
+                    controller={props.controller}
+                  />
+                  <LogicGraph
+                    graphType={LogicGraphTypes.RECORDS_PER_DECADE}
+                    activeItem={props.activeItem}
+                    controller={props.controller}
+                  />
+                </div>
+                <div className="column">
+                  <LogicGraph
+                    graphType={LogicGraphTypes.RECORDS_PER_DIET_TYPE}
+                    activeItem={props.activeItem}
+                    controller={props.controller}
+                  />
+                  <LogicMap activeItem={props.activeItem} />
+                </div>
               </div>
             ) : null}
           </div>
@@ -74,7 +79,6 @@ export const DesignItem = (props: DesignItemProps) => {
         {isPredator ? (
           <div>
             {" "}
-            <LogicMap activeItem={props.activeItem} />
             <LogicSources
               activeItem={props.activeItem}
               itemType={props.itemType}
