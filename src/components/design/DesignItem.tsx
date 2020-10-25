@@ -7,12 +7,15 @@ import { LogicGraph, LogicGraphTypes } from "../logic/LogicGraph";
 import { LogicSources } from "../logic/LogicSources";
 import { ItemType } from "../../App";
 import { LogicMap } from "../logic/LogicMap";
+import { LogicSearchBar } from "../logic/LogicSearchBar";
 export interface DesignItemProps {
   activeItem: string;
   itemType: ItemType;
   numStudies: number;
   numRecords: number;
   controller: CriteriaController;
+  updateActiveItem: React.Dispatch<React.SetStateAction<string>>;
+  updateItemType: React.Dispatch<React.SetStateAction<ItemType>>;
 }
 
 // Note: these columns are lazy and unfriendly to mobile.
@@ -21,6 +24,17 @@ export const DesignItem = (props: DesignItemProps) => {
   return (
     <div className="hero-body">
       <div className="section">
+        <div className="container has-text-centerd">
+          <LogicSearchBar
+            queryType={props.itemType}
+            activeItem={props.activeItem}
+            updateActiveItem={props.updateActiveItem}
+            updateItemType={props.updateItemType}
+            placeholder={props.activeItem}
+            left="The "
+            right=" eats..."
+          />
+        </div>
         <div className="notification is-light has-text-dark">
           <div className="content has-text-centered is-size-2">
             {props.numRecords} records from {props.numStudies} total studies

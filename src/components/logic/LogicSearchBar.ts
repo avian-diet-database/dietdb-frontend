@@ -1,34 +1,41 @@
 import { DesignSearchBar } from "../design/DesignSearchBar";
-import { ItemType } from "../../App"
-import { useAutocomplete } from "./AutocompleteHook"
+import { ItemType } from "../../App";
+import { useAutocomplete } from "./AutocompleteHook";
 
 export interface LogicSearchBarProps {
   // In test cases, fruit/vegetable.
-  queryType: ItemType
+  queryType: ItemType;
   // A callback for updating the selected item.
-  updateActiveItem: React.Dispatch<React.SetStateAction<string>>
+  updateActiveItem: React.Dispatch<React.SetStateAction<string>>;
   // The active item.
-  activeItem: string
+  activeItem: string;
   // Dispatcher for active item type.
-  updateItemType: React.Dispatch<React.SetStateAction<ItemType>>
+  updateItemType: React.Dispatch<React.SetStateAction<ItemType>>;
   // Placeholder for input
-  placeholder: string
+  placeholder: string;
+
+  left: string;
+  right: string;
 }
 
 export const LogicSearchBar = (props: LogicSearchBarProps) => {
-
-  const [queryMatches, updateQueryString] = useAutocomplete(props.queryType)
+  const [queryMatches, updateQueryString] = useAutocomplete(props.queryType);
 
   // --- UPDATE HANDLERS --- //
   // When the user changes their query, update the query string.
   const onQueryInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    updateQueryString(event.target.value)
+    updateQueryString(event.target.value);
   };
 
-  const onItemSelect = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    props.updateActiveItem(() => { return event.currentTarget.textContent || "" })
-    props.updateItemType(props.queryType)
-  }
+  const onItemSelect = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    props.updateActiveItem(() => {
+      return event.currentTarget.textContent || "";
+    });
+    props.updateItemType(props.queryType);
+    updateQueryString("");
+  };
 
   return DesignSearchBar({
     queryType: props.queryType,
@@ -36,6 +43,8 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
     queryMatches: queryMatches,
     onQueryInputChange: onQueryInputChange,
     onItemSelect: onItemSelect,
-    placeholder: props.placeholder
+    placeholder: props.placeholder,
+    left: props.left,
+    right: props.right,
   });
 };
