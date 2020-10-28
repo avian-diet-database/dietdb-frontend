@@ -7,12 +7,15 @@ import { LogicGraph, LogicGraphTypes } from "../logic/LogicGraph";
 import { LogicSources } from "../logic/LogicSources";
 import { ItemType } from "../../App";
 import { LogicMap } from "../logic/LogicMap";
+import { LogicSearchBar } from "../logic/LogicSearchBar";
 export interface DesignItemProps {
   activeItem: string;
   itemType: ItemType;
   numStudies: number;
   numRecords: number;
   controller: CriteriaController;
+  updateActiveItem: React.Dispatch<React.SetStateAction<string>>;
+  updateItemType: React.Dispatch<React.SetStateAction<ItemType>>;
 }
 
 // Note: these columns are lazy and unfriendly to mobile.
@@ -21,6 +24,17 @@ export const DesignItem = (props: DesignItemProps) => {
   return (
     <div className="hero-body">
       <div className="section">
+        <div className="container has-text-centerd">
+          <LogicSearchBar
+            queryType={props.itemType}
+            activeItem={props.activeItem}
+            updateActiveItem={props.updateActiveItem}
+            updateItemType={props.updateItemType}
+            placeholder={props.activeItem}
+            left="The "
+            right=" eats..."
+          />
+        </div>
         <div className="notification is-light has-text-dark">
           <div className="content has-text-centered is-size-2">
             {props.numRecords} records from {props.numStudies} total studies
@@ -37,22 +51,27 @@ export const DesignItem = (props: DesignItemProps) => {
           </div>
           <div className="column is-6">
             {isPredator ? (
-              <div>
-                <LogicGraph
-                  graphType={LogicGraphTypes.RECORDS_PER_SEASON}
-                  activeItem={props.activeItem}
-                  controller={props.controller}
-                />
-                <LogicGraph
-                  graphType={LogicGraphTypes.RECORDS_PER_DECADE}
-                  activeItem={props.activeItem}
-                  controller={props.controller}
-                />
-                <LogicGraph
-                  graphType={LogicGraphTypes.RECORDS_PER_DIET_TYPE}
-                  activeItem={props.activeItem}
-                  controller={props.controller}
-                />
+              <div className="columns">
+                <div className="column">
+                  <LogicGraph
+                    graphType={LogicGraphTypes.RECORDS_PER_SEASON}
+                    activeItem={props.activeItem}
+                    controller={props.controller}
+                  />
+                  <LogicGraph
+                    graphType={LogicGraphTypes.RECORDS_PER_DECADE}
+                    activeItem={props.activeItem}
+                    controller={props.controller}
+                  />
+                </div>
+                <div className="column">
+                  <LogicGraph
+                    graphType={LogicGraphTypes.RECORDS_PER_DIET_TYPE}
+                    activeItem={props.activeItem}
+                    controller={props.controller}
+                  />
+                  <LogicMap activeItem={props.activeItem} />
+                </div>
               </div>
             ) : null}
           </div>
@@ -60,7 +79,6 @@ export const DesignItem = (props: DesignItemProps) => {
         {isPredator ? (
           <div>
             {" "}
-            <LogicMap activeItem={props.activeItem} />
             <LogicSources
               activeItem={props.activeItem}
               itemType={props.itemType}

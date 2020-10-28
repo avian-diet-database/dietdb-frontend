@@ -69,11 +69,16 @@ function App() {
         {activeItem === "" ? (
           <LogicHome
             activeItem={activeItem}
-            setActiveItem={updateActiveItem}
+            updateActiveItem={updateActiveItem}
             updateItemType={updateItemType}
           />
         ) : (
-          <LogicItem activeItem={activeItem} itemType={itemType} />
+          <LogicItem
+            activeItem={activeItem}
+            itemType={itemType}
+            updateActiveItem={updateActiveItem}
+            updateItemType={updateItemType}
+          />
         )}
       </section>
       <LogicFooter />

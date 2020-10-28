@@ -7,13 +7,11 @@ export interface DesignScaleProps {}
 export const DesignScale = () => {
   return (
     <ContinuousColorLegend
-      width={300}
+      width={200}
       startTitle={"0 Studies"}
-      midTitle={"35 Studies"}
       endTitle={"70+ Studies"}
       startColor={"#ffffff"}
       endColor={"#b15900"}
     />
   );
 };
-
