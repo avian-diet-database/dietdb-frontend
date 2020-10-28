@@ -17,12 +17,8 @@
     "d3": "^6.2.0",
     "d3-svg-legend": "^2.25.6",
     "graphql": "^15.3.0",
-<<<<<<< HEAD
     "rainbowvis.js": "^1.0.1",
-    "react": "^16.13.1",
-=======
     "react": "^16.14.0",
->>>>>>> a08b30753032bd143c5086d4701354420a9809d3
     "react-color-bar": "^0.1.2",
     "react-csv": "^2.0.3",
     "react-debounce-input": "^3.2.2",
