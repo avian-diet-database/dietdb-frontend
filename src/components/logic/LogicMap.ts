@@ -1,12 +1,16 @@
 import { DesignMap } from "../design/DesignMap";
-import { GET_MAP_DATA} from "../../gql/queries";
+import { GET_MAP_DATA } from "../../gql/queries";
 import { useQuery } from "@apollo/client";
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { LogicErrorPage } from "./LogicErrorPage";
 
 interface LogicMapProps {
-    activeItem:string;
+    activeItem: string;
 }
+
+let Rainbow = require('rainbowvis.js');
+let colorScale = new Rainbow();
+colorScale.setSpectrum('#ffffff', '#b15900');
 
 let stateNames = new Map();
 
@@ -62,25 +66,7 @@ stateNames.set("Wisconsin", "WI");
 stateNames.set("Wyoming", "WY");
 
 export const numToColor = (count: number) => {
-  if (count <= 0) {
-    return "white";
-  } else if (count <= 10) {
-    return "#ffc04d";
-  } else if (count <= 20) {
-    return "#ffb733";
-  } else if (count <= 30) {
-    return "#ffae1a";
-  } else if (count <= 40) {
-    return "#ffa500";
-  } else if (count <= 50) {
-    return "#e69500";
-  } else if (count <= 60) {
-    return "#cc8400";
-  } else if (count <= 70) {
-    return "#b37400";
-  } else {
-    return "#b15900";
-  }
+    return ("#" + colorScale.colourAt(count) + "");
 };
 
 let customFill: { [k: string]: any } = {};
@@ -97,27 +83,27 @@ export const LogicMap = (props: LogicMapProps) => {
 
     const { loading, error, data } = useQuery(query, options);
     if (loading) return DesignLoadingPage()
-    if (error) return LogicErrorPage({ errorMessage: "Uh no, an error has occurred :( please return to homepage!"  + error.message})
+    if (error) return LogicErrorPage({ errorMessage: "Uh no, an error has occurred :( please return to homepage!" + error.message })
     const arr = data.getMapData;
 
-    return createMap( arr );
+    return createMap(arr);
 }
 
-export const createMap = (data:any[]) => {
-  let region = "";
-  let regionColor = "";
-  for (let entry of data) {
-    region = entry.region;
-    if (!stateNames.has(region)) {
-      continue;
-    }
-    region = stateNames.get(region);
-    regionColor = numToColor(entry.count);
-    customFill[region] = { fill: regionColor };
+export const createMap = (data: any[]) => {
+    let region = "";
+    let regionColor = "";
+    for (let entry of data) {
+        region = entry.region;
+        if (!stateNames.has(region)) {
+            continue;
+        }
+        region = stateNames.get(region);
+        regionColor = numToColor(entry.count);
+        customFill[region] = { fill: regionColor };
     }
     let customConfig = () => {
         return customFill;
     };
 
-    return DesignMap({customFill:customConfig()});
+    return DesignMap({ customFill: customConfig() });
 }
