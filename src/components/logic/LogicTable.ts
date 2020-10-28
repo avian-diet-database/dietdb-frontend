@@ -109,5 +109,7 @@ export const LogicTable = (props: LogicTableProps) => {
     return { ...prey, items, wt_or_vol, occurrence, unspecified };
   });
 
-  return DesignTable({ data: arr, controller });
+  let activeItem = props.activeItem;
+
+  return DesignTable({ data: arr, controller, activeItem, options} );
 };

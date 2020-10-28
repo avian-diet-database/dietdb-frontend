@@ -6,6 +6,18 @@ import { TableController } from "../../types/TableController";
 interface DesignTableProps {
   data: any[];
   controller: TableController;
+  activeItem:string;
+  options:{
+    variables:{
+      name: string
+      startYear: string
+      endYear: string
+      season: string
+      region: string
+      metrics: string
+      level: string
+    }
+  }
 }
 
 export const DesignTable = (props: DesignTableProps) => {
@@ -79,12 +91,21 @@ export const DesignTable = (props: DesignTableProps) => {
     </tr>
   );
 
+  let metadata = ["Species: " + props.activeItem,
+  "Region: " + props.options.variables.region,
+  "Season: " + props.options.variables.season,
+  "startYear: " + props.options.variables.startYear,
+  "endYear: " + props.options.variables.endYear,
+  "Metrics: " + props.options.variables.metrics,
+  "Level: " + props.options.variables.level,
+  "Table Timestamp: " + new Date()];
+
   return (
     <div className="message is-dark">
       <div className="message-header">
         Data
         <DesignDownload
-          csvData={downloadData(props.data)}
+          csvData={downloadData(props.data, metadata)}
           fileName={"avianDietTable"}
         />
       </div>
@@ -114,10 +135,14 @@ export const DesignTable = (props: DesignTableProps) => {
   );
 };
 
-let downloadData = (preyData: any[]) => {
+
+
+let downloadData = (preyData: any[], metadata: any[]) => {
   let resData = [];
   let headers = [];
   headers = Object.keys(preyData[0]);
+  resData.push(metadata)
+  resData.push([]);
   resData.push(headers);
   let body = [];
   for (let item of preyData) {
