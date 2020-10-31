@@ -1,4 +1,4 @@
-import { useReducer, Dispatch } from "react";
+import { useReducer } from "react";
 import { Prey } from "../../types/Prey";
 
 export enum TableSort {
@@ -90,7 +90,7 @@ export const useTable = (
     if (action.type === TableActionType.UPDTE)
       data = {
         sort: state.sort,
-        rows: action.payload,
+        rows: sortByType(action.payload, state.sort, state.direction),
         direction: state.direction,
       };
     if (action.type === TableActionType.TOGGLEDIR)
@@ -105,10 +105,10 @@ export const useTable = (
 
   const initialState: TableState = {
     rows: data,
-    sort: TableSort.TAXON,
+    sort: TableSort.ITEMS,
     direction: TableDirection.DESCENDING,
   };
-  // This is being initialized with an empty array.
+  // This is being initialized with an empty array. No point in sending an initializer
   const [state, dispatch] = useReducer(tableReducer, initialState);
   return [state, dispatch];
 };
