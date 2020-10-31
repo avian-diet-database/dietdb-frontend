@@ -17,6 +17,7 @@ interface DesignCriteriaProps {
 }
 
 export const DesignCriteria = (props: DesignCriteriaProps) => {
+
     return (
         <div className="box has-background-light">
             <div className="content has-text-dark has-text-centered is-size-4">

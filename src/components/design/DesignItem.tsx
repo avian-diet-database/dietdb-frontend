@@ -40,7 +40,7 @@ export const DesignItem = (props: DesignItemProps) => {
             {props.numRecords} records from {props.numStudies} total studies
           </div>
         </div>
-        <div className="columns">
+        <div className="columns replacement">
           <div className="column is-6">
             <LogicCriteria controller={props.controller} />
             <LogicTable
