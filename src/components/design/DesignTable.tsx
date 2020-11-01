@@ -36,9 +36,9 @@ export const DesignTable = (props: DesignTableProps) => {
       <th>
         <button
           className="button is-dark is-inverted"
-          onClick={props.controller.handleItemsClick}
+          onClick={props.controller.handleTaxonClick}
         >
-          <span>Item</span>
+          <span>Taxon</span>
           <span className="icon is-small">
             <i className="fas fa-angle-down" />
           </span>
@@ -47,9 +47,9 @@ export const DesignTable = (props: DesignTableProps) => {
       <th>
         <button
           className="button is-dark is-inverted"
-          onClick={props.controller.handleTaxonClick}
+          onClick={props.controller.handleItemsClick}
         >
-          <span>Taxon</span>
+          <span>Item</span>
           <span className="icon is-small">
             <i className="fas fa-angle-down" />
           </span>
@@ -121,6 +121,13 @@ export const DesignTable = (props: DesignTableProps) => {
                   <tr key={props.data.indexOf(item)}>
                     {Object.keys(item)
                       .filter((val) => val != "__typename")
+                      .filter((val) => val == "taxon")
+                      .map((datum) => {
+                        return <td key={datum}>{item[datum]}</td>;
+                      })}
+                    {Object.keys(item)
+                      .filter((val) => val != "__typename")
+                      .filter((val) => val != "taxon")
                       .map((datum) => {
                         return <td key={datum}>{item[datum]}</td>;
                       })}
