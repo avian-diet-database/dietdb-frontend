@@ -14,4 +14,19 @@ export interface TableController {
   handleUnspcClick: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
+  handleCommonNameClick: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
+  handleMetricsClick: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
+  handleFractionDietClick: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
+  handleFamilyClick: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
+  handleNumberOfStudiesClick: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
 }

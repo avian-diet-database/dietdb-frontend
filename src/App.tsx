@@ -42,10 +42,35 @@ function App() {
                   <a
                     onClick={() => {
                       updateActiveItem("");
+                      updateItemType(ItemType.PREDATOR);
+                    }}
+                    className={
+                      "navbar-item " +
+                      (itemType === ItemType.PREDATOR ? "is-active" : "")
+                    }
+                  >
+                    Predator
+                  </a>
+                  <a
+                    onClick={() => {
+                      updateActiveItem("");
+                      updateItemType(ItemType.PREY);
+                    }}
+                    className={
+                      "navbar-item " +
+                      (itemType === ItemType.PREY ? "is-active" : "")
+                    }
+                  >
+                    Prey
+                  </a>
+                  <a
+                    onClick={() => {
+                      updateActiveItem("");
                       updateItemType(ItemType.NA);
                     }}
                     className={
-                      "navbar-item " + (activeItem === "" ? "is-active" : "")
+                      "navbar-item " +
+                      (itemType === ItemType.NA ? "is-active" : "")
                     }
                   >
                     Home
@@ -66,7 +91,7 @@ function App() {
         </div>
         {/* Here, render the home if activeItem is "", and otherwise
           render the item page for it. */}
-        {activeItem === "" ? (
+        {itemType === ItemType.NA ? (
           <LogicHome
             activeItem={activeItem}
             updateActiveItem={updateActiveItem}

@@ -4,6 +4,9 @@ import { GET_NUM_RECORDS_AND_STUDIES } from "../../gql/queries";
 import { CriteriaController } from "../../types/CriteriaController";
 // import { GET_PREDATOR_OF, GET_PREY_OF } from "../../gql/queries"
 // import { useQuery } from "@apollo/client"
+import { ItemType } from "../../App";
+// import { DesignLoadingPage } from "../design/DesignLoadingPage";
+// import { DesignErrorPage } from "../design/DesignErrorPage";
 import {
   useStartYear,
   useEndYear,
@@ -11,10 +14,8 @@ import {
   useSeasons,
   useMetrics,
   useLevel,
+  useStage,
 } from "./CiteriaHooks";
-import { ItemType } from "../../App";
-// import { DesignLoadingPage } from "../design/DesignLoadingPage";
-// import { DesignErrorPage } from "../design/DesignErrorPage";
 
 interface LogicItemProps {
   activeItem: string;
@@ -31,6 +32,7 @@ export const LogicItem = (props: LogicItemProps) => {
   const [region, updateRegion, regionOptions] = useRegion(props.activeItem);
   const [metrics, updateMetrics, metricsOptions] = useMetrics();
   const [level, updateLevel, levelOptions] = useLevel();
+  const [stage, updateStage, stageOptions] = useStage();
   // The CriteriaController is just a convenient container object to hold all this state.
   const controller: CriteriaController = {
     startYear,
@@ -56,6 +58,10 @@ export const LogicItem = (props: LogicItemProps) => {
     level,
     updateLevel,
     levelOptions,
+
+    stage,
+    updateStage,
+    stageOptions,
   };
 
   const itemOptions = {

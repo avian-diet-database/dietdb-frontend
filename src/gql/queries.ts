@@ -39,7 +39,7 @@ export const GET_PREDATOR_OF = gql`
   ) {
     getPredatorOf(
       preyName: $name
-      preyLevel: $level
+      preyStage: $level
       dietType: $metrics
       startYear: $startYear
       endYear: $endYear

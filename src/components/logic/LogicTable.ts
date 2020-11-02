@@ -17,8 +17,8 @@ interface LogicTableProps {
 
 export const LogicTable = (props: LogicTableProps) => {
   //Fetch the data for the active item.
-  const query =
-    props.itemType === ItemType.PREDATOR ? GET_PREY_OF : GET_PREDATOR_OF;
+  let isPredator = props.itemType === ItemType.PREDATOR;
+  const query = isPredator ? GET_PREY_OF : GET_PREDATOR_OF;
   const options = {
     variables: {
       name: props.activeItem,
@@ -27,13 +27,15 @@ export const LogicTable = (props: LogicTableProps) => {
       season: props.controller.season.value,
       region: props.controller.region.value,
       metrics: props.controller.metrics.value,
-      level: props.controller.level.value,
+      level: isPredator
+        ? props.controller.level.value
+        : props.controller.stage.value,
     },
   };
 
   const { loading, error, data } = useQuery(query, options);
 
-  const [tableData, dispatchTableAction] = useTable([]);
+  const [tableData, dispatchTableAction] = useTable([], props.itemType);
 
   useEffect(() => {
     if (data) {
@@ -50,11 +52,50 @@ export const LogicTable = (props: LogicTableProps) => {
   if (error)
     return LogicErrorPage({
       errorMessage:
-        "Uh no, an error has occurred :( please return to homepage!",
+        "Uh oh, an error has occurred :( please return to homepage!",
     });
 
-  // Need to initialize the array but updating hte payload here creates an inf loop
   const controller: TableController = {
+    handleMetricsClick: () => {
+      tableData.sort === TableSort.DTTYP
+        ? dispatchTableAction({
+            type: TableActionType.TOGGLEDIR,
+            payload: null,
+          })
+        : dispatchTableAction({ type: TableActionType.DTTYP, payload: null });
+    },
+    handleCommonNameClick: () => {
+      tableData.sort === TableSort.CMNNM
+        ? dispatchTableAction({
+            type: TableActionType.TOGGLEDIR,
+            payload: null,
+          })
+        : dispatchTableAction({ type: TableActionType.CMNNM, payload: null });
+    },
+    handleFractionDietClick: () => {
+      tableData.sort === TableSort.FRADT
+        ? dispatchTableAction({
+            type: TableActionType.TOGGLEDIR,
+            payload: null,
+          })
+        : dispatchTableAction({ type: TableActionType.FRADT, payload: null });
+    },
+    handleFamilyClick: () => {
+      tableData.sort === TableSort.FAMLY
+        ? dispatchTableAction({
+            type: TableActionType.TOGGLEDIR,
+            payload: null,
+          })
+        : dispatchTableAction({ type: TableActionType.FAMLY, payload: null });
+    },
+    handleNumberOfStudiesClick: () => {
+      tableData.sort === TableSort.NMSTD
+        ? dispatchTableAction({
+            type: TableActionType.TOGGLEDIR,
+            payload: null,
+          })
+        : dispatchTableAction({ type: TableActionType.NMSTD, payload: null });
+    },
     handleTaxonClick: () => {
       tableData.sort === TableSort.TAXON
         ? dispatchTableAction({
@@ -80,7 +121,6 @@ export const LogicTable = (props: LogicTableProps) => {
         : dispatchTableAction({ type: TableActionType.WTVOL, payload: null });
     },
     handleOccurClick: () => {
-      console.log("handling occurr click");
       tableData.sort === TableSort.OCCUR
         ? dispatchTableAction({
             type: TableActionType.TOGGLEDIR,
@@ -98,18 +138,37 @@ export const LogicTable = (props: LogicTableProps) => {
     },
   };
 
-  let arr = tableData.rows.map((prey: any) => {
-    let items = prey.items === null ? null : prey.items.substring(0, 4) + "%";
-    let wt_or_vol =
-      prey.wt_or_vol === null ? null : prey.wt_or_vol.substring(0, 4) + "%";
-    let unspecified =
-      prey.unspecified === null ? null : prey.unspecified.substring(0, 4) + "%";
-    let occurrence =
-      prey.occurrence === null ? null : prey.occurrence.substring(0, 4) + "%";
-    return { ...prey, items, wt_or_vol, occurrence, unspecified };
-  });
+  // This is hardcoded to work for only the predator page, prey page won't work
+  let arr = [];
+  if (props.itemType === ItemType.PREDATOR && props.activeItem !== "") {
+    arr = tableData.rows.map((prey: any) => {
+      let items = prey.items === null ? null : prey.items.substring(0, 4) + "%";
+      let wt_or_vol =
+        prey.wt_or_vol === null ? null : prey.wt_or_vol.substring(0, 4) + "%";
+      let unspecified =
+        prey.unspecified === null
+          ? null
+          : prey.unspecified.substring(0, 4) + "%";
+      let occurrence =
+        prey.occurrence === null ? null : prey.occurrence.substring(0, 4) + "%";
+      return { ...prey, items, wt_or_vol, occurrence, unspecified };
+    });
+  } else if (props.itemType === ItemType.PREY && props.activeItem !== "") {
+    arr = tableData.rows.map((predator: any) => {
+      let fraction_diet =
+        predator.fraction_diet === null
+          ? null
+          : predator.fraction_diet.substring(0, 4) + "%";
+      return { ...predator, fraction_diet };
+    });
+  }
 
   let activeItem = props.activeItem;
-
-  return DesignTable({ data: arr, controller, activeItem, options} );
+  return DesignTable({
+    data: arr,
+    itemType: props.itemType,
+    controller,
+    activeItem,
+    options,
+  });
 };

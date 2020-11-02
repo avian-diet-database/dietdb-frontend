@@ -2,11 +2,14 @@ import React from "react";
 import { LogicErrorPage } from "../logic/LogicErrorPage";
 import { DesignDownload } from "./DesignDownload";
 import { TableController } from "../../types/TableController";
+import { DesignTableHeader } from "./DesignTableHeader";
+import { ItemType } from "../../App";
 
 interface DesignTableProps {
   data: any[];
   controller: TableController;
   activeItem: string;
+  itemType: ItemType;
   options: {
     variables: {
       name: string;
@@ -24,72 +27,10 @@ export const DesignTable = (props: DesignTableProps) => {
   if (props.data.length < 1) {
     return (
       <div>
-        <LogicErrorPage
-          errorMessage={"The following query returned no results"}
-        />
+        <LogicErrorPage errorMessage={"That query returned no results"} />
       </div>
     );
   }
-
-  const tableHeader = (
-    <tr>
-      <th>
-        <button
-          className="button is-dark is-inverted"
-          onClick={props.controller.handleItemsClick}
-        >
-          <span>Item</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
-      </th>
-      <th>
-        <button
-          className="button is-dark is-inverted"
-          onClick={props.controller.handleTaxonClick}
-        >
-          <span>Taxon</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
-      </th>
-      <th>
-        <button
-          className="button is-dark is-inverted"
-          onClick={props.controller.handleWtVolClick}
-        >
-          <span>Weight/Volume</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
-      </th>
-      <th>
-        <button
-          className="button is-dark is-inverted"
-          onClick={props.controller.handleOccurClick}
-        >
-          <span>Occurrence</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
-      </th>
-      <th>
-        <button
-          className="button is-dark is-inverted"
-          onClick={props.controller.handleUnspcClick}
-        >
-          <span>Unspecified</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
-      </th>
-    </tr>
-  );
 
   let metadata = [
     "Species: " + props.activeItem,
@@ -114,7 +55,12 @@ export const DesignTable = (props: DesignTableProps) => {
       <div className="message-body has-background-light">
         <div className="has-background-light is-scrollable has-text-dark">
           <table className="table is-fullwidth has-background-light has-text-dark">
-            <thead>{tableHeader}</thead>
+            <thead>
+              <DesignTableHeader
+                itemType={props.itemType}
+                controller={props.controller}
+              />
+            </thead>
             <tbody>
               {props.data.map((item) => {
                 return (
@@ -128,10 +74,14 @@ export const DesignTable = (props: DesignTableProps) => {
                 );
               })}
             </tbody>
-            <tfoot>{tableHeader}</tfoot>
+            <tfoot>
+              <DesignTableHeader
+                itemType={props.itemType}
+                controller={props.controller}
+              />
+            </tfoot>
           </table>
         </div>
-        <div></div>
       </div>
     </div>
   );
