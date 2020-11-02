@@ -12,7 +12,7 @@ export interface DesignHomeProps {
 export const DesignHome = (props: DesignHomeProps) => {
   return (
     <div className="hero-body">
-      <div className="container has-text-centered ">
+      <div className="container has-text-center ">
         <div className="section ">
           <LogicHeader />
         </div>
@@ -33,8 +33,8 @@ export const DesignHome = (props: DesignHomeProps) => {
               updateActiveItem={props.updateActiveItem}
               updateItemType={props.updateItemType}
               placeholder="Enter a prey name"
-              left="What birds eat "
-              right=" ?"
+              left="What bird eats "
+              right="?"
             />
           </div>
         </div>

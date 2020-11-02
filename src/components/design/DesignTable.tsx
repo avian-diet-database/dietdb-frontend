@@ -67,6 +67,13 @@ export const DesignTable = (props: DesignTableProps) => {
                   <tr key={props.data.indexOf(item)}>
                     {Object.keys(item)
                       .filter((val) => val != "__typename")
+                      .filter((val) => val == "taxon")
+                      .map((datum) => {
+                        return <td key={datum}>{item[datum]}</td>;
+                      })}
+                    {Object.keys(item)
+                      .filter((val) => val != "__typename")
+                      .filter((val) => val != "taxon")
                       .map((datum) => {
                         return <td key={datum}>{item[datum]}</td>;
                       })}
