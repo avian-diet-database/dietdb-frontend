@@ -14,9 +14,9 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className="button is-dark is-inverted"
-          onClick={props.controller.handleItemsClick}
+          onClick={props.controller.handleTaxonClick}
         >
-          <span>Item</span>
+          <span>Taxon</span>
           <span className="icon is-small">
             <i className="fas fa-angle-down" />
           </span>
@@ -25,9 +25,9 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className="button is-dark is-inverted"
-          onClick={props.controller.handleTaxonClick}
+          onClick={props.controller.handleItemsClick}
         >
-          <span>Taxon</span>
+          <span>Items</span>
           <span className="icon is-small">
             <i className="fas fa-angle-down" />
           </span>
