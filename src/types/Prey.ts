@@ -1,8 +1,7 @@
 export interface Prey {
-  order: string;
   taxon: string;
-  items: string;
-  wt_or_vol: string;
-  occurrence: string;
-  unspecified: string;
+  items: string | null;
+  wt_or_vol: string | null;
+  occurrence: string | null;
+  unspecified: string | null;
 }

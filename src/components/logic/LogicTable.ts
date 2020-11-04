@@ -35,7 +35,7 @@ export const LogicTable = (props: LogicTableProps) => {
 
   const { loading, error, data } = useQuery(query, options);
 
-  const [tableData, dispatchTableAction] = useTable([], props.itemType);
+  const [tableData, dispatchTableAction] = useTable(props.itemType);
 
   useEffect(() => {
     if (data) {

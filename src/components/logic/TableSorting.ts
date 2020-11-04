@@ -2,6 +2,7 @@ import { useReducer } from "react";
 import { Prey } from "../../types/Prey";
 import { Predator } from "../../types/Predator";
 import { ItemType } from "../../App";
+import { parse } from "path";
 
 export enum TableSort {
   TAXON,
@@ -102,7 +103,6 @@ export interface TableState {
 }
 
 export const useTable = (
-  data: any,
   type: ItemType
 ): [TableState, React.Dispatch<TableAction>] => {
   const tableReducer = (state: TableState, action: TableAction): TableState => {
@@ -133,9 +133,10 @@ export const useTable = (
   };
 
   let isPredator = type === ItemType.PREDATOR;
+  let sorting = isPredator ? TableSort.ITEMS : TableSort.FRADT;
   const initialState: TableState = {
-    rows: data,
-    sort: isPredator ? TableSort.ITEMS : TableSort.FRADT,
+    rows: [],
+    sort: sorting,
     direction: TableDirection.DESCENDING,
   };
   // This is being initialized with an empty array. No point in sending an initializer
@@ -254,11 +255,11 @@ const sortByFractionDiet = (
       return dir === TableDirection.ASCENDING ? -1 : 1;
     if (b.fraction_diet === null)
       return dir === TableDirection.ASCENDING ? 1 : -1;
-    if (a.fraction_diet < b.fraction_diet) {
+    if (parseFloat(a.fraction_diet) < parseFloat(b.fraction_diet)) {
       return dir == TableDirection.ASCENDING ? -1 : 1;
     }
 
-    if (a.fraction_diet > b.fraction_diet) {
+    if (parseFloat(a.fraction_diet) > parseFloat(b.fraction_diet)) {
       return dir == TableDirection.ASCENDING ? 1 : -1;
     }
     return 0;
