@@ -1,3 +1,5 @@
+import { ItemType } from "../App";
+
 export interface TableController {
   handleTaxonClick: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -29,4 +31,5 @@ export interface TableController {
   handleNumberOfStudiesClick: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
+  resetTable: (itemType: ItemType) => void;
 }

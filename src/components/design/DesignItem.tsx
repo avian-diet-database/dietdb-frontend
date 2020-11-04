@@ -48,6 +48,8 @@ export const DesignItem = (props: DesignItemProps) => {
           />
           <LogicTable
             activeItem={props.activeItem}
+            updateItemType={props.updateItemType}
+            updateActiveItem={props.updateActiveItem}
             itemType={props.itemType}
             controller={props.controller}
           />

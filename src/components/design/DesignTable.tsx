@@ -4,6 +4,7 @@ import { DesignDownload } from "./DesignDownload";
 import { TableController } from "../../types/TableController";
 import { DesignTableHeader } from "./DesignTableHeader";
 import { ItemType } from "../../App";
+import { LogicItemLink } from "../logic/LogicItemLink";
 
 interface DesignTableProps {
   data: any[];
@@ -21,6 +22,10 @@ interface DesignTableProps {
       level: string;
     };
   };
+  // A callback for updating the selected item.
+  updateActiveItem: React.Dispatch<React.SetStateAction<string>>;
+  // Dispatcher for active item type.
+  updateItemType: React.Dispatch<React.SetStateAction<ItemType>>;
 }
 
 export const DesignTable = (props: DesignTableProps) => {
@@ -65,15 +70,26 @@ export const DesignTable = (props: DesignTableProps) => {
               {props.data.map((item) => {
                 return (
                   <tr key={props.data.indexOf(item)}>
+                    {item["taxon"] ? (
+                      <LogicItemLink
+                        itemType={ItemType.PREY}
+                        itemName={item["taxon"]}
+                        updateItemType={props.updateItemType}
+                        updateActiveItem={props.updateActiveItem}
+                        resetTable={props.controller.resetTable}
+                      />
+                    ) : (
+                      <LogicItemLink
+                        itemType={ItemType.PREDATOR}
+                        itemName={item["common_name"]}
+                        updateItemType={props.updateItemType}
+                        updateActiveItem={props.updateActiveItem}
+                        resetTable={props.controller.resetTable}
+                      />
+                    )}
                     {Object.keys(item)
                       .filter((val) => val != "__typename")
-                      .filter((val) => val == "taxon")
-                      .map((datum) => {
-                        return <td key={datum}>{item[datum]}</td>;
-                      })}
-                    {Object.keys(item)
-                      .filter((val) => val != "__typename")
-                      .filter((val) => val != "taxon")
+                      .filter((val) => val != "taxon" && val != "common_name")
                       .map((datum) => {
                         return <td key={datum}>{item[datum]}</td>;
                       })}

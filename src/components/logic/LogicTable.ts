@@ -13,6 +13,10 @@ interface LogicTableProps {
   controller: CriteriaController;
   itemType: ItemType;
   activeItem: string;
+  // A callback for updating the selected item.
+  updateActiveItem: React.Dispatch<React.SetStateAction<string>>;
+  // Dispatcher for active item type.
+  updateItemType: React.Dispatch<React.SetStateAction<ItemType>>;
 }
 
 export const LogicTable = (props: LogicTableProps) => {
@@ -56,6 +60,21 @@ export const LogicTable = (props: LogicTableProps) => {
     });
 
   const controller: TableController = {
+    resetTable: (itemType: ItemType) => {
+      dispatchTableAction({
+        type: TableActionType.UPDTE,
+        payload: [],
+      });
+      itemType === ItemType.PREDATOR
+        ? dispatchTableAction({
+            type: TableActionType.ITEMS,
+            payload: null,
+          })
+        : dispatchTableAction({
+            type: TableActionType.FRADT,
+            payload: null,
+          });
+    },
     handleMetricsClick: () => {
       tableData.sort === TableSort.DTTYP
         ? dispatchTableAction({
@@ -138,9 +157,10 @@ export const LogicTable = (props: LogicTableProps) => {
     },
   };
 
-  // This is hardcoded to work for only the predator page, prey page won't work
   let arr = [];
+  // This logic should be moved into a helper function.
   if (props.itemType === ItemType.PREDATOR && props.activeItem !== "") {
+    // Fix the rows for Predator page
     arr = tableData.rows.map((prey: any) => {
       let items = prey.items === null ? null : prey.items.substring(0, 4) + "%";
       let wt_or_vol =
@@ -154,6 +174,7 @@ export const LogicTable = (props: LogicTableProps) => {
       return { ...prey, items, wt_or_vol, occurrence, unspecified };
     });
   } else if (props.itemType === ItemType.PREY && props.activeItem !== "") {
+    // Fix the rows for Prey page.
     arr = tableData.rows.map((predator: any) => {
       let fraction_diet =
         predator.fraction_diet === null
@@ -167,6 +188,8 @@ export const LogicTable = (props: LogicTableProps) => {
   return DesignTable({
     data: arr,
     itemType: props.itemType,
+    updateItemType: props.updateItemType,
+    updateActiveItem: props.updateActiveItem,
     controller,
     activeItem,
     options,
