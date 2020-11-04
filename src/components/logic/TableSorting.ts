@@ -2,7 +2,6 @@ import { useReducer } from "react";
 import { Prey } from "../../types/Prey";
 import { Predator } from "../../types/Predator";
 import { ItemType } from "../../App";
-import { parse } from "path";
 
 export enum TableSort {
   TAXON,
@@ -169,6 +168,14 @@ const sortByItems = (data: Prey[], dir: TableDirection): Prey[] => {
       return dir === TableDirection.ASCENDING ? 1 : -1;
     }
 
+    // If tied, sort by taxon
+    if (a.taxon < b.taxon) {
+      return dir === TableDirection.ASCENDING ? -1 : 1;
+    }
+
+    if (a.taxon > b.taxon) {
+      return dir === TableDirection.ASCENDING ? 1 : -1;
+    }
     return 0;
   });
 };
@@ -185,6 +192,14 @@ const sortByWtVol = (data: Prey[], dir: TableDirection): Prey[] => {
       return dir === TableDirection.ASCENDING ? 1 : -1;
     }
 
+    // If tied, sort by taxon
+    if (a.taxon < b.taxon) {
+      return dir === TableDirection.ASCENDING ? -1 : 1;
+    }
+
+    if (a.taxon > b.taxon) {
+      return dir === TableDirection.ASCENDING ? 1 : -1;
+    }
     return 0;
   });
 };
@@ -201,6 +216,14 @@ const sortByOccur = (data: Prey[], dir: TableDirection): Prey[] => {
       return dir === TableDirection.ASCENDING ? 1 : -1;
     }
 
+    // If tied, sort by taxon
+    if (a.taxon < b.taxon) {
+      return dir === TableDirection.ASCENDING ? -1 : 1;
+    }
+
+    if (a.taxon > b.taxon) {
+      return dir === TableDirection.ASCENDING ? 1 : -1;
+    }
     return 0;
   });
 };
@@ -219,6 +242,14 @@ const sortByUnspc = (data: Prey[], dir: TableDirection): Prey[] => {
       return dir == TableDirection.ASCENDING ? 1 : -1;
     }
 
+    // If tied, sort by taxon
+    if (a.taxon < b.taxon) {
+      return dir === TableDirection.ASCENDING ? -1 : 1;
+    }
+
+    if (a.taxon > b.taxon) {
+      return dir === TableDirection.ASCENDING ? 1 : -1;
+    }
     return 0;
   });
 };
@@ -231,14 +262,11 @@ const sortByCommonName = (
   dir: TableDirection
 ): Predator[] => {
   return [...data].sort((a: Predator, b: Predator) => {
-    if (a.common_name === null)
-      return dir === TableDirection.ASCENDING ? -1 : 1;
-    if (b.common_name === null)
-      return dir === TableDirection.ASCENDING ? 1 : -1;
+    if (!a.common_name) return dir === TableDirection.ASCENDING ? -1 : 1;
+    if (!b.common_name) return dir === TableDirection.ASCENDING ? 1 : -1;
     if (a.common_name < b.common_name) {
       return dir == TableDirection.ASCENDING ? -1 : 1;
     }
-
     if (a.common_name > b.common_name) {
       return dir == TableDirection.ASCENDING ? 1 : -1;
     }
@@ -251,10 +279,8 @@ const sortByFractionDiet = (
   dir: TableDirection
 ): Predator[] => {
   return [...data].sort((a: Predator, b: Predator) => {
-    if (a.fraction_diet === null)
-      return dir === TableDirection.ASCENDING ? -1 : 1;
-    if (b.fraction_diet === null)
-      return dir === TableDirection.ASCENDING ? 1 : -1;
+    if (!a.fraction_diet) return dir === TableDirection.ASCENDING ? -1 : 1;
+    if (!b.fraction_diet) return dir === TableDirection.ASCENDING ? 1 : -1;
     if (parseFloat(a.fraction_diet) < parseFloat(b.fraction_diet)) {
       return dir == TableDirection.ASCENDING ? -1 : 1;
     }
@@ -262,6 +288,12 @@ const sortByFractionDiet = (
     if (parseFloat(a.fraction_diet) > parseFloat(b.fraction_diet)) {
       return dir == TableDirection.ASCENDING ? 1 : -1;
     }
+    // If tied, sort by name.
+    if (a.common_name < b.common_name)
+      return dir == TableDirection.ASCENDING ? -1 : 1;
+
+    if (a.common_name > b.common_name)
+      return dir == TableDirection.ASCENDING ? 1 : -1;
     return 0;
   });
 };
@@ -277,6 +309,12 @@ const sortByDietType = (data: Predator[], dir: TableDirection): Predator[] => {
     if (a.diet_type > b.diet_type) {
       return dir == TableDirection.ASCENDING ? 1 : -1;
     }
+    // If tied, sort by name.
+    if (a.common_name < b.common_name)
+      return dir == TableDirection.ASCENDING ? -1 : 1;
+
+    if (a.common_name > b.common_name)
+      return dir == TableDirection.ASCENDING ? 1 : -1;
     return 0;
   });
 };
@@ -297,6 +335,12 @@ const sortByNumberOfStudies = (
     if (a.number_of_studies > b.number_of_studies) {
       return dir == TableDirection.ASCENDING ? 1 : -1;
     }
+    // If tied, sort by name.
+    if (a.common_name < b.common_name)
+      return dir == TableDirection.ASCENDING ? -1 : 1;
+
+    if (a.common_name > b.common_name)
+      return dir == TableDirection.ASCENDING ? 1 : -1;
     return 0;
   });
 };
@@ -312,6 +356,13 @@ const sortByFamily = (data: Predator[], dir: TableDirection): Predator[] => {
     if (a.family > b.family) {
       return dir == TableDirection.ASCENDING ? 1 : -1;
     }
+    // If tied, sort by name.
+    if (a.common_name < b.common_name)
+      return dir == TableDirection.ASCENDING ? -1 : 1;
+
+    if (a.common_name > b.common_name)
+      return dir == TableDirection.ASCENDING ? 1 : -1;
+
     return 0;
   });
 };

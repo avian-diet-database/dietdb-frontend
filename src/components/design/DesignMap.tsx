@@ -7,8 +7,6 @@ interface DesignMapProps {
 }
 
 export const DesignMap = (props: DesignMapProps) => {
-
-
   return (
     <div className="message is-dark">
       <div className="message-header">Number of Records Per State</div>

@@ -14,6 +14,7 @@ export interface LogicSearchBarProps {
   // Placeholder for input
   placeholder: string;
 
+  // left and right are the words that will be presented to the left and right of the search bar
   left: string;
   right: string;
 }
