@@ -4,7 +4,7 @@ import { GET_PREDATOR_OF, GET_PREY_OF } from "../../gql/queries";
 import { useQuery } from "@apollo/client";
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { ItemType } from "../../App";
-import { LogicErrorPage } from "./LogicErrorPage";
+import { DesignErrorPage } from "../design/DesignErrorPage";
 import { useTable, TableSort, TableActionType } from "./TableSorting";
 import { TableController } from "../../types/TableController";
 import { useEffect } from "react";
@@ -52,9 +52,11 @@ export const LogicTable = (props: LogicTableProps) => {
   }, [data]);
 
   //Pass the data to the design.
+  if (props.activeItem === "")
+    return DesignErrorPage({ errorMessage: "Enter a name above." });
   if (loading) return DesignLoadingPage();
   if (error)
-    return LogicErrorPage({
+    return DesignErrorPage({
       errorMessage:
         "Uh oh, an error has occurred :( please return to homepage!",
     });
@@ -185,6 +187,9 @@ export const LogicTable = (props: LogicTableProps) => {
   }
 
   let activeItem = props.activeItem;
+  if (arr.length < 1) {
+    return DesignErrorPage({ errorMessage: "That query returned no results." });
+  }
   return DesignTable({
     data: arr,
     itemType: props.itemType,

@@ -1,17 +1,15 @@
-import React from 'react';
+import React from "react";
 
 interface DesignErrorPageProps {
-    errorMessage:string
+  errorMessage: string;
 }
 
-export const DesignErrorPage = (props:DesignErrorPageProps) => {
-    return (
-        <div className="hero-body">
-            <div className="container">
-                <h1 className="title">
-                    {props.errorMessage}
-                </h1>
-            </div>
-        </div>
-    )
-}
+export const DesignErrorPage = (props: DesignErrorPageProps) => {
+  return (
+    <div className="message is-danger">
+      <div className="message-body">
+        <h1 className="subtitle">{props.errorMessage}</h1>
+      </div>
+    </div>
+  );
+};

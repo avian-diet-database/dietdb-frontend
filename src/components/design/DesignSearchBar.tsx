@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ItemType } from "../../App";
 import { DebounceInput } from "react-debounce-input";
 
@@ -17,9 +17,14 @@ export interface DesignSearchBarProps {
 }
 
 export const DesignSearchBar = (props: DesignSearchBarProps) => {
+  const [liveItem, setLiveItem] = useState("_____");
   return (
-    <div className="section is-flex is-justify-content-space-between is-flex-direction-row">
-      <p className="content is-size-3">{props.left}</p>
+    <div className="container">
+      <p className="title is-size-3">
+        {props.left}
+        <span className="has-text-dark">{liveItem}</span>
+        {props.right}
+      </p>
       <div className="dropdown">
         <div className="container">
           <div className="field">
@@ -29,7 +34,10 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
                 className="input is-dark is-large"
                 type="text"
                 placeholder={props.placeholder}
-                onChange={props.onQueryInputChange}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setLiveItem(event.target.value);
+                  props.onQueryInputChange(event);
+                }}
               />
             </div>
           </div>
@@ -42,7 +50,12 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
                 return (
                   <a
                     key={name}
-                    onClick={props.onItemSelect}
+                    onClick={(
+                      event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+                    ) => {
+                      setLiveItem(event.currentTarget.textContent || "");
+                      props.onItemSelect(event);
+                    }}
                     className={
                       "dropdown-item is-size-5 has-text-left" +
                       (props.activeItem === name ? " is-active" : "")
@@ -56,7 +69,6 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
           ) : null}
         </div>
       </div>
-      <p className="content is-size-3">{props.right}</p>
     </div>
   );
 };

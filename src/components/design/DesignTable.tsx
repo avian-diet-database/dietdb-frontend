@@ -29,14 +29,6 @@ interface DesignTableProps {
 }
 
 export const DesignTable = (props: DesignTableProps) => {
-  if (props.data.length < 1) {
-    return (
-      <div>
-        <LogicErrorPage errorMessage={"That query returned no results"} />
-      </div>
-    );
-  }
-
   let metadata = [
     "Species: " + props.activeItem,
     "Region: " + props.options.variables.region,
@@ -49,7 +41,7 @@ export const DesignTable = (props: DesignTableProps) => {
   ];
 
   return (
-    <div className="message is-dark">
+    <div className="message is-primary">
       <div className="message-header">
         Data
         <DesignDownload
@@ -57,9 +49,9 @@ export const DesignTable = (props: DesignTableProps) => {
           fileName={"avianDietTable"}
         />
       </div>
-      <div className="message-body has-background-light">
-        <div className="has-background-light is-scrollable has-text-dark">
-          <table className="table is-fullwidth has-background-light has-text-dark">
+      <div className="message-body">
+        <div className="is-scrollable ">
+          <table className="table is-striped is-fullwidth has-background-primary-light">
             <thead>
               <DesignTableHeader
                 itemType={props.itemType}

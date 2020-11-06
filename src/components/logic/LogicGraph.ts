@@ -56,7 +56,8 @@ export const LogicGraph = (props: LogicGraphProps) => {
   if (loading) return DesignLoadingPage();
   if (error)
     return LogicErrorPage({
-      errorMessage: "Uh no, an error has occurred: " + error.message,
+      errorMessage:
+        "We're sorry, there was an error producing the graph for " + title,
     });
   let graphData;
   switch (props.graphType) {
@@ -76,4 +77,3 @@ export const LogicGraph = (props: LogicGraphProps) => {
 
   return DesignGraph({ data: graphData, title: title });
 };
-

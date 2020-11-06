@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { LogicHome } from "./components/logic/LogicHome";
 import { LogicFooter } from "./components/logic/LogicFooter";
 import { LogicItem } from "./components/logic/LogicItem";
+import { LogicHome } from "./components/logic/LogicHome";
+import { DesignNavBar } from "./components/design/DesignNavBar";
+import { DesignTabBar } from "./components/design/DesignTabBar";
 
 export enum ItemType {
   PREY,
@@ -17,95 +19,63 @@ function App() {
    */
   const [activeItem, updateActiveItem] = useState("");
   const [itemType, updateItemType] = useState(ItemType.NA);
+  const isHome = itemType === ItemType.NA;
   return (
     <div>
-      <section className="hero is-primary">
+      <section className={"hero is-primary is-fullheight"}>
         <div className="hero-head">
-          <nav className="navbar is-size-6 has-text-light">
-            <figure className="image is-96x96">
-              <img src="../eagle_fish_silhouette.png"></img>
-            </figure>
-            <div className="container">
-              <div className="navbar-brand">
-                <div className="navbar-item"></div>
-                <span
-                  className="navbar-burger burger"
-                  data-target="navbarMenuHeroA"
-                >
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </span>
-              </div>
-              <div id="navbarMenuHeroA" className="navbar-menu">
-                <div className="navbar-end">
-                  <a
-                    onClick={() => {
-                      updateActiveItem("");
-                      updateItemType(ItemType.PREDATOR);
-                    }}
-                    className={
-                      "navbar-item " +
-                      (itemType === ItemType.PREDATOR ? "is-active" : "")
-                    }
-                  >
-                    Predator
-                  </a>
-                  <a
-                    onClick={() => {
-                      updateActiveItem("");
-                      updateItemType(ItemType.PREY);
-                    }}
-                    className={
-                      "navbar-item " +
-                      (itemType === ItemType.PREY ? "is-active" : "")
-                    }
-                  >
-                    Prey
-                  </a>
-                  <a
-                    onClick={() => {
-                      updateActiveItem("");
-                      updateItemType(ItemType.NA);
-                    }}
-                    className={
-                      "navbar-item " +
-                      (itemType === ItemType.NA ? "is-active" : "")
-                    }
-                  >
-                    Home
-                  </a>
-                  <span className="navbar-item">
-                    <a
-                      href="https://github.com/hurlbertlab/dietdatabase"
-                      className="button is-primary is-inverted"
-                    >
-                      {" "}
-                      Github{" "}
-                    </a>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </nav>
-        </div>
-        {/* Here, render the home if activeItem is "", and otherwise
-          render the item page for it. */}
-        {itemType === ItemType.NA ? (
-          <LogicHome
-            activeItem={activeItem}
-            updateActiveItem={updateActiveItem}
-            updateItemType={updateItemType}
+          <DesignNavBar
+            itemType={itemType}
+            onHomeClick={() => {
+              updateActiveItem("");
+              updateItemType(ItemType.NA);
+            }}
+            onPreyClick={() => {
+              updateActiveItem("");
+              updateItemType(ItemType.PREY);
+            }}
+            onPredatorClick={() => {
+              updateActiveItem("");
+              updateItemType(ItemType.PREDATOR);
+            }}
           />
-        ) : (
-          <LogicItem
+        </div>
+        <div className="hero-body">
+          {/* Here, render the home if activeItem is "", and otherwise
+          render the item page for it. */}
+          <LogicHome
             activeItem={activeItem}
             itemType={itemType}
             updateActiveItem={updateActiveItem}
             updateItemType={updateItemType}
           />
-        )}
+        </div>
+        <div className="hero-foot">
+          <DesignTabBar
+            itemType={itemType}
+            onHomeClick={() => {
+              updateActiveItem("");
+              updateItemType(ItemType.NA);
+            }}
+            onPreyClick={() => {
+              updateActiveItem("");
+              updateItemType(ItemType.PREY);
+            }}
+            onPredatorClick={() => {
+              updateActiveItem("");
+              updateItemType(ItemType.PREDATOR);
+            }}
+          />
+        </div>
       </section>
+      {!isHome ? (
+        <LogicItem
+          activeItem={activeItem}
+          itemType={itemType}
+          updateActiveItem={updateActiveItem}
+          updateItemType={updateItemType}
+        />
+      ) : null}
       <LogicFooter />
     </div>
   );

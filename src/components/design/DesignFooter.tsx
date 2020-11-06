@@ -7,16 +7,16 @@ interface DesignFooterProps {
 export const DesignFooter = () => {
   return (
     <footer className="footer ">
-      <section className="columns" >
+      <section className="columns">
         <div className="column is-6 is-offset-1">
           <div className="content has-text-left">
             <p>
-              The Avian Database Project, envisioned by Professor Allen Hurlbert of
-              UNC’s Department of Biology, provides user-friendly access to the data
-              Prof. Hurlbert and his team collect on avian diet from various
-              studies. This is one of the largest collections on this subject, with
-              over 56,000 records up to date.
-          </p>
+              The Avian Database Project, envisioned by Professor Allen Hurlbert
+              of UNC’s Department of Biology, provides user-friendly access to
+              the data Prof. Hurlbert and his team collect on avian diet from
+              various studies. This is one of the largest collections on this
+              subject, with over 56,000 records up to date.
+            </p>
           </div>
         </div>
         <div className="column is-4">
@@ -26,7 +26,7 @@ export const DesignFooter = () => {
             <p className="has-text-right">(919) 843-9930 (office)</p>
           </div>
         </div>
-      </section >
+      </section>
     </footer>
   );
 };

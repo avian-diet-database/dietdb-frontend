@@ -15,9 +15,11 @@ export interface DesignGraphProps {
 }
 export const DesignGraph = (props: DesignGraphProps) => {
   return (
-    <article className="message is-dark">
-      <div className="message-header">{props.title}</div>
-      <div className="message-body has-background-light">
+    <article className="message is-primary">
+      <div className="message-header">
+        <p>{props.title}</p>
+      </div>
+      <div className="message-body ">
         <FlexibleWidthXYPlot
           height={165}
           xType={"ordinal"}

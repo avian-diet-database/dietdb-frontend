@@ -16,7 +16,7 @@ export interface LogicItemLinkProps {
 
 export const LogicItemLink = (props: LogicItemLinkProps) => {
   const onItemClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+    event: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>
   ) => {
     props.resetTable(props.itemType);
     props.updateItemType(props.itemType);
