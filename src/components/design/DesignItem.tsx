@@ -27,6 +27,7 @@ export const DesignItem = (props: DesignItemProps) => {
             <LogicCriteria
               controller={props.controller}
               itemType={props.itemType}
+              activeItem={props.activeItem}
             />
             <LogicTable
               activeItem={props.activeItem}

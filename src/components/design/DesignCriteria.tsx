@@ -4,6 +4,9 @@ import { LogicDropdown } from "../logic/LogicDropdown";
 
 interface DesignCriteriaProps {
   itemType: ItemType;
+  activeItem: string;
+  editing: boolean;
+  setEditing: React.Dispatch<boolean>;
   onStartYearChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   startYearOptions: string[];
   onEndYearChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -21,51 +24,61 @@ interface DesignCriteriaProps {
 }
 
 export const DesignCriteria = (props: DesignCriteriaProps) => {
+  const isPredator = props.itemType === ItemType.PREDATOR;
   return (
     <div className="message is-primary">
       <div className="message-body is-size-5">
-        From{" "}
-        <LogicDropdown
-          criteriaOptions={props.startYearOptions}
-          onChange={props.onStartYearChange}
-        />{" "}
-        to{" "}
-        <LogicDropdown
-          criteriaOptions={props.endYearOptions}
-          onChange={props.onEndYearChange}
-        />{" "}
-        in{" "}
-        <LogicDropdown
-          criteriaOptions={props.regionOptions}
-          onChange={props.onRegionChange}
-        />{" "}
-        over the span of{" "}
-        <LogicDropdown
-          criteriaOptions={props.seasonsOptions}
-          onChange={props.onSeasonsChange}
-        />
-        , the data includes{" "}
-        <LogicDropdown
-          criteriaOptions={props.metricsOptions}
-          onChange={props.onMetricsChange}
-        />{" "}
-        {props.itemType === ItemType.PREDATOR ? (
-          <div>
-            and is summarized at the level of{" "}
-            <LogicDropdown
-              criteriaOptions={props.levelOptions}
-              onChange={props.onLevelChange}
-            />
-          </div>
-        ) : (
-          <div>
-            and is of the stage{" "}
-            <LogicDropdown
-              criteriaOptions={props.stageOptions}
-              onChange={props.onStageChange}
-            />
-          </div>
-        )}
+        <div className="block">
+          From{" "}
+          <LogicDropdown
+            criteriaOptions={props.startYearOptions}
+            onChange={props.onStartYearChange}
+          />{" "}
+          to{" "}
+          <LogicDropdown
+            criteriaOptions={props.endYearOptions}
+            onChange={props.onEndYearChange}
+          />{" "}
+          in{" "}
+          <LogicDropdown
+            criteriaOptions={props.regionOptions}
+            onChange={props.onRegionChange}
+          />{" "}
+          over the span of{" "}
+          <LogicDropdown
+            criteriaOptions={props.seasonsOptions}
+            onChange={props.onSeasonsChange}
+          />
+          , the data includes{" "}
+          <LogicDropdown
+            criteriaOptions={props.metricsOptions}
+            onChange={props.onMetricsChange}
+          />{" "}
+          {props.itemType === ItemType.PREDATOR ? (
+            <div>
+              and is summarized at the level of{" "}
+              <LogicDropdown
+                criteriaOptions={props.levelOptions}
+                onChange={props.onLevelChange}
+              />
+            </div>
+          ) : (
+            <div>
+              and is of the stage{" "}
+              <LogicDropdown
+                criteriaOptions={props.stageOptions}
+                onChange={props.onStageChange}
+              />
+            </div>
+          )}
+        </div>
+        <div className="block">
+          <strong className="subtitle is-size-4">
+            {isPredator ? "What does the " : "What birds eat the "}
+            <span className="has-text-success">{props.activeItem}</span>
+            {isPredator ? " eat?" : " ?"}
+          </strong>
+        </div>
       </div>
     </div>
   );

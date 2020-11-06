@@ -1,13 +1,17 @@
 import { DesignCriteria } from "../design/DesignCriteria";
 import { ItemType } from "../../App";
 import { CriteriaController } from "../../types/CriteriaController";
+import { useState } from "react";
 
 interface LogicCriteriaProps {
   itemType: ItemType;
+  activeItem: string;
   controller: CriteriaController;
 }
 
 export const LogicCriteria = (props: LogicCriteriaProps) => {
+  const [editing, setEditing] = useState(false);
+
   const onStartYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     props.controller.updateStartYear(event.target.value);
   };
@@ -32,6 +36,7 @@ export const LogicCriteria = (props: LogicCriteriaProps) => {
 
   return DesignCriteria({
     itemType: props.itemType,
+    activeItem: props.activeItem,
     onStartYearChange: onStartYearChange,
     startYearOptions: props.controller.startYearOptions,
     onEndYearChange: onEndYearChange,
@@ -46,5 +51,7 @@ export const LogicCriteria = (props: LogicCriteriaProps) => {
     seasonsOptions: props.controller.seasonOptions,
     onStageChange: onStageChange,
     stageOptions: props.controller.stageOptions,
+    editing,
+    setEditing,
   });
 };

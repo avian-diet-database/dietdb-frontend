@@ -16,4 +16,3 @@ export const DesignDropdown = (props: DesignDropdownProps) => {
     </div>
   );
 };
-
