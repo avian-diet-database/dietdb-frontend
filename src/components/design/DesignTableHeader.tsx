@@ -89,9 +89,8 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " + (props.sortedBy === TableSort.CMNNM)
-              ? ""
-              : "is-inverted"
+            "button is-info " +
+            (props.sortedBy === TableSort.CMNNM ? "" : "is-inverted")
           }
           onClick={props.controller.handleCommonNameClick}
         >
@@ -104,9 +103,8 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " + (props.sortedBy === TableSort.FAMLY)
-              ? ""
-              : "is-inverted"
+            "button is-info " +
+            (props.sortedBy === TableSort.FAMLY ? "" : "is-inverted")
           }
           onClick={props.controller.handleFamilyClick}
         >
@@ -119,9 +117,8 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " + (props.sortedBy === TableSort.DTTYP)
-              ? ""
-              : "is-inverted"
+            "button is-info " +
+            (props.sortedBy === TableSort.DTTYP ? "" : "is-inverted")
           }
           onClick={props.controller.handleMetricsClick}
         >
@@ -134,9 +131,8 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " + (props.sortedBy === TableSort.FRADT)
-              ? ""
-              : "is-inverted"
+            "button is-info " +
+            (props.sortedBy === TableSort.FRADT ? "" : "is-inverted")
           }
           onClick={props.controller.handleFractionDietClick}
         >
@@ -149,9 +145,8 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " + (props.sortedBy === TableSort.NMSTD)
-              ? ""
-              : "is-inverted"
+            "button is-info " +
+            (props.sortedBy === TableSort.NMSTD ? "" : "is-inverted")
           }
           onClick={props.controller.handleNumberOfStudiesClick}
         >
