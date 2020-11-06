@@ -22,24 +22,26 @@ function App() {
   const isHome = itemType === ItemType.NA;
   return (
     <div>
-      <section className={"hero is-fullheight"}>
-        <div className="hero-head">
-          <DesignNavBar
-            itemType={itemType}
-            onHomeClick={() => {
-              updateActiveItem("");
-              updateItemType(ItemType.NA);
-            }}
-            onPreyClick={() => {
-              updateActiveItem("");
-              updateItemType(ItemType.PREY);
-            }}
-            onPredatorClick={() => {
-              updateActiveItem("");
-              updateItemType(ItemType.PREDATOR);
-            }}
-          />
-        </div>
+      <DesignNavBar
+        itemType={itemType}
+        onHomeClick={() => {
+          document.getElementById("home")?.scrollIntoView();
+          updateActiveItem("");
+          updateItemType(ItemType.NA);
+        }}
+        onPreyClick={() => {
+          document.getElementById("home")?.scrollIntoView();
+          updateActiveItem("");
+          updateItemType(ItemType.PREY);
+        }}
+        onPredatorClick={() => {
+          document.getElementById("home")?.scrollIntoView();
+          updateActiveItem("");
+          updateItemType(ItemType.PREDATOR);
+        }}
+      />
+      <section className={"hero is-fullheight-with-navbar"} id="home">
+        <div className="hero-head"></div>
         <div className="hero-body">
           {/* Here, render the home if activeItem is "", and otherwise
           render the item page for it. */}
@@ -48,26 +50,6 @@ function App() {
             itemType={itemType}
             updateActiveItem={updateActiveItem}
             updateItemType={updateItemType}
-          />
-        </div>
-        <div className="hero-foot">
-          <DesignTabBar
-            itemType={itemType}
-            onHomeClick={() => {
-              document.getElementById("home")?.scrollIntoView();
-              updateActiveItem("");
-              updateItemType(ItemType.NA);
-            }}
-            onPreyClick={() => {
-              document.getElementById("home")?.scrollIntoView();
-              updateActiveItem("");
-              updateItemType(ItemType.PREY);
-            }}
-            onPredatorClick={() => {
-              document.getElementById("home")?.scrollIntoView();
-              updateActiveItem("");
-              updateItemType(ItemType.PREDATOR);
-            }}
           />
         </div>
       </section>
@@ -83,5 +65,25 @@ function App() {
     </div>
   );
 }
+//<div className="hero-foot">
+//<DesignTabBar
+//itemType={itemType}
+//onHomeClick={() => {
+//document.getElementById("home")?.scrollIntoView();
+//updateActiveItem("");
+//updateItemType(ItemType.NA);
+//}}
+//onPreyClick={() => {
+//document.getElementById("home")?.scrollIntoView();
+//updateActiveItem("");
+//updateItemType(ItemType.PREY);
+//}}
+//onPredatorClick={() => {
+//document.getElementById("home")?.scrollIntoView();
+//updateActiveItem("");
+//updateItemType(ItemType.PREDATOR);
+//}}
+///>
+//</div>
 
 export default App;

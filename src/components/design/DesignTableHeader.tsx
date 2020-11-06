@@ -2,6 +2,7 @@ import React from "react";
 import { TableController } from "../../types/TableController";
 import { ItemType } from "../../App";
 import { TableSort } from "../logic/TableSorting";
+import { DesignTableHeaderButton } from "./DesignTableHeaderButton";
 
 interface DesignTableHeaderProps {
   sortedBy: TableSort;
@@ -14,147 +15,97 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
   const tableHeader = isPredator ? (
     <tr>
       <th>
-        <button
-          className={
-            "button is-primary " +
-            (props.sortedBy === TableSort.TAXON ? "" : "is-inverted")
+        <DesignTableHeaderButton
+          classNameAddons={
+            props.sortedBy === TableSort.TAXON ? "" : "is-inverted"
           }
           onClick={props.controller.handleTaxonClick}
-        >
-          <span>Taxon</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
+          buttonText="Taxon"
+        />
       </th>
       <th>
-        <button
-          className={
-            "button is-primary " +
-            (props.sortedBy === TableSort.ITEMS ? "" : "is-inverted")
+        <DesignTableHeaderButton
+          classNameAddons={
+            props.sortedBy === TableSort.ITEMS ? "" : "is-inverted"
           }
           onClick={props.controller.handleItemsClick}
-        >
-          <span>Items</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
+          buttonText="Items"
+        />
       </th>
       <th>
-        <button
-          className={
-            "button is-primary " +
-            (props.sortedBy === TableSort.WTVOL ? "" : "is-inverted")
+        <DesignTableHeaderButton
+          classNameAddons={
+            props.sortedBy === TableSort.WTVOL ? "" : "is-inverted"
           }
           onClick={props.controller.handleWtVolClick}
-        >
-          <span>Weight/Volume</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
+          buttonText="Weight/Volume"
+        />
       </th>
       <th>
-        <button
-          className={
-            "button is-primary " +
-            (props.sortedBy === TableSort.OCCUR ? "" : "is-inverted")
+        <DesignTableHeaderButton
+          classNameAddons={
+            props.sortedBy === TableSort.OCCUR ? "" : "is-inverted"
           }
           onClick={props.controller.handleOccurClick}
-        >
-          <span>Occurrence</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
+          buttonText="Occurrence"
+        />
       </th>
       <th>
-        <button
-          className={
-            "button is-primary " +
-            (props.sortedBy === TableSort.UNSPC ? "" : "is-inverted")
+        <DesignTableHeaderButton
+          classNameAddons={
+            props.sortedBy === TableSort.UNSPC ? "" : "is-inverted"
           }
           onClick={props.controller.handleUnspcClick}
-        >
-          <span>Unspecified</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
+          buttonText="Unspecified"
+        />
       </th>
     </tr>
   ) : (
     <tr>
       <th>
-        <button
-          className={
-            "button is-primary " +
-            (props.sortedBy === TableSort.CMNNM ? "" : "is-inverted")
+        <DesignTableHeaderButton
+          classNameAddons={
+            props.sortedBy === TableSort.CMNNM ? "" : "is-inverted"
           }
           onClick={props.controller.handleCommonNameClick}
-        >
-          <span>Common Name</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
+          buttonText="Common Name"
+        />
       </th>
       <th>
-        <button
-          className={
-            "button is-primary " +
-            (props.sortedBy === TableSort.FAMLY ? "" : "is-inverted")
+        <DesignTableHeaderButton
+          classNameAddons={
+            props.sortedBy === TableSort.FAMLY ? "" : "is-inverted"
           }
           onClick={props.controller.handleFamilyClick}
-        >
-          <span>Family</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
+          buttonText="Family"
+        />
       </th>
       <th>
-        <button
-          className={
-            "button is-primary " +
-            (props.sortedBy === TableSort.DTTYP ? "" : "is-inverted")
+        <DesignTableHeaderButton
+          classNameAddons={
+            props.sortedBy === TableSort.DTTYP ? "" : "is-inverted"
           }
           onClick={props.controller.handleMetricsClick}
-        >
-          <span>Diet Type</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
+          buttonText="Diet Type"
+        />
       </th>
       <th>
-        <button
-          className={
-            "button is-primary " +
-            (props.sortedBy === TableSort.FRADT ? "" : "is-inverted")
+        <DesignTableHeaderButton
+          classNameAddons={
+            props.sortedBy === TableSort.FRADT ? "" : "is-inverted"
           }
           onClick={props.controller.handleFractionDietClick}
-        >
-          <span>Fraction Diet</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
+          buttonText="Fraction Diet"
+        />
       </th>
       <th>
-        <button
-          className={
-            "button is-primary " +
-            (props.sortedBy === TableSort.NMSTD ? "" : "is-inverted")
+        <DesignTableHeaderButton
+          classNameAddons={
+            props.sortedBy === TableSort.NMSTD ? "" : "is-inverted"
           }
           onClick={props.controller.handleNumberOfStudiesClick}
-        >
-          <span>Number of Studies</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" />
-          </span>
-        </button>
+          buttonText="Number of Studies"
+        />
       </th>
     </tr>
   );

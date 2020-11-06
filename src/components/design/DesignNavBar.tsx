@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ItemType } from "../../App";
 
 interface DesignNavBarProps {
@@ -8,33 +8,75 @@ interface DesignNavBarProps {
   itemType: ItemType;
 }
 export const DesignNavBar = (props: DesignNavBarProps) => {
+  const [mobileActive, setMobileActive] = useState(false);
+  const active = mobileActive ? "is-active" : "";
   return (
-    <nav className="navbar is-size-6 is-light" id="home">
-      <div className="container">
-        <div className="navbar-brand">
-          <div className="navbar-item">
-            <img src="../eagle_fish_silhouette.png" alt="Bird"></img>
-          </div>
-          <span className="navbar-burger burger" data-target="navbarMenuHeroA">
-            <span></span>
-            <span></span>
-            <span></span>
-          </span>
+    <nav className="navbar is-fixed-top is-light">
+      <div className="navbar-brand">
+        <div className="navbar-item">
+          <img src="../eagle_fish_silhouette.png" alt="Bird"></img>
         </div>
-        <div id="navbarMenuHeroA" className="navbar-menu">
-          <div className="navbar-end">
-            <a className={"navbar-item"}>About</a>
-            <a className={"navbar-item"}>Contact</a>
-            <span className="navbar-item">
-              <a
-                href="https://github.com/hurlbertlab/dietdatabase"
-                className="button is-dark is-inverted"
-              >
-                {" "}
-                Github{" "}
-              </a>
-            </span>
-          </div>
+        <a
+          role="button"
+          className="navbar-burger burger"
+          data-target="navbarMenuHeroA"
+          onClick={() => setMobileActive(!mobileActive)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </a>
+      </div>
+      <div id="navbarMenuHeroA" className={"navbar-menu " + active}>
+        <div className="navbar-start">
+          <a
+            onClick={() => {
+              setMobileActive(false);
+              props.onPreyClick();
+            }}
+            className={
+              "navbar-item " +
+              (props.itemType === ItemType.PREY ? "is-active" : "")
+            }
+          >
+            Prey
+          </a>
+          <a
+            onClick={() => {
+              setMobileActive(false);
+              props.onPredatorClick();
+            }}
+            className={
+              "navbar-item " +
+              (props.itemType === ItemType.PREDATOR ? "is-active" : "")
+            }
+          >
+            Bird
+          </a>
+          <a
+            onClick={() => {
+              setMobileActive(false);
+              props.onHomeClick();
+            }}
+            className={
+              "navbar-item " +
+              (props.itemType === ItemType.NA ? "is-active" : "")
+            }
+          >
+            Home
+          </a>
+        </div>
+        <div className="navbar-end">
+          <a className={"navbar-item"}>About</a>
+          <a className={"navbar-item"}>Contact</a>
+          <span className="navbar-item">
+            <a
+              href="https://github.com/hurlbertlab/dietdatabase"
+              className="button is-dark is-inverted"
+            >
+              Github
+            </a>
+          </span>
         </div>
       </div>
     </nav>

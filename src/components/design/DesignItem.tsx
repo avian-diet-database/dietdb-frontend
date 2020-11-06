@@ -20,10 +20,10 @@ export interface DesignItemProps {
 export const DesignItem = (props: DesignItemProps) => {
   let isPredator = props.itemType == ItemType.PREDATOR;
   return (
-    <div className="hero is-light">
+    <div className="hero is-light" id="item">
       <div className="hero-body">
         <div className="notification is-light is-size-4">
-          {isPredator ? "Here is what the " : "Here is what eats the "}
+          {isPredator ? "Here is what the " : "Here is what eats "}
           <a
             style={{ textDecoration: "none" }}
             onClick={() => document.getElementById("home")?.scrollIntoView()}
