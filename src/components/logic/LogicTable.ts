@@ -13,6 +13,8 @@ interface LogicTableProps {
   controller: CriteriaController;
   itemType: ItemType;
   activeItem: string;
+  numStudies: number;
+  numRecords: number;
   // A callback for updating the selected item.
   updateActiveItem: React.Dispatch<React.SetStateAction<string>>;
   // Dispatcher for active item type.
@@ -193,6 +195,8 @@ export const LogicTable = (props: LogicTableProps) => {
     itemType: props.itemType,
     updateItemType: props.updateItemType,
     updateActiveItem: props.updateActiveItem,
+    numRecords: props.numRecords,
+    numStudies: props.numStudies,
     controller,
     activeItem,
     options,

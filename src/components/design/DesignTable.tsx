@@ -26,6 +26,8 @@ interface DesignTableProps {
   updateActiveItem: React.Dispatch<React.SetStateAction<string>>;
   // Dispatcher for active item type.
   updateItemType: React.Dispatch<React.SetStateAction<ItemType>>;
+  numRecords: number;
+  numStudies: number;
 }
 
 export const DesignTable = (props: DesignTableProps) => {
@@ -43,7 +45,7 @@ export const DesignTable = (props: DesignTableProps) => {
   return (
     <div className="message is-primary">
       <div className="message-header">
-        Data
+        Data from {props.numRecords} records and {props.numStudies} studies.
         <DesignDownload
           csvData={downloadData(props.data, metadata)}
           fileName={"avianDietTable"}

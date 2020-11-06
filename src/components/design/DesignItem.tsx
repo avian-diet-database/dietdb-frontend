@@ -35,15 +35,13 @@ export const DesignItem = (props: DesignItemProps) => {
               updateActiveItem={props.updateActiveItem}
               itemType={props.itemType}
               controller={props.controller}
+              numStudies={props.numStudies}
+              numRecords={props.numRecords}
             />
           </div>
           <div className="column is-6">
             {isPredator ? (
               <div className="content">
-                <div className="content has-text-centered is-size-2">
-                  {props.numRecords} records from {props.numStudies} total
-                  studies
-                </div>
                 <div className="columns">
                   <div className="column">
                     <LogicGraph
