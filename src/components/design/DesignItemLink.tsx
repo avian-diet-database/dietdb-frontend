@@ -5,5 +5,9 @@ export interface DesignItemLinkProps {
 }
 
 export const DesignItemLink = (props: DesignItemLinkProps) => {
-  return <a onClick={props.onItemClick}>{props.itemName}</a>;
+  return (
+    <a style={{ textDecoration: "none" }} onClick={props.onItemClick}>
+      {props.itemName}
+    </a>
+  );
 };
