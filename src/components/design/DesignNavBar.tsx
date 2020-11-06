@@ -23,37 +23,12 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
         </div>
         <div id="navbarMenuHeroA" className="navbar-menu">
           <div className="navbar-end">
-            <a
-              onClick={props.onPredatorClick}
-              className={
-                "navbar-item " +
-                (props.itemType === ItemType.PREDATOR ? "is-active" : "")
-              }
-            >
-              Predator
-            </a>
-            <a
-              onClick={props.onPreyClick}
-              className={
-                "navbar-item " +
-                (props.itemType === ItemType.PREY ? "is-active" : "")
-              }
-            >
-              Prey
-            </a>
-            <a
-              onClick={props.onHomeClick}
-              className={
-                "navbar-item " +
-                (props.itemType === ItemType.NA ? "is-active" : "")
-              }
-            >
-              Home
-            </a>
+            <a className={"navbar-item"}>About</a>
+            <a className={"navbar-item"}>Contact</a>
             <span className="navbar-item">
               <a
                 href="https://github.com/hurlbertlab/dietdatabase"
-                className="button is-success is-inverted"
+                className="button is-dark is-inverted"
               >
                 {" "}
                 Github{" "}

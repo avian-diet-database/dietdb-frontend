@@ -52,8 +52,6 @@ export const LogicTable = (props: LogicTableProps) => {
   }, [data]);
 
   //Pass the data to the design.
-  if (props.activeItem === "")
-    return DesignErrorPage({ errorMessage: "Enter a name above." });
   if (loading) return DesignLoadingPage();
   if (error)
     return DesignErrorPage({

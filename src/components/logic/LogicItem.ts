@@ -6,7 +6,7 @@ import { CriteriaController } from "../../types/CriteriaController";
 // import { useQuery } from "@apollo/client"
 import { ItemType } from "../../App";
 // import { DesignLoadingPage } from "../design/DesignLoadingPage";
-// import { DesignErrorPage } from "../design/DesignErrorPage";
+import { DesignErrorPage } from "../design/DesignErrorPage";
 import {
   useStartYear,
   useEndYear,
@@ -78,6 +78,10 @@ export const LogicItem = (props: LogicItemProps) => {
     loading || error ? 0 : data.getNumRecordsAndStudies.records;
   const numStudies =
     loading || error ? 0 : data.getNumRecordsAndStudies.studies;
+
+  if (!props.activeItem || props.activeItem.length < 1) {
+    return DesignErrorPage({ errorMessage: "Enter a name above." });
+  }
 
   return DesignItem({ ...props, numRecords, numStudies, controller });
 };

@@ -23,6 +23,7 @@ export const LogicItemLink = (props: LogicItemLinkProps) => {
     props.updateActiveItem(
       props.itemName.replace(/Unid./g, "").replace(/larva/g, "").trim()
     );
+    document.getElementById("item")?.scrollIntoView();
   };
   return DesignItemLink({ itemName: props.itemName, onItemClick });
 };

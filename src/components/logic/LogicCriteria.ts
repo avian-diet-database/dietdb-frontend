@@ -8,7 +8,6 @@ interface LogicCriteriaProps {
 }
 
 export const LogicCriteria = (props: LogicCriteriaProps) => {
-  // Define change-event handlers for the design componenent.
   const onStartYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     props.controller.updateStartYear(event.target.value);
   };
