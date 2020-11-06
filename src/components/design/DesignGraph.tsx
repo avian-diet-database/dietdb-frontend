@@ -14,6 +14,7 @@ export interface DesignGraphProps {
   title: string;
 }
 export const DesignGraph = (props: DesignGraphProps) => {
+  console.log(props.data);
   return (
     <article className="message is-primary">
       <div className="message-header">
