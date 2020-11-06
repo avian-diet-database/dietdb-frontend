@@ -135,8 +135,22 @@ export const GET_REGIONS_PRED = gql`
   }
 `;
 export const GET_PREY_OF_SOURCES = gql`
-  query($name: String!) {
-    getPreyOfSources(predatorName: $name)
+  query(
+    $name: String!
+    $metrics: String
+    $startYear: String
+    $endYear: String
+    $seasons: String
+    $region: String
+  ) {
+    getPreyOfSources(
+      predatorName: $name
+      dietType: $metrics
+      startYear: $startYear
+      endYear: $endYear
+      season: $seasons
+      region: $region
+    )
   }
 `;
 export const GET_NUM_RECORDS_AND_STUDIES = gql`

@@ -83,9 +83,22 @@ export function useSeasons(): [
   React.Dispatch<string>,
   string[]
 ] {
-  const options = ["All", "Spring", "Summer", "Fall", "Winter", "Unspecified"];
+  const options = [
+    "All seasons",
+    "Spring",
+    "Summer",
+    "Fall",
+    "Winter",
+    "Unspecified",
+  ];
   function reducer(state: CriteriaState, action: string) {
     if (options.includes(action)) {
+      if (action === "All seasons") {
+        return {
+          type: action,
+          value: "all",
+        };
+      }
       return {
         type: action,
         value: action.toLowerCase(),
@@ -94,7 +107,10 @@ export function useSeasons(): [
       return state;
     }
   }
-  const [state, dispatch] = useReducer(reducer, { type: "All", value: "all" });
+  const [state, dispatch] = useReducer(reducer, {
+    type: "All seasons",
+    value: "all",
+  });
   return [state, dispatch, options];
 }
 
@@ -109,10 +125,10 @@ export function useRegion(
   const { loading, error, data } = useQuery(GET_REGIONS_PRED, options);
   function reducer(state: CriteriaState, action: string) {
     // In this case, no mapping is done. The options come straight from the backend.
-    if (action === "All") {
+    if (action === "All regions") {
       return {
         type: action,
-        value: action.toLowerCase(),
+        value: "all",
       };
     }
     if (data.getRegionsPred.includes(action)) {
@@ -124,10 +140,13 @@ export function useRegion(
       return state;
     }
   }
-  const [state, dispatch] = useReducer(reducer, { type: "All", value: "all" });
+  const [state, dispatch] = useReducer(reducer, {
+    type: "All regions",
+    value: "all",
+  });
   if (loading) return [state, dispatch, []];
   if (error) return [state, dispatch, []];
-  return [state, dispatch, ["All", ...data.getRegionsPred]];
+  return [state, dispatch, ["All regions", ...data.getRegionsPred]];
 }
 
 export function useMetrics(): [
@@ -136,7 +155,7 @@ export function useMetrics(): [
   string[]
 ] {
   const options = [
-    "All",
+    "All diet types",
     "% By Occurrence",
     "% By Items",
     "% By Weight/Volume",
@@ -154,22 +173,25 @@ export function useMetrics(): [
         case "Unspecified":
           return { type: action, value: "unspecified" };
         default:
-          return { type: "All", value: "all" };
+          return { type: "All diet types", value: "all" };
       }
     } else {
       return state;
     }
   }
-  const [state, dispatch] = useReducer(reducer, { type: "All", value: "all" });
+  const [state, dispatch] = useReducer(reducer, {
+    type: "All diet types",
+    value: "all",
+  });
   return [state, dispatch, options];
 }
 
 export function useStage(): [CriteriaState, React.Dispatch<string>, string[]] {
-  const options = ["All", "Larva", "Pupa", "Adult"];
+  const options = ["All stages", "Larva", "Pupa", "Adult"];
   function reducer(state: CriteriaState, action: string) {
     if (options.includes(action)) {
       switch (action) {
-        case "All":
+        case "All stages":
           return { type: action, value: "any" };
         case "Larva":
           return { type: action, value: "larva" };
@@ -185,7 +207,7 @@ export function useStage(): [CriteriaState, React.Dispatch<string>, string[]] {
     }
   }
   const [state, dispatch] = useReducer(reducer, {
-    type: "All",
+    type: "All stages",
     value: "any",
   });
   return [state, dispatch, options];
@@ -193,14 +215,14 @@ export function useStage(): [CriteriaState, React.Dispatch<string>, string[]] {
 
 export function useLevel(): [CriteriaState, React.Dispatch<string>, string[]] {
   const options = [
+    "Species",
+    "Genus",
+    "Family",
     "Suborder",
     "Order",
-    "Kingdom",
-    "Phylum",
     "Class",
-    "Family",
-    "Genus",
-    "Species",
+    "Phylum",
+    "Kingdom",
   ];
   function reducer(state: CriteriaState, action: string) {
     if (options.includes(action)) {
@@ -213,7 +235,7 @@ export function useLevel(): [CriteriaState, React.Dispatch<string>, string[]] {
     }
   }
   const [state, dispatch] = useReducer(reducer, {
-    type: "Scientific_Name",
+    type: "Species",
     value: "scientific_name",
   });
   return [state, dispatch, options];

@@ -18,7 +18,7 @@ export const LogicHome = (props: LogicHomeProps) => {
         activeItem: props.activeItem,
         updateActiveItem: props.updateActiveItem,
         updateItemType: props.updateItemType,
-        placeholder: "Enter a predator name",
+        placeholder: "Enter a bird name",
         left: "What does the ",
         right: " eat?",
       });

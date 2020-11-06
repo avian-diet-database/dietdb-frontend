@@ -22,6 +22,17 @@ export const DesignItem = (props: DesignItemProps) => {
   return (
     <div className="hero is-light">
       <div className="hero-body">
+        <div className="notification is-light is-size-4">
+          {isPredator ? "Here is what the " : "Here is what eats the "}
+          <a
+            style={{ textDecoration: "none" }}
+            onClick={() => document.getElementById("home")?.scrollIntoView()}
+            className="has-text-info has-text-strong"
+          >
+            {props.activeItem}
+          </a>
+          {isPredator ? " eats." : "."}
+        </div>
         <div className="columns">
           <div className="column is-6">
             <LogicCriteria
@@ -67,10 +78,10 @@ export const DesignItem = (props: DesignItemProps) => {
         </div>
         {isPredator ? (
           <div>
-            {" "}
             <LogicSources
               activeItem={props.activeItem}
               itemType={props.itemType}
+              controller={props.controller}
             />
           </div>
         ) : null}

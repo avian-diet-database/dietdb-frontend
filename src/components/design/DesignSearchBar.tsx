@@ -1,7 +1,6 @@
-import React, { useState, useEffect, Children } from "react";
+import React, { useState, useEffect } from "react";
 import { ItemType } from "../../App";
 import { DebounceInput } from "react-debounce-input";
-import { ReactComponent } from "*.svg";
 
 export interface DesignSearchBarProps {
   queryMatches: string[];

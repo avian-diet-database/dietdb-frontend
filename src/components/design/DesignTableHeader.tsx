@@ -44,7 +44,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " +
+            "button is-primary " +
             (props.sortedBy === TableSort.WTVOL ? "" : "is-inverted")
           }
           onClick={props.controller.handleWtVolClick}
@@ -58,7 +58,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " +
+            "button is-primary " +
             (props.sortedBy === TableSort.OCCUR ? "" : "is-inverted")
           }
           onClick={props.controller.handleOccurClick}
@@ -72,7 +72,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " +
+            "button is-primary " +
             (props.sortedBy === TableSort.UNSPC ? "" : "is-inverted")
           }
           onClick={props.controller.handleUnspcClick}
@@ -89,7 +89,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " +
+            "button is-primary " +
             (props.sortedBy === TableSort.CMNNM ? "" : "is-inverted")
           }
           onClick={props.controller.handleCommonNameClick}
@@ -103,7 +103,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " +
+            "button is-primary " +
             (props.sortedBy === TableSort.FAMLY ? "" : "is-inverted")
           }
           onClick={props.controller.handleFamilyClick}
@@ -117,7 +117,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " +
+            "button is-primary " +
             (props.sortedBy === TableSort.DTTYP ? "" : "is-inverted")
           }
           onClick={props.controller.handleMetricsClick}
@@ -131,7 +131,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " +
+            "button is-primary " +
             (props.sortedBy === TableSort.FRADT ? "" : "is-inverted")
           }
           onClick={props.controller.handleFractionDietClick}
@@ -145,7 +145,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " +
+            "button is-primary " +
             (props.sortedBy === TableSort.NMSTD ? "" : "is-inverted")
           }
           onClick={props.controller.handleNumberOfStudiesClick}

@@ -8,8 +8,10 @@ export interface DesignItemLinkProps {
 
 export const DesignItemLink = (props: DesignItemLinkProps) => {
   return (
-    <td className="is-clickable" onClick={props.onItemClick}>
-      {props.itemName}
+    <td onClick={props.onItemClick}>
+      <a style={{ textDecoration: "none" }} className="has-text-primary-dark">
+        {props.itemName}
+      </a>
     </td>
   );
 };

@@ -20,7 +20,7 @@ export const DesignTabBar = (props: DesignTabBarProps) => {
                 (props.itemType === ItemType.PREDATOR ? "is-active" : "")
               }
             >
-              Predator
+              Bird
             </a>
           </li>
           <li>

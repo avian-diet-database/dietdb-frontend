@@ -4,16 +4,24 @@ import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { LogicErrorPage } from "../logic/LogicErrorPage";
 import { DesignSources } from "../design/DesignSources";
 import { ItemType } from "../../App";
+import { CriteriaController } from "../../types/CriteriaController";
 
 export interface LogicSourceProps {
   activeItem: string;
   itemType: ItemType;
+  controller: CriteriaController;
 }
 
 export const LogicSources = (props: LogicSourceProps) => {
   const options = {
     variables: {
       name: props.activeItem,
+      level: props.controller.level.value,
+      metrics: props.controller.metrics.value,
+      startYear: props.controller.startYear.value,
+      endYear: props.controller.endYear.value,
+      season: props.controller.season.value,
+      region: props.controller.region.value,
     },
   };
   const query =
@@ -28,4 +36,3 @@ export const LogicSources = (props: LogicSourceProps) => {
     });
   return DesignSources({ sources: data.getPreyOfSources });
 };
-

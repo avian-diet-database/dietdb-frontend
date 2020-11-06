@@ -19,7 +19,6 @@ interface DesignCriteriaProps {
 }
 
 export const DesignCriteria = (props: DesignCriteriaProps) => {
-  const isPredator = props.itemType === ItemType.PREDATOR;
   return (
     <div className="message is-primary">
       <div className="message-body is-size-5">
@@ -68,13 +67,6 @@ export const DesignCriteria = (props: DesignCriteriaProps) => {
               />
             </div>
           )}
-        </div>
-        <div className="block">
-          <strong className="subtitle is-size-4">
-            {isPredator ? "What does the " : "What birds eat the "}
-            <span className="has-text-success">{props.activeItem}</span>
-            {isPredator ? " eat?" : " ?"}
-          </strong>
         </div>
       </div>
     </div>
