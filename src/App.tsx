@@ -22,7 +22,7 @@ function App() {
   const isHome = itemType === ItemType.NA;
   return (
     <div>
-      <section className={"hero is-light is-fullheight"}>
+      <section className={"hero is-fullheight"}>
         <div className="hero-head">
           <DesignNavBar
             itemType={itemType}

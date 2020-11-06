@@ -9,7 +9,7 @@ interface DesignNavBarProps {
 }
 export const DesignNavBar = (props: DesignNavBarProps) => {
   return (
-    <nav className="navbar is-size-6 has-text-light" id="home">
+    <nav className="navbar is-size-6 is-light" id="home">
       <div className="container">
         <div className="navbar-brand">
           <div className="navbar-item">

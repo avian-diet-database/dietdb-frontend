@@ -16,7 +16,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " +
+            "button is-primary " +
             (props.sortedBy === TableSort.TAXON ? "" : "is-inverted")
           }
           onClick={props.controller.handleTaxonClick}
@@ -30,7 +30,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <button
           className={
-            "button is-info " +
+            "button is-primary " +
             (props.sortedBy === TableSort.ITEMS ? "" : "is-inverted")
           }
           onClick={props.controller.handleItemsClick}

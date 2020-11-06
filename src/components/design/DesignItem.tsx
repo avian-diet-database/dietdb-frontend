@@ -20,7 +20,7 @@ export interface DesignItemProps {
 export const DesignItem = (props: DesignItemProps) => {
   let isPredator = props.itemType == ItemType.PREDATOR;
   return (
-    <div className="hero">
+    <div className="hero is-light">
       <div className="hero-body">
         <div className="columns">
           <div className="column is-6">
