@@ -121,7 +121,6 @@ export const createMap = (data: any[]) => {
     let customConfig = () => {
         return customFill;
     };
-    console.log(customConfig());
 
     return DesignMap({ customFill: customConfig() });
 }
