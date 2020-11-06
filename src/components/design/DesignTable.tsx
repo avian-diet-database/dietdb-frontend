@@ -5,12 +5,14 @@ import { TableController } from "../../types/TableController";
 import { DesignTableHeader } from "./DesignTableHeader";
 import { ItemType } from "../../App";
 import { LogicItemLink } from "../logic/LogicItemLink";
+import { TableSort } from "../logic/TableSorting";
 
 interface DesignTableProps {
   data: any[];
   controller: TableController;
   activeItem: string;
   itemType: ItemType;
+  sortedBy: TableSort;
   options: {
     variables: {
       name: string;
@@ -56,6 +58,7 @@ export const DesignTable = (props: DesignTableProps) => {
           <table className="table is-striped is-fullwidth has-background-primary-light">
             <thead>
               <DesignTableHeader
+                sortedBy={props.sortedBy}
                 itemType={props.itemType}
                 controller={props.controller}
               />
@@ -93,6 +96,7 @@ export const DesignTable = (props: DesignTableProps) => {
             </tbody>
             <tfoot>
               <DesignTableHeader
+                sortedBy={props.sortedBy}
                 itemType={props.itemType}
                 controller={props.controller}
               />

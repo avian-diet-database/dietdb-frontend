@@ -7,7 +7,7 @@ import { ItemType } from "../../App";
 import { DesignErrorPage } from "../design/DesignErrorPage";
 import { useTable, TableSort, TableActionType } from "./TableSorting";
 import { TableController } from "../../types/TableController";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface LogicTableProps {
   controller: CriteriaController;
@@ -43,6 +43,8 @@ export const LogicTable = (props: LogicTableProps) => {
 
   const [tableData, dispatchTableAction] = useTable(props.itemType);
 
+  const [sortedBy, updateSortedBy] = useState(TableSort.ITEMS);
+
   useEffect(() => {
     if (data) {
       const arr =
@@ -76,8 +78,13 @@ export const LogicTable = (props: LogicTableProps) => {
             type: TableActionType.FRADT,
             payload: null,
           });
+      updateSortedBy(
+        itemType === ItemType.PREDATOR ? TableSort.ITEMS : TableSort.FRADT
+      );
     },
     handleMetricsClick: () => {
+      updateSortedBy(TableSort.DTTYP);
+      updateSortedBy(TableSort.DTTYP);
       tableData.sort === TableSort.DTTYP
         ? dispatchTableAction({
             type: TableActionType.TOGGLEDIR,
@@ -86,6 +93,7 @@ export const LogicTable = (props: LogicTableProps) => {
         : dispatchTableAction({ type: TableActionType.DTTYP, payload: null });
     },
     handleCommonNameClick: () => {
+      updateSortedBy(TableSort.CMNNM);
       tableData.sort === TableSort.CMNNM
         ? dispatchTableAction({
             type: TableActionType.TOGGLEDIR,
@@ -94,6 +102,7 @@ export const LogicTable = (props: LogicTableProps) => {
         : dispatchTableAction({ type: TableActionType.CMNNM, payload: null });
     },
     handleFractionDietClick: () => {
+      updateSortedBy(TableSort.FRADT);
       tableData.sort === TableSort.FRADT
         ? dispatchTableAction({
             type: TableActionType.TOGGLEDIR,
@@ -102,6 +111,7 @@ export const LogicTable = (props: LogicTableProps) => {
         : dispatchTableAction({ type: TableActionType.FRADT, payload: null });
     },
     handleFamilyClick: () => {
+      updateSortedBy(TableSort.FAMLY);
       tableData.sort === TableSort.FAMLY
         ? dispatchTableAction({
             type: TableActionType.TOGGLEDIR,
@@ -110,6 +120,7 @@ export const LogicTable = (props: LogicTableProps) => {
         : dispatchTableAction({ type: TableActionType.FAMLY, payload: null });
     },
     handleNumberOfStudiesClick: () => {
+      updateSortedBy(TableSort.NMSTD);
       tableData.sort === TableSort.NMSTD
         ? dispatchTableAction({
             type: TableActionType.TOGGLEDIR,
@@ -118,6 +129,7 @@ export const LogicTable = (props: LogicTableProps) => {
         : dispatchTableAction({ type: TableActionType.NMSTD, payload: null });
     },
     handleTaxonClick: () => {
+      updateSortedBy(TableSort.TAXON);
       tableData.sort === TableSort.TAXON
         ? dispatchTableAction({
             type: TableActionType.TOGGLEDIR,
@@ -126,6 +138,7 @@ export const LogicTable = (props: LogicTableProps) => {
         : dispatchTableAction({ type: TableActionType.TAXON, payload: null });
     },
     handleItemsClick: () => {
+      updateSortedBy(TableSort.ITEMS);
       tableData.sort === TableSort.ITEMS
         ? dispatchTableAction({
             type: TableActionType.TOGGLEDIR,
@@ -134,6 +147,7 @@ export const LogicTable = (props: LogicTableProps) => {
         : dispatchTableAction({ type: TableActionType.ITEMS, payload: null });
     },
     handleWtVolClick: () => {
+      updateSortedBy(TableSort.WTVOL);
       tableData.sort === TableSort.WTVOL
         ? dispatchTableAction({
             type: TableActionType.TOGGLEDIR,
@@ -142,6 +156,7 @@ export const LogicTable = (props: LogicTableProps) => {
         : dispatchTableAction({ type: TableActionType.WTVOL, payload: null });
     },
     handleOccurClick: () => {
+      updateSortedBy(TableSort.OCCUR);
       tableData.sort === TableSort.OCCUR
         ? dispatchTableAction({
             type: TableActionType.TOGGLEDIR,
@@ -150,6 +165,7 @@ export const LogicTable = (props: LogicTableProps) => {
         : dispatchTableAction({ type: TableActionType.OCCUR, payload: null });
     },
     handleUnspcClick: () => {
+      updateSortedBy(TableSort.UNSPC);
       tableData.sort === TableSort.UNSPC
         ? dispatchTableAction({
             type: TableActionType.TOGGLEDIR,
@@ -200,5 +216,6 @@ export const LogicTable = (props: LogicTableProps) => {
     controller,
     activeItem,
     options,
+    sortedBy,
   });
 };

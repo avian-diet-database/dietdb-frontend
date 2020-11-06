@@ -54,19 +54,19 @@ function App() {
           <DesignTabBar
             itemType={itemType}
             onHomeClick={() => {
+              document.getElementById("home")?.scrollIntoView();
               updateActiveItem("");
               updateItemType(ItemType.NA);
-              document.getElementById("home")?.scrollIntoView();
             }}
             onPreyClick={() => {
+              document.getElementById("home")?.scrollIntoView();
               updateActiveItem("");
               updateItemType(ItemType.PREY);
-              document.getElementById("home")?.scrollIntoView();
             }}
             onPredatorClick={() => {
+              document.getElementById("home")?.scrollIntoView();
               updateActiveItem("");
               updateItemType(ItemType.PREDATOR);
-              document.getElementById("home")?.scrollIntoView();
             }}
           />
         </div>

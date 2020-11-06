@@ -1,26 +1,21 @@
 import React from "react";
 import { ItemType } from "../../App";
 import { LogicDropdown } from "../logic/LogicDropdown";
+import { CriteriaController } from "../../types/CriteriaController";
 
 interface DesignCriteriaProps {
   itemType: ItemType;
+  controller: CriteriaController;
   activeItem: string;
   editing: boolean;
   setEditing: React.Dispatch<boolean>;
   onStartYearChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  startYearOptions: string[];
   onEndYearChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  endYearOptions: string[];
   onRegionChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  regionOptions: string[];
   onLevelChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  levelOptions: string[];
   onMetricsChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  metricsOptions: string[];
   onSeasonsChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  seasonsOptions: string[];
   onStageChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  stageOptions: string[];
 }
 
 export const DesignCriteria = (props: DesignCriteriaProps) => {
@@ -29,36 +24,38 @@ export const DesignCriteria = (props: DesignCriteriaProps) => {
     <div className="message is-primary">
       <div className="message-body is-size-5">
         <div className="block">
-          From{" "}
+          {"From "}
+          {
+            <LogicDropdown
+              criteriaOptions={props.controller.startYearOptions}
+              onChange={props.onStartYearChange}
+            />
+          }
+          {" to "}
           <LogicDropdown
-            criteriaOptions={props.startYearOptions}
-            onChange={props.onStartYearChange}
-          />{" "}
-          to{" "}
-          <LogicDropdown
-            criteriaOptions={props.endYearOptions}
+            criteriaOptions={props.controller.endYearOptions}
             onChange={props.onEndYearChange}
           />{" "}
           in{" "}
           <LogicDropdown
-            criteriaOptions={props.regionOptions}
+            criteriaOptions={props.controller.regionOptions}
             onChange={props.onRegionChange}
           />{" "}
           over the span of{" "}
           <LogicDropdown
-            criteriaOptions={props.seasonsOptions}
+            criteriaOptions={props.controller.seasonOptions}
             onChange={props.onSeasonsChange}
           />
           , the data includes{" "}
           <LogicDropdown
-            criteriaOptions={props.metricsOptions}
+            criteriaOptions={props.controller.metricsOptions}
             onChange={props.onMetricsChange}
           />{" "}
           {props.itemType === ItemType.PREDATOR ? (
             <div>
               and is summarized at the level of{" "}
               <LogicDropdown
-                criteriaOptions={props.levelOptions}
+                criteriaOptions={props.controller.levelOptions}
                 onChange={props.onLevelChange}
               />
             </div>
@@ -66,7 +63,7 @@ export const DesignCriteria = (props: DesignCriteriaProps) => {
             <div>
               and is of the stage{" "}
               <LogicDropdown
-                criteriaOptions={props.stageOptions}
+                criteriaOptions={props.controller.stageOptions}
                 onChange={props.onStageChange}
               />
             </div>
