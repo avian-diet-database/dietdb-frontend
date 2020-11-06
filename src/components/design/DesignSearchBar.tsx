@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, Children } from "react";
 import { ItemType } from "../../App";
 import { DebounceInput } from "react-debounce-input";
+import { ReactComponent } from "*.svg";
 
 export interface DesignSearchBarProps {
   queryMatches: string[];
@@ -18,20 +19,23 @@ export interface DesignSearchBarProps {
 
 export const DesignSearchBar = (props: DesignSearchBarProps) => {
   const [liveItem, setLiveItem] = useState("_____");
+  useEffect(() => {
+    setLiveItem(props.activeItem || "_____");
+  }, [props.queryType, props.activeItem]);
   return (
     <div className="container">
       <p className="title is-size-3">
         {props.left}
-        <span className="has-text-dark">{liveItem}</span>
+        <span className="has-text-info">{liveItem}</span>
         {props.right}
       </p>
       <div className="dropdown">
         <div className="container">
-          <div className="field">
+          <div className="field has-addons">
             <div className="control">
               <DebounceInput
                 value={props.activeItem}
-                className="input is-dark is-large"
+                className="input is-info"
                 type="text"
                 placeholder={props.placeholder}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +43,16 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
                   props.onQueryInputChange(event);
                 }}
               />
+            </div>
+            <div className="control">
+              <a
+                className="button is-info"
+                onClick={() =>
+                  document.getElementById("item")?.scrollIntoView()
+                }
+              >
+                Search
+              </a>
             </div>
           </div>
           {props.queryMatches.length > 0 ? (

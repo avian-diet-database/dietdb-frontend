@@ -5,10 +5,10 @@ export interface DesignSourcesProps {
 
 export const DesignSources = (props: DesignSourcesProps) => {
   return (
-    <div className="message is-dark">
+    <div className="message is-primary">
       <div className="message-header">Sources</div>
-      <div className="message-body has-background-light">
-        <div className="has-background-light has-text-dark">
+      <div className="message-body">
+        <div className="container">
           {props.sources.map((source) => {
             return (
               <div className="block" key={props.sources.indexOf(source)}>

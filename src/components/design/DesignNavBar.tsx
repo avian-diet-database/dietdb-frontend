@@ -9,7 +9,7 @@ interface DesignNavBarProps {
 }
 export const DesignNavBar = (props: DesignNavBarProps) => {
   return (
-    <nav className="navbar is-size-6 has-text-light">
+    <nav className="navbar is-size-6 has-text-light" id="home">
       <div className="container">
         <div className="navbar-brand">
           <div className="navbar-item">
@@ -53,7 +53,7 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
             <span className="navbar-item">
               <a
                 href="https://github.com/hurlbertlab/dietdatabase"
-                className="button is-primary is-inverted"
+                className="button is-success is-inverted"
               >
                 {" "}
                 Github{" "}

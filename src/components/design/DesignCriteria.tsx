@@ -22,8 +22,8 @@ interface DesignCriteriaProps {
 
 export const DesignCriteria = (props: DesignCriteriaProps) => {
   return (
-    <div className="box has-background-light">
-      <div className="content has-text-dark has-text-centered is-size-4">
+    <div className="message is-primary">
+      <div className="message-body is-size-5">
         From{" "}
         <LogicDropdown
           criteriaOptions={props.startYearOptions}

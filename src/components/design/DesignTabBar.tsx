@@ -9,7 +9,7 @@ interface DesignTabBarProps {
 }
 export const DesignTabBar = (props: DesignTabBarProps) => {
   return (
-    <nav className="tabs">
+    <nav className="tabs" id="item">
       <div className="container">
         <ul>
           <li>

@@ -22,7 +22,7 @@ export const DesignItem = (props: DesignItemProps) => {
   return (
     <div className="hero">
       <div className="hero-body">
-        <div className="columns replacement">
+        <div className="columns">
           <div className="column is-6">
             <LogicCriteria
               controller={props.controller}
@@ -62,7 +62,10 @@ export const DesignItem = (props: DesignItemProps) => {
                       activeItem={props.activeItem}
                       controller={props.controller}
                     />
-                    <LogicMap activeItem={props.activeItem} controller={props.controller} />
+                    <LogicMap
+                      activeItem={props.activeItem}
+                      controller={props.controller}
+                    />
                   </div>
                 </div>
               </div>

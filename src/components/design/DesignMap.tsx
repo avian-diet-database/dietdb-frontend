@@ -8,9 +8,9 @@ interface DesignMapProps {
 
 export const DesignMap = (props: DesignMapProps) => {
   return (
-    <div className="message is-dark">
+    <div className="message is-primary">
       <div className="message-header">Number of Records Per State</div>
-      <div className="message-body has-background-light">
+      <div className="message-body">
         <USAMap height={132} width={200} customize={props.customFill} />
         <DesignScale />
       </div>

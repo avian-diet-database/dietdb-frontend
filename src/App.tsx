@@ -22,7 +22,7 @@ function App() {
   const isHome = itemType === ItemType.NA;
   return (
     <div>
-      <section className={"hero is-primary is-fullheight"}>
+      <section className={"hero is-light is-fullheight"}>
         <div className="hero-head">
           <DesignNavBar
             itemType={itemType}
@@ -56,14 +56,17 @@ function App() {
             onHomeClick={() => {
               updateActiveItem("");
               updateItemType(ItemType.NA);
+              document.getElementById("home")?.scrollIntoView();
             }}
             onPreyClick={() => {
               updateActiveItem("");
               updateItemType(ItemType.PREY);
+              document.getElementById("home")?.scrollIntoView();
             }}
             onPredatorClick={() => {
               updateActiveItem("");
               updateItemType(ItemType.PREDATOR);
+              document.getElementById("home")?.scrollIntoView();
             }}
           />
         </div>
