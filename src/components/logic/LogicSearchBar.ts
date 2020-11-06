@@ -22,20 +22,29 @@ export interface LogicSearchBarProps {
 export const LogicSearchBar = (props: LogicSearchBarProps) => {
   const [queryMatches, updateQueryString] = useAutocomplete(props.queryType);
 
+  document.addEventListener("keyup", (e: KeyboardEvent) => {
+    if (e.keyCode === 13) {
+      selectItem(queryMatches[0]);
+    }
+  });
+
   // --- UPDATE HANDLERS --- //
   // When the user changes their query, update the query string.
   const onQueryInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     updateQueryString(event.target.value);
   };
 
+  const selectItem = (item: string) => {
+    document.getElementById("item")?.scrollIntoView();
+    props.updateActiveItem(item);
+    props.updateItemType(props.queryType);
+    updateQueryString("");
+  };
+
   const onItemSelect = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
-    props.updateActiveItem(() => {
-      return event.currentTarget.textContent || "";
-    });
-    props.updateItemType(props.queryType);
-    updateQueryString("");
+    selectItem(event.currentTarget.textContent || "");
   };
 
   return DesignSearchBar({

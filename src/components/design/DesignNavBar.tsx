@@ -11,7 +11,7 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
   const [mobileActive, setMobileActive] = useState(false);
   const active = mobileActive ? "is-active" : "";
   return (
-    <nav className="navbar is-fixed-top is-light">
+    <nav className="navbar is-fixed-top is-primary">
       <div className="navbar-brand">
         <div className="navbar-item">
           <img src="../eagle_fish_silhouette.png" alt="Bird"></img>
