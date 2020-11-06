@@ -6,7 +6,11 @@ export interface DesignItemLinkProps {
 
 export const DesignItemLink = (props: DesignItemLinkProps) => {
   return (
-    <a style={{ textDecoration: "none" }} onClick={props.onItemClick}>
+    <a
+      style={{ textDecoration: "none" }}
+      className="is-hoverable"
+      onClick={props.onItemClick}
+    >
       {props.itemName}
     </a>
   );
