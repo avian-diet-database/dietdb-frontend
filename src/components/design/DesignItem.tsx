@@ -76,7 +76,7 @@ export const DesignItem = (props: DesignItemProps) => {
                     activeItem={props.activeItem}
                     controller={props.controller}
                   />
-                  <LogicMap activeItem={props.activeItem} />
+                  <LogicMap activeItem={props.activeItem} controller={props.controller}/>
                 </div>
               </div>
             </div>

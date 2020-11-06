@@ -3,14 +3,16 @@ import { GET_MAP_DATA } from "../../gql/queries";
 import { useQuery } from "@apollo/client";
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { LogicErrorPage } from "./LogicErrorPage";
+import { CriteriaController } from "../../types/CriteriaController";
 
 interface LogicMapProps {
     activeItem: string;
+    controller: CriteriaController;
 }
 
 let Rainbow = require('rainbowvis.js');
 let colorScale = new Rainbow();
-colorScale.setSpectrum('#ffffff', '#b15900');
+colorScale.setSpectrum('#CED5D3', '#b15900');
 
 let stateNames = new Map();
 
@@ -78,6 +80,11 @@ export const LogicMap = (props: LogicMapProps) => {
     const options = {
         variables: {
             name: props.activeItem,
+            metrics: props.controller.metrics.value,
+            startYear: props.controller.startYear.value,
+            endYear: props.controller.endYear.value,
+            seasons: props.controller.season.value,
+            region: props.controller.region.value,
         }
     };
 
@@ -89,7 +96,17 @@ export const LogicMap = (props: LogicMapProps) => {
     return createMap(arr);
 }
 
+export const includeAllStates = () => {
+    stateNames.forEach(addState);
+}
+
+function addState(value:string, key:string) {
+    customFill[value] = { fill: "#CED5D3" }; 
+}
+
 export const createMap = (data: any[]) => {
+    customFill = {};
+    includeAllStates();
     let region = "";
     let regionColor = "";
     for (let entry of data) {
@@ -104,6 +121,7 @@ export const createMap = (data: any[]) => {
     let customConfig = () => {
         return customFill;
     };
+    console.log(customConfig());
 
     return DesignMap({ customFill: customConfig() });
 }
