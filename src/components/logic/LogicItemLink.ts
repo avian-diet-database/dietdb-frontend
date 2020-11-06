@@ -20,7 +20,9 @@ export const LogicItemLink = (props: LogicItemLinkProps) => {
   ) => {
     props.resetTable(props.itemType);
     props.updateItemType(props.itemType);
-    props.updateActiveItem(props.itemName);
+    props.updateActiveItem(
+      props.itemName.replace(/Unid./g, "").replace(/larva/g, "").trim()
+    );
   };
   return DesignItemLink({ itemName: props.itemName, onItemClick });
 };
