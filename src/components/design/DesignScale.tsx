@@ -10,7 +10,7 @@ export const DesignScale = () => {
       width={200}
       startTitle={"0 Records"}
       endTitle={"70+ Records"}
-      startColor={"#ffffff"}
+      startColor={"#CED5D3"}
       endColor={"#b15900"}
     />
   );
