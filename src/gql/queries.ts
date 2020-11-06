@@ -169,3 +169,29 @@ export const GET_MAP_DATA = gql`
     }
   }
 `;
+
+export const GET_FILTERS_PRED = gql`
+  query(
+    $name: String!
+    $metrics: String
+    $startYear: String
+    $endYear: String
+    $seasons: String
+    $region: String
+  ) {
+    getFiltersPred(
+      predatorName: $name
+      dietType: $metrics
+      startYear: $startYear
+      endYear: $endYear
+      season: $seasons
+      region: $region
+    ) {
+      startYears
+      endYears
+      regions
+      dietTypes
+      seasons
+    }
+  }
+`;

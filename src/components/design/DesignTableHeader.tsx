@@ -1,8 +1,10 @@
 import React from "react";
 import { TableController } from "../../types/TableController";
 import { ItemType } from "../../App";
+import { TableSort } from "../logic/TableSorting";
 
 interface DesignTableHeaderProps {
+  sortedBy: TableSort;
   itemType: ItemType;
   controller: TableController;
 }
@@ -13,7 +15,10 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
     <tr>
       <th>
         <button
-          className="button is-dark is-inverted"
+          className={
+            "button is-info " +
+            (props.sortedBy === TableSort.TAXON ? "" : "is-inverted")
+          }
           onClick={props.controller.handleTaxonClick}
         >
           <span>Taxon</span>
@@ -24,7 +29,10 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       </th>
       <th>
         <button
-          className="button is-dark is-inverted"
+          className={
+            "button is-info " +
+            (props.sortedBy === TableSort.ITEMS ? "" : "is-inverted")
+          }
           onClick={props.controller.handleItemsClick}
         >
           <span>Items</span>
@@ -35,7 +43,10 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       </th>
       <th>
         <button
-          className="button is-dark is-inverted"
+          className={
+            "button is-info " +
+            (props.sortedBy === TableSort.WTVOL ? "" : "is-inverted")
+          }
           onClick={props.controller.handleWtVolClick}
         >
           <span>Weight/Volume</span>
@@ -46,7 +57,10 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       </th>
       <th>
         <button
-          className="button is-dark is-inverted"
+          className={
+            "button is-info " +
+            (props.sortedBy === TableSort.OCCUR ? "" : "is-inverted")
+          }
           onClick={props.controller.handleOccurClick}
         >
           <span>Occurrence</span>
@@ -57,7 +71,10 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       </th>
       <th>
         <button
-          className="button is-dark is-inverted"
+          className={
+            "button is-info " +
+            (props.sortedBy === TableSort.UNSPC ? "" : "is-inverted")
+          }
           onClick={props.controller.handleUnspcClick}
         >
           <span>Unspecified</span>
@@ -71,7 +88,10 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
     <tr>
       <th>
         <button
-          className="button is-dark is-inverted"
+          className={
+            "button is-info " +
+            (props.sortedBy === TableSort.CMNNM ? "" : "is-inverted")
+          }
           onClick={props.controller.handleCommonNameClick}
         >
           <span>Common Name</span>
@@ -82,7 +102,10 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       </th>
       <th>
         <button
-          className="button is-dark is-inverted"
+          className={
+            "button is-info " +
+            (props.sortedBy === TableSort.FAMLY ? "" : "is-inverted")
+          }
           onClick={props.controller.handleFamilyClick}
         >
           <span>Family</span>
@@ -93,7 +116,10 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       </th>
       <th>
         <button
-          className="button is-dark is-inverted"
+          className={
+            "button is-info " +
+            (props.sortedBy === TableSort.DTTYP ? "" : "is-inverted")
+          }
           onClick={props.controller.handleMetricsClick}
         >
           <span>Diet Type</span>
@@ -104,7 +130,10 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       </th>
       <th>
         <button
-          className="button is-dark is-inverted"
+          className={
+            "button is-info " +
+            (props.sortedBy === TableSort.FRADT ? "" : "is-inverted")
+          }
           onClick={props.controller.handleFractionDietClick}
         >
           <span>Fraction Diet</span>
@@ -115,7 +144,10 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       </th>
       <th>
         <button
-          className="button is-dark is-inverted"
+          className={
+            "button is-info " +
+            (props.sortedBy === TableSort.NMSTD ? "" : "is-inverted")
+          }
           onClick={props.controller.handleNumberOfStudiesClick}
         >
           <span>Number of Studies</span>
