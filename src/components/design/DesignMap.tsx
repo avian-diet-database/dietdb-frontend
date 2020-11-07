@@ -8,7 +8,7 @@ interface DesignMapProps {
 
 export const DesignMap = (props: DesignMapProps) => {
   return (
-    <div className="message is-primary">
+    <div className="message">
       <div className="message-header">Number of Records Per State</div>
       <div className="message-body">
         <div className="has-text-centered">
@@ -16,10 +16,12 @@ export const DesignMap = (props: DesignMapProps) => {
         </div>
         <div className="columns">
           <div className="column"></div>
-          <div className="column"><DesignScale /></div>
+          <div className="column">
+            <DesignScale />
+          </div>
           <div className="column"></div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };

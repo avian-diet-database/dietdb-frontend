@@ -17,7 +17,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <DesignTableHeaderButton
           classNameAddons={
-            props.sortedBy === TableSort.TAXON ? "" : "is-inverted"
+            props.sortedBy === TableSort.TAXON ? "is-light" : "is-inverted"
           }
           onClick={props.controller.handleTaxonClick}
           buttonText="Taxon"
@@ -26,7 +26,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <DesignTableHeaderButton
           classNameAddons={
-            props.sortedBy === TableSort.ITEMS ? "" : "is-inverted"
+            props.sortedBy === TableSort.ITEMS ? "is-light" : "is-inverted"
           }
           onClick={props.controller.handleItemsClick}
           buttonText="Items"
@@ -35,7 +35,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <DesignTableHeaderButton
           classNameAddons={
-            props.sortedBy === TableSort.WTVOL ? "" : "is-inverted"
+            props.sortedBy === TableSort.WTVOL ? "is-light" : "is-inverted"
           }
           onClick={props.controller.handleWtVolClick}
           buttonText="Weight/Volume"
@@ -44,7 +44,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <DesignTableHeaderButton
           classNameAddons={
-            props.sortedBy === TableSort.OCCUR ? "" : "is-inverted"
+            props.sortedBy === TableSort.OCCUR ? "is-light" : "is-inverted"
           }
           onClick={props.controller.handleOccurClick}
           buttonText="Occurrence"
@@ -53,7 +53,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <DesignTableHeaderButton
           classNameAddons={
-            props.sortedBy === TableSort.UNSPC ? "" : "is-inverted"
+            props.sortedBy === TableSort.UNSPC ? "is-light" : "is-inverted"
           }
           onClick={props.controller.handleUnspcClick}
           buttonText="Unspecified"
@@ -65,7 +65,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <DesignTableHeaderButton
           classNameAddons={
-            props.sortedBy === TableSort.CMNNM ? "" : "is-inverted"
+            props.sortedBy === TableSort.CMNNM ? "is-light" : "is-inverted"
           }
           onClick={props.controller.handleCommonNameClick}
           buttonText="Common Name"
@@ -74,7 +74,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <DesignTableHeaderButton
           classNameAddons={
-            props.sortedBy === TableSort.FAMLY ? "" : "is-inverted"
+            props.sortedBy === TableSort.FAMLY ? "is-light" : "is-inverted"
           }
           onClick={props.controller.handleFamilyClick}
           buttonText="Family"
@@ -83,7 +83,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <DesignTableHeaderButton
           classNameAddons={
-            props.sortedBy === TableSort.DTTYP ? "" : "is-inverted"
+            props.sortedBy === TableSort.DTTYP ? "is-light" : "is-inverted"
           }
           onClick={props.controller.handleMetricsClick}
           buttonText="Diet Type"
@@ -92,7 +92,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <DesignTableHeaderButton
           classNameAddons={
-            props.sortedBy === TableSort.FRADT ? "" : "is-inverted"
+            props.sortedBy === TableSort.FRADT ? "is-light" : "is-inverted"
           }
           onClick={props.controller.handleFractionDietClick}
           buttonText="Fraction Diet"
@@ -101,7 +101,7 @@ export const DesignTableHeader = (props: DesignTableHeaderProps) => {
       <th>
         <DesignTableHeaderButton
           classNameAddons={
-            props.sortedBy === TableSort.NMSTD ? "" : "is-inverted"
+            props.sortedBy === TableSort.NMSTD ? "is-light" : "is-inverted"
           }
           onClick={props.controller.handleNumberOfStudiesClick}
           buttonText="Number of Studies"

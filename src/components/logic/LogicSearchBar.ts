@@ -22,9 +22,10 @@ export interface LogicSearchBarProps {
 export const LogicSearchBar = (props: LogicSearchBarProps) => {
   const [queryMatches, updateQueryString] = useAutocomplete(props.queryType);
 
-  document.addEventListener("keyup", (e: KeyboardEvent) => {
+  document.addEventListener("keypress", (e: KeyboardEvent) => {
     if (e.keyCode === 13) {
-      selectItem(queryMatches[0]);
+      selectItem(queryMatches[0] || props.activeItem);
+      document.getElementById("item")?.scrollIntoView();
     }
   });
 
@@ -35,7 +36,6 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
   };
 
   const selectItem = (item: string) => {
-    document.getElementById("item")?.scrollIntoView();
     props.updateActiveItem(item);
     props.updateItemType(props.queryType);
     updateQueryString("");

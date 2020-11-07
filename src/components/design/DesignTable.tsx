@@ -45,7 +45,7 @@ export const DesignTable = (props: DesignTableProps) => {
   ];
 
   return (
-    <div className="message is-primary">
+    <div className="message">
       <div className="message-header">
         Data from {props.numRecords} records and {props.numStudies} studies.
         <DesignDownload
@@ -54,8 +54,8 @@ export const DesignTable = (props: DesignTableProps) => {
         />
       </div>
       <div className="message-body">
-        <div className="is-scrollable ">
-          <table className="table is-striped is-fullwidth has-background-primary-light">
+        <div className="is-scrollable">
+          <table className="table is-striped is-fullwidth">
             <thead>
               <DesignTableHeader
                 sortedBy={props.sortedBy}

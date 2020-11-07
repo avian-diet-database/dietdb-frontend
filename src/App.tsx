@@ -3,7 +3,6 @@ import { LogicFooter } from "./components/logic/LogicFooter";
 import { LogicItem } from "./components/logic/LogicItem";
 import { LogicHome } from "./components/logic/LogicHome";
 import { DesignNavBar } from "./components/design/DesignNavBar";
-import { DesignTabBar } from "./components/design/DesignTabBar";
 
 export enum ItemType {
   PREY,
@@ -21,7 +20,7 @@ function App() {
   const [itemType, updateItemType] = useState(ItemType.NA);
   const isHome = itemType === ItemType.NA;
   return (
-    <div>
+    <div id="home">
       <DesignNavBar
         itemType={itemType}
         onHomeClick={() => {
@@ -40,7 +39,7 @@ function App() {
           updateItemType(ItemType.PREDATOR);
         }}
       />
-      <section className={"hero is-fullheight-with-navbar"} id="home">
+      <section className={"hero is-fullheight-with-navbar"}>
         <div className="hero-head"></div>
         <div className="hero-body">
           {/* Here, render the home if activeItem is "", and otherwise
@@ -53,14 +52,18 @@ function App() {
           />
         </div>
       </section>
-      {!isHome ? (
-        <LogicItem
-          activeItem={activeItem}
-          itemType={itemType}
-          updateActiveItem={updateActiveItem}
-          updateItemType={updateItemType}
-        />
-      ) : null}
+      <section id="item">
+        {!isHome ? (
+          <LogicItem
+            activeItem={activeItem}
+            itemType={itemType}
+            updateActiveItem={updateActiveItem}
+            updateItemType={updateItemType}
+          />
+        ) : (
+          <div></div>
+        )}
+      </section>
       <LogicFooter />
     </div>
   );
