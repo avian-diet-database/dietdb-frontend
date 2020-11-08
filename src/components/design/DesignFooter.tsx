@@ -11,18 +11,21 @@ export const DesignFooter = () => {
         <div className="column is-6 is-offset-1">
           <div className="content has-text-left">
             <p>
-              The Avian Database Project, envisioned by Professor Allen Hurlbert
-              of UNC’s Department of Biology, provides user-friendly access to
-              the data Prof. Hurlbert and his team collect on avian diet from
-              various studies. This is one of the largest collections on this
-              subject, with over 56,000 records up to date.
+              The Avian Diet Database was created by <a className="has-text-primary" href="http://labs.bio.unc.edu/hurlbert/">Dr. Allen Hurlbert</a>, 
+              Professor of Biology at the University of North Carolina at Chapel Hill. 
+              The database currently focuses on North American birds but 
+              will eventually encompass data for all species globally. 
+              The raw data along with a data paper describing the dataset can be found [link for raw data].
             </p>
+            <div>
+              Database last updated on XXXX.
+            </div>
           </div>
         </div>
         <div className="column is-4">
           <div className="content">
             <p className="has-text-right">hurlbert@bio.unc.edu</p>
-            <p className="has-text-right">331 Wilson Hall</p>
+            <p className="has-text-right">University of North Carolina</p>
             <p className="has-text-right">(919) 843-9930 (office)</p>
           </div>
         </div>
