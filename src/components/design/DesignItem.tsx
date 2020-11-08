@@ -23,8 +23,8 @@ export const DesignItem = (props: DesignItemProps) => {
     <div className="hero is-light">
       <div className="hero-body">
         <div className="notification is-light is-size-4">
-          {isPredator ? "Here is what the " : "Here is what eats "}
-          <strong>
+          {isPredator ? "Here is what the " : "Birds known to eat "}
+          <strong className="is-size-2">
             <a
               style={{ textDecoration: "none" }}
               onClick={() => document.getElementById("home")?.scrollIntoView()}
@@ -33,7 +33,11 @@ export const DesignItem = (props: DesignItemProps) => {
               {props.activeItem}
             </a>
           </strong>
-          {isPredator ? " eats." : "."}
+          {isPredator ? " eats based on" : " based on"}
+          <strong className="is-size-2"> {props.numRecords} </strong>
+           records and 
+          <strong className="is-size-2"> {props.numStudies} </strong> 
+           studies.
         </div>
         <div className="columns">
           <div className="column is-6">

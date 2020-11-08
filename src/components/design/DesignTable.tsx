@@ -44,10 +44,14 @@ export const DesignTable = (props: DesignTableProps) => {
     "Table Timestamp: " + new Date(),
   ];
 
+  let isPredator = props.itemType == ItemType.PREDATOR;
+
   return (
     <div className="message">
       <div className="message-header">
-        Data from {props.numRecords} records and {props.numStudies} studies.
+        <div>
+          {isPredator ? "Bird Query Results" : "Prey Query Results"}
+        </div>
         <DesignDownload
           csvData={downloadData(props.data, metadata)}
           fileName={"avianDietTable"}
