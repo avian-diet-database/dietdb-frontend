@@ -105,10 +105,19 @@ function addState(value:string, key:string) {
 }
 
 export const createMap = (data: any[]) => {
+    let maxCount = 0;
     customFill = {};
     includeAllStates();
     let region = "";
     let regionColor = "";
+    for(let entry of data) {
+        region = entry.region;
+        if (!stateNames.has(region)) {
+            continue;
+        }
+        maxCount = Math.max(maxCount, entry.count);
+    }
+    colorScale.setNumberRange(0, maxCount+1);
     for (let entry of data) {
         region = entry.region;
         if (!stateNames.has(region)) {
@@ -122,5 +131,5 @@ export const createMap = (data: any[]) => {
         return customFill;
     };
 
-    return DesignMap({ customFill: customConfig() });
+    return DesignMap({ customFill: customConfig(), maxRecords:maxCount});
 }

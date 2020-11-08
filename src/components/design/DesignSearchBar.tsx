@@ -14,6 +14,7 @@ export interface DesignSearchBarProps {
 
   left: string;
   right: string;
+  indexNum:number;
 }
 
 export const DesignSearchBar = (props: DesignSearchBarProps) => {
@@ -21,6 +22,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
   useEffect(() => {
     setLiveItem(props.activeItem || "_____");
   }, [props.queryType, props.activeItem]);
+  
   return (
     <div className="container">
       <p className="title is-size-3">
@@ -59,7 +61,8 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
               className="dropdown-content"
               style={{ position: "absolute", zIndex: 10 }}
             >
-              {props.queryMatches.map((name: string) => {
+              
+              {props.queryMatches.map((name: string, index:number) => {
                 return (
                   <a
                     key={name}
@@ -71,7 +74,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
                     }}
                     className={
                       "dropdown-item is-size-5 has-text-left" +
-                      (props.activeItem === name ? " is-active" : "")
+                      (index === props.indexNum ? " is-active" : "")
                     }
                   >
                     {name}

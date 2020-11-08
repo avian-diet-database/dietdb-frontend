@@ -4,6 +4,7 @@ import { DesignScale } from "./DesignScale";
 
 interface DesignMapProps {
   customFill: {};
+  maxRecords:number;
 }
 
 export const DesignMap = (props: DesignMapProps) => {
@@ -17,7 +18,7 @@ export const DesignMap = (props: DesignMapProps) => {
         <div className="columns">
           <div className="column"></div>
           <div className="column">
-            <DesignScale />
+            <DesignScale maxScale={props.maxRecords}/>
           </div>
           <div className="column"></div>
         </div>

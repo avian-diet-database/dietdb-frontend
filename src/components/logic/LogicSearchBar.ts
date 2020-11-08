@@ -1,6 +1,7 @@
 import { DesignSearchBar } from "../design/DesignSearchBar";
 import { ItemType } from "../../App";
 import { useAutocomplete } from "./AutocompleteHook";
+import { useState } from "react";
 
 export interface LogicSearchBarProps {
   // In test cases, fruit/vegetable.
@@ -21,10 +22,26 @@ export interface LogicSearchBarProps {
 
 export const LogicSearchBar = (props: LogicSearchBarProps) => {
   const [queryMatches, updateQueryString] = useAutocomplete(props.queryType);
+  
+  const [currIndex, changeIndex] = useState(0);
+
+  document.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (e.keyCode === 38) {
+      //up arrow key
+      if (currIndex <= 0) { } else {
+        changeIndex(currIndex - 1)
+      }
+    } else if (e.keyCode === 40) {
+      //down arrow key
+      if (currIndex >= Math.min(9, queryMatches.length - 1)) { } else {
+        changeIndex(currIndex + 1)
+      }
+    }
+  });
 
   document.addEventListener("keypress", (e: KeyboardEvent) => {
     if (e.keyCode === 13) {
-      selectItem(queryMatches[0] || props.activeItem);
+      selectItem(queryMatches[currIndex] || props.activeItem);
       document.getElementById("item")?.scrollIntoView();
     }
   });
@@ -56,5 +73,6 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
     placeholder: props.placeholder,
     left: props.left,
     right: props.right,
+    indexNum: currIndex
   });
 };
