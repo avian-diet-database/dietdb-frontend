@@ -10,11 +10,11 @@ export interface DesignSearchBarProps {
   onItemSelect: (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => void;
+  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   activeItem: string;
-
   left: string;
   right: string;
-  indexNum:number;
+  indexNum: number;
 }
 
 export const DesignSearchBar = (props: DesignSearchBarProps) => {
@@ -22,9 +22,9 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
   useEffect(() => {
     setLiveItem(props.activeItem || "_____");
   }, [props.queryType, props.activeItem]);
-  
+
   return (
-    <div className="container">
+    <div className="container" onKeyDown={props.onKeyDown}>
       <p className="title is-size-3">
         {props.left}
         <span className="has-text-info">{liveItem}</span>
@@ -61,8 +61,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
               className="dropdown-content"
               style={{ position: "absolute", zIndex: 10 }}
             >
-              
-              {props.queryMatches.map((name: string, index:number) => {
+              {props.queryMatches.map((name: string, index: number) => {
                 return (
                   <a
                     key={name}

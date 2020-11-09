@@ -7,7 +7,7 @@ import {
   HorizontalGridLines,
   XAxis,
   YAxis,
-  Crosshair
+  Crosshair,
 } from "react-vis";
 import { GraphColumn } from "../../types/GraphData";
 
@@ -17,9 +17,6 @@ export interface DesignGraphProps {
 }
 
 export const DesignGraph = (props: DesignGraphProps) => {
-  
-
-  console.log(props.data);
   return (
     <article className="message">
       <div className="message-header">
@@ -35,9 +32,11 @@ export const DesignGraph = (props: DesignGraphProps) => {
           <HorizontalGridLines />
           <XAxis />
           <YAxis left={3} />
-          <VerticalBarSeries barWidth={0.8} data={props.data} onNearestXY={(value, {event, innerX, index}) => {
-            
-          }}/>
+          <VerticalBarSeries
+            barWidth={0.8}
+            data={props.data}
+            onNearestXY={(value, { event, innerX, index }) => {}}
+          />
         </FlexibleWidthXYPlot>
       </div>
     </article>

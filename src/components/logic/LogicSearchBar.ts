@@ -22,29 +22,26 @@ export interface LogicSearchBarProps {
 
 export const LogicSearchBar = (props: LogicSearchBarProps) => {
   const [queryMatches, updateQueryString] = useAutocomplete(props.queryType);
-  
+
   const [currIndex, changeIndex] = useState(0);
 
-  document.addEventListener("keydown", (e: KeyboardEvent) => {
-    if (e.keyCode === 38) {
+  const keyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.keyCode === 38) {
       //up arrow key
-      if (currIndex <= 0) { } else {
-        changeIndex(currIndex - 1)
+      if (currIndex > 0) {
+        changeIndex(currIndex - 1);
       }
-    } else if (e.keyCode === 40) {
+    } else if (event.keyCode === 40) {
       //down arrow key
-      if (currIndex >= Math.min(9, queryMatches.length - 1)) { } else {
-        changeIndex(currIndex + 1)
+      if (currIndex < queryMatches.length - 1) {
+        changeIndex(currIndex + 1);
       }
-    }
-  });
-
-  document.addEventListener("keypress", (e: KeyboardEvent) => {
-    if (e.keyCode === 13) {
+    } else if (event.keyCode === 13) {
+      // Enter key
       selectItem(queryMatches[currIndex] || props.activeItem);
-      document.getElementById("item")?.scrollIntoView();
+      changeIndex(0);
     }
-  });
+  };
 
   // --- UPDATE HANDLERS --- //
   // When the user changes their query, update the query string.
@@ -56,6 +53,7 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
     props.updateActiveItem(item);
     props.updateItemType(props.queryType);
     updateQueryString("");
+    document.getElementById("item")?.scrollIntoView();
   };
 
   const onItemSelect = (
@@ -73,6 +71,7 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
     placeholder: props.placeholder,
     left: props.left,
     right: props.right,
-    indexNum: currIndex
+    indexNum: currIndex,
+    onKeyDown: keyDown,
   });
 };

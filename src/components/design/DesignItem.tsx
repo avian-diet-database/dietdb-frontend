@@ -35,9 +35,9 @@ export const DesignItem = (props: DesignItemProps) => {
           </strong>
           {isPredator ? " eats based on" : " based on"}
           <strong className="is-size-2"> {props.numRecords} </strong>
-           records and 
-          <strong className="is-size-2"> {props.numStudies} </strong> 
-           studies.
+          records and
+          <strong className="is-size-2"> {props.numStudies} </strong>
+          studies.
         </div>
         <div className="columns">
           <div className="column is-6">
