@@ -4,15 +4,27 @@ A mobile-friendly web page that presents bird diet information using  data compi
 
 ## 1. Getting Started
 ### Prerequisites
+- Git
+- npm
+- [Node.js](https://nodejs.org/en/)
+
 ### Installing
+1. Clone the repository
+    
+    `https://github.com/COMP523FA2020/Frontend.git`
+
+2. Run npm install to have all the libraries
+
+    `npm install`
+
 ### Running Locally
 In the project, you can run 
 
-### `npm run-script start-dev`
+`npm run start-dev`
 
 to launch a local server to see the unbuilt files live.
 
-### `npm run build`
+`npm run build`
 
 Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -20,7 +32,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
-### `npm run start`
+`npm run start`
 
 Launches the app from the build folder. This will not live-update, run build in order to see updates.
 
@@ -30,7 +42,7 @@ Launches the app from the build folder. This will not live-update, run build in 
 These instructions were last tested on Nov. 9th, 2020 by Muyan Pan on Windows 10
 
 ## 2. Testing 
-### `npm test`
+`npm test`
 
 Launches the Jest test suites while file-watching.<br />
 
@@ -38,14 +50,22 @@ Use the options '-- --coverage --watchAll=false' to generate a code coverage rep
 
 ## 3. Deployment
 
-The backend is deployed using Heroku.
+The frontend, backend, and production database are deployed using Carolina Cloud Apps. 
 
-The production database is deployed using Carolina Cloud Apps. 
-
-When local changes are pushed on to GitHub, the changes will be built automatically,<br /> and the production will be updated. 
+When local changes are pushed onto GitHub, the changes will be built automatically,<br /> and the production will be updated. 
 
 
 ## 4. Technologies Used
+
+### Frontend
+- React
+- Apollo Client
+- Bulma 
+- react-vis
+- Typescript
+
+Our architecture decision records can be found in the ADR.md file
+
 
 ## 5. Contributing
 ### Access
