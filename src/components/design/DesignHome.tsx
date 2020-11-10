@@ -2,6 +2,7 @@ import React from "react";
 import { LogicSearchBar } from "../logic/LogicSearchBar";
 import { LogicHeader } from "../logic/LogicHeader";
 import { ItemType } from "../../App";
+import { LogicStatistics } from "../logic/LogicStatistics";
 
 export interface DesignHomeProps {
   activeItem: string;
@@ -38,7 +39,10 @@ export const DesignHome = (props: DesignHomeProps) => {
         />
       );
     default:
-      content = <LogicHeader />;
+      content = 
+      <div>
+        <LogicHeader />
+      </div>;
   }
   return <div className="">{content}</div>;
 };

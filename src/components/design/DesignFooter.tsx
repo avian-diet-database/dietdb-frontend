@@ -1,10 +1,11 @@
 import React from "react";
+import { LogicStatistics } from "../logic/LogicStatistics";
 
 interface DesignFooterProps {
-  itemData: any;
+  lastUpdated:string;
 }
 
-export const DesignFooter = () => {
+export const DesignFooter = (props:DesignFooterProps) => {
   return (
     <footer className="footer ">
       <section className="columns">
@@ -18,7 +19,7 @@ export const DesignFooter = () => {
               The raw data along with a data paper describing the dataset can be found [link for raw data].
             </p>
             <div>
-              Database last updated on XXXX.
+              Database last updated on {props.lastUpdated}.
             </div>
           </div>
         </div>

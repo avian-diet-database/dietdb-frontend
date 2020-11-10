@@ -17,6 +17,7 @@ export interface DesignGraphProps {
 }
 
 export const DesignGraph = (props: DesignGraphProps) => {
+
   return (
     <article className="message">
       <div className="message-header">
@@ -35,7 +36,6 @@ export const DesignGraph = (props: DesignGraphProps) => {
           <VerticalBarSeries
             barWidth={0.8}
             data={props.data}
-            onNearestXY={(value, { event, innerX, index }) => {}}
           />
         </FlexibleWidthXYPlot>
       </div>

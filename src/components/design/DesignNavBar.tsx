@@ -71,10 +71,10 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
           <a className={"navbar-item"}>Contact</a>
           <span className="navbar-item">
             <a
-              href="https://github.com/hurlbertlab/dietdatabase"
+              href="https://github.com/ahhurlbert/aviandietdb"
               className="button is-dark is-inverted"
             >
-              Github
+              R package
             </a>
           </span>
         </div>

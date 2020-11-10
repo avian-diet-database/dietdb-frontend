@@ -184,6 +184,17 @@ export const GET_MAP_DATA = gql`
   }
 `;
 
+export const GET_DATABASE_STATS = gql`
+query {
+  getAvianTableStats {
+	numSpecies
+	numStudies
+	numRecords
+	lastUpdated
+  }
+}`;
+
+
 export const GET_FILTERS_PRED = gql`
   query(
     $name: String!
