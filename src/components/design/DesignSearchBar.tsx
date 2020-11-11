@@ -7,6 +7,8 @@ export interface DesignSearchBarProps {
   queryType: ItemType;
   placeholder: string;
   onQueryInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onQueryCancel: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onQueryFocus: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onItemSelect: (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => void;
@@ -15,6 +17,7 @@ export interface DesignSearchBarProps {
   left: string;
   right: string;
   indexNum: number;
+  displayMatches: boolean;
 }
 
 export const DesignSearchBar = (props: DesignSearchBarProps) => {
@@ -35,10 +38,12 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
                 type="text"
                 placeholder={props.placeholder}
                 onChange={props.onQueryInputChange}
+                onBlur={props.onQueryCancel}
+                onFocus={props.onQueryFocus}
               />
             </div>
           </div>
-          {props.queryMatches.length > 0 ? (
+          {props.queryMatches.length > 0 && props.displayMatches ? (
             <div
               className="dropdown-content"
               style={{ position: "absolute", zIndex: 10 }}

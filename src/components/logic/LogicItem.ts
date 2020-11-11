@@ -77,7 +77,10 @@ export const LogicItem = (props: LogicItemProps) => {
     loading || error ? 0 : data.getNumRecordsAndStudies.studies;
 
   if (!props.activeItem || props.activeItem.length < 1) {
-    return DesignErrorPage({ errorMessage: "Enter a name above." });
+    return DesignErrorPage({
+      errorMessage: "Enter a name above.",
+      minHeight: 600,
+    });
   }
 
   return DesignItem({ ...props, numRecords, numStudies, controller });

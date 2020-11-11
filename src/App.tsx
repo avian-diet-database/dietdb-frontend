@@ -20,7 +20,6 @@ function App() {
    */
   const [activeItem, updateActiveItem] = useState("");
   const [itemType, updateItemType] = useState(ItemType.NA);
-  const isHome = itemType === ItemType.NA;
   return (
     <div>
       <DesignNavBar
@@ -80,16 +79,12 @@ function App() {
         </div>
       </section>
       <section id="item">
-        {!isHome ? (
-          <LogicItem
-            activeItem={activeItem}
-            itemType={itemType}
-            updateActiveItem={updateActiveItem}
-            updateItemType={updateItemType}
-          />
-        ) : (
-          <div></div>
-        )}
+        <LogicItem
+          activeItem={activeItem}
+          itemType={itemType}
+          updateActiveItem={updateActiveItem}
+          updateItemType={updateItemType}
+        />
       </section>
       <LogicFooter />
     </div>
