@@ -13,7 +13,7 @@ export interface CriteriaState {
 // initializing them with calling the reducer, inciting its default
 // behavior.
 export function useStartYear(
-  options: any
+  options: string[]
 ): [CriteriaState, React.Dispatch<string>, string[]] {
   // The user-friendly optins.
   // Map user-friendly to backend-friendly
@@ -27,15 +27,15 @@ export function useStartYear(
   }
   // Initialize with 1900.
   const [state, dispatch] = useReducer(reducer, {
-    type: "1900",
-    value: "1900",
+    type: options ? options[0] : "",
+    value: options ? options[0] : "",
   });
   return [state, dispatch, options];
 }
 
 // Same as start year pretty much.
 export function useEndYear(
-  options: any
+  options: string[]
 ): [CriteriaState, React.Dispatch<string>, string[]] {
   function reducer(state: CriteriaState, action: string) {
     if (options.includes(action)) {
@@ -45,8 +45,8 @@ export function useEndYear(
     }
   }
   const [state, dispatch] = useReducer(reducer, {
-    type: "2020",
-    value: "2020",
+    type: options ? options[options.length] : "",
+    value: options ? options[options.length] : "",
   });
   return [state, dispatch, options];
 }
