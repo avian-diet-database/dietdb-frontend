@@ -3,6 +3,8 @@ import { LogicFooter } from "./components/logic/LogicFooter";
 import { LogicItem } from "./components/logic/LogicItem";
 import { LogicHome } from "./components/logic/LogicHome";
 import { DesignNavBar } from "./components/design/DesignNavBar";
+import { LogicSearchBar } from "./components/logic/LogicSearchBar";
+import { DesignHeader } from "./components/design/DesignHeader";
 
 export enum ItemType {
   PREY,
@@ -20,23 +22,23 @@ function App() {
   const [itemType, updateItemType] = useState(ItemType.NA);
   const isHome = itemType === ItemType.NA;
   return (
-    <div id="home">
+    <div>
       <DesignNavBar
         itemType={itemType}
         onHomeClick={() => {
-          document.getElementById("home")?.scrollIntoView();
           updateActiveItem("");
           updateItemType(ItemType.NA);
+          document.body.scrollIntoView();
         }}
         onPreyClick={() => {
-          document.getElementById("home")?.scrollIntoView();
           updateActiveItem("");
           updateItemType(ItemType.PREY);
+          document.body.scrollIntoView();
         }}
         onPredatorClick={() => {
-          document.getElementById("home")?.scrollIntoView();
           updateActiveItem("");
           updateItemType(ItemType.PREDATOR);
+          document.body.scrollIntoView();
         }}
       />
       <section className={"hero is-fullheight-with-navbar"}>
@@ -44,12 +46,37 @@ function App() {
         <div className="hero-body">
           {/* Here, render the home if activeItem is "", and otherwise
           render the item page for it. */}
-          <LogicHome
+          {/*<LogicHome
             activeItem={activeItem}
             itemType={itemType}
             updateActiveItem={updateActiveItem}
             updateItemType={updateItemType}
-          />
+          >*/}
+          <div className="container">
+            {itemType === ItemType.NA ? <DesignHeader /> : null}
+            {itemType !== ItemType.PREY ? (
+              <LogicSearchBar
+                queryType={ItemType.PREDATOR}
+                activeItem={activeItem}
+                updateActiveItem={updateActiveItem}
+                updateItemType={updateItemType}
+                placeholder={"Enter a bird name"}
+                left={"What does the "}
+                right={" eat?"}
+              />
+            ) : null}
+            {itemType !== ItemType.PREDATOR ? (
+              <LogicSearchBar
+                queryType={ItemType.PREY}
+                activeItem={activeItem}
+                updateActiveItem={updateActiveItem}
+                updateItemType={updateItemType}
+                placeholder={"Enter a prey name"}
+                left={"What birds eat "}
+                right={" ?"}
+              />
+            ) : null}
+          </div>
         </div>
       </section>
       <section id="item">
@@ -68,25 +95,5 @@ function App() {
     </div>
   );
 }
-//<div className="hero-foot">
-//<DesignTabBar
-//itemType={itemType}
-//onHomeClick={() => {
-//document.getElementById("home")?.scrollIntoView();
-//updateActiveItem("");
-//updateItemType(ItemType.NA);
-//}}
-//onPreyClick={() => {
-//document.getElementById("home")?.scrollIntoView();
-//updateActiveItem("");
-//updateItemType(ItemType.PREY);
-//}}
-//onPredatorClick={() => {
-//document.getElementById("home")?.scrollIntoView();
-//updateActiveItem("");
-//updateItemType(ItemType.PREDATOR);
-//}}
-///>
-//</div>
 
 export default App;

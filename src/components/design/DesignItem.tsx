@@ -20,14 +20,14 @@ export interface DesignItemProps {
 export const DesignItem = (props: DesignItemProps) => {
   let isPredator = props.itemType == ItemType.PREDATOR;
   return (
-    <div className="hero is-light">
+    <div className="hero is-light" id="item">
       <div className="hero-body">
         <div className="notification is-light is-size-4">
           {isPredator ? "Here is what the " : "Birds known to eat "}
           <strong className="is-size-2">
             <a
               style={{ textDecoration: "none" }}
-              onClick={() => document.getElementById("home")?.scrollIntoView()}
+              onClick={() => document.body.scrollIntoView()}
               className="has-text-info"
             >
               {props.activeItem}

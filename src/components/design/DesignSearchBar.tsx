@@ -18,42 +18,24 @@ export interface DesignSearchBarProps {
 }
 
 export const DesignSearchBar = (props: DesignSearchBarProps) => {
-  const [liveItem, setLiveItem] = useState("_____");
-  useEffect(() => {
-    setLiveItem(props.activeItem || "_____");
-  }, [props.queryType, props.activeItem]);
-
   return (
-    <div className="container" onKeyDown={props.onKeyDown}>
-      <p className="title is-size-3">
-        {props.left}
-        <span className="has-text-info">{liveItem}</span>
-        {props.right}
-      </p>
+    <div
+      className="container is-flex is-flex-direction-row"
+      onKeyDown={props.onKeyDown}
+    >
+      <p className="subtitle is-size-2 pt-5">{props.left}</p>
       <div className="dropdown">
         <div className="container">
           <div className="field has-addons">
             <div className="control">
               <DebounceInput
                 value={props.activeItem}
-                className="input is-info"
+                style={{ border: "none", boxShadow: "none" }}
+                className="input is-size-2 has-text-info title"
                 type="text"
                 placeholder={props.placeholder}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setLiveItem(event.target.value);
-                  props.onQueryInputChange(event);
-                }}
+                onChange={props.onQueryInputChange}
               />
-            </div>
-            <div className="control">
-              <a
-                className="button is-info"
-                onClick={() =>
-                  document.getElementById("item")?.scrollIntoView()
-                }
-              >
-                Search
-              </a>
             </div>
           </div>
           {props.queryMatches.length > 0 ? (
@@ -65,12 +47,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
                 return (
                   <a
                     key={name}
-                    onClick={(
-                      event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-                    ) => {
-                      setLiveItem(event.currentTarget.textContent || "");
-                      props.onItemSelect(event);
-                    }}
+                    onClick={props.onItemSelect}
                     className={
                       "dropdown-item is-size-5 has-text-left" +
                       (index === props.indexNum ? " is-active" : "")
@@ -83,6 +60,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
             </div>
           ) : null}
         </div>
+        <p className="subitle is-size-2 pt-5">{props.right}</p>
       </div>
     </div>
   );
