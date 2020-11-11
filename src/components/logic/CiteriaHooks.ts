@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_REGIONS_PRED } from "../../gql/queries";
+import { GET_REGIONS_PRED, GET_REGIONS_PREY } from "../../gql/queries";
+import { ItemType } from "../../App";
 export interface CriteriaState {
   // type: The string the user sees in the select element's options.
   // value: The string that the backend understands.
@@ -11,24 +12,10 @@ export interface CriteriaState {
 // these could be cleaned up by implementing default behavior and then
 // initializing them with calling the reducer, inciting its default
 // behavior.
-export function useStartYear(): [
-  CriteriaState,
-  React.Dispatch<string>,
-  string[]
-] {
+export function useStartYear(
+  options: any
+): [CriteriaState, React.Dispatch<string>, string[]] {
   // The user-friendly optins.
-  const options = [
-    "1900",
-    "1910",
-    "1920",
-    "1930",
-    "1940",
-    "1950",
-    "1960",
-    "1970",
-    "1980",
-    "1990",
-  ];
   // Map user-friendly to backend-friendly
   // For start and end year, there isn't any mapping to be done really.
   function reducer(state: CriteriaState, action: string) {
@@ -47,23 +34,9 @@ export function useStartYear(): [
 }
 
 // Same as start year pretty much.
-export function useEndYear(): [
-  CriteriaState,
-  React.Dispatch<string>,
-  string[]
-] {
-  const options = [
-    "2020",
-    "1990",
-    "1980",
-    "1970",
-    "1960",
-    "1950",
-    "1940",
-    "1930",
-    "1920",
-    "1910",
-  ];
+export function useEndYear(
+  options: any
+): [CriteriaState, React.Dispatch<string>, string[]] {
   function reducer(state: CriteriaState, action: string) {
     if (options.includes(action)) {
       return { type: action, value: action };
@@ -115,14 +88,8 @@ export function useSeasons(): [
 }
 
 export function useRegion(
-  activeItem: string
+  options: any
 ): [CriteriaState, React.Dispatch<string>, string[]] {
-  const options = {
-    variables: {
-      name: activeItem,
-    },
-  };
-  const { loading, error, data } = useQuery(GET_REGIONS_PRED, options);
   function reducer(state: CriteriaState, action: string) {
     // In this case, no mapping is done. The options come straight from the backend.
     if (action === "All regions") {
@@ -131,7 +98,7 @@ export function useRegion(
         value: "all",
       };
     }
-    if (data.getRegionsPred.includes(action)) {
+    if (options.includes(action)) {
       return {
         type: action,
         value: action,
@@ -144,9 +111,7 @@ export function useRegion(
     type: "All regions",
     value: "all",
   });
-  if (loading) return [state, dispatch, []];
-  if (error) return [state, dispatch, []];
-  return [state, dispatch, ["All regions", ...data.getRegionsPred]];
+  return [state, dispatch, ["All regions", ...options]];
 }
 
 export function useMetrics(): [

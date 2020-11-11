@@ -134,6 +134,11 @@ export const GET_REGIONS_PRED = gql`
     getRegionsPred(name: $name)
   }
 `;
+export const GET_REGIONS_PREY = gql`
+  query($name: String!) {
+    getRegionsPrey(name: $name)
+  }
+`;
 export const GET_PREY_OF_SOURCES = gql`
   query(
     $name: String!
@@ -153,11 +158,45 @@ export const GET_PREY_OF_SOURCES = gql`
     )
   }
 `;
-export const GET_NUM_RECORDS_AND_STUDIES = gql`
+export const GET_NUM_RECORDS_AND_STUDIES_PRED = gql`
   query($name: String!) {
-    getNumRecordsAndStudies(name: $name) {
+    getNumRecordsAndStudiesPred(name: $name) {
       studies
       records
+    }
+  }
+`;
+export const GET_NUM_RECORDS_AND_STUDIES_PREY = gql`
+  query($name: String!) {
+    getNumRecordsAndStudiesPrey(name: $name) {
+      studies
+      records
+    }
+  }
+`;
+export const ITEM_PAGE_PRED = gql`
+  query($name: String!) {
+    getNumRecordsAndStudiesPred(name: $name) {
+      studies
+      records
+    }
+    getFilterValuesPred(name: $name) {
+      startYears
+      endYears
+      regions
+    }
+  }
+`;
+export const ITEM_PAGE_PREY = gql`
+  query($name: String!) {
+    getNumRecordsAndStudiesPrey(name: $name) {
+      studies
+      records
+    }
+    getFilterValuesPrey(name: $name) {
+      startYears
+      endYears
+      regions
     }
   }
 `;
@@ -185,15 +224,15 @@ export const GET_MAP_DATA = gql`
 `;
 
 export const GET_DATABASE_STATS = gql`
-query {
-  getAvianTableStats {
-	numSpecies
-	numStudies
-	numRecords
-	lastUpdated
+  query {
+    getAvianTableStats {
+      numSpecies
+      numStudies
+      numRecords
+      lastUpdated
+    }
   }
-}`;
-
+`;
 
 export const GET_FILTERS_PRED = gql`
   query(

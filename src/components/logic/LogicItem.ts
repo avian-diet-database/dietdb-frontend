@@ -1,6 +1,6 @@
 import { DesignItem } from "../design/DesignItem";
 import { useQuery } from "@apollo/client";
-import { GET_NUM_RECORDS_AND_STUDIES } from "../../gql/queries";
+import { ITEM_PAGE_PRED, ITEM_PAGE_PREY } from "../../gql/queries";
 import { CriteriaController } from "../../types/CriteriaController";
 import { ItemType } from "../../App";
 import { DesignErrorPage } from "../design/DesignErrorPage";
@@ -22,10 +22,35 @@ interface LogicItemProps {
 }
 
 export const LogicItem = (props: LogicItemProps) => {
-  const [startYear, updateStartYear, startYearOptions] = useStartYear();
-  const [endYear, updateEndYear, endYearOptions] = useEndYear();
+  const itemOptions = {
+    variables: {
+      name: props.activeItem,
+    },
+  };
+
+  let isPred = ItemType.PREDATOR === props.itemType;
+  const { loading, error, data } = useQuery(
+    isPred ? ITEM_PAGE_PRED : ITEM_PAGE_PREY,
+    itemOptions
+  );
+  const iType = isPred ? "Pred" : "Prey";
+  const startYears =
+    loading || error ? [] : data["getFilterValues" + iType].startYears;
+  const endYears =
+    loading || error ? [] : data["getFilterValues" + iType].endYears;
+  const regions =
+    loading || error ? [] : data["getFilterValues" + iType].regions;
+  const numRecords =
+    loading || error ? [] : data["getNumRecordsAndStudies" + iType].records;
+  const numStudies =
+    loading || error ? [] : data["getNumRecordsAndStudies" + iType].studies;
+
+  const [startYear, updateStartYear, startYearOptions] = useStartYear(
+    startYears
+  );
+  const [endYear, updateEndYear, endYearOptions] = useEndYear(endYears);
   const [season, updateSeason, seasonOptions] = useSeasons();
-  const [region, updateRegion, regionOptions] = useRegion(props.activeItem);
+  const [region, updateRegion, regionOptions] = useRegion(regions);
   const [metrics, updateMetrics, metricsOptions] = useMetrics();
   const [level, updateLevel, levelOptions] = useLevel();
   const [stage, updateStage, stageOptions] = useStage();
@@ -60,21 +85,6 @@ export const LogicItem = (props: LogicItemProps) => {
     updateStage,
     stageOptions,
   };
-
-  const itemOptions = {
-    variables: {
-      name: props.activeItem,
-    },
-  };
-
-  const { loading, error, data } = useQuery(
-    GET_NUM_RECORDS_AND_STUDIES,
-    itemOptions
-  );
-  const numRecords =
-    loading || error ? 0 : data.getNumRecordsAndStudies.records;
-  const numStudies =
-    loading || error ? 0 : data.getNumRecordsAndStudies.studies;
 
   if (!props.activeItem || props.activeItem.length < 1) {
     return DesignErrorPage({
