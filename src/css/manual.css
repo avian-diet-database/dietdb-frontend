@@ -11,3 +11,8 @@ html {
   font-size: 4.75rem;
 }
 
+.is-sticky-header {
+  position: sticky;
+  top: 0;
+}
+
