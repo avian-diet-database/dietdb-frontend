@@ -5,6 +5,7 @@ interface DesignNavBarProps {
   onPredatorClick: () => void;
   onPreyClick: () => void;
   onHomeClick: () => void;
+  onAboutClick: () => void;
   itemType: ItemType;
 }
 export const DesignNavBar = (props: DesignNavBarProps) => {
@@ -67,7 +68,9 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
           </a>
         </div>
         <div className="navbar-end">
-          <a className={"navbar-item"}>About</a>
+          <a className={"navbar-item"} onClick={props.onAboutClick}>
+            About
+          </a>
           <span className="navbar-item">
             <a
               href="https://github.com/ahhurlbert/aviandietdb"

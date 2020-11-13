@@ -82,7 +82,7 @@ export const LogicTable = (props: LogicTableProps) => {
       updateSortedBy(() =>
         itemType === ItemType.PREDATOR ? TableSort.ITEMS : TableSort.FRADT
       );
-      // TODO: Reset the selected criteria
+      // TODO: Reset the selected criteria - this is not thoroughly tested.
       props.controller.updateLevel(props.controller.levelOptions[0]);
       props.controller.updateStage(props.controller.stageOptions[0]);
       props.controller.updateRegion(props.controller.regionOptions[0]);

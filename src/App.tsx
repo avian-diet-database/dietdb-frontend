@@ -11,6 +11,7 @@ export enum ItemType {
   PREY,
   PREDATOR,
   NA,
+  ABOUT,
 }
 function App() {
   /* App state needed:
@@ -30,6 +31,9 @@ function App() {
           updateItemType(ItemType.NA);
           document.body.scrollIntoView();
         }}
+        onAboutClick={() => {
+          updateItemType(ItemType.ABOUT);
+        }}
         onPreyClick={() => {
           updateActiveItem("");
           updateItemType(ItemType.PREY);
@@ -46,15 +50,10 @@ function App() {
         <div className="hero-body">
           {/* Here, render the home if activeItem is "", and otherwise
           render the item page for it. */}
-          {/*<LogicHome
-            activeItem={activeItem}
-            itemType={itemType}
-            updateActiveItem={updateActiveItem}
-            updateItemType={updateItemType}
-          >*/}
           <div className="container">
+            {itemType === ItemType.ABOUT ? <LogicAbout /> : null}
             {itemType === ItemType.NA ? <DesignHeader /> : null}
-            {itemType !== ItemType.PREY ? (
+            {itemType === ItemType.PREDATOR || itemType === ItemType.NA ? (
               <LogicSearchBar
                 queryType={ItemType.PREDATOR}
                 activeItem={activeItem}
@@ -65,7 +64,7 @@ function App() {
                 right={" eat?"}
               />
             ) : null}
-            {itemType !== ItemType.PREDATOR ? (
+            {itemType === ItemType.PREY || itemType === ItemType.NA ? (
               <LogicSearchBar
                 queryType={ItemType.PREY}
                 activeItem={activeItem}
