@@ -15,13 +15,16 @@ export interface LogicItemLinkProps {
 }
 
 export const LogicItemLink = (props: LogicItemLinkProps) => {
-  const onItemClick = (
-    event: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>
-  ) => {
+  const onItemClick = () => {
     props.resetTable(props.itemType);
     props.updateItemType(props.itemType);
-    props.updateActiveItem(
-      props.itemName.replace(/Unid./g, "").replace(/larva/g, "").trim()
+    props.updateActiveItem(() =>
+      props.itemName
+        .replace(/Unid./g, "")
+        .replace(/larva/g, "")
+        .replace(/adult/g, "")
+        .replace(/pupa/g, "")
+        .trim()
     );
     document.getElementById("item")?.scrollIntoView();
   };

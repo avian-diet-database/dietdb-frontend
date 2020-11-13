@@ -63,7 +63,7 @@ export const LogicTable = (props: LogicTableProps) => {
         "Uh oh, an error has occurred :( please return to homepage!",
     });
 
-  const controller: TableController = {
+  const tableController: TableController = {
     resetTable: (itemType: ItemType) => {
       dispatchTableAction({
         type: TableActionType.UPDTE,
@@ -78,9 +78,18 @@ export const LogicTable = (props: LogicTableProps) => {
             type: TableActionType.FRADT,
             payload: null,
           });
-      updateSortedBy(
+      // Reset the sorting to default
+      updateSortedBy(() =>
         itemType === ItemType.PREDATOR ? TableSort.ITEMS : TableSort.FRADT
       );
+      // TODO: Reset the selected criteria
+      props.controller.updateLevel(props.controller.levelOptions[0]);
+      props.controller.updateStage(props.controller.stageOptions[0]);
+      props.controller.updateRegion(props.controller.regionOptions[0]);
+      props.controller.updateSeason(props.controller.seasonOptions[0]);
+      props.controller.updateEndYear(props.controller.endYearOptions[0]);
+      props.controller.updateStartYear(props.controller.startYearOptions[0]);
+      props.controller.updateMetrics(props.controller.metricsOptions[0]);
     },
     handleMetricsClick: () => {
       updateSortedBy(TableSort.DTTYP);
@@ -213,7 +222,7 @@ export const LogicTable = (props: LogicTableProps) => {
     updateActiveItem: props.updateActiveItem,
     numRecords: props.numRecords,
     numStudies: props.numStudies,
-    controller,
+    controller: tableController,
     activeItem,
     options,
     sortedBy,
