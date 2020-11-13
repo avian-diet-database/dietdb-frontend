@@ -33,6 +33,7 @@ function App() {
         }}
         onAboutClick={() => {
           updateItemType(ItemType.ABOUT);
+          document.body.scrollIntoView();
         }}
         onPreyClick={() => {
           updateActiveItem("");

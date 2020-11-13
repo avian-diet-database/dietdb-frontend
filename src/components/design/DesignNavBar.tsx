@@ -40,7 +40,7 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
               (props.itemType === ItemType.PREY ? "is-active" : "")
             }
           >
-            Prey
+            Diet by Prey
           </a>
           <a
             onClick={() => {
@@ -52,7 +52,7 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
               (props.itemType === ItemType.PREDATOR ? "is-active" : "")
             }
           >
-            Bird
+            Diet by Bird
           </a>
           <a
             onClick={() => {
