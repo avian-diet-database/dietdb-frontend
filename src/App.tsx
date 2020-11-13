@@ -5,6 +5,7 @@ import { LogicHome } from "./components/logic/LogicHome";
 import { DesignNavBar } from "./components/design/DesignNavBar";
 import { LogicSearchBar } from "./components/logic/LogicSearchBar";
 import { DesignHeader } from "./components/design/DesignHeader";
+import { LogicAbout } from "./components/logic/LogicAbout";
 
 export enum ItemType {
   PREY,
@@ -71,7 +72,7 @@ function App() {
                 updateActiveItem={updateActiveItem}
                 updateItemType={updateItemType}
                 placeholder={"Enter a prey name"}
-                left={"What birds eat "}
+                left={"What bird eats "}
                 right={" ?"}
               />
             ) : null}

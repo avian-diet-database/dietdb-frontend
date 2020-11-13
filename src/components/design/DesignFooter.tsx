@@ -12,11 +12,11 @@ export const DesignFooter = (props:DesignFooterProps) => {
         <div className="column is-6 is-offset-1">
           <div className="content has-text-left">
             <p>
-              The Avian Diet Database was created by <a className="has-text-primary" href="http://labs.bio.unc.edu/hurlbert/">Dr. Allen Hurlbert</a>, 
+              The Avian Diet Database was created by <a className="has-text-info" href="http://labs.bio.unc.edu/hurlbert/">Dr. Allen Hurlbert</a>, 
               Professor of Biology at the University of North Carolina at Chapel Hill. 
               The database currently focuses on North American birds but 
               will eventually encompass data for all species globally. 
-              The raw data along with a data paper describing the dataset can be found [link for raw data].
+              The raw data along with a data paper describing the dataset can be found <a className="has-text-info" href="https://github.com/hurlbertlab/dietdatabase/blob/master/AvianDietDatabase.txt">here</a>.
             </p>
             <div>
               Database last updated on {props.lastUpdated}.

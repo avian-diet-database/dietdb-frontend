@@ -68,7 +68,6 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
         </div>
         <div className="navbar-end">
           <a className={"navbar-item"}>About</a>
-          <a className={"navbar-item"}>Contact</a>
           <span className="navbar-item">
             <a
               href="https://github.com/ahhurlbert/aviandietdb"
