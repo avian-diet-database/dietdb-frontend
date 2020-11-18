@@ -6,7 +6,7 @@ import App from "./App";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "http://back-end-dept-dietdatabase.cloudapps.unc.edu/graphql",
+  uri: "https://back-end-dept-dietdatabase.cloudapps.unc.edu/graphql",
   cache: new InMemoryCache(),
 });
 
