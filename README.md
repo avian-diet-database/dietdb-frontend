@@ -88,11 +88,16 @@ Follow the [OneFlow model](https://www.endoflineblog.com/oneflow-a-git-branching
 ### Backend
 - Thomas Le
 
-## 7. Licenses
+## 7. TODO
+- Refactor with a state management library - like Redux. 
+
+## 8. Licenses
 
 MIT license
 
-## 8. Acknowledgements
+
+
+## 9. Acknowledgements
 
 - Professor Allen Hurlbert for providing the R queries and consistent feedbacks
 - Jacob Yackenovich for mentoring us weekly and answering our questions
