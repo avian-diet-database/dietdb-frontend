@@ -4,18 +4,7 @@ import { TableController } from "../../types/TableController";
 import { DesignTableHeader } from "./DesignTableHeader";
 import { LogicItemLink } from "../logic/LogicItemLink";
 import { TableSort } from "../logic/TableSorting";
-import { useReactiveVar } from "@apollo/client";
-import {
-  ActiveItemVar,
-  RegionVar,
-  SeasonVar,
-  StartYearVar,
-  EndYearVar,
-  LevelVar,
-  ActiveItemTypeVar,
-  ItemType,
-} from "../../cache";
-import { CriteriaValues } from "../../types/CriteriaController";
+import { ItemType } from "../../cache";
 
 interface DesignTableProps {
   data: any[];
@@ -43,26 +32,21 @@ export const DesignTable = (props: DesignTableProps) => {
         <div className="is-scrollable">
           <table className="table is-striped is-fullwidth">
             <thead>
-              <DesignTableHeader
-                sortedBy={props.sortedBy}
-                controller={props.controller}
-              />
+              <DesignTableHeader {...props} />
             </thead>
             <tbody>
               {props.data.map((item) => {
                 return (
                   <tr key={props.data.indexOf(item)}>
-                    {item["taxon"] ? (
+                    {isPredator ? (
                       <LogicItemLink
                         itemType={ItemType.PREY}
                         itemName={item["taxon"]}
-                        resetTable={props.controller.resetTable}
                       />
                     ) : (
                       <LogicItemLink
                         itemType={ItemType.PREDATOR}
                         itemName={item["common_name"]}
-                        resetTable={props.controller.resetTable}
                       />
                     )}
                     {Object.keys(item)
@@ -76,10 +60,7 @@ export const DesignTable = (props: DesignTableProps) => {
               })}
             </tbody>
             <tfoot>
-              <DesignTableHeader
-                sortedBy={props.sortedBy}
-                controller={props.controller}
-              />
+              <DesignTableHeader {...props} />
             </tfoot>
           </table>
         </div>

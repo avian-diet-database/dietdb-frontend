@@ -3,7 +3,7 @@ import {
   RECORDS_PER_DECADE,
   RECORDS_PER_DIET_TYPE,
 } from "../../gql/queries";
-import { useQuery, useReactiveVar } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { DesignGraph } from "../design/DesignGraph";
 import { LogicErrorPage } from "./LogicErrorPage";
@@ -15,6 +15,7 @@ export enum LogicGraphTypes {
 
 export interface LogicGraphProps {
   graphType: LogicGraphTypes;
+  activeItem: string;
 }
 
 export const LogicGraph = (props: LogicGraphProps) => {
@@ -39,13 +40,17 @@ export const LogicGraph = (props: LogicGraphProps) => {
       title = "Records Per Season";
       break;
   }
-  const { loading, error, data } = useQuery(query);
+
+  const skip = props.activeItem.length < 1;
+  const { loading, error, data } = useQuery(query, { skip });
+
   if (loading) return DesignLoadingPage();
   if (error)
     return LogicErrorPage({
       errorMessage:
         "We're sorry, there was an error producing the graph for " + title,
     });
+
   let graphData;
   switch (props.graphType) {
     case LogicGraphTypes.RECORDS_PER_SEASON:

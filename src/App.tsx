@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { LogicFooter } from "./components/logic/LogicFooter";
 import { LogicItem } from "./components/logic/LogicItem";
 import { DesignNavBar } from "./components/design/DesignNavBar";
@@ -19,6 +19,7 @@ function App() {
           document.body.scrollIntoView();
         }}
         onAboutClick={() => {
+          ActiveItemVar("");
           ActiveItemTypeVar(ItemType.ABOUT);
           document.body.scrollIntoView();
         }}

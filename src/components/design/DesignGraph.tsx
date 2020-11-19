@@ -1,5 +1,4 @@
-import { valueFromAST } from "graphql";
-import React, { useState } from "react";
+import React from "react";
 import {
   FlexibleWidthXYPlot,
   VerticalBarSeries,
@@ -7,7 +6,6 @@ import {
   HorizontalGridLines,
   XAxis,
   YAxis,
-  Crosshair,
 } from "react-vis";
 import { GraphColumn } from "../../types/GraphData";
 
@@ -17,7 +15,6 @@ export interface DesignGraphProps {
 }
 
 export const DesignGraph = (props: DesignGraphProps) => {
-
   return (
     <article className="message">
       <div className="message-header">
@@ -33,10 +30,7 @@ export const DesignGraph = (props: DesignGraphProps) => {
           <HorizontalGridLines />
           <XAxis />
           <YAxis left={3} />
-          <VerticalBarSeries
-            barWidth={0.8}
-            data={props.data}
-          />
+          <VerticalBarSeries barWidth={0.8} data={props.data} />
         </FlexibleWidthXYPlot>
       </div>
     </article>

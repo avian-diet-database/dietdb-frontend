@@ -2,17 +2,16 @@ import React from "react";
 import { TableController } from "../../types/TableController";
 import { TableSort } from "../logic/TableSorting";
 import { DesignTableHeaderButton } from "./DesignTableHeaderButton";
-import { useReactiveVar } from "@apollo/client";
-import { ActiveItemTypeVar, ItemType } from "../../cache";
+import { ItemType } from "../../cache";
 
 interface DesignTableHeaderProps {
   sortedBy: TableSort;
   controller: TableController;
+  activeItemType: ItemType;
 }
 
 export const DesignTableHeader = (props: DesignTableHeaderProps) => {
-  const activeItemType = useReactiveVar(ActiveItemTypeVar);
-  let isPredator = activeItemType === ItemType.PREDATOR;
+  let isPredator = props.activeItemType === ItemType.PREDATOR;
   const tableHeader = isPredator ? (
     <tr>
       <th className="is-sticky-header">

@@ -16,20 +16,30 @@ export const LogicItem = () => {
   const isPred = activeItemType === ItemType.PREDATOR;
 
   const query = isPred ? ITEM_PAGE_PRED : ITEM_PAGE_PREY;
+  const skip = activeItem.length < 1;
+  const { loading, error, data } = useQuery(query, { skip });
 
-  const { loading, error, data } = useQuery(query);
+  const filterVals = isPred ? "getFilterValuesPred" : "getFilterValuesPrey";
+  const numRecStud = isPred
+    ? "getNumRecordsAndStudiesPred"
+    : "getNumRecordsAndStudiesPrey";
 
-  const iType = isPred ? "Pred" : "Prey";
-  const startYears =
-    loading || error ? [] : data["getFilterValues" + iType].startYears;
-  const endYears =
-    loading || error ? [] : data["getFilterValues" + iType].endYears;
-  const regions =
-    loading || error ? [] : data["getFilterValues" + iType].regions;
-  const numRecords =
-    loading || error ? [] : data["getNumRecordsAndStudies" + iType].records;
-  const numStudies =
-    loading || error ? [] : data["getNumRecordsAndStudies" + iType].studies;
+  let startYears: string[] = [];
+  let endYears: string[] = [];
+  let regions: string[] = [];
+  let numRecords: number = 0;
+  let numStudies: number = 0;
+
+  if (data && data[filterVals]) {
+    startYears = data[filterVals].startYears;
+    endYears = data[filterVals].endYears;
+    regions = data[filterVals].regions;
+  }
+
+  if (data && data[numRecStud]) {
+    numRecords = data[numRecStud].records;
+    numStudies = data[numRecStud].studies;
+  }
 
   CriteriaOptionsVar({
     ...CriteriaOptionsVar(),
@@ -38,7 +48,6 @@ export const LogicItem = () => {
     regionOptions: ["All regions", ...regions],
   });
 
-  // The CriteriaController is just a convenient container object to hold all this state.
   if (activeItem.length < 1 || error || loading) {
     return DesignErrorPage({
       errorMessage: "Enter a name above.",
@@ -46,13 +55,12 @@ export const LogicItem = () => {
     });
   }
 
-  return DesignItem({
+  const component = DesignItem({
     activeItem,
     activeItemType,
     numRecords,
     numStudies,
-    startYears,
-    endYears,
-    regions,
   });
+
+  return component;
 };

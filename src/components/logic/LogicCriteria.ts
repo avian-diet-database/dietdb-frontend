@@ -6,15 +6,16 @@ import {
   LevelVar,
   SeasonVar,
   StageVar,
-  ActiveItemTypeVar,
-  ActiveItemVar,
   CriteriaOptionsVar,
+  ItemType,
 } from "../../cache";
 import { useReactiveVar } from "@apollo/client";
 
-export const LogicCriteria = () => {
-  const activeItemType = useReactiveVar(ActiveItemTypeVar);
-  const activeItem = useReactiveVar(ActiveItemVar);
+interface LogicCriteriaProps {
+  activeItem: string;
+  activeItemType: ItemType;
+}
+export const LogicCriteria = (props: LogicCriteriaProps) => {
   const criteria = useReactiveVar(CriteriaOptionsVar);
 
   const onStartYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -37,8 +38,7 @@ export const LogicCriteria = () => {
   };
 
   return DesignCriteria({
-    activeItem,
-    activeItemType,
+    ...props,
     criteria,
     onStartYearChange,
     onEndYearChange,

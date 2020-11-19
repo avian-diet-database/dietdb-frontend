@@ -2,7 +2,6 @@ import { DesignSearchBar } from "../design/DesignSearchBar";
 import { ItemType, ActiveItemVar, ActiveItemTypeVar } from "../../cache";
 import { useAutocomplete } from "./AutocompleteHook";
 import { useState } from "react";
-import { setTimeout } from "timers";
 import { useReactiveVar } from "@apollo/client";
 
 export interface LogicSearchBarProps {
@@ -59,8 +58,8 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
   };
 
   const selectItem = (item: string) => {
-    ActiveItemVar(item);
     ActiveItemTypeVar(props.queryType);
+    ActiveItemVar(item);
     updateQueryString("");
     document.getElementById("item")?.scrollIntoView();
   };

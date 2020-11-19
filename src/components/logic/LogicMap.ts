@@ -61,16 +61,20 @@ stateNames.set("West Virginia", "WV");
 stateNames.set("Wisconsin", "WI");
 stateNames.set("Wyoming", "WY");
 
-export const numToColor = (count: number) => {
+const numToColor = (count: number) => {
   return "#" + colorScale.colourAt(count) + "";
 };
 
 let customFill: { [k: string]: any } = {};
 
-export const LogicMap = () => {
+interface LogicMapProps {
+  activeItem: string;
+}
+export const LogicMap = (props: LogicMapProps) => {
   const query = GET_MAP_DATA;
 
-  const { loading, error, data } = useQuery(query);
+  const skip = props.activeItem.length < 1;
+  const { loading, error, data } = useQuery(query, { skip });
   if (loading) return DesignLoadingPage();
   if (error)
     return LogicErrorPage({
@@ -78,12 +82,11 @@ export const LogicMap = () => {
         "Uh no, an error has occurred :( please return to homepage!" +
         error.message,
     });
-  const arr = data.getMapData;
-
+  const arr = data ? data.getMapData : [];
   return createMap(arr);
 };
 
-export const includeAllStates = () => {
+const includeAllStates = () => {
   stateNames.forEach(addState);
 };
 
@@ -91,7 +94,7 @@ function addState(value: string, key: string) {
   customFill[value] = { fill: "#CED5D3" };
 }
 
-export const createMap = (data: any[]) => {
+const createMap = (data: any[]) => {
   let maxCount = 0;
   customFill = {};
   includeAllStates();
@@ -120,4 +123,3 @@ export const createMap = (data: any[]) => {
 
   return DesignMap({ customFill: customConfig(), maxRecords: maxCount });
 };
-

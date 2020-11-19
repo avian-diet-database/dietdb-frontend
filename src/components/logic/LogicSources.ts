@@ -3,20 +3,25 @@ import { GET_PREY_OF_SOURCES } from "../../gql/queries";
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { LogicErrorPage } from "../logic/LogicErrorPage";
 import { DesignSources } from "../design/DesignSources";
-import { ActiveItemTypeVar, ItemType } from "../../cache";
+import { ActiveItemTypeVar, ItemType, ActiveItemVar } from "../../cache";
 
-export const LogicSources = () => {
-  const activeItemType = useReactiveVar(ActiveItemTypeVar);
+interface LogicSourcesProps {
+  activeItem: string;
+  activeItemType: ItemType;
+}
+export const LogicSources = (props: LogicSourcesProps) => {
   const query =
-    activeItemType === ItemType.PREDATOR
+    props.activeItemType === ItemType.PREDATOR
       ? GET_PREY_OF_SOURCES
       : GET_PREY_OF_SOURCES;
 
-  const { loading, error, data } = useQuery(query);
+  const skip = props.activeItem.length < 1;
+  const { loading, error, data } = useQuery(query, { skip });
   if (loading) return DesignLoadingPage();
   if (error)
     return LogicErrorPage({
       errorMessage: "Uh no, an error has occurred: " + error.message,
     });
-  return DesignSources({ sources: data.getPreyOfSources });
+
+  return DesignSources({ sources: data ? data.getPreyOfSources : [] });
 };

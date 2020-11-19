@@ -8,9 +8,6 @@ import { useTable, TableSort, TableActionType } from "./TableSorting";
 import { TableController } from "../../types/TableController";
 import { useEffect, useState } from "react";
 import {
-  ActiveItemVar,
-  ActiveItemTypeVar,
-  CriteriaOptionsVar,
   RegionVar,
   SeasonVar,
   StartYearVar,
@@ -21,13 +18,12 @@ import {
 interface LogicTableProps {
   numStudies: number;
   numRecords: number;
+  activeItem: string;
+  activeItemType: ItemType;
 }
 
 export const LogicTable = (props: LogicTableProps) => {
   //Fetch the data for the active item.
-  const criteria = useReactiveVar(CriteriaOptionsVar);
-  const activeItemType = useReactiveVar(ActiveItemTypeVar);
-  const activeItem = useReactiveVar(ActiveItemVar);
   const region = useReactiveVar(RegionVar);
   const season = useReactiveVar(SeasonVar);
   const startYear = useReactiveVar(StartYearVar);
@@ -36,7 +32,7 @@ export const LogicTable = (props: LogicTableProps) => {
   const stage = useReactiveVar(StageVar);
 
   const metadata = {
-    name: activeItem,
+    name: props.activeItem,
     region,
     season,
     startYear,
@@ -45,14 +41,15 @@ export const LogicTable = (props: LogicTableProps) => {
     stage,
   };
 
-  let isPredator = activeItemType === ItemType.PREDATOR;
-  let isPrey = activeItemType === ItemType.PREY;
+  let isPredator = props.activeItemType === ItemType.PREDATOR;
+  let isPrey = props.activeItemType === ItemType.PREY;
 
   const query = isPredator ? GET_PREY_OF : GET_PREDATOR_OF;
 
-  const { loading, error, data } = useQuery(query);
+  const skip = props.activeItem.length < 1;
+  const { loading, error, data } = useQuery(query, { skip });
 
-  const [tableData, dispatchTableAction] = useTable(activeItemType);
+  const [tableData, dispatchTableAction] = useTable(props.activeItemType);
 
   const [sortedBy, updateSortedBy] = useState(TableSort.ITEMS);
 
@@ -92,7 +89,6 @@ export const LogicTable = (props: LogicTableProps) => {
       );
     },
     handleMetricsClick: () => {
-      updateSortedBy(TableSort.DTTYP);
       updateSortedBy(TableSort.DTTYP);
       tableData.sort === TableSort.DTTYP
         ? dispatchTableAction({
@@ -186,7 +182,7 @@ export const LogicTable = (props: LogicTableProps) => {
 
   let arr = [];
   // This logic should be moved into a helper function.
-  if (isPredator && activeItem !== "") {
+  if (isPredator && props.activeItem !== "") {
     // Fix the rows for Predator page
     arr = tableData.rows.map((prey: any) => {
       let items = prey.items === null ? null : prey.items.substring(0, 4) + "%";
@@ -200,7 +196,7 @@ export const LogicTable = (props: LogicTableProps) => {
         prey.occurrence === null ? null : prey.occurrence.substring(0, 4) + "%";
       return { ...prey, items, wt_or_vol, occurrence, unspecified };
     });
-  } else if (isPrey && activeItem !== "") {
+  } else if (isPrey && props.activeItem !== "") {
     // Fix the rows for Prey page.
     arr = tableData.rows.map((predator: any) => {
       let fraction_diet =
@@ -214,13 +210,14 @@ export const LogicTable = (props: LogicTableProps) => {
   if (arr.length < 1) {
     return DesignErrorPage({ errorMessage: "That query returned no results." });
   }
+
   return DesignTable({
     data: arr,
     numRecords: props.numRecords,
     numStudies: props.numStudies,
+    activeItemType: props.activeItemType,
     controller: tableController,
     sortedBy,
     metadata: [...Object.values(metadata)],
-    activeItemType,
   });
 };

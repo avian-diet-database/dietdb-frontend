@@ -5,18 +5,12 @@ import { LogicGraph, LogicGraphTypes } from "../logic/LogicGraph";
 import { LogicSources } from "../logic/LogicSources";
 import { ItemType } from "../../cache";
 import { LogicMap } from "../logic/LogicMap";
-import { useReactiveVar } from "@apollo/client";
-
-import { ActiveItemVar, ActiveItemTypeVar } from "../../cache";
 
 export interface DesignItemProps {
   activeItem: string;
   activeItemType: ItemType;
   numStudies: number;
   numRecords: number;
-  startYears: string[];
-  endYears: string[];
-  regions: string[];
 }
 
 export const DesignItem = (props: DesignItemProps) => {
@@ -44,26 +38,38 @@ export const DesignItem = (props: DesignItemProps) => {
         </div>
         <div className="columns">
           <div className="column is-6">
-            <LogicCriteria />
-            <LogicTable
-              numStudies={props.numStudies}
-              numRecords={props.numRecords}
+            <LogicCriteria
+              activeItem={props.activeItem}
+              activeItemType={props.activeItemType}
             />
+            <LogicTable {...props} />
           </div>
           <div className="column is-6">
             {isPredator ? (
               <div className="content">
-                <LogicGraph graphType={LogicGraphTypes.RECORDS_PER_SEASON} />
-                <LogicGraph graphType={LogicGraphTypes.RECORDS_PER_DECADE} />
-                <LogicGraph graphType={LogicGraphTypes.RECORDS_PER_DIET_TYPE} />
-                <LogicMap />
+                <LogicGraph
+                  activeItem={props.activeItem}
+                  graphType={LogicGraphTypes.RECORDS_PER_SEASON}
+                />
+                <LogicGraph
+                  activeItem={props.activeItem}
+                  graphType={LogicGraphTypes.RECORDS_PER_DECADE}
+                />
+                <LogicGraph
+                  activeItem={props.activeItem}
+                  graphType={LogicGraphTypes.RECORDS_PER_DIET_TYPE}
+                />
+                <LogicMap activeItem={props.activeItem} />
               </div>
             ) : null}
           </div>
         </div>
         {isPredator ? (
           <div>
-            <LogicSources />
+            <LogicSources
+              activeItem={props.activeItem}
+              activeItemType={props.activeItemType}
+            />
           </div>
         ) : null}
       </div>
