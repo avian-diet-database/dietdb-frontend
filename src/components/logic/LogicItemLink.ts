@@ -18,8 +18,8 @@ export const LogicItemLink = (props: LogicItemLinkProps) => {
       .replace(/pupa/g, "")
       .trim();
 
-    ActiveItemVar(item);
-    ActiveItemTypeVar(props.itemType);
+    //ActiveItemVar(item);
+    //ActiveItemTypeVar(props.itemType);
     document.getElementById("item")?.scrollIntoView();
   };
 
