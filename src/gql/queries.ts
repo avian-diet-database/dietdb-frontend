@@ -35,14 +35,14 @@ const GET_PREY_OF = gql`
 const GET_PREDATOR_OF = gql`
   query GetPredOf(
     $name: String!
-    $level: String
+    $stage: String
     $startYear: String
     $endYear: String
     $season: String
     $region: String
   ) {
     activeItem @client @export(as: "name")
-    level @client @export(as: "level")
+    stage @client @export(as: "stage")
     startYear @client @export(as: "startYear")
     endYear @client @export(as: "endYear")
     season @client @export(as: "season")
@@ -50,7 +50,7 @@ const GET_PREDATOR_OF = gql`
 
     getPredatorOf(
       preyName: $name
-      preyStage: $level
+      preyStage: $stage
       startYear: $startYear
       endYear: $endYear
       season: $season
