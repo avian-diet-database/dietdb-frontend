@@ -1,18 +1,14 @@
 import { DesignSearchBar } from "../design/DesignSearchBar";
-import { ItemType } from "../../App";
+import { ItemType, ActiveItemVar, ActiveItemTypeVar } from "../../cache";
 import { useAutocomplete } from "./AutocompleteHook";
 import { useState } from "react";
 import { setTimeout } from "timers";
+import { useReactiveVar } from "@apollo/client";
 
 export interface LogicSearchBarProps {
   // In test cases, fruit/vegetable.
   queryType: ItemType;
-  // A callback for updating the selected item.
-  updateActiveItem: React.Dispatch<React.SetStateAction<string>>;
-  // The active item.
-  activeItem: string;
-  // Dispatcher for active item type.
-  updateItemType: React.Dispatch<React.SetStateAction<ItemType>>;
+
   // Placeholder for input
   placeholder: string;
 
@@ -22,6 +18,8 @@ export interface LogicSearchBarProps {
 }
 
 export const LogicSearchBar = (props: LogicSearchBarProps) => {
+  const activeItem = useReactiveVar(ActiveItemVar);
+
   const [queryMatches, updateQueryString] = useAutocomplete(props.queryType);
 
   const [currIndex, changeIndex] = useState(0);
@@ -41,7 +39,7 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
       }
     } else if (event.keyCode === 13) {
       // Enter key
-      selectItem(queryMatches[currIndex] || props.activeItem);
+      selectItem(queryMatches[currIndex] || activeItem);
       changeIndex(0);
     }
   };
@@ -61,8 +59,8 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
   };
 
   const selectItem = (item: string) => {
-    props.updateActiveItem(item);
-    props.updateItemType(props.queryType);
+    ActiveItemVar(item);
+    ActiveItemTypeVar(props.queryType);
     updateQueryString("");
     document.getElementById("item")?.scrollIntoView();
   };
@@ -75,7 +73,6 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
 
   return DesignSearchBar({
     queryType: props.queryType,
-    activeItem: props.activeItem,
     queryMatches: queryMatches,
     onQueryInputChange: onQueryInputChange,
     onQueryCancel: onQueryCancel,

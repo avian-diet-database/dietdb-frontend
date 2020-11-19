@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { ItemType } from "../../App";
+import { ItemType, ActiveItemVar } from "../../cache";
 import { DebounceInput } from "react-debounce-input";
+import { useReactiveVar } from "@apollo/client";
 
 export interface DesignSearchBarProps {
   queryMatches: string[];
@@ -13,7 +14,6 @@ export interface DesignSearchBarProps {
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => void;
   onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  activeItem: string;
   left: string;
   right: string;
   indexNum: number;
@@ -21,6 +21,7 @@ export interface DesignSearchBarProps {
 }
 
 export const DesignSearchBar = (props: DesignSearchBarProps) => {
+  const activeItem = useReactiveVar(ActiveItemVar);
   return (
     <div
       className="container is-flex is-flex-direction-row"
@@ -32,7 +33,7 @@ export const DesignSearchBar = (props: DesignSearchBarProps) => {
           <div className="field has-addons">
             <div className="control">
               <DebounceInput
-                value={props.activeItem}
+                value={activeItem}
                 style={{ border: "none", boxShadow: "none" }}
                 className="input is-size-2 has-text-info title"
                 type="text"

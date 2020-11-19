@@ -3,16 +3,10 @@ import { GET_MAP_DATA } from "../../gql/queries";
 import { useQuery } from "@apollo/client";
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { LogicErrorPage } from "./LogicErrorPage";
-import { CriteriaController } from "../../types/CriteriaController";
 
-interface LogicMapProps {
-    activeItem: string;
-    controller: CriteriaController;
-}
-
-let Rainbow = require('rainbowvis.js');
+let Rainbow = require("rainbowvis.js");
 let colorScale = new Rainbow();
-colorScale.setSpectrum('#CED5D3', '#b15900');
+colorScale.setSpectrum("#CED5D3", "#b15900");
 
 let stateNames = new Map();
 
@@ -68,68 +62,62 @@ stateNames.set("Wisconsin", "WI");
 stateNames.set("Wyoming", "WY");
 
 export const numToColor = (count: number) => {
-    return ("#" + colorScale.colourAt(count) + "");
+  return "#" + colorScale.colourAt(count) + "";
 };
 
 let customFill: { [k: string]: any } = {};
 
+export const LogicMap = () => {
+  const query = GET_MAP_DATA;
 
-export const LogicMap = (props: LogicMapProps) => {
+  const { loading, error, data } = useQuery(query);
+  if (loading) return DesignLoadingPage();
+  if (error)
+    return LogicErrorPage({
+      errorMessage:
+        "Uh no, an error has occurred :( please return to homepage!" +
+        error.message,
+    });
+  const arr = data.getMapData;
 
-    const query = GET_MAP_DATA;
-    const options = {
-        variables: {
-            name: props.activeItem,
-            metrics: props.controller.metrics.value,
-            startYear: props.controller.startYear.value,
-            endYear: props.controller.endYear.value,
-            seasons: props.controller.season.value,
-            region: props.controller.region.value,
-        }
-    };
-
-    const { loading, error, data } = useQuery(query, options);
-    if (loading) return DesignLoadingPage()
-    if (error) return LogicErrorPage({ errorMessage: "Uh no, an error has occurred :( please return to homepage!" + error.message })
-    const arr = data.getMapData;
-
-    return createMap(arr);
-}
+  return createMap(arr);
+};
 
 export const includeAllStates = () => {
-    stateNames.forEach(addState);
-}
+  stateNames.forEach(addState);
+};
 
-function addState(value:string, key:string) {
-    customFill[value] = { fill: "#CED5D3" }; 
+function addState(value: string, key: string) {
+  customFill[value] = { fill: "#CED5D3" };
 }
 
 export const createMap = (data: any[]) => {
-    let maxCount = 0;
-    customFill = {};
-    includeAllStates();
-    let region = "";
-    let regionColor = "";
-    for(let entry of data) {
-        region = entry.region;
-        if (!stateNames.has(region)) {
-            continue;
-        }
-        maxCount = Math.max(maxCount, entry.count);
+  let maxCount = 0;
+  customFill = {};
+  includeAllStates();
+  let region = "";
+  let regionColor = "";
+  for (let entry of data) {
+    region = entry.region;
+    if (!stateNames.has(region)) {
+      continue;
     }
-    colorScale.setNumberRange(0, maxCount+1);
-    for (let entry of data) {
-        region = entry.region;
-        if (!stateNames.has(region)) {
-            continue;
-        }
-        region = stateNames.get(region);
-        regionColor = numToColor(entry.count);
-        customFill[region] = { fill: regionColor };
+    maxCount = Math.max(maxCount, entry.count);
+  }
+  colorScale.setNumberRange(0, maxCount + 1);
+  for (let entry of data) {
+    region = entry.region;
+    if (!stateNames.has(region)) {
+      continue;
     }
-    let customConfig = () => {
-        return customFill;
-    };
+    region = stateNames.get(region);
+    regionColor = numToColor(entry.count);
+    customFill[region] = { fill: regionColor };
+  }
+  let customConfig = () => {
+    return customFill;
+  };
 
-    return DesignMap({ customFill: customConfig(), maxRecords:maxCount});
-}
+  return DesignMap({ customFill: customConfig(), maxRecords: maxCount });
+};
+

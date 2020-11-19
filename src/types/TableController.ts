@@ -1,4 +1,4 @@
-import { ItemType } from "../App";
+import { ItemType } from "../cache";
 
 export interface TableController {
   handleTaxonClick: (

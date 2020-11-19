@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { ItemType } from "../../App";
+import { ItemType, ActiveItemTypeVar } from "../../cache";
+import { useReactiveVar } from "@apollo/client";
 
 interface DesignNavBarProps {
   onPredatorClick: () => void;
   onPreyClick: () => void;
   onHomeClick: () => void;
   onAboutClick: () => void;
-  itemType: ItemType;
 }
 export const DesignNavBar = (props: DesignNavBarProps) => {
   const [mobileActive, setMobileActive] = useState(false);
   const active = mobileActive ? "is-active" : "";
+  const activeItemType = useReactiveVar(ActiveItemTypeVar);
   return (
     <nav className="navbar is-fixed-top is-info" id="home">
       <div className="navbar-brand">
@@ -37,7 +38,7 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
             }}
             className={
               "navbar-item " +
-              (props.itemType === ItemType.PREY ? "is-active" : "")
+              (activeItemType === ItemType.PREY ? "is-active" : "")
             }
           >
             Diet by Prey
@@ -49,7 +50,7 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
             }}
             className={
               "navbar-item " +
-              (props.itemType === ItemType.PREDATOR ? "is-active" : "")
+              (activeItemType === ItemType.PREDATOR ? "is-active" : "")
             }
           >
             Diet by Bird
@@ -61,7 +62,7 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
             }}
             className={
               "navbar-item " +
-              (props.itemType === ItemType.NA ? "is-active" : "")
+              (activeItemType === ItemType.NA ? "is-active" : "")
             }
           >
             Home
@@ -74,7 +75,7 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
           <span className="navbar-item">
             <a
               href="https://github.com/ahhurlbert/aviandietdb"
-              className="button is-dark is-inverted"
+              className="button is-info is-inverted"
             >
               R package
             </a>

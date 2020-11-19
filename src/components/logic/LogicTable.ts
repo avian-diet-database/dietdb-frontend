@@ -1,56 +1,64 @@
 import { DesignTable } from "../design/DesignTable";
-import { CriteriaController } from "../../types/CriteriaController";
 import { GET_PREDATOR_OF, GET_PREY_OF } from "../../gql/queries";
-import { useQuery } from "@apollo/client";
+import { useQuery, useReactiveVar } from "@apollo/client";
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
-import { ItemType } from "../../App";
+import { ItemType, StageVar } from "../../cache";
 import { DesignErrorPage } from "../design/DesignErrorPage";
 import { useTable, TableSort, TableActionType } from "./TableSorting";
 import { TableController } from "../../types/TableController";
 import { useEffect, useState } from "react";
+import {
+  ActiveItemVar,
+  ActiveItemTypeVar,
+  CriteriaOptionsVar,
+  RegionVar,
+  SeasonVar,
+  StartYearVar,
+  EndYearVar,
+  LevelVar,
+} from "../../cache";
 
 interface LogicTableProps {
-  controller: CriteriaController;
-  itemType: ItemType;
-  activeItem: string;
   numStudies: number;
   numRecords: number;
-  // A callback for updating the selected item.
-  updateActiveItem: React.Dispatch<React.SetStateAction<string>>;
-  // Dispatcher for active item type.
-  updateItemType: React.Dispatch<React.SetStateAction<ItemType>>;
 }
 
 export const LogicTable = (props: LogicTableProps) => {
   //Fetch the data for the active item.
-  let isPredator = props.itemType === ItemType.PREDATOR;
-  const query = isPredator ? GET_PREY_OF : GET_PREDATOR_OF;
-  const options = {
-    variables: {
-      name: props.activeItem,
-      startYear: props.controller.startYear.value,
-      endYear: props.controller.endYear.value,
-      season: props.controller.season.value,
-      region: props.controller.region.value,
-      metrics: props.controller.metrics.value,
-      level: isPredator
-        ? props.controller.level.value
-        : props.controller.stage.value,
-    },
+  const criteria = useReactiveVar(CriteriaOptionsVar);
+  const activeItemType = useReactiveVar(ActiveItemTypeVar);
+  const activeItem = useReactiveVar(ActiveItemVar);
+  const region = useReactiveVar(RegionVar);
+  const season = useReactiveVar(SeasonVar);
+  const startYear = useReactiveVar(StartYearVar);
+  const endYear = useReactiveVar(EndYearVar);
+  const level = useReactiveVar(LevelVar);
+  const stage = useReactiveVar(StageVar);
+
+  const metadata = {
+    name: activeItem,
+    region,
+    season,
+    startYear,
+    endYear,
+    level,
+    stage,
   };
 
-  const { loading, error, data } = useQuery(query, options);
+  let isPredator = activeItemType === ItemType.PREDATOR;
+  let isPrey = activeItemType === ItemType.PREY;
 
-  const [tableData, dispatchTableAction] = useTable(props.itemType);
+  const query = isPredator ? GET_PREY_OF : GET_PREDATOR_OF;
+
+  const { loading, error, data } = useQuery(query);
+
+  const [tableData, dispatchTableAction] = useTable(activeItemType);
 
   const [sortedBy, updateSortedBy] = useState(TableSort.ITEMS);
 
   useEffect(() => {
     if (data) {
-      const arr =
-        props.itemType === ItemType.PREDATOR
-          ? data.getPreyOf
-          : data.getPredatorOf;
+      const arr = isPredator ? data.getPreyOf : data.getPredatorOf;
       dispatchTableAction({ type: TableActionType.UPDTE, payload: arr });
     }
   }, [data]);
@@ -82,14 +90,6 @@ export const LogicTable = (props: LogicTableProps) => {
       updateSortedBy(() =>
         itemType === ItemType.PREDATOR ? TableSort.ITEMS : TableSort.FRADT
       );
-      // TODO: Reset the selected criteria - this is not thoroughly tested.
-      props.controller.updateLevel(props.controller.levelOptions[0]);
-      props.controller.updateStage(props.controller.stageOptions[0]);
-      props.controller.updateRegion(props.controller.regionOptions[0]);
-      props.controller.updateSeason(props.controller.seasonOptions[0]);
-      props.controller.updateEndYear(props.controller.endYearOptions[0]);
-      props.controller.updateStartYear(props.controller.startYearOptions[0]);
-      props.controller.updateMetrics(props.controller.metricsOptions[0]);
     },
     handleMetricsClick: () => {
       updateSortedBy(TableSort.DTTYP);
@@ -186,7 +186,7 @@ export const LogicTable = (props: LogicTableProps) => {
 
   let arr = [];
   // This logic should be moved into a helper function.
-  if (props.itemType === ItemType.PREDATOR && props.activeItem !== "") {
+  if (isPredator && activeItem !== "") {
     // Fix the rows for Predator page
     arr = tableData.rows.map((prey: any) => {
       let items = prey.items === null ? null : prey.items.substring(0, 4) + "%";
@@ -200,7 +200,7 @@ export const LogicTable = (props: LogicTableProps) => {
         prey.occurrence === null ? null : prey.occurrence.substring(0, 4) + "%";
       return { ...prey, items, wt_or_vol, occurrence, unspecified };
     });
-  } else if (props.itemType === ItemType.PREY && props.activeItem !== "") {
+  } else if (isPrey && activeItem !== "") {
     // Fix the rows for Prey page.
     arr = tableData.rows.map((predator: any) => {
       let fraction_diet =
@@ -211,20 +211,16 @@ export const LogicTable = (props: LogicTableProps) => {
     });
   }
 
-  let activeItem = props.activeItem;
   if (arr.length < 1) {
     return DesignErrorPage({ errorMessage: "That query returned no results." });
   }
   return DesignTable({
     data: arr,
-    itemType: props.itemType,
-    updateItemType: props.updateItemType,
-    updateActiveItem: props.updateActiveItem,
     numRecords: props.numRecords,
     numStudies: props.numStudies,
     controller: tableController,
-    activeItem,
-    options,
     sortedBy,
+    metadata: [...Object.values(metadata)],
+    activeItemType,
   });
 };

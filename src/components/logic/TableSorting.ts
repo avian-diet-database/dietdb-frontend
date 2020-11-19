@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 import { Prey } from "../../types/Prey";
 import { Predator } from "../../types/Predator";
-import { ItemType } from "../../App";
+import { ItemType } from "../../cache";
 
 export enum TableSort {
   TAXON,

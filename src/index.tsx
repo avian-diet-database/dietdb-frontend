@@ -3,11 +3,13 @@ import ReactDOM from "react-dom";
 import "./css/index.css";
 import "./css/manual.css";
 import App from "./App";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { ApolloClient, ApolloProvider } from "@apollo/client";
+import { cache } from "./cache";
 
 const client = new ApolloClient({
-  uri: "http://back-end-dept-dietdatabase.cloudapps.unc.edu/graphql",
-  cache: new InMemoryCache(),
+  cache,
+  uri: "https://back-end-dept-dietdatabase.cloudapps.unc.edu/graphql",
+  connectToDevTools: true,
 });
 
 ReactDOM.render(

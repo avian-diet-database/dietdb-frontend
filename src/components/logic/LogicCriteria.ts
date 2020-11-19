@@ -1,51 +1,50 @@
 import { DesignCriteria } from "../design/DesignCriteria";
-import { ItemType } from "../../App";
-import { CriteriaController } from "../../types/CriteriaController";
-import { useState } from "react";
+import {
+  StartYearVar,
+  EndYearVar,
+  RegionVar,
+  LevelVar,
+  SeasonVar,
+  StageVar,
+  ActiveItemTypeVar,
+  ActiveItemVar,
+  CriteriaOptionsVar,
+} from "../../cache";
+import { useReactiveVar } from "@apollo/client";
 
-interface LogicCriteriaProps {
-  itemType: ItemType;
-  activeItem: string;
-  controller: CriteriaController;
-}
-
-export const LogicCriteria = (props: LogicCriteriaProps) => {
-  const [editing, setEditing] = useState(false);
+export const LogicCriteria = () => {
+  const activeItemType = useReactiveVar(ActiveItemTypeVar);
+  const activeItem = useReactiveVar(ActiveItemVar);
+  const criteria = useReactiveVar(CriteriaOptionsVar);
 
   const onStartYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    props.controller.updateStartYear(event.target.value);
+    StartYearVar(event.target.value);
   };
   const onEndYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    props.controller.updateEndYear(event.target.value);
+    EndYearVar(event.target.value);
   };
   const onRegionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    props.controller.updateRegion(event.target.value);
+    RegionVar(event.target.value);
   };
   const onLevelChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    props.controller.updateLevel(event.target.value);
-  };
-  const onMetricsChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    props.controller.updateMetrics(event.target.value);
+    LevelVar(event.target.value);
   };
   const onSeasonsChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    props.controller.updateSeason(event.target.value);
+    SeasonVar(event.target.value);
   };
   const onStageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    props.controller.updateStage(event.target.value);
+    StageVar(event.target.value);
   };
 
   return DesignCriteria({
-    itemType: props.itemType,
-    activeItem: props.activeItem,
-    controller: props.controller,
-    onStartYearChange: onStartYearChange,
-    onEndYearChange: onEndYearChange,
-    onRegionChange: onRegionChange,
-    onLevelChange: onLevelChange,
-    onMetricsChange: onMetricsChange,
-    onSeasonsChange: onSeasonsChange,
-    onStageChange: onStageChange,
-    editing,
-    setEditing,
+    activeItem,
+    activeItemType,
+    criteria,
+    onStartYearChange,
+    onEndYearChange,
+    onRegionChange,
+    onLevelChange,
+    onSeasonsChange,
+    onStageChange,
   });
 };

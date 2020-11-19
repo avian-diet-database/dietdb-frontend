@@ -1,34 +1,18 @@
-import { useQuery } from "@apollo/client";
+import { useQuery, useReactiveVar } from "@apollo/client";
 import { GET_PREY_OF_SOURCES } from "../../gql/queries";
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { LogicErrorPage } from "../logic/LogicErrorPage";
 import { DesignSources } from "../design/DesignSources";
-import { ItemType } from "../../App";
-import { CriteriaController } from "../../types/CriteriaController";
+import { ActiveItemTypeVar, ItemType } from "../../cache";
 
-export interface LogicSourceProps {
-  activeItem: string;
-  itemType: ItemType;
-  controller: CriteriaController;
-}
-
-export const LogicSources = (props: LogicSourceProps) => {
-  const options = {
-    variables: {
-      name: props.activeItem,
-      level: props.controller.level.value,
-      metrics: props.controller.metrics.value,
-      startYear: props.controller.startYear.value,
-      endYear: props.controller.endYear.value,
-      season: props.controller.season.value,
-      region: props.controller.region.value,
-    },
-  };
+export const LogicSources = () => {
+  const activeItemType = useReactiveVar(ActiveItemTypeVar);
   const query =
-    props.itemType === ItemType.PREDATOR
+    activeItemType === ItemType.PREDATOR
       ? GET_PREY_OF_SOURCES
       : GET_PREY_OF_SOURCES;
-  const { loading, error, data } = useQuery(query, options);
+
+  const { loading, error, data } = useQuery(query);
   if (loading) return DesignLoadingPage();
   if (error)
     return LogicErrorPage({

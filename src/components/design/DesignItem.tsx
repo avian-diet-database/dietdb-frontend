@@ -1,24 +1,27 @@
 import React from "react";
-import { CriteriaController } from "../../types/CriteriaController";
 import { LogicCriteria } from "../logic/LogicCriteria";
 import { LogicTable } from "../logic/LogicTable";
 import { LogicGraph, LogicGraphTypes } from "../logic/LogicGraph";
 import { LogicSources } from "../logic/LogicSources";
-import { ItemType } from "../../App";
+import { ItemType } from "../../cache";
 import { LogicMap } from "../logic/LogicMap";
+import { useReactiveVar } from "@apollo/client";
+
+import { ActiveItemVar, ActiveItemTypeVar } from "../../cache";
 
 export interface DesignItemProps {
   activeItem: string;
-  itemType: ItemType;
+  activeItemType: ItemType;
   numStudies: number;
   numRecords: number;
-  controller: CriteriaController;
-  updateActiveItem: React.Dispatch<React.SetStateAction<string>>;
-  updateItemType: React.Dispatch<React.SetStateAction<ItemType>>;
+  startYears: string[];
+  endYears: string[];
+  regions: string[];
 }
 
 export const DesignItem = (props: DesignItemProps) => {
-  let isPredator = props.itemType == ItemType.PREDATOR;
+  let isPredator = props.activeItemType == ItemType.PREDATOR;
+
   return (
     <div className="hero is-light" id="item">
       <div className="hero-body">
@@ -41,17 +44,8 @@ export const DesignItem = (props: DesignItemProps) => {
         </div>
         <div className="columns">
           <div className="column is-6">
-            <LogicCriteria
-              controller={props.controller}
-              itemType={props.itemType}
-              activeItem={props.activeItem}
-            />
+            <LogicCriteria />
             <LogicTable
-              activeItem={props.activeItem}
-              updateItemType={props.updateItemType}
-              updateActiveItem={props.updateActiveItem}
-              itemType={props.itemType}
-              controller={props.controller}
               numStudies={props.numStudies}
               numRecords={props.numRecords}
             />
@@ -59,36 +53,17 @@ export const DesignItem = (props: DesignItemProps) => {
           <div className="column is-6">
             {isPredator ? (
               <div className="content">
-                <LogicGraph
-                  graphType={LogicGraphTypes.RECORDS_PER_SEASON}
-                  activeItem={props.activeItem}
-                  controller={props.controller}
-                />
-                <LogicGraph
-                  graphType={LogicGraphTypes.RECORDS_PER_DECADE}
-                  activeItem={props.activeItem}
-                  controller={props.controller}
-                />
-                <LogicGraph
-                  graphType={LogicGraphTypes.RECORDS_PER_DIET_TYPE}
-                  activeItem={props.activeItem}
-                  controller={props.controller}
-                />
-                <LogicMap
-                  activeItem={props.activeItem}
-                  controller={props.controller}
-                />
+                <LogicGraph graphType={LogicGraphTypes.RECORDS_PER_SEASON} />
+                <LogicGraph graphType={LogicGraphTypes.RECORDS_PER_DECADE} />
+                <LogicGraph graphType={LogicGraphTypes.RECORDS_PER_DIET_TYPE} />
+                <LogicMap />
               </div>
             ) : null}
           </div>
         </div>
         {isPredator ? (
           <div>
-            <LogicSources
-              activeItem={props.activeItem}
-              itemType={props.itemType}
-              controller={props.controller}
-            />
+            <LogicSources />
           </div>
         ) : null}
       </div>

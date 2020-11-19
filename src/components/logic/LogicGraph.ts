@@ -3,11 +3,10 @@ import {
   RECORDS_PER_DECADE,
   RECORDS_PER_DIET_TYPE,
 } from "../../gql/queries";
-import { useQuery } from "@apollo/client";
+import { useQuery, useReactiveVar } from "@apollo/client";
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { DesignGraph } from "../design/DesignGraph";
 import { LogicErrorPage } from "./LogicErrorPage";
-import { CriteriaController } from "../../types/CriteriaController";
 export enum LogicGraphTypes {
   RECORDS_PER_SEASON,
   RECORDS_PER_DIET_TYPE,
@@ -16,24 +15,12 @@ export enum LogicGraphTypes {
 
 export interface LogicGraphProps {
   graphType: LogicGraphTypes;
-  activeItem: string;
-  controller: CriteriaController;
 }
 
 export const LogicGraph = (props: LogicGraphProps) => {
   let query;
   let title;
-  let options = {
-    variables: {
-      name: props.activeItem,
-      level: props.controller.level.value,
-      metrics: props.controller.metrics.value,
-      startYear: props.controller.startYear.value,
-      endYear: props.controller.endYear.value,
-      season: props.controller.season.value,
-      region: props.controller.region.value,
-    },
-  };
+
   switch (props.graphType) {
     case LogicGraphTypes.RECORDS_PER_SEASON:
       query = RECORDS_PER_SEASON;
@@ -52,7 +39,7 @@ export const LogicGraph = (props: LogicGraphProps) => {
       title = "Records Per Season";
       break;
   }
-  const { loading, error, data } = useQuery(query, options);
+  const { loading, error, data } = useQuery(query);
   if (loading) return DesignLoadingPage();
   if (error)
     return LogicErrorPage({

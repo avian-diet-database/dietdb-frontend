@@ -1,5 +1,5 @@
 import React from "react";
-import { ItemType } from "../../App";
+import { ItemType } from "../../cache";
 
 interface DesignTabBarProps {
   onPredatorClick: () => void;

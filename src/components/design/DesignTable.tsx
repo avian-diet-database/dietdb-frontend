@@ -1,59 +1,41 @@
 import React from "react";
-import { LogicErrorPage } from "../logic/LogicErrorPage";
 import { DesignDownload } from "./DesignDownload";
 import { TableController } from "../../types/TableController";
 import { DesignTableHeader } from "./DesignTableHeader";
-import { ItemType } from "../../App";
 import { LogicItemLink } from "../logic/LogicItemLink";
 import { TableSort } from "../logic/TableSorting";
+import { useReactiveVar } from "@apollo/client";
+import {
+  ActiveItemVar,
+  RegionVar,
+  SeasonVar,
+  StartYearVar,
+  EndYearVar,
+  LevelVar,
+  ActiveItemTypeVar,
+  ItemType,
+} from "../../cache";
+import { CriteriaValues } from "../../types/CriteriaController";
 
 interface DesignTableProps {
   data: any[];
   controller: TableController;
-  activeItem: string;
-  itemType: ItemType;
   sortedBy: TableSort;
-  options: {
-    variables: {
-      name: string;
-      startYear: string;
-      endYear: string;
-      season: string;
-      region: string;
-      metrics: string;
-      level: string;
-    };
-  };
-  // A callback for updating the selected item.
-  updateActiveItem: React.Dispatch<React.SetStateAction<string>>;
-  // Dispatcher for active item type.
-  updateItemType: React.Dispatch<React.SetStateAction<ItemType>>;
   numRecords: number;
   numStudies: number;
+  metadata: string[];
+  activeItemType: ItemType;
 }
 
 export const DesignTable = (props: DesignTableProps) => {
-  let metadata = [
-    "Species: " + props.activeItem,
-    "Region: " + props.options.variables.region,
-    "Season: " + props.options.variables.season,
-    "startYear: " + props.options.variables.startYear,
-    "endYear: " + props.options.variables.endYear,
-    "Metrics: " + props.options.variables.metrics,
-    "Level: " + props.options.variables.level,
-    "Table Timestamp: " + new Date(),
-  ];
-
-  let isPredator = props.itemType == ItemType.PREDATOR;
+  let isPredator = props.activeItemType == ItemType.PREDATOR;
 
   return (
     <div className="message">
       <div className="message-header">
-        <div>
-          {isPredator ? "Bird Query Results" : "Prey Query Results"}
-        </div>
+        <div>{isPredator ? "Bird Query Results" : "Prey Query Results"}</div>
         <DesignDownload
-          csvData={downloadData(props.data, metadata)}
+          csvData={downloadData(props.data, props.metadata)}
           fileName={"avianDietTable"}
         />
       </div>
@@ -63,7 +45,6 @@ export const DesignTable = (props: DesignTableProps) => {
             <thead>
               <DesignTableHeader
                 sortedBy={props.sortedBy}
-                itemType={props.itemType}
                 controller={props.controller}
               />
             </thead>
@@ -75,16 +56,12 @@ export const DesignTable = (props: DesignTableProps) => {
                       <LogicItemLink
                         itemType={ItemType.PREY}
                         itemName={item["taxon"]}
-                        updateItemType={props.updateItemType}
-                        updateActiveItem={props.updateActiveItem}
                         resetTable={props.controller.resetTable}
                       />
                     ) : (
                       <LogicItemLink
                         itemType={ItemType.PREDATOR}
                         itemName={item["common_name"]}
-                        updateItemType={props.updateItemType}
-                        updateActiveItem={props.updateActiveItem}
                         resetTable={props.controller.resetTable}
                       />
                     )}
@@ -101,7 +78,6 @@ export const DesignTable = (props: DesignTableProps) => {
             <tfoot>
               <DesignTableHeader
                 sortedBy={props.sortedBy}
-                itemType={props.itemType}
                 controller={props.controller}
               />
             </tfoot>
