@@ -7,6 +7,9 @@ import {
   ActiveItemTypeVar,
   ActiveItemVar,
   CriteriaOptionsVar,
+  StartYearVar,
+  EndYearVar,
+  RegionVar,
 } from "../../cache";
 
 export const LogicItem = () => {
@@ -47,6 +50,10 @@ export const LogicItem = () => {
     endYearOptions: endYears,
     regionOptions: ["All regions", ...regions],
   });
+
+  StartYearVar(startYears[0] || "1900");
+  EndYearVar(endYears[0] || "2020");
+  RegionVar(regions[0] || "All regions");
 
   if (activeItem.length < 1 || error || loading) {
     return DesignErrorPage({
