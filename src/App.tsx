@@ -64,10 +64,7 @@ function App() {
         </div>
       </section>
       <section id="item">
-        {activeItemType === ItemType.PREY ||
-        activeItemType === ItemType.PREDATOR ? (
-          <LogicItem />
-        ) : null}
+        <LogicItem />
       </section>
       <LogicFooter />
     </div>

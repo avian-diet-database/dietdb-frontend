@@ -5,6 +5,7 @@ interface DesignDropdownProps {
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
+//Try setting the value here, instead of relying on these onChange methods.
 export const DesignDropdown = (props: DesignDropdownProps) => {
   return (
     <div className="select is-primary is-small">

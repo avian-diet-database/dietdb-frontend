@@ -10,6 +10,9 @@ import {
   StartYearVar,
   EndYearVar,
   RegionVar,
+  SeasonVar,
+  LevelVar,
+  StageVar,
 } from "../../cache";
 
 export const LogicItem = () => {
@@ -51,10 +54,14 @@ export const LogicItem = () => {
     regionOptions: ["All regions", ...regions],
   });
 
-  // Might have to reset other vars here.
+  // These variables are rest, but this is not
+  // reflected by the ui correctly.
   StartYearVar(startYears[0] || "1900");
   EndYearVar(endYears[0] || "2020");
   RegionVar("All regions");
+  SeasonVar("All seasons");
+  StageVar("All stages");
+  LevelVar("Species");
 
   if (activeItem.length < 1 || error || loading) {
     return DesignErrorPage({

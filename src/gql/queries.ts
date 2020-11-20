@@ -15,7 +15,6 @@ const GET_PREY_OF = gql`
     endYear @client @export(as: "endYear")
     season @client @export(as: "season")
     region @client @export(as: "region")
-
     getPreyOf(
       predatorName: $name
       preyLevel: $level
