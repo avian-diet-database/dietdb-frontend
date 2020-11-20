@@ -15,6 +15,7 @@ interface LogicCriteriaProps {
   activeItem: string;
   activeItemType: ItemType;
 }
+
 export const LogicCriteria = (props: LogicCriteriaProps) => {
   const criteria = useReactiveVar(CriteriaOptionsVar);
 

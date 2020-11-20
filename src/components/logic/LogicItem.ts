@@ -51,9 +51,10 @@ export const LogicItem = () => {
     regionOptions: ["All regions", ...regions],
   });
 
+  // Might have to reset other vars here.
   StartYearVar(startYears[0] || "1900");
   EndYearVar(endYears[0] || "2020");
-  RegionVar(regions[0] || "All regions");
+  RegionVar("All regions");
 
   if (activeItem.length < 1 || error || loading) {
     return DesignErrorPage({
