@@ -11,7 +11,7 @@ A mobile-friendly web page that presents bird diet information using  data compi
 ### Installing
 1. Clone the repository
     
-    `https://github.com/COMP523FA2020/Frontend.git`
+    `https://github.com/avian-diet-database/dietdb-frontend.git`
 
 2. Run npm install to have all the libraries
 
