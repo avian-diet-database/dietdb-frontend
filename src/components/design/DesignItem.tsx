@@ -34,7 +34,7 @@ export const DesignItem = (props: DesignItemProps) => {
           <strong className="is-size-2"> {props.numRecords} </strong>
           records and
           <strong className="is-size-2"> {props.numStudies} </strong>
-          studies.
+          studies...
         </div>
         <div className="columns">
           <div className="column is-6">
