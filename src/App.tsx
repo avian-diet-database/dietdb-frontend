@@ -56,7 +56,7 @@ function App() {
               <LogicSearchBar
                 queryType={ItemType.PREY}
                 placeholder={"Enter a prey name"}
-                left={"What bird eats "}
+                left={"What birds eat "}
                 right={" ?"}
               />
             ) : null}

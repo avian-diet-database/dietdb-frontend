@@ -47,6 +47,7 @@ export const DesignItem = (props: DesignItemProps) => {
           <div className="column is-6">
             {isPredator ? (
               <div className="content">
+                <LogicMap activeItem={props.activeItem} />
                 <LogicGraph
                   activeItem={props.activeItem}
                   graphType={LogicGraphTypes.RECORDS_PER_SEASON}
@@ -59,7 +60,6 @@ export const DesignItem = (props: DesignItemProps) => {
                   activeItem={props.activeItem}
                   graphType={LogicGraphTypes.RECORDS_PER_DIET_TYPE}
                 />
-                <LogicMap activeItem={props.activeItem} />
               </div>
             ) : null}
           </div>

@@ -7,7 +7,9 @@ import { LogicErrorPage } from "./LogicErrorPage";
 interface LogicFooterProps {
 }
 
-export const LogicFooter = (props: LogicFooterProps) => {
+let databaseTime = ""
+
+export const LogicTime = () => {
 
     const query = GET_DATABASE_STATS;
     const { loading, error, data} = useQuery(query);
@@ -17,6 +19,15 @@ export const LogicFooter = (props: LogicFooterProps) => {
     
     let lastUpdated = arr.lastUpdated;
 
-    return DesignFooter({lastUpdated:lastUpdated});
+    databaseTime = lastUpdated;
+    return lastUpdated;
 }
 
+export const getTime = () => {
+    return databaseTime;
+}
+
+export const LogicFooter = () => {
+    let time = LogicTime();
+    return DesignFooter({lastUpdated:time});
+}

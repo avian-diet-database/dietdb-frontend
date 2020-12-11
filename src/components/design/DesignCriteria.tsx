@@ -21,7 +21,7 @@ export const DesignCriteria = (props: DesignCriteriaProps) => {
     <div className="message is-primary">
       <div className="message-body is-size-5">
         <div className="block">
-          {"From "}
+          {"...from "}
           {
             <LogicDropdown
               criteriaOptions={props.criteria.startYearOptions}
@@ -38,14 +38,14 @@ export const DesignCriteria = (props: DesignCriteriaProps) => {
             criteriaOptions={props.criteria.regionOptions}
             onChange={props.onRegionChange}
           />{" "}
-          over the span of{" "}
+          over {" "}
           <LogicDropdown
             criteriaOptions={props.criteria.seasonOptions}
             onChange={props.onSeasonsChange}
           />
           {isPredator ? (
             <div>
-              and summarized at the level of{" "}
+              , summarized at the level of prey{" "}
               <LogicDropdown
                 criteriaOptions={props.criteria.levelOptions}
                 onChange={props.onLevelChange}
@@ -53,7 +53,7 @@ export const DesignCriteria = (props: DesignCriteriaProps) => {
             </div>
           ) : (
             <div>
-              and is of the stage{" "}
+              , in the stage of{" "}
               <LogicDropdown
                 criteriaOptions={props.criteria.stageOptions}
                 onChange={props.onStageChange}

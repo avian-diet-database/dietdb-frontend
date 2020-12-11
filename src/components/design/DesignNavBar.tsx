@@ -34,18 +34,6 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
           <a
             onClick={() => {
               setMobileActive(false);
-              props.onPreyClick();
-            }}
-            className={
-              "navbar-item " +
-              (activeItemType === ItemType.PREY ? "is-active" : "")
-            }
-          >
-            Diet by Prey
-          </a>
-          <a
-            onClick={() => {
-              setMobileActive(false);
               props.onPredatorClick();
             }}
             className={
@@ -54,6 +42,18 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
             }
           >
             Diet by Bird
+          </a>
+          <a
+            onClick={() => {
+              setMobileActive(false);
+              props.onPreyClick();
+            }}
+            className={
+              "navbar-item " +
+              (activeItemType === ItemType.PREY ? "is-active" : "")
+            }
+          >
+            Diet by Prey
           </a>
           <a
             onClick={() => {

@@ -16,9 +16,25 @@ export const LogicStatistics = () => {
     if (error) return LogicErrorPage({ errorMessage: "Uh no, an error has occurred :( please return to homepage!" + error.message })
     const arr = data.getAvianTableStats;
     
-    let speciesCount = arr.numSpecies;
-    let studiesCount = arr.numStudies;
-    let recordsCount = arr.numRecords;
+    let speciesCount = addComma(arr.numSpecies);
+    let studiesCount = addComma(arr.numStudies);
+    let recordsCount = addComma(arr.numRecords);
+
+
 
     return DesignStatistics({speciesCount:speciesCount, studiesCount:studiesCount, recordsCount:recordsCount});
+}
+
+let addComma = (inputNum:String) => {
+    if(inputNum.length <= 3) {
+        return inputNum;
+    }
+    let res = "";
+    res = inputNum.substring(inputNum.length - 3) + res;
+    inputNum = inputNum.substring(0, inputNum.length - 3);
+    while(inputNum.length > 3) {
+        res = inputNum.substring(inputNum.length - 3) + "," + res;
+        inputNum = inputNum.substring(0, inputNum.length - 3);
+    }
+    return inputNum + "," + res;
 }

@@ -5,6 +5,11 @@ import { DesignTableHeader } from "./DesignTableHeader";
 import { LogicItemLink } from "../logic/LogicItemLink";
 import { TableSort } from "../logic/TableSorting";
 import { ItemType } from "../../cache";
+import { useQuery } from "@apollo/client";
+import { GET_DATABASE_STATS } from "../../gql/queries";
+import { LogicErrorPage } from "../logic/LogicErrorPage";
+import { DesignLoadingPage } from "./DesignLoadingPage";
+import { getTime, LogicTime } from "../logic/LogicFooter";
 
 interface DesignTableProps {
   data: any[];
@@ -44,11 +49,11 @@ export const DesignTable = (props: DesignTableProps) => {
                         itemName={item["taxon"]}
                       />
                     ) : (
-                      <LogicItemLink
-                        itemType={ItemType.PREDATOR}
-                        itemName={item["common_name"]}
-                      />
-                    )}
+                        <LogicItemLink
+                          itemType={ItemType.PREDATOR}
+                          itemName={item["common_name"]}
+                        />
+                      )}
                     {Object.keys(item)
                       .filter((val) => val != "__typename")
                       .filter((val) => val != "taxon" && val != "common_name")
@@ -70,16 +75,35 @@ export const DesignTable = (props: DesignTableProps) => {
 };
 
 let downloadData = (preyData: any[], metadata: any[]) => {
+  
   let resData = [];
   let headers = [];
   headers = Object.keys(preyData[0]);
-  resData.push(metadata);
-  resData.push([]);
+  headers = formatHeaders(headers);
   resData.push(headers);
   let body = [];
   for (let item of preyData) {
     body = Object.values(item);
+    body.unshift(metadata[0])
+    body.splice(2, 0, metadata[5]);
+    body.splice(2, 0, metadata[4]);
+    body.splice(2, 0, metadata[3]);
+    body.splice(2, 0, metadata[2]);
+    body.splice(2, 0, metadata[1]);
+    body[body.length] = getTime();
     resData.push(body);
   }
   return resData;
+};
+
+let formatHeaders = (headers:any[]) => {
+  headers[0] = "query type";
+  headers.unshift("species");
+  headers.splice(2, 0, "prey level");
+  headers.splice(2, 0, "end year");
+  headers.splice(2, 0, "start year");
+  headers.splice(2, 0, "season");
+  headers.splice(2, 0, "region");
+  headers[headers.length] = "DataBase Timestamp"
+  return headers;
 };

@@ -1,5 +1,5 @@
 import { DesignTable } from "../design/DesignTable";
-import { GET_PREDATOR_OF, GET_PREY_OF } from "../../gql/queries";
+import { GET_DATABASE_STATS, GET_PREDATOR_OF, GET_PREY_OF } from "../../gql/queries";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { ItemType, StageVar } from "../../cache";
@@ -14,6 +14,7 @@ import {
   EndYearVar,
   LevelVar,
 } from "../../cache";
+import { LogicErrorPage } from "./LogicErrorPage";
 
 interface LogicTableProps {
   numStudies: number;
@@ -76,13 +77,13 @@ export const LogicTable = (props: LogicTableProps) => {
       });
       itemType === ItemType.PREDATOR
         ? dispatchTableAction({
-            type: TableActionType.ITEMS,
-            payload: null,
-          })
+          type: TableActionType.ITEMS,
+          payload: null,
+        })
         : dispatchTableAction({
-            type: TableActionType.FRADT,
-            payload: null,
-          });
+          type: TableActionType.FRADT,
+          payload: null,
+        });
       // Reset the sorting to default
       updateSortedBy(() =>
         itemType === ItemType.PREDATOR ? TableSort.ITEMS : TableSort.FRADT
@@ -92,90 +93,90 @@ export const LogicTable = (props: LogicTableProps) => {
       updateSortedBy(TableSort.DTTYP);
       tableData.sort === TableSort.DTTYP
         ? dispatchTableAction({
-            type: TableActionType.TOGGLEDIR,
-            payload: null,
-          })
+          type: TableActionType.TOGGLEDIR,
+          payload: null,
+        })
         : dispatchTableAction({ type: TableActionType.DTTYP, payload: null });
     },
     handleCommonNameClick: () => {
       updateSortedBy(TableSort.CMNNM);
       tableData.sort === TableSort.CMNNM
         ? dispatchTableAction({
-            type: TableActionType.TOGGLEDIR,
-            payload: null,
-          })
+          type: TableActionType.TOGGLEDIR,
+          payload: null,
+        })
         : dispatchTableAction({ type: TableActionType.CMNNM, payload: null });
     },
     handleFractionDietClick: () => {
       updateSortedBy(TableSort.FRADT);
       tableData.sort === TableSort.FRADT
         ? dispatchTableAction({
-            type: TableActionType.TOGGLEDIR,
-            payload: null,
-          })
+          type: TableActionType.TOGGLEDIR,
+          payload: null,
+        })
         : dispatchTableAction({ type: TableActionType.FRADT, payload: null });
     },
     handleFamilyClick: () => {
       updateSortedBy(TableSort.FAMLY);
       tableData.sort === TableSort.FAMLY
         ? dispatchTableAction({
-            type: TableActionType.TOGGLEDIR,
-            payload: null,
-          })
+          type: TableActionType.TOGGLEDIR,
+          payload: null,
+        })
         : dispatchTableAction({ type: TableActionType.FAMLY, payload: null });
     },
     handleNumberOfStudiesClick: () => {
       updateSortedBy(TableSort.NMSTD);
       tableData.sort === TableSort.NMSTD
         ? dispatchTableAction({
-            type: TableActionType.TOGGLEDIR,
-            payload: null,
-          })
+          type: TableActionType.TOGGLEDIR,
+          payload: null,
+        })
         : dispatchTableAction({ type: TableActionType.NMSTD, payload: null });
     },
     handleTaxonClick: () => {
       updateSortedBy(TableSort.TAXON);
       tableData.sort === TableSort.TAXON
         ? dispatchTableAction({
-            type: TableActionType.TOGGLEDIR,
-            payload: null,
-          })
+          type: TableActionType.TOGGLEDIR,
+          payload: null,
+        })
         : dispatchTableAction({ type: TableActionType.TAXON, payload: null });
     },
     handleItemsClick: () => {
       updateSortedBy(TableSort.ITEMS);
       tableData.sort === TableSort.ITEMS
         ? dispatchTableAction({
-            type: TableActionType.TOGGLEDIR,
-            payload: null,
-          })
+          type: TableActionType.TOGGLEDIR,
+          payload: null,
+        })
         : dispatchTableAction({ type: TableActionType.ITEMS, payload: null });
     },
     handleWtVolClick: () => {
       updateSortedBy(TableSort.WTVOL);
       tableData.sort === TableSort.WTVOL
         ? dispatchTableAction({
-            type: TableActionType.TOGGLEDIR,
-            payload: null,
-          })
+          type: TableActionType.TOGGLEDIR,
+          payload: null,
+        })
         : dispatchTableAction({ type: TableActionType.WTVOL, payload: null });
     },
     handleOccurClick: () => {
       updateSortedBy(TableSort.OCCUR);
       tableData.sort === TableSort.OCCUR
         ? dispatchTableAction({
-            type: TableActionType.TOGGLEDIR,
-            payload: null,
-          })
+          type: TableActionType.TOGGLEDIR,
+          payload: null,
+        })
         : dispatchTableAction({ type: TableActionType.OCCUR, payload: null });
     },
     handleUnspcClick: () => {
       updateSortedBy(TableSort.UNSPC);
       tableData.sort === TableSort.UNSPC
         ? dispatchTableAction({
-            type: TableActionType.TOGGLEDIR,
-            payload: null,
-          })
+          type: TableActionType.TOGGLEDIR,
+          payload: null,
+        })
         : dispatchTableAction({ type: TableActionType.UNSPC, payload: null });
     },
   };
