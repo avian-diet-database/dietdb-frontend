@@ -45,7 +45,7 @@ export const DesignCriteria = (props: DesignCriteriaProps) => {
           />
           {isPredator ? (
             <div>
-              , summarized at the level of prey{" "}
+              summarized at the level of prey{" "}
               <LogicDropdown
                 criteriaOptions={props.criteria.levelOptions}
                 onChange={props.onLevelChange}
