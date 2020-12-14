@@ -159,6 +159,29 @@ const GET_REGIONS_PREY = gql`
     getRegionsPrey(name: $name)
   }
 `;
+const GET_PRED_OF_SOURCES = gql`
+  query(
+    $name: String!
+    $startYear: String
+    $endYear: String
+    $seasons: String
+    $region: String
+  ) {
+    activeItem @client @export(as: "name")
+    startYear @client @export(as: "startYear")
+    endYear @client @export(as: "endYear")
+    season @client @export(as: "season")
+    region @client @export(as: "region")
+
+    getPredatorOfSources(
+      preyName: $name
+      startYear: $startYear
+      endYear: $endYear
+      season: $seasons
+      region: $region
+    )
+  }
+`;
 const GET_PREY_OF_SOURCES = gql`
   query(
     $name: String!
@@ -306,6 +329,7 @@ export {
   GET_PREDATOR_OF,
   GET_PREY_OF,
   GET_PREY_OF_SOURCES,
+  GET_PRED_OF_SOURCES,
   ITEM_PAGE_PRED,
   ITEM_PAGE_PREY,
   RECORDS_PER_DECADE,

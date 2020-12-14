@@ -5,11 +5,7 @@ import { DesignTableHeader } from "./DesignTableHeader";
 import { LogicItemLink } from "../logic/LogicItemLink";
 import { TableSort } from "../logic/TableSorting";
 import { ItemType } from "../../cache";
-import { useQuery } from "@apollo/client";
-import { GET_DATABASE_STATS } from "../../gql/queries";
-import { LogicErrorPage } from "../logic/LogicErrorPage";
-import { DesignLoadingPage } from "./DesignLoadingPage";
-import { getTime, LogicTime } from "../logic/LogicFooter";
+import { getTime } from "../logic/LogicFooter";
 
 interface DesignTableProps {
   data: any[];

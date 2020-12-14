@@ -1,5 +1,5 @@
 import { useQuery, useReactiveVar } from "@apollo/client";
-import { GET_PREY_OF_SOURCES } from "../../gql/queries";
+import { GET_PREY_OF_SOURCES, GET_PRED_OF_SOURCES } from "../../gql/queries";
 import { DesignLoadingPage } from "../design/DesignLoadingPage";
 import { LogicErrorPage } from "../logic/LogicErrorPage";
 import { DesignSources } from "../design/DesignSources";
@@ -13,7 +13,7 @@ export const LogicSources = (props: LogicSourcesProps) => {
   const query =
     props.activeItemType === ItemType.PREDATOR
       ? GET_PREY_OF_SOURCES
-      : GET_PREY_OF_SOURCES;
+      : GET_PRED_OF_SOURCES;
 
   const skip = props.activeItem.length < 1;
   const { loading, error, data } = useQuery(query, { skip });
@@ -23,5 +23,9 @@ export const LogicSources = (props: LogicSourcesProps) => {
       errorMessage: "Uh no, an error has occurred: " + error.message,
     });
 
-  return DesignSources({ sources: data ? data.getPreyOfSources : [] });
+  const sources =
+    props.activeItemType === ItemType.PREDATOR
+      ? data.getPreyOfSources
+      : data.getPredatorOfSources;
+  return DesignSources({ sources: data ? sources : [] });
 };
