@@ -63,11 +63,12 @@ export const LogicItem = () => {
   StageVar("All stages");
   LevelVar("Species");
 
-  if (activeItem.length < 1 || error || loading) {
-    return DesignErrorPage({
-      errorMessage: "Enter a name above.",
-      minHeight: 600,
-    });
+  if ((activeItem.length < 1 || error || loading)) {
+//  return DesignErrorPage({
+//    errorMessage: "Enter a name above.",
+//    minHeight: 600,
+//  });
+    return null;
   }
 
   const component = DesignItem({

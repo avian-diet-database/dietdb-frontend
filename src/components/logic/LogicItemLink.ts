@@ -26,7 +26,7 @@ export const LogicItemLink = (props: LogicItemLinkProps) => {
     // It is only switching the type that breaks.
     //ActiveItemTypeVar(props.itemType);
     //ActiveItemVar(item);
-    document.getElementById("item")?.scrollIntoView();
+    //document.getElementById("item")?.scrollIntoView();
   };
 
   return DesignItemLink({ itemName: props.itemName, onItemClick });

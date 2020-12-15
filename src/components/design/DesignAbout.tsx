@@ -6,7 +6,6 @@ interface DesignAboutProps {
 
 export const DesignAbout = () => {
     return (
-        <div className="section">
             <div className="container">
                 <p className="title is-size-1-">About</p>
                 <p className="content">Quantitative information on what different birds
@@ -41,6 +40,5 @@ export const DesignAbout = () => {
                     </p>
                 </div>
             </div>
-        </div>
     )
 }
