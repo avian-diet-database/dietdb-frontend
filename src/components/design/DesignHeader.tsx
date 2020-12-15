@@ -7,6 +7,9 @@ export const DesignHeader = () => {
       <p className="title is-size-1">Avian Diet Database</p>
       <p className="subtitle is-3"></p>
       <LogicStatistics />
+      <div className="section">
+
+      </div>
     </div>
   );
 };
