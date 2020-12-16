@@ -185,12 +185,12 @@ export function mapLevel(orig: string): CriteriaState {
 
 export function useLevel(): [CriteriaState, React.Dispatch<string>, string[]] {
   const options = [
+    "Class",
     "Species",
     "Genus",
     "Family",
     "Suborder",
     "Order",
-    "Class",
     "Phylum",
     "Kingdom",
   ];
@@ -200,7 +200,7 @@ export function useLevel(): [CriteriaState, React.Dispatch<string>, string[]] {
   }
 
   const [state, dispatch] = useReducer(reducer, {
-    type: "Species",
+    type: "Class",
     value: "scientific_name",
   });
   return [state, dispatch, options];

@@ -61,7 +61,7 @@ export const LogicItem = () => {
   RegionVar("All regions");
   SeasonVar("All seasons");
   StageVar("All stages");
-  LevelVar("Species");
+  LevelVar("Class");
 
   if ((activeItem.length < 1 || error || loading)) {
 //  return DesignErrorPage({
