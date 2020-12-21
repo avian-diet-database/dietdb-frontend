@@ -88,11 +88,6 @@ let downloadData = (preyData: any[], metadata: any[]) => {
     body.splice(2, 0, metadata[1]);
     body[body.length] = getTime();
     body = swapTemp(body, 7, 8)
-    body[11] = dietTypeBody(body);
-    body[8] = dietPercentBody(body);
-    body.splice(9, 1)
-    body.splice(9, 1)
-    body = swapTemp(body, 8, 9)
     resData.push(body);
   }
   return resData;
@@ -105,32 +100,6 @@ let swapTemp = (swapA:any[], a:number, b:number) => {
   return swapA
 }
 
-let dietPercentBody = (body:any[]) => {
-  if(body[8] != null) {
-    return body[8]
-  }
-  if(body[9] != null) {
-    return body[9]
-  }
-  if(body[10] != null) {
-    return body[10]
-  }
-  return ""
-}
-
-let dietTypeBody = (body:any[]) => {
-  if(body[8] != null) {
-    return "items"
-  }
-  if(body[9] != null) {
-    return "Wt_or_Vol"
-  }
-  if(body[10] != null) {
-    return "Occurence"
-  }
-  return "unspecified"
-}
-
 let formatHeaders = (headers:any[]) => {
   headers[0] = "query type";
   headers.unshift("species");
@@ -141,10 +110,5 @@ let formatHeaders = (headers:any[]) => {
   headers.splice(2, 0, "region");
   headers[headers.length] = "DataBase Timestamp"
   headers = swapTemp(headers, 7, 8)
-  headers[8] = "diet %"
-  headers[11] = "diet type"
-  headers.splice(9, 1);
-  headers.splice(9, 1);
-  headers = swapTemp(headers, 8, 9)
   return headers;
 };
