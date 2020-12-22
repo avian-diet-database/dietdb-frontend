@@ -88,10 +88,21 @@ let downloadData = (preyData: any[], metadata: any[]) => {
     body.splice(2, 0, metadata[1]);
     body[body.length] = getTime();
     body = swapTemp(body, 7, 8)
+    body[8] = removeSign(body[8])
+    body[9] = removeSign(body[9])
+    body[10] = removeSign(body[10])
+    body[11] = removeSign(body[11])
     resData.push(body);
   }
   return resData;
 };
+
+let removeSign = (input:string) => {
+  if(input == null) {
+    return null;
+  }
+  return input.slice(0, -1);
+}
 
 let swapTemp = (swapA:any[], a:number, b:number) => {
   let temp = swapA[a]
@@ -101,14 +112,18 @@ let swapTemp = (swapA:any[], a:number, b:number) => {
 }
 
 let formatHeaders = (headers:any[]) => {
-  headers[0] = "query type";
+  headers[0] = "query_type";
   headers.unshift("species");
-  headers.splice(2, 0, "prey level");
-  headers.splice(2, 0, "end year");
-  headers.splice(2, 0, "start year");
+  headers.splice(2, 0, "prey_level");
+  headers.splice(2, 0, "end_year");
+  headers.splice(2, 0, "start_year");
   headers.splice(2, 0, "season");
   headers.splice(2, 0, "region");
-  headers[headers.length] = "DataBase Timestamp"
+  headers[headers.length] = "database_timestamp"
   headers = swapTemp(headers, 7, 8)
+  headers[8] = "pct_items"
+  headers[9] = "pct_wt_or_vol"
+  headers[10] = "pct_occurrence"
+  headers[11] = "pct_unspecified"
   return headers;
 };
