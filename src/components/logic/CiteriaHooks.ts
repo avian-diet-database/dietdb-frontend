@@ -149,31 +149,21 @@ export function useMetrics(): [
 }
 
 export function mapStage(orig: string): CriteriaState {
-  switch (orig) {
-    case "All stages":
-      return { type: orig, value: "any" };
-    case "Larva":
-      return { type: orig, value: "larva" };
-    case "Pupa":
-      return { type: orig, value: "pupa" };
-    case "Adult":
-      return { type: orig, value: "adult" };
-    default:
-      return { type: "All", value: "any" };
-  }
+  return { type: orig, value: orig };
 }
 
-export function useStage(): [CriteriaState, React.Dispatch<string>, string[]] {
-  const options = ["All stages", "Larva", "Pupa", "Adult"];
+export function useStage(
+  options: string[]
+): [CriteriaState, React.Dispatch<string>, string[]] {
   function reducer(state: CriteriaState, action: string) {
     return mapStage(action);
   }
 
   const [state, dispatch] = useReducer(reducer, {
-    type: "All stages",
+    type: "any",
     value: "any",
   });
-  return [state, dispatch, options];
+  return [state, dispatch, ["any", ...options]];
 }
 
 export function mapLevel(orig: string): CriteriaState {
