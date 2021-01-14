@@ -37,7 +37,7 @@ export const DesignAbout = () => {
                 </div>
                 <p className="title is-size-3">Downloading Results</p>
                 <div className="content">
-                    <p className="">At the top right corner of diet results table is a <strong>Download Data</strong> button. Click this to download a .csv file of the table which can be opened with Microsoft Excel or other programs. Users who are familiar with the statistical programming language R may use our <a className="has-text-info" href="https://github.com/ahhurlbert/aviandietdb">R package</a> for working with and exploring the raw data.</p>
+                    <p className="">At the top right corner of the diet results table is a <strong>Download Data</strong> button. Click this to download a .csv file of the table which can be opened with Microsoft Excel or other programs. Users who are familiar with the statistical programming language R may use our <a className="has-text-info" href="https://github.com/ahhurlbert/aviandietdb">R package</a> for working with and exploring the raw data.</p>
                 </div>
                 <p className="title is-size-3">Feedback</p>
                 <div className="content">
