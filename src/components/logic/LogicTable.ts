@@ -58,6 +58,31 @@ export const LogicTable = (props: LogicTableProps) => {
     if (data) {
       const arr = isPredator ? data.getPreyOf : data.getPredatorOf;
       dispatchTableAction({ type: TableActionType.UPDTE, payload: arr });
+      // This is at best a hack to sort table based on whether or not a column is empty
+      // Order goes: Items by DESC => Wt_or_Vol by ASC => Occurrence by ASC => Unspecified by ASC
+      if (isPredator) {
+        if (!arr.some((element: any) => element.items !== null)) {
+          let newSortBy = TableSort.WTVOL;
+          let newActionType = TableActionType.WTVOL;
+          if (!arr.some((element: any) => element.wt_or_vol !== null)) {
+            newSortBy = TableSort.OCCUR;
+            newActionType = TableActionType.OCCUR;
+            if (!arr.some((element: any) => element.occurrence !== null)) {
+              newSortBy = TableSort.UNSPC;
+              newActionType = TableActionType.UNSPC;
+            }
+          }
+          updateSortedBy(newSortBy);
+          dispatchTableAction({
+            type: newActionType,
+            payload: null
+          });
+          dispatchTableAction({
+            type: TableActionType.TOGGLEDIR,
+            payload: null
+          });
+        }
+      }
     }
   }, [data]);
 
