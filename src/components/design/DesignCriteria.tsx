@@ -1,7 +1,8 @@
 import React from "react";
 import { LogicDropdown } from "../logic/LogicDropdown";
-import { ItemType } from "../../cache";
+import { ItemType, StartYearVar, EndYearVar, RegionVar, SeasonVar, LevelVar, StageVar } from "../../cache";
 import { CriteriaOptions } from "../../types/CriteriaController";
+import { useReactiveVar } from "@apollo/client";
 
 interface DesignCriteriaProps {
   activeItemType: ItemType;
@@ -16,6 +17,13 @@ interface DesignCriteriaProps {
 }
 
 export const DesignCriteria = (props: DesignCriteriaProps) => {
+  const startYear = useReactiveVar(StartYearVar);
+  const endYear = useReactiveVar(EndYearVar);
+  const region = useReactiveVar(RegionVar);
+  const season = useReactiveVar(SeasonVar);
+  const level = useReactiveVar(LevelVar);
+  const stage = useReactiveVar(StageVar);
+
   const isPredator = props.activeItemType === ItemType.PREDATOR;
   return (
     <div className="message is-primary">
@@ -26,29 +34,34 @@ export const DesignCriteria = (props: DesignCriteriaProps) => {
             <LogicDropdown
               criteriaOptions={props.criteria.startYearOptions}
               onChange={props.onStartYearChange}
+              val = {startYear}
             />
           }
           {" to "}
           <LogicDropdown
             criteriaOptions={props.criteria.endYearOptions}
             onChange={props.onEndYearChange}
+            val={endYear}
           />{" "}
           in{" "}
           <LogicDropdown
             criteriaOptions={props.criteria.regionOptions}
             onChange={props.onRegionChange}
+            val={region}
           />{" "}
           over {" "}
           <LogicDropdown
             criteriaOptions={props.criteria.seasonOptions}
             onChange={props.onSeasonsChange}
+            val={season}
           />
           {isPredator ? (
             <div>
-              , summarized at the level of prey{" "}
+              summarized at the level of prey{" "}
               <LogicDropdown
                 criteriaOptions={props.criteria.levelOptions}
                 onChange={props.onLevelChange}
+                val={level}
               />
             </div>
           ) : (
@@ -57,6 +70,7 @@ export const DesignCriteria = (props: DesignCriteriaProps) => {
               <LogicDropdown
                 criteriaOptions={props.criteria.stageOptions}
                 onChange={props.onStageChange}
+                val={stage}
               />
             </div>
           )}

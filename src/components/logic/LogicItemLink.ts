@@ -18,9 +18,15 @@ export const LogicItemLink = (props: LogicItemLinkProps) => {
       .replace(/pupa/g, "")
       .trim();
 
-    //ActiveItemVar(item);
+    // These two lines would theoretically swap items on click.
+    // This breaks apollo client, I think because the whole
+    // Query itself is changed when we update itemType.
+    // Possible solution: trigger some deeper update, don't touch the apollo variables here too much.
+    // Theory confirmed: uncommenting active item var works as expected.
+    // It is only switching the type that breaks.
     //ActiveItemTypeVar(props.itemType);
-    document.getElementById("item")?.scrollIntoView();
+    //ActiveItemVar(item);
+    //document.getElementById("item")?.scrollIntoView();
   };
 
   return DesignItemLink({ itemName: props.itemName, onItemClick });

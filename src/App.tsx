@@ -34,7 +34,7 @@ function App() {
           document.body.scrollIntoView();
         }}
       />
-      <section className={"hero is-fullheight-with-navbar"}>
+      <section className={"hero is-large"}>
         <div className="hero-head"></div>
         <div className="hero-body">
           {/* Here, render the home if activeItem is "", and otherwise
@@ -63,9 +63,11 @@ function App() {
           </div>
         </div>
       </section>
-      <section id="item">
+      {activeItemType === ItemType.NA || activeItemType === ItemType.ABOUT ?
+      null:
+      <section id="item" className="hero-foot">
         <LogicItem />
-      </section>
+      </section>}
       <LogicFooter />
     </div>
   );

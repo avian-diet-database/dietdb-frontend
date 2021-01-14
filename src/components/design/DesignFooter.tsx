@@ -7,7 +7,7 @@ interface DesignFooterProps {
 
 export const DesignFooter = (props:DesignFooterProps) => {
   return (
-    <footer className="footer ">
+    <footer className="footer">
       <section className="columns">
         <div className="column is-6 is-offset-1">
           <div className="content has-text-left">

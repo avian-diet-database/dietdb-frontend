@@ -6,7 +6,6 @@ interface DesignAboutProps {
 
 export const DesignAbout = () => {
     return (
-        <div className="section">
             <div className="container">
                 <p className="title is-size-1-">What do birds eat?</p>
                 <p className="content">Different species eat different things, of course! But how do we know how important a given food type is to a species? The best way to answer this is by examining a sample of all of the things a bird recently ate (or tried to eat), and quantifying the prevalence of each diet item. Quantitative information on what different birds
@@ -52,6 +51,5 @@ export const DesignAbout = () => {
                     </p>
                 </div>
             </div>
-        </div>
     )
 }

@@ -34,7 +34,7 @@ export const DesignItem = (props: DesignItemProps) => {
           <strong className="is-size-2"> {props.numRecords} </strong>
           records and
           <strong className="is-size-2"> {props.numStudies} </strong>
-          studies.
+          studies...
         </div>
         <div className="columns">
           <div className="column is-6">
@@ -64,14 +64,10 @@ export const DesignItem = (props: DesignItemProps) => {
             ) : null}
           </div>
         </div>
-        {isPredator ? (
-          <div>
             <LogicSources
               activeItem={props.activeItem}
               activeItemType={props.activeItemType}
             />
-          </div>
-        ) : null}
       </div>
     </div>
   );

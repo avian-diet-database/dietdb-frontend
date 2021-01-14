@@ -61,7 +61,9 @@ export const LogicSearchBar = (props: LogicSearchBarProps) => {
     ActiveItemTypeVar(props.queryType);
     ActiveItemVar(item);
     updateQueryString("");
-    document.getElementById("item")?.scrollIntoView();
+    setTimeout(()=>{
+      document.getElementById("item")?.scrollIntoView();
+    }, 700);
   };
 
   const onItemSelect = (

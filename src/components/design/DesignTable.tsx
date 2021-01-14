@@ -5,11 +5,7 @@ import { DesignTableHeader } from "./DesignTableHeader";
 import { LogicItemLink } from "../logic/LogicItemLink";
 import { TableSort } from "../logic/TableSorting";
 import { ItemType } from "../../cache";
-import { useQuery } from "@apollo/client";
-import { GET_DATABASE_STATS } from "../../gql/queries";
-import { LogicErrorPage } from "../logic/LogicErrorPage";
-import { DesignLoadingPage } from "./DesignLoadingPage";
-import { getTime, LogicTime } from "../logic/LogicFooter";
+import { getTime } from "../logic/LogicFooter";
 
 interface DesignTableProps {
   data: any[];
@@ -91,19 +87,43 @@ let downloadData = (preyData: any[], metadata: any[]) => {
     body.splice(2, 0, metadata[2]);
     body.splice(2, 0, metadata[1]);
     body[body.length] = getTime();
+    body = swapTemp(body, 7, 8)
+    body[8] = removeSign(body[8])
+    body[9] = removeSign(body[9])
+    body[10] = removeSign(body[10])
+    body[11] = removeSign(body[11])
     resData.push(body);
   }
   return resData;
 };
 
+let removeSign = (input:string) => {
+  if(input == null) {
+    return null;
+  }
+  return input.slice(0, -1);
+}
+
+let swapTemp = (swapA:any[], a:number, b:number) => {
+  let temp = swapA[a]
+  swapA[a] = swapA[b]
+  swapA[b] = temp
+  return swapA
+}
+
 let formatHeaders = (headers:any[]) => {
-  headers[0] = "query type";
+  headers[0] = "query_type";
   headers.unshift("species");
-  headers.splice(2, 0, "prey level");
-  headers.splice(2, 0, "end year");
-  headers.splice(2, 0, "start year");
+  headers.splice(2, 0, "prey_level");
+  headers.splice(2, 0, "end_year");
+  headers.splice(2, 0, "start_year");
   headers.splice(2, 0, "season");
   headers.splice(2, 0, "region");
-  headers[headers.length] = "DataBase Timestamp"
+  headers[headers.length] = "database_timestamp"
+  headers = swapTemp(headers, 7, 8)
+  headers[8] = "pct_items"
+  headers[9] = "pct_wt_or_vol"
+  headers[10] = "pct_occurrence"
+  headers[11] = "pct_unspecified"
   return headers;
 };
