@@ -158,8 +158,8 @@ const sortByTaxon = (data: Prey[], dir: TableDirection): Prey[] => {
 
 const sortByItems = (data: Prey[], dir: TableDirection): Prey[] => {
   return [...data].sort((a: Prey, b: Prey) => {
-    if (a.items === null) return dir === TableDirection.ASCENDING ? -1 : 1;
-    if (b.items === null) return dir === TableDirection.ASCENDING ? 1 : -1;
+    if (a.items === null) return 1;
+    if (b.items === null) return -1; 
     if (parseFloat(a.items) < parseFloat(b.items)) {
       return dir === TableDirection.ASCENDING ? -1 : 1;
     }
@@ -182,8 +182,8 @@ const sortByItems = (data: Prey[], dir: TableDirection): Prey[] => {
 
 const sortByWtVol = (data: Prey[], dir: TableDirection): Prey[] => {
   return [...data].sort((a: Prey, b: Prey) => {
-    if (a.wt_or_vol === null) return dir === TableDirection.ASCENDING ? -1 : 1;
-    if (b.wt_or_vol === null) return dir === TableDirection.ASCENDING ? 1 : -1;
+    if (a.wt_or_vol === null) return 1;
+    if (b.wt_or_vol === null) return -1;
     if (parseFloat(a.wt_or_vol) < parseFloat(b.wt_or_vol)) {
       return dir === TableDirection.ASCENDING ? -1 : 1;
     }
@@ -206,8 +206,8 @@ const sortByWtVol = (data: Prey[], dir: TableDirection): Prey[] => {
 
 const sortByOccur = (data: Prey[], dir: TableDirection): Prey[] => {
   return [...data].sort((a: Prey, b: Prey) => {
-    if (a.occurrence === null) return dir === TableDirection.ASCENDING ? -1 : 1;
-    if (b.occurrence === null) return dir === TableDirection.ASCENDING ? 1 : -1;
+    if (a.occurrence === null) return 1; 
+    if (b.occurrence === null) return -1;
     if (parseFloat(a.occurrence) < parseFloat(b.occurrence)) {
       return dir === TableDirection.ASCENDING ? -1 : 1;
     }
@@ -231,9 +231,9 @@ const sortByOccur = (data: Prey[], dir: TableDirection): Prey[] => {
 const sortByUnspc = (data: Prey[], dir: TableDirection): Prey[] => {
   return [...data].sort((a: Prey, b: Prey) => {
     if (a.unspecified === null)
-      return dir === TableDirection.ASCENDING ? -1 : 1;
+      return 1; 
     if (b.unspecified === null)
-      return dir === TableDirection.ASCENDING ? 1 : -1;
+      return -1; 
     if (a.unspecified < b.unspecified) {
       return dir == TableDirection.ASCENDING ? -1 : 1;
     }
