@@ -8,10 +8,7 @@ export const DesignAbout = () => {
     return (
             <div className="container">
                 <p className="title is-size-1-">What do birds eat?</p>
-                <p className="content">Different species eat different things, of course! But how do we know how important a given food type is to a species? The best way to answer this is by examining a sample of all of the things a bird recently ate (or tried to eat), and quantifying the prevalence of each diet item. Quantitative information on what different birds
-                eat is scattered across the published and grey literature. The <strong>Avian Diet Database</strong> 
-                attempts to collate and synthesize these disparate data into one easily accessible
-                repository. See our <a className="has-text-info" href="https://github.com/hurlbertlab/dietdatabase/blob/master/AvianDietDatabase.txt">data paper</a> for details.</p> 
+                <p className="content">Different species eat different things, of course! But how do we know how important a given food type is to a species? The best way to answer this is by examining a sample of all of the things a bird recently ate (or tried to eat), and quantifying the prevalence of each diet item. Quantitative information on what different birds eat is scattered across the published and grey literature. The <strong>Avian Diet Database</strong> attempts to collate and synthesize these disparate data into one easily accessible repository. See our <a className="has-text-info" href="https://github.com/hurlbertlab/dietdatabase/blob/master/AvianDietDatabase.txt">data paper</a> for details.</p> 
                 <p className="title is-size-3">Methods of Quantifying the Diet</p>
                 <div className="content">
                     <p className="">Diet is typically assessed by behavioral observation or
