@@ -9,7 +9,7 @@ export const DesignAbout = () => {
             <div className="container">
                 <p className="title is-size-1-">What do birds eat?</p>
                 <p className="content">Different species eat different things, of course! But how do we know how important a given food type is to a species? The best way to answer this is by examining a sample of all of the things a bird recently ate (or tried to eat), and quantifying the prevalence of each diet item. Quantitative information on what different birds
-                eat is scattered across the published and grey literature. The Avian Diet Database
+                eat is scattered across the published and grey literature. The <strong>Avian Diet Database</strong>
                 attempts to collate and synthesize these disparate data into one easily accessible
                 repository. See our <a className="has-text-info" href="https://github.com/hurlbertlab/dietdatabase/blob/master/AvianDietDatabase.txt">data paper</a>.</p> 
                 <p className="title is-size-3">Methods of Quantifying the Diet</p>
@@ -20,20 +20,20 @@ export const DesignAbout = () => {
                     prevalence of a prey type:</p>
                     <div className="content">
                         <ol type="1">
-                            <li>Fraction of the diet by number of prey items (e.g., there was evidence
+                            <li><strong>Fraction of the diet by number of prey items</strong> (e.g., there was evidence
                             of 3 beetles out of 50 total prey items)</li>
-                            <li>Fraction of the diet by weight or volume (e.g., beetles comprised 26%
+                            <li><strong>Fraction of the diet by weight or volume</strong> (e.g., beetles comprised 26%
                             of the mass of the total stomach contents)</li>
-                            <li>Percent occurrence (e.g., 65% of stomachs examined had at least one beetle)</li>
+                            <li><strong>Percent occurrence</strong> (e.g., 65% of stomachs examined had at least one beetle)</li>
                         </ol>
                     </div>
                 </div>
                 <p className="title is-size-3">Using This Website</p>
                 <div className="content">
-                    <p className="">Find out what a particular bird species has been shown to eat by entering either a scientific or common name on the <strong>Home</strong> or <strong>Diet by Bird</strong> page. If the species you are searching for does not come up in the auto-complete, then you have misspelled the name or it is absent from our database. For some species, studies have never been conducted!</p>
+                    <p className=""><strong>Find out what a particular bird species has been shown to eat</strong> by entering either a scientific or common name on the <strong>Home</strong> or <strong>Diet by Bird</strong> page. If the species you are searching for does not come up in the auto-complete, then you have misspelled the name or it is absent from our database. <em>For some species, studies have never been conducted!</em></p>
                     <p className="">If the species is present in our database, you will see the total number of diet records available and how those diet records are distributed over time, space, season, and "diet type" (the categories mentioned above). By default, you will see diet data summarized at the level of taxonomic Class (e.g., birds, mammals, insects, etc.), but you can re-summarize the data at higher (e.g., animals versus plants) or lower (e.g., beetles versus moths versus leafhoppers) taxonomic levels, but note that the taxonomic resolution with which the original studies classify prey may often be coarse. </p>
                     <p className="">&nbsp;</p>
-                    <p className="">Find out which bird species eat a particular prey item by entering either a scientific or common name of the prey on the <strong>Home</strong> or <strong>Diet by Prey</strong> page. This will return a list of all bird species in the database for which there is a quantitative diet estimate. Bird species for which multiple studies have been conducted will be represented by a single value per Diet Type which is the mean fraction of the diet across studies.</p>
+                    <p className=""><strong>Find out which bird species eat a particular prey item</strong> by entering either a scientific or common name of the prey on the <strong>Home</strong> or <strong>Diet by Prey</strong> page. This will return a list of all bird species in the database for which there is a quantitative diet estimate. Bird species for which multiple studies have been conducted will be represented by a single value per Diet Type which is the mean fraction of the diet across studies.</p>
                 </div>
                 <p className="title is-size-3">Downloading Results</p>
                 <div className="content">
