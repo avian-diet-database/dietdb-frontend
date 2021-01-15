@@ -77,10 +77,6 @@ export const LogicTable = (props: LogicTableProps) => {
             type: newActionType,
             payload: null
           });
-          dispatchTableAction({
-            type: TableActionType.TOGGLEDIR,
-            payload: null
-          });
         }
       }
     }
