@@ -52,12 +52,13 @@ export const LogicTable = (props: LogicTableProps) => {
 
   const [tableData, dispatchTableAction] = useTable(props.activeItemType);
 
-  const [sortedBy, updateSortedBy] = useState(TableSort.ITEMS);
+  const [sortedBy, updateSortedBy] = useState(TableSort.DEFAULT);
 
   useEffect(() => {
     if (data) {
       const arr = isPredator ? data.getPreyOf : data.getPredatorOf;
       dispatchTableAction({ type: TableActionType.UPDTE, payload: arr });
+      updateSortedBy(TableSort.NONE)
     }
   }, [data]);
 
@@ -75,18 +76,18 @@ export const LogicTable = (props: LogicTableProps) => {
         type: TableActionType.UPDTE,
         payload: [],
       });
-      itemType === ItemType.PREDATOR
-        ? dispatchTableAction({
-          type: TableActionType.ITEMS,
-          payload: null,
-        })
-        : dispatchTableAction({
-          type: TableActionType.FRADT,
-          payload: null,
-        });
+//      itemType === ItemType.PREDATOR
+//       ? dispatchTableAction({
+//         type: TableActionType.DEFAULT,
+//         payload: null,
+//       })
+//       : dispatchTableAction({
+//         type: TableActionType.FRADT,
+//       payload: null,
+//        });
       // Reset the sorting to default
       updateSortedBy(() =>
-        itemType === ItemType.PREDATOR ? TableSort.ITEMS : TableSort.FRADT
+        itemType === ItemType.PREDATOR ? TableSort.DEFAULT : TableSort.FRADT
       );
     },
     handleMetricsClick: () => {
