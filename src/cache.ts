@@ -28,7 +28,7 @@ export const EndYearVar: ReactiveVar<string> = makeVar<string>("2020");
 export const RegionVar: ReactiveVar<string> = makeVar<string>("All regions");
 export const SeasonVar: ReactiveVar<string> = makeVar<string>("All seasons");
 export const StageVar: ReactiveVar<string> = makeVar<string>("All stages");
-export const LevelVar: ReactiveVar<string> = makeVar<string>("Species");
+export const LevelVar: ReactiveVar<string> = makeVar<string>("Class");
 
 const CriteriaOptionsInitialValue: CriteriaOptions = {
   startYearOptions: [],
@@ -44,12 +44,12 @@ const CriteriaOptionsInitialValue: CriteriaOptions = {
   ],
   stageOptions: ["All stages", "Larva", "Pupa", "Adult"],
   levelOptions: [
+    "Class",
     "Species",
     "Genus",
     "Family",
     "Suborder",
     "Order",
-    "Class",
     "Phylum",
     "Kingdom",
   ],

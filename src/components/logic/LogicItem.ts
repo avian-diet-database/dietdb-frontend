@@ -33,6 +33,7 @@ export const LogicItem = () => {
   let startYears: string[] = [];
   let endYears: string[] = [];
   let regions: string[] = [];
+  let stages: string[] = [];
   let numRecords: number = 0;
   let numStudies: number = 0;
 
@@ -40,6 +41,9 @@ export const LogicItem = () => {
     startYears = data[filterVals].startYears;
     endYears = data[filterVals].endYears;
     regions = data[filterVals].regions;
+    if (!isPred) {
+      stages = data[filterVals].preyStages;
+    }
   }
 
   if (data && data[numRecStud]) {
@@ -52,6 +56,7 @@ export const LogicItem = () => {
     startYearOptions: startYears,
     endYearOptions: endYears,
     regionOptions: ["All regions", ...regions],
+    stageOptions: ["any", ...stages],
   });
 
   // These variables are rest, but this is not
@@ -60,8 +65,8 @@ export const LogicItem = () => {
   EndYearVar(endYears[0] || "2020");
   RegionVar("All regions");
   SeasonVar("All seasons");
-  StageVar("All stages");
-  LevelVar("Species");
+  StageVar("any");
+  LevelVar("Class");
 
   if ((activeItem.length < 1 || error || loading)) {
 //  return DesignErrorPage({

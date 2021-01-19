@@ -248,6 +248,7 @@ const ITEM_PAGE_PREY = gql`
       startYears
       endYears
       regions
+      preyStages
     }
   }
 `;
