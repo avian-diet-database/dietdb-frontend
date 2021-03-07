@@ -55,7 +55,7 @@ export const LogicItem = () => {
     ...CriteriaOptionsVar(),
     startYearOptions: startYears,
     endYearOptions: endYears,
-    regionOptions: ["All regions", ...regions],
+    regionOptions: ["all regions", ...regions],
     stageOptions: ["any", ...stages],
   });
 
@@ -63,8 +63,8 @@ export const LogicItem = () => {
   // reflected by the ui correctly.
   StartYearVar(startYears[0] || "1900");
   EndYearVar(endYears[0] || "2020");
-  RegionVar("All regions");
-  SeasonVar("All seasons");
+  RegionVar("all regions");
+  SeasonVar("all seasons");
   StageVar("any");
   LevelVar("Class");
 
