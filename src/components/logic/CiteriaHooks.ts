@@ -52,7 +52,7 @@ export function useEndYear(
 }
 
 export function mapSeason(orig: string): CriteriaState {
-  if (orig === "All seasons") {
+  if (orig === "all seasons") {
     return {
       type: orig,
       value: "all",
@@ -69,25 +69,25 @@ export function useSeasons(): [
   string[]
 ] {
   const options = [
-    "All seasons",
-    "Spring",
-    "Summer",
-    "Fall",
-    "Winter",
-    "Unspecified",
+    "all seasons",
+    "spring",
+    "summer",
+    "fall",
+    "winter",
+    "unspecified",
   ];
   function reducer(state: CriteriaState, action: string) {
     return mapSeason(action);
   }
   const [state, dispatch] = useReducer(reducer, {
-    type: "All seasons",
+    type: "all seasons",
     value: "all",
   });
   return [state, dispatch, options];
 }
 
 export function mapRegion(orig: string) {
-  if (orig === "All regions") {
+  if (orig === "all regions") {
     return {
       type: orig,
       value: "all",
@@ -106,7 +106,7 @@ export function useRegion(
     return mapRegion(action);
   }
   const [state, dispatch] = useReducer(reducer, {
-    type: "All regions",
+    type: "all regions",
     value: "all",
   });
   return [state, dispatch, ["All regions", ...options]];
