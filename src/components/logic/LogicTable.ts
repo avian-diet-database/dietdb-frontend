@@ -52,37 +52,13 @@ export const LogicTable = (props: LogicTableProps) => {
 
   const [tableData, dispatchTableAction] = useTable(props.activeItemType);
 
-  const [sortedBy, updateSortedBy] = useState(TableSort.ITEMS);
+  const [sortedBy, updateSortedBy] = useState(TableSort.DEFAULT);
 
   useEffect(() => {
     if (data) {
       const arr = isPredator ? data.getPreyOf : data.getPredatorOf;
       dispatchTableAction({ type: TableActionType.UPDTE, payload: arr });
-      // This is at best a hack to sort table based on whether or not a column is empty
-      // Order goes: Items by DESC => Wt_or_Vol by ASC => Occurrence by ASC => Unspecified by ASC
-      if (isPredator) {
-        if (!arr.some((element: any) => element.items !== null)) {
-          let newSortBy = TableSort.WTVOL;
-          let newActionType = TableActionType.WTVOL;
-          if (!arr.some((element: any) => element.wt_or_vol !== null)) {
-            newSortBy = TableSort.OCCUR;
-            newActionType = TableActionType.OCCUR;
-            if (!arr.some((element: any) => element.occurrence !== null)) {
-              newSortBy = TableSort.UNSPC;
-              newActionType = TableActionType.UNSPC;
-            }
-          }
-          updateSortedBy(newSortBy);
-          dispatchTableAction({
-            type: newActionType,
-            payload: null
-          });
-          dispatchTableAction({
-            type: TableActionType.TOGGLEDIR,
-            payload: null
-          });
-        }
-      }
+      updateSortedBy(TableSort.NONE)
     }
   }, [data]);
 
@@ -100,18 +76,18 @@ export const LogicTable = (props: LogicTableProps) => {
         type: TableActionType.UPDTE,
         payload: [],
       });
-      itemType === ItemType.PREDATOR
-        ? dispatchTableAction({
-          type: TableActionType.ITEMS,
-          payload: null,
-        })
-        : dispatchTableAction({
-          type: TableActionType.FRADT,
-          payload: null,
-        });
+//      itemType === ItemType.PREDATOR
+//       ? dispatchTableAction({
+//         type: TableActionType.DEFAULT,
+//         payload: null,
+//       })
+//       : dispatchTableAction({
+//         type: TableActionType.FRADT,
+//       payload: null,
+//        });
       // Reset the sorting to default
       updateSortedBy(() =>
-        itemType === ItemType.PREDATOR ? TableSort.ITEMS : TableSort.FRADT
+        itemType === ItemType.PREDATOR ? TableSort.DEFAULT : TableSort.FRADT
       );
     },
     handleMetricsClick: () => {

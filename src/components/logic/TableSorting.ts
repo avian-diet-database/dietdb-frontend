@@ -4,6 +4,7 @@ import { Predator } from "../../types/Predator";
 import { ItemType } from "../../cache";
 
 export enum TableSort {
+  DEFAULT,
   TAXON,
   ITEMS,
   WTVOL,
@@ -25,6 +26,7 @@ export enum TableDirection {
 export enum TableActionType {
   TOGGLEDIR,
   UPDTE,
+  DEFAULT,
   TAXON,
   ITEMS,
   WTVOL,
@@ -64,6 +66,8 @@ const sortByType = (data: any, sort: TableSort, dir: TableDirection): any[] => {
       return sortByCommonName(data, dir);
     case TableSort.UNSPC:
       return sortByUnspc(data, dir);
+    case TableSort.DEFAULT:
+      return defaultSort(data);
     default:
       return data;
   }
@@ -90,6 +94,8 @@ const actionToSort = (action: TableActionType): TableSort => {
       return TableSort.FRADT;
     case TableActionType.UNSPC:
       return TableSort.UNSPC;
+    case TableActionType.DEFAULT:
+      return TableSort.DEFAULT;
     default:
       return TableSort.NONE;
   }
@@ -115,10 +121,12 @@ export const useTable = (
       state.direction === TableDirection.ASCENDING
         ? TableDirection.DESCENDING
         : TableDirection.ASCENDING;
+
+    let defaultsorttype = type === ItemType.PREDATOR ? TableSort.DEFAULT : TableSort.FRADT;
     if (action.type === TableActionType.UPDTE)
       data = {
-        sort: state.sort,
-        rows: sortByType(action.payload, state.sort, state.direction),
+        sort: defaultsorttype,
+        rows: sortByType(action.payload, defaultsorttype, state.direction),
         direction: state.direction,
       };
     if (action.type === TableActionType.TOGGLEDIR)
@@ -132,7 +140,7 @@ export const useTable = (
   };
 
   let isPredator = type === ItemType.PREDATOR;
-  let sorting = isPredator ? TableSort.ITEMS : TableSort.FRADT;
+  let sorting = isPredator ? TableSort.DEFAULT : TableSort.FRADT;
   const initialState: TableState = {
     rows: [],
     sort: sorting,
@@ -141,6 +149,34 @@ export const useTable = (
   // This is being initialized with an empty array. No point in sending an initializer
   const [state, dispatch] = useReducer(tableReducer, initialState);
   return [state, dispatch];
+};
+
+const defaultSort = (data: Prey[]): Prey[] => {
+  let hasItems = data.reduce((acc:boolean, curr:Prey):boolean=>{
+    return (acc || (curr.items != null));
+  },false);  
+
+  let hasWtVol = data.reduce((acc:boolean, curr:Prey):boolean=>{
+    return (acc || (curr.wt_or_vol != null));
+  },false);  
+
+  let hasOccurr = data.reduce((acc:boolean, curr:Prey):boolean=>{
+    return (acc || (curr.occurrence != null));
+  },false);  
+
+  if (hasItems) {
+    return sortByItems(data, TableDirection.DESCENDING);
+  }
+
+  if (hasWtVol) {
+    return sortByWtVol(data, TableDirection.DESCENDING);
+  }
+
+  if (hasOccurr) {
+    return sortByOccur(data, TableDirection.DESCENDING);
+  }
+
+  return sortByUnspc(data, TableDirection.DESCENDING);
 };
 
 const sortByTaxon = (data: Prey[], dir: TableDirection): Prey[] => {
