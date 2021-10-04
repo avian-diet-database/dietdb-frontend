@@ -8,7 +8,7 @@ export const DesignAbout = () => {
     return (
             <div className="container">
                 <p className="title is-size-1-">What do birds eat?</p>
-                <p className="content">Different species eat different things, of course! But how do we know how important a given food type is to a species? The best way to answer this is by examining a sample of all of the things a bird recently ate (or tried to eat), and quantifying the prevalence of each diet item. Quantitative information on what different birds eat is scattered across the published and grey literature. The <strong>Avian Diet Database</strong> attempts to collate and synthesize these disparate data into one easily accessible repository. See our <a className="has-text-info" href="https://github.com/hurlbertlab/dietdatabase/blob/master/AvianDietDatabase.txt">data paper</a> for details.</p> 
+                <p className="content">Different species eat different things, of course! But how do we know how important a given food type is to a species? The best way to answer this is by examining a sample of all of the things a bird recently ate (or tried to eat), and quantifying the prevalence of each diet item. Quantitative information on what different birds eat is scattered across the published and grey literature. The <strong>Avian Diet Database</strong> attempts to collate and synthesize these disparate data into one easily accessible repository. See our <a className="has-text-info" href="https://www.nature.com/articles/s41597-021-01049-9.epdf">data paper</a> for details.</p> 
                 <p className="title is-size-3">Methods of Quantifying the Diet</p>
                 <div className="content">
                     <p className="">Diet is typically assessed by behavioral observation or
@@ -35,6 +35,10 @@ export const DesignAbout = () => {
                 <p className="title is-size-3">Downloading Results</p>
                 <div className="content">
                     <p className="">At the top right corner of the diet results table is a <strong>Download Data</strong> button. Click this to download a .csv file of the table which can be opened with Microsoft Excel or other programs. Users who are familiar with the statistical programming language R may use our <a className="has-text-info" href="https://github.com/ahhurlbert/aviandietdb">R package</a> for working with and exploring the raw data.</p>
+                </div>
+                <p className="title is-size-3">Citation</p>
+                <div className="content">
+                    <p className="">Hurlbert, AH, AM Olsen, MM Sawyer, and PM Winner. 2021. The Avian Diet Database as a source of quantitative information on avian diets. <italic>Scientific Data</italic> 8:260. https://doi.org/10.1038/s41597-021-01049-9</p>
                 </div>
                 <p className="title is-size-3">Feedback</p>
                 <div className="content">
