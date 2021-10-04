@@ -38,7 +38,7 @@ export const DesignAbout = () => {
                 </div>
                 <p className="title is-size-3">Citation</p>
                 <div className="content">
-                    <p className="">Hurlbert, AH, AM Olsen, MM Sawyer, and PM Winner. 2021. The Avian Diet Database as a source of quantitative information on avian diets. <italic>Scientific Data</italic> 8:260. https://doi.org/10.1038/s41597-021-01049-9</p>
+                    <p className="">Hurlbert, AH, AM Olsen, MM Sawyer, and PM Winner. 2021. The Avian Diet Database as a source of quantitative information on avian diets. Scientific Data 8:260. https://doi.org/10.1038/s41597-021-01049-9</p>
                 </div>
                 <p className="title is-size-3">Feedback</p>
                 <div className="content">
