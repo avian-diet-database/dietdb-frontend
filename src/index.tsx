@@ -8,7 +8,7 @@ import { cache } from "./cache";
 
 const client = new ApolloClient({
   cache,
-  uri: "https://back-end-dept-dietdatabase.cloudapps.unc.edu/graphql",
+  uri: "https://dev-back-end-dept-dietdatabase.cloudapps.unc.edu/graphql",
 });
 
 ReactDOM.render(
