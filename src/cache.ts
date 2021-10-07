@@ -14,6 +14,10 @@ export enum ItemType {
   PREDATOR,
   NA,
   ABOUT,
+  SUBMIT,
+  LOGIN,
+  LOGOUT,
+  ADMIN
 }
 
 export const PreyVar: ReactiveVar<Prey[]> = makeVar<Prey[]>([]);
