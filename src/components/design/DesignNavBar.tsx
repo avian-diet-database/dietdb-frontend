@@ -8,6 +8,9 @@ interface DesignNavBarProps {
   onHomeClick: () => void;
   onAboutClick: () => void;
   onSubmitDataClick: () => void;
+  onAdminClick: () => void;
+  onLoginClick: () => void;
+  onLogoutClick: () => void;
 }
 export const DesignNavBar = (props: DesignNavBarProps) => {
   const [mobileActive, setMobileActive] = useState(false);
@@ -97,12 +100,10 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
         <a className={"navbar-item"}>
             Welcome, John Doe!
           </a>
-          {/*add link to admin page when we do*/}
-        <a className={"navbar-item"}>
+        <a className={"navbar-item"} onClick={() => {props.onAdminClick()}}>
             Admin
           </a>
-          {/*add link to login page when we do*/}
-          <a className={"navbar-item"}>
+          <a className={"navbar-item"} onClick={() => {props.onLogoutClick()}}>
             Logout (Note: THIS IS DEV ENVIRONMENT!!)
           </a>
           <span className="navbar-item">

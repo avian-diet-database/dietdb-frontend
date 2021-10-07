@@ -33,7 +33,24 @@ function App() {
           ActiveItemTypeVar(ItemType.PREDATOR);
           document.body.scrollIntoView();
         }}
-        onSubmitDataClick={() => {console.log("data submitted")}}
+        onSubmitDataClick={() => {
+          ActiveItemVar("");
+          ActiveItemTypeVar(ItemType.SUBMIT);
+          document.body.scrollIntoView();
+        }}
+        onAdminClick={() => {
+          ActiveItemVar("");
+          ActiveItemTypeVar(ItemType.ADMIN);
+          document.body.scrollIntoView();}}
+        onLoginClick={() => {
+          ActiveItemVar("");
+          ActiveItemTypeVar(ItemType.LOGIN);
+          document.body.scrollIntoView();
+        }}
+        onLogoutClick={() => {
+          ActiveItemVar("");
+          ActiveItemTypeVar(ItemType.NA);
+        }}
       />
       <section className={"hero is-large"}>
         <div className="hero-head"></div>
