@@ -70,7 +70,7 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
         </div>
         <div className="navbar-end">
           <a className={"navbar-item"} onClick={props.onAboutClick}>
-            About (Note: THIS IS DEV ENVIRONMENT)
+            About (Note: THIS IS DEV ENVIRONMENT!!)
           </a>
           <span className="navbar-item">
             <a
