@@ -8,7 +8,9 @@ import { cache } from "./cache";
 
 const client = new ApolloClient({
   cache,
-  uri: "https://dev-back-end-dept-dietdatabase.cloudapps.unc.edu/graphql",
+  // TODO: When finalizing changes in prod, can just uncomment prod DB link (line 13)
+  uri: "http://test-dietdb-backend-git-pichhim.apps.cloudapps.unc.edu/graphql",
+  // uri: "https://back-end-dept-dietdatabase.cloudapps.unc.edu/graphql",
 });
 
 ReactDOM.render(
