@@ -7,6 +7,7 @@ interface DesignNavBarProps {
   onPreyClick: () => void;
   onHomeClick: () => void;
   onAboutClick: () => void;
+  onSubmitDataClick: () => void;
 }
 export const DesignNavBar = (props: DesignNavBarProps) => {
   const [mobileActive, setMobileActive] = useState(false);
@@ -16,7 +17,9 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
     <nav className="navbar is-fixed-top is-info" id="home">
       <div className="navbar-brand">
         <div className="navbar-item">
-          <img src="../eagle_fish_silhouette.png" alt="Bird"></img>
+          <a onClick={() => {props.onHomeClick()}}>
+            <img src="../eagle_fish_silhouette.png" alt="Bird"></img>
+          </a>
         </div>
         <a
           role="button"
@@ -31,6 +34,29 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
       </div>
       <div id="navbarMenuHeroA" className={"navbar-menu " + active}>
         <div className="navbar-start">
+          <a
+            onClick={() => {
+              setMobileActive(false);
+              props.onHomeClick();
+            }}
+            className={
+              "navbar-item " +
+              (activeItemType === ItemType.NA ? "is-active" : "")
+            }
+          >
+            Home
+          </a>
+          <a
+            onClick={() => {
+              setMobileActive(false);
+              props.onAboutClick();
+            }}
+            className={
+              "navbar-item"
+            }
+          >
+            About
+          </a>
           <a
             onClick={() => {
               setMobileActive(false);
@@ -58,19 +84,26 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
           <a
             onClick={() => {
               setMobileActive(false);
-              props.onHomeClick();
+              props.onSubmitDataClick();
             }}
             className={
-              "navbar-item " +
-              (activeItemType === ItemType.NA ? "is-active" : "")
+              "navbar-item"
             }
           >
-            Home
+            Submit Data
           </a>
         </div>
         <div className="navbar-end">
-          <a className={"navbar-item"} onClick={props.onAboutClick}>
-            About (Note: THIS IS DEV ENVIRONMENT!!)
+        <a className={"navbar-item"}>
+            Welcome, John Doe!
+          </a>
+          {/*add link to admin page when we do*/}
+        <a className={"navbar-item"}>
+            Admin
+          </a>
+          {/*add link to login page when we do*/}
+          <a className={"navbar-item"}>
+            Logout (Note: THIS IS DEV ENVIRONMENT!!)
           </a>
           <span className="navbar-item">
             <a

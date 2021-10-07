@@ -33,6 +33,7 @@ function App() {
           ActiveItemTypeVar(ItemType.PREDATOR);
           document.body.scrollIntoView();
         }}
+        onSubmitDataClick={() => {console.log("data submitted")}}
       />
       <section className={"hero is-large"}>
         <div className="hero-head"></div>
