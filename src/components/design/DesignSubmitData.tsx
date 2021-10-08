@@ -1,48 +1,238 @@
+import internal from "events";
 import React from "react";
+import { DesignGreenButton } from "../design/DesignGreenButton";
+
+const styles = {
+    formContainerPg1: {
+        display: 'block',
+    },
+    formContainerPg2: {
+        display: 'none',
+    },
+    formContainerPg3: {
+        display: 'none',
+    },
+    alignTextCenter: {
+        textAlign: 'center' as 'center',
+    },
+    studyInfoTitle: {
+        marginBottom: '0px',
+    },
+    green: {
+        color: '#01B684',
+    },
+    requiredQuestion: {
+        fontSize: '16px',
+    },
+    questionTextSize: {
+        fontSize: '18px',
+        fontWeight: 100
+    },
+    form: {
+        paddingTop: '6rem',
+    },
+    inputBoxSpacing: {
+        marginTop: '.5rem',
+        marginBottom: '.5rem',
+    },
+    inputBox: {
+        backgroundColor: 'white',
+        '&:focusVisible': {
+            borderColor: '#01B684',
+        }
+    },
+    inputBoxMultipleSectionContainer: {
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
+    inputBox4Sections: {
+        width: '230px'
+    },
+    inputBox2Sections: {
+        width: '473px'
+    },
+    singleButton: {
+        marginTop: '200px',
+        display: 'flex',
+        justifyContent: 'flex-end',
+    },
+    doubleButton: {
+        marginTop: '200px',
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    noMarginBottom: {
+        marginBottom: '0px',
+    },
+
+  };
+
+function movePgToPg(currentPage: string, targetPage: string) {
+    document.getElementById('page' + currentPage).style.display = 'none';
+    document.getElementById('page' + targetPage).style.display = 'block';
+}
+
+function submitForm() {
+    console.log("form submitted")
+}
 
 export const DesignSubmitData = () => {
     return (
             <div className="container">
-                <h2 className="title is-size-1">Submit Data</h2>
-                <p className="title is-size-1-">What do birds eat?</p>
-                <p className="content">Different species eat different things, of course! But how do we know how important a given food type is to a species? The best way to answer this is by examining a sample of all of the things a bird recently ate (or tried to eat), and quantifying the prevalence of each diet item. Quantitative information on what different birds eat is scattered across the published and grey literature. The <strong>Avian Diet Database</strong> attempts to collate and synthesize these disparate data into one easily accessible repository. See our <a className="has-text-info" href="https://github.com/hurlbertlab/dietdatabase/blob/master/AvianDietDatabase.txt">data paper</a> for details.</p> 
-                <p className="title is-size-3">Methods of Quantifying the Diet</p>
-                <div className="content">
-                    <p className="">Diet is typically assessed by behavioral observation or
-                    by examining stomach contents, nest debris, pellets (that are coughed up), or fecal contents. Regardless of the study
-                    method, researchers have historically used three different methods for quantifying the
-                    prevalence of a prey type:</p>
-                    <div className="content">
-                        <ol type="1">
-                            <li><strong>Fraction of the diet by number of prey items</strong> (e.g., there was evidence
-                            of 3 beetles out of 50 total prey items)</li>
-                            <li><strong>Fraction of the diet by weight or volume</strong> (e.g., beetles comprised 26%
-                            of the mass of the total stomach contents)</li>
-                            <li><strong>Percent occurrence</strong> (e.g., 65% of stomachs examined had at least one beetle)</li>
-                        </ol>
+                <div id="page1" style={styles.formContainerPg1}>
+                    <div>
+                        <p className="title is-size-1-" style={styles.alignTextCenter}>Submit Avian Data</p> 
+                        <p className="title is-size-3" style={{...styles.alignTextCenter, ...styles.studyInfoTitle}}>Study-Related Information</p> 
+                        <p style={{...styles.requiredQuestion, ...styles.alignTextCenter}}>Questions marked with <span style={styles.green}>*</span> are required</p>
+                    </div>
+                    <div style={styles.form}>
+                        <div id="question1">
+                            <p id="required" style={{...styles.questionTextSize}}>1. Do you have a study with <strong>quantitative</strong> data on avian diet? <span style={styles.green}>*</span></p>
+                            <p style={styles.questionTextSize}>If <span style={styles.green}>yes</span>, do you know the study’s DOI?</p>
+                            <div className="control" style={styles.inputBoxSpacing}>
+                                <input className="input" style={styles.inputBox} type="text" placeholder="Enter DOI" />
+                            </div>
+                            <p style={styles.questionTextSize}>If <span style={styles.green}>no</span>, please fill out relevant information below.</p>
+                            <div style={styles.inputBoxMultipleSectionContainer}>
+                                <div className="field">
+                                    <label className="label" style={styles.questionTextSize}>Title</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox4Sections}} type="text" placeholder="Enter Title" />
+                                    </div>
+                                </div>
+                                <div className="field">
+                                    <label className="label" style={styles.questionTextSize}>Journal</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox4Sections}} type="text" placeholder="Enter Journal" />
+                                    </div>
+                                </div>
+                                <div className="field">
+                                    <label className="label" style={styles.questionTextSize}>Year</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox4Sections}} type="text" placeholder="Enter Year" />
+                                    </div>
+                                </div>
+                                <div className="field">
+                                    <label className="label" style={styles.questionTextSize}>Last Name of First Author</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox4Sections}} type="text" placeholder="Enter Last Name" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style={styles.singleButton} onClick={() => movePgToPg('1','2')}>
+                        <DesignGreenButton
+                            buttonText={'Next'}
+                            className={'next-pg-1'}
+                        />
                     </div>
                 </div>
-                <p className="title is-size-3">Using This Website</p>
-                <div className="content">
-                    <p className=""><strong>Find out what a particular bird species has been shown to eat</strong> by entering either a scientific or common name on the <strong>Home</strong> or <strong>Diet by Bird</strong> page. If the species you are searching for does not come up in the auto-complete, then you have misspelled the name or it is absent from our database. <em>For some species, studies have never been conducted!</em></p>
-                    <p className="">If the species is present in our database, you will see the total number of diet records available and how those diet records are distributed over time, space, season, and "diet type" (the categories mentioned above). By default, you will see diet data summarized at the level of taxonomic Class (e.g., birds, mammals, insects, etc.), but you can re-summarize the data at higher (e.g., animals versus plants) or lower (e.g., beetles versus moths versus leafhoppers) taxonomic levels, but note that the taxonomic resolution with which the original studies classify prey may often be coarse. </p>
-                    <p className="">&nbsp;</p>
-                    <p className=""><strong>Find out which bird species eat a particular prey item</strong> by entering either a scientific or common name of the prey on the <strong>Home</strong> or <strong>Diet by Prey</strong> page. This will return a list of all bird species in the database for which there is a quantitative diet estimate. Bird species for which multiple studies have been conducted will be represented by a single value per Diet Type which is the mean fraction of the diet across studies.</p>
+                <div id="page2" style={styles.formContainerPg2}>
+                    <div>
+                        <p className="title is-size-1-" style={styles.alignTextCenter}>Submit Avian Data</p> 
+                        <p className="title is-size-3" style={{...styles.alignTextCenter, ...styles.studyInfoTitle}}>Study-Related Information</p> 
+                        <p style={{...styles.requiredQuestion, ...styles.alignTextCenter}}>Questions marked with <span style={styles.green}>*</span> are required</p>
+                    </div>
+                    <div style={styles.form}>
+                        <div id="question2">
+                            <p id="required" style={{...styles.questionTextSize}}>2. What bird species are you entering diet data for? <span style={styles.green}>*</span></p>
+                            <div style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom}}>
+                                <div className="field" style={styles.noMarginBottom}>
+                                    <label className="label" style={styles.questionTextSize}>Check your species against our database!</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Species" />
+                                    </div>
+                                </div>
+                                <div className="field" style={styles.noMarginBottom}>
+                                    <label className="label" style={styles.questionTextSize}>Subspecies</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Subspecies" />
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="required" style={{...styles.questionTextSize}}>New species? Enter it in manually</span>
+                            <div style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom}}>
+                                <div className="field" style={styles.noMarginBottom}>
+                                    <label className="label" style={styles.questionTextSize}>Enter Species</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Species" />
+                                    </div>
+                                </div>
+                                <div className="field" style={styles.noMarginBottom}>
+                                    <label className="label" style={styles.questionTextSize}>Taxonomy</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Taxonomy" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="question3">
+                            <p id="required" style={{...styles.questionTextSize}}>3. Was the data collected from within a single state, province, or country? <span style={styles.green}>*</span></p>
+                            <p style={styles.questionTextSize}>If <span style={styles.green}>yes</span>, select a country.</p>
+                            <div style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom}}>
+                                <div className="field" style={styles.noMarginBottom}>
+                                    <label className="label" style={styles.questionTextSize}>Country</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Country" />
+                                    </div>
+                                </div>
+                                <div className="field" style={styles.noMarginBottom}>
+                                    <label className="label" style={styles.questionTextSize}>Specify State/Province</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Specify Area" />
+                                    </div>
+                                </div>
+                            </div>
+                            <p style={styles.questionTextSize}>If <span style={styles.green}>no</span>, select a region.</p>
+                            <div style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom}}>
+                                <div className="field" style={styles.noMarginBottom}>
+                                    <label className="label" style={styles.questionTextSize}>Region</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Region" />
+                                    </div>
+                                </div>
+                                <div className="field" style={styles.noMarginBottom}>
+                                    <label className="label" style={styles.questionTextSize}>Other</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Specify Area" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="question4">
+                            <p id="required" style={{...styles.questionTextSize}}>4. What was the specific location name? <span style={styles.green}>*</span></p>
+                            <div className="control" style={styles.inputBoxSpacing}>
+                                <input className="input" style={styles.inputBox} type="text" placeholder="Enter Location" />
+                            </div>
+                        </div>
+                    </div>
+                    <div style={styles.doubleButton}>
+                        <div onClick={() => movePgToPg('2','1')}>
+                            <DesignGreenButton
+                                buttonText={'Back'}
+                                className={'back-pg-2'}
+                            />
+                        </div>
+                        <div onClick={() => movePgToPg('2','3')}>
+                            <DesignGreenButton
+                                buttonText={'Next'}
+                                className={'next-pg-2'}
+                            />
+                        </div>
+                    </div>
                 </div>
-                <p className="title is-size-3">Downloading Results</p>
-                <div className="content">
-                    <p className="">At the top right corner of the diet results table is a <strong>Download Data</strong> button. Click this to download a .csv file of the table which can be opened with Microsoft Excel or other programs. Users who are familiar with the statistical programming language R may use our <a className="has-text-info" href="https://github.com/ahhurlbert/aviandietdb">R package</a> for working with and exploring the raw data.</p>
-                </div>
-                <p className="title is-size-3">Feedback</p>
-                <div className="content">
-                    <p className="">Did you find an error in the database? Do you know of a published study
-                    with quantitative diet information that is not included in our database?</p>
-                    <p>
-                        Let us know! Post an issue on 
-                        <a className="has-text-info" href="https://github.com/hurlbertlab/dietdatabase/issues"> this page </a> 
-                        by clicking the green ‘New Issue’ button at the top right (requires a Github account), 
-                        or send an email to <a className="has-text-info" href="aviandietdb@gmail.com">aviandietdb@gmail.com</a>.  
-                    </p>
+                <div id="page3" style={styles.formContainerPg3}>
+                    <div>
+                        <p className="title is-size-1-" style={styles.alignTextCenter}>Submit Avian Data</p> 
+                        <p className="title is-size-3" style={{...styles.alignTextCenter, ...styles.studyInfoTitle}}>Review Information</p>
+                    </div>
+                    <div style={styles.singleButton} onClick={() => submitForm()}>
+                        <DesignGreenButton
+                            buttonText={'Submit'}
+                            className={'submit-pg-4'}
+                        />
+                    </div>
                 </div>
             </div>
     )
