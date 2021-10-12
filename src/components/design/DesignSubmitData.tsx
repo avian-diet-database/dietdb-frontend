@@ -12,6 +12,15 @@ const styles = {
     formContainerPg3: {
         display: 'none',
     },
+    displayFlex: {
+        display: 'flex',
+    },
+    justifyFlexStart: {
+        justifyContent: 'flex-start',
+    },
+    justifyFlexEnd: {
+        justifyContent: 'flex-end',
+    },
     alignTextCenter: {
         textAlign: 'center' as 'center',
     },
@@ -20,6 +29,9 @@ const styles = {
     },
     green: {
         color: '#01B684',
+    },
+    backgroundGreen: {
+        backgroundColor: '#01B684',
     },
     requiredQuestion: {
         fontSize: '16px',
@@ -64,6 +76,21 @@ const styles = {
     noMarginBottom: {
         marginBottom: '0px',
     },
+    reviewInfoContainer: {
+        marginTop: '3rem',
+    },
+    reviewInfoTitleContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    editButton: {
+        paddingRight: '1rem',
+        paddingLeft: '1rem',
+        marginTop: '.3rem',
+        fontSize: '16px',
+        backgroundColor: '#01B684',
+        color: 'white',
+    }
 
   };
 
@@ -227,11 +254,35 @@ export const DesignSubmitData = () => {
                         <p className="title is-size-1-" style={styles.alignTextCenter}>Submit Avian Data</p> 
                         <p className="title is-size-3" style={{...styles.alignTextCenter, ...styles.studyInfoTitle}}>Review Information</p>
                     </div>
-                    <div style={styles.singleButton} onClick={() => submitForm()}>
-                        <DesignGreenButton
-                            buttonText={'Submit'}
-                            className={'submit-pg-4'}
-                        />
+                    <div style={styles.reviewInfoContainer}>
+                        <div style={styles.reviewInfoTitleContainer}>
+                            <p className="title is-size-3" style={{...styles.alignTextCenter, ...styles.studyInfoTitle}}>Study-Related Information</p>
+                            <div onClick={() => movePgToPg('3', '1')}>
+                                <button className="button edit-study-info-pg-3" style={styles.editButton}>Edit</button>
+                            </div>
+                        </div>
+                        <div>
+                            <p id="required" style={{...styles.questionTextSize}}>1. Do you have a study with <strong>quantitative</strong> data on avian diet? <span style={styles.green}>*</span></p>
+                            <p id="required" style={{...styles.questionTextSize}}>2. What bird species are you entering diet data for? <span style={styles.green}>*</span></p>
+                            <p id="required" style={{...styles.questionTextSize}}>3. Was the data collected from within a single state, province, or country? <span style={styles.green}>*</span></p>
+                            <p id="required" style={{...styles.questionTextSize}}>4. What was the specific location name? <span style={styles.green}>*</span></p>
+                        </div>
+                    </div>
+                    <hr style={styles.backgroundGreen}/>
+                    <div style={styles.doubleButton}>
+                        <div onClick={() => movePgToPg('3','2')}>
+                            <DesignGreenButton
+                                buttonText={'Back'}
+                                className={'back-pg-3'}
+                            />
+                        </div>
+                        <div onClick={() => submitForm()}>
+                            <DesignGreenButton
+                                buttonText={'Submit'}
+                                className={'submit-pg-3'}
+                            />
+                        </div>
+                        
                     </div>
                 </div>
             </div>
