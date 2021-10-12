@@ -103,8 +103,8 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
         <a className={"navbar-item"} onClick={() => {props.onAdminClick()}}>
             Admin
           </a>
-          <a className={"navbar-item"} onClick={() => {props.onLogoutClick()}}>
-            Logout (Note: THIS IS DEV ENVIRONMENT!!)
+          <a className={"navbar-item"} onClick={() => {props.onLoginClick()}}>
+            Login (Note: THIS IS DEV ENVIRONMENT!!)
           </a>
           <span className="navbar-item">
             <a
