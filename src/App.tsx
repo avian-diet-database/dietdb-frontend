@@ -5,6 +5,7 @@ import { DesignNavBar } from "./components/design/DesignNavBar";
 import { LogicSearchBar } from "./components/logic/LogicSearchBar";
 import { DesignHeader } from "./components/design/DesignHeader";
 import { LogicAbout } from "./components/logic/LogicAbout";
+import { LogicAdminDashboard } from "./components/logic/LogicAdminDashboard";
 import { ItemType, ActiveItemVar, ActiveItemTypeVar } from "./cache";
 import { useReactiveVar } from "@apollo/client";
 
@@ -78,6 +79,7 @@ function App() {
                 right={" ?"}
               />
             ) : null}
+            {activeItemType === ItemType.ADMIN ? <LogicAdminDashboard /> : null}
           </div>
         </div>
       </section>
