@@ -12,7 +12,7 @@ const signupPromptStyles = {
   margin: "2.5% 0%",
 };
 
-const linkStyles = {
+const greenTextStyles = {
     color: "#33CC99",
 }
 
@@ -46,7 +46,7 @@ export const DesignLogin = () =>  {
           ))}
         </div>
         <div className="signupPrompt" style={signupPromptStyles}>
-          <p>New user? <a style={linkStyles} onClick={() => setIsSignup(true)}>Sign up!</a></p>
+          <p>New user? <a style={greenTextStyles} onClick={() => setIsSignup(true)}>Sign up!</a></p>
         </div>
         <div className="field is-grouped is-grouped-centered">
           <p className="control">
@@ -55,6 +55,7 @@ export const DesignLogin = () =>  {
         </div>
       </div>
     </div> :
-    <LogicSignup></LogicSignup>
+    <LogicSignup
+    setIsSignup={setIsSignup}/>
   );
 };

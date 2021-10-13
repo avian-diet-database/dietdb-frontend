@@ -1,18 +1,20 @@
 import React from "react";
 
-interface DesignSignupProps {}
+interface DesignSignupProps {
+  setIsSignup: React.Dispatch<React.SetStateAction<boolean>>,
+}
 
 const formContainerStyles = {
   margin: "5% 20%",
 };
 
+const signupPromptStyles = {
+  margin: "2.5% 0%",
+};
+
 const greenTextStyles = {
   color: "#33CC99",
 };
-
-const submitStyles = {
-  margin: "5%",
-}
 
 const requiredFields = [
   "Full Name",
@@ -23,7 +25,7 @@ const requiredFields = [
 ];
 const optionalFields = ["Admin Password"];
 
-export const DesignSignup = () => {
+export const DesignSignup: React.FC<DesignSignupProps> = (props: DesignSignupProps) => {
   return (
     <div>
       <div className="container has-text-centered">
@@ -56,7 +58,10 @@ export const DesignSignup = () => {
             </div>
           ))}
         </div>
-        <div className="field is-grouped is-grouped-centered" style={submitStyles}>
+        <div className="signupPrompt" style={signupPromptStyles}>
+          <p>Already have an account? <a style={greenTextStyles} onClick={() => props.setIsSignup(false)}>Log in!</a></p>
+        </div>
+        <div className="field is-grouped is-grouped-centered">
           <p className="control">
             <a className="button is-info">Submit</a>
           </p>
