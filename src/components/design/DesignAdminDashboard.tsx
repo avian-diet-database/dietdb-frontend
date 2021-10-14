@@ -5,10 +5,10 @@ const styles = {
     adminContainerPg1: {
         display: 'block',
     },
-    formContainerPg2: {
+    adminContainerPg2: {
         display: 'none',
     },
-    formContainerPg3: {
+    adminContainerPg3: {
         display: 'none',
     },
     pendingTableTitle: {
@@ -73,10 +73,10 @@ const styles = {
 
   };
 
-// function movePgToPg(currentPage: string, targetPage: string) {
-//     document.getElementById('page' + currentPage).style.display = 'none';
-//     document.getElementById('page' + targetPage).style.display = 'block';
-// }
+function movePgToPg(currentPage: string, targetPage: string) {
+    document.getElementById('page' + currentPage).style.display = 'none';
+    document.getElementById('page' + targetPage).style.display = 'block';
+}
 
 function submitForm() {
     console.log("form submitted")
@@ -90,6 +90,21 @@ export const DesignAdminDashboard = () => {
                         <p className="title is-size-1" style={styles.alignTextCenter}>Admin Dashboard</p>
                     </div>
                     <div>
+                        <div style={{...styles.backgroundGreen, ...styles.tableHeader, ...styles.alignTextCenter}} onClick={() => movePgToPg('1', '2')}>
+                            <p style={styles.pendingTableTitle}><strong style={styles.white}>Pending Approval</strong></p>
+                        </div>
+                        <div style={styles.pendingTableContent}>
+                            <p>table stuff here</p>
+                        </div>
+                    </div>
+                    <div style={styles.singleButton} onClick={() => movePgToPg('1', '3')}>
+                        <DesignLargeGreenButton 
+                            buttonText={'Approval History'} 
+                            className={'approval-history-button-pg-1'} />
+                    </div>
+                </div>
+                <div id="page2" style={styles.adminContainerPg2}>
+                    <div>
                         <div style={{...styles.backgroundGreen, ...styles.tableHeader, ...styles.alignTextCenter}}>
                             <p style={styles.pendingTableTitle}><strong style={styles.white}>Pending Approval</strong></p>
                         </div>
@@ -97,10 +112,25 @@ export const DesignAdminDashboard = () => {
                             <p>table stuff here</p>
                         </div>
                     </div>
-                    <div style={styles.singleButton}>
+                    <div style={styles.singleButton} onClick={() => movePgToPg('2', '1')}>
                         <DesignLargeGreenButton 
-                            buttonText={'Approval History'} 
-                            className={'approval-history-button-pg-1'} />
+                            buttonText={'Back to Dashboard'} 
+                            className={'back-dashboard-button-pg-2'} />
+                    </div>
+                </div>
+                <div id="page3" style={styles.adminContainerPg3}>
+                    <div>
+                        <div style={{...styles.backgroundGreen, ...styles.tableHeader, ...styles.alignTextCenter}}>
+                            <p style={styles.pendingTableTitle}><strong style={styles.white}>Approval History</strong></p>
+                        </div>
+                        <div style={styles.pendingTableContent}>
+                            <p>table stuff here</p>
+                        </div>
+                    </div>
+                    <div style={styles.singleButton} onClick={() => movePgToPg('3','1')}>
+                        <DesignLargeGreenButton 
+                            buttonText={'Back to Dashboard'} 
+                            className={'back-dashboard-button-pg-3'} />
                     </div>
                 </div>
             </div>
