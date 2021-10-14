@@ -15,7 +15,7 @@
     "noEmit": true,
     "jsx": "react",
     "typeRoots": ["./types", "./node_modules/@types"],
-    "strictNullChecks": false
+    "strictNullChecks": false,
   },
   "include": ["src"],
   "exclude": ["node_modules", "typings"]
