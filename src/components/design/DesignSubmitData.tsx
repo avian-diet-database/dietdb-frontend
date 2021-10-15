@@ -207,10 +207,12 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
 
         // WHERE TO FIND FUNC
         console.log("tryna submit doi " + doi);
+        let result;
         try {
-            props.addData({ variables: { text: doi } });
-        } catch (e){
-            console.log(e);
+            // just hardcoded in for now to get this addData to work
+            props.addData({ variables: { common_name: "HELLO GUYS" } });
+        } catch(e){
+            result = (e as Error).message;
         }
     }
 
