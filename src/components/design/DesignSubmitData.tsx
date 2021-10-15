@@ -1,9 +1,14 @@
+import { FetchResult, MutationFunctionOptions } from "@apollo/client";
 import { autoType } from "d3-dsv";
 import internal from "events";
 import React, { useState } from "react";
 import { DesignGreenButton } from "../design/DesignGreenButton";
 
-export const DesignSubmitData = () => {
+interface DesignSubmitDataProps {
+    addData:(options?: MutationFunctionOptions<any, Record<string, any>>) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
+}
+
+export const DesignSubmitData = (props:DesignSubmitDataProps) => {
     const initialState = {
         doi: '',
         title: '',
@@ -199,6 +204,14 @@ export const DesignSubmitData = () => {
     function submitForm(targetPage: string) {
         document.getElementById('page' + targetPage).style.display = 'block';
         console.log(formData);
+
+        // WHERE TO FIND FUNC
+        console.log("tryna submit doi " + doi);
+        try {
+            props.addData({ variables: { text: doi } });
+        } catch (e){
+            console.log(e);
+        }
     }
 
     //const [studyInfoFormData, setStudyInfoFormData] = useState({doi:"", title:""});
