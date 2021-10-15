@@ -212,7 +212,12 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
             // just hardcoded in for now to get this addData to work
             props.addData({ variables: { common_name: "HELLO GUYS" } });
         } catch(e){
-            result = (e as Error).message;
+            console.log("caught error");
+            result = (e as Error);
+            console.log(JSON.stringify(e, null, 2));
+            console.error(e);
+        } finally {
+            console.log("finally");
         }
     }
 
@@ -399,6 +404,7 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                                 className={'back-pg-3'}
                             />
                         </div>
+                        
                         <div onClick={() => submitForm('4')}>
                             <DesignGreenButton
                                 buttonText={'Submit'}
