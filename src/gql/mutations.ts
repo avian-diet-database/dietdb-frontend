@@ -1,10 +1,15 @@
 import { gql, useMutation } from '@apollo/client';
 
+// using this one for now
 const TESTB = gql`
-mutation createPendingDiet($common_name: String) {
-    createPendingDiet(common_name: $common_name) {
-        common_name
-    }
+mutation createAlternativePendingDiet($common_name: String!,
+    $source: String!, $subspecies: String!, $taxonomy: String!, 
+    $location_region: String!, $location_specific: String!, 
+    $prey_kingdom: String!, $diet_type: String!) {
+        createAlternativePendingDiet(common_name: $common_name,
+        source: $source, subspecies: $subspecies, taxonomy: $taxonomy,
+        location_region: $location_region, location_specific: $location_specific, 
+        prey_kingdom: $prey_kingdom, diet_type: $diet_type)
 }
 `;
 

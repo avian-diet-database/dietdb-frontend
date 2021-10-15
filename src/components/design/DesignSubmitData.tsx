@@ -205,20 +205,14 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
         document.getElementById('page' + targetPage).style.display = 'block';
         console.log(formData);
 
-        // WHERE TO FIND FUNC
-        console.log("tryna submit doi " + doi);
-        let result;
-        try {
-            // just hardcoded in for now to get this addData to work
-            props.addData({ variables: { common_name: "HELLO GUYS" } });
-        } catch(e){
-            console.log("caught error");
-            result = (e as Error);
-            console.log(JSON.stringify(e, null, 2));
-            console.error(e);
-        } finally {
-            console.log("finally");
-        }
+        // just hardcoded in for now to get this addData to work
+        // also console logging for now just to make sure it works.. remove later
+        console.log("does it work? " + props.addData({ 
+            variables: { common_name: "common_name_to_be_implemented", source: formData.studyInfo.journal,
+            subspecies:formData.studyInfo.subspecies, taxonomy: formData.studyInfo.taxonomy,
+            location_region: formData.studyInfo.region, location_specific: formData.studyInfo.location, 
+            prey_kingdom: "prey_kingdom_to_be_implemented", diet_type: "diet_type_to_be_implemented" } 
+        }));
     }
 
     //const [studyInfoFormData, setStudyInfoFormData] = useState({doi:"", title:""});
