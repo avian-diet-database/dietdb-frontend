@@ -322,6 +322,56 @@ const GET_FILTERS_PRED = gql`
   }
 `;
 
+const GET_PENDING_DIET = gql`
+query {
+  getPendingDiet {
+    id
+    common_name
+    scientific_name
+    subspecies
+    family
+    taxonomy
+    longitude_dd
+    latitude_dd
+    altitude_min_m
+    altitude_max_m
+    altitude_mean_m
+    location_region
+    location_specific
+    habitat_type
+    observation_month_begin
+    observation_month_end
+    observation_year_begin
+    observation_year_end
+    observation_season
+    analysis_number
+    prey_kingdom
+    prey_phylum
+    prey_class
+    prey_order
+    prey_suborder
+    prey_family
+    prey_genus
+    prey_scientific_name
+    inclusive_prey_taxon
+    prey_name_ITIS_ID
+    prey_name_status
+    prey_stage
+    prey_part
+    prey_common_name
+    fraction_diet
+    diet_type
+    item_sample_size
+    bird_sample_size
+    sites
+    study_type
+    notes
+    entered_by
+    source
+  }
+}
+`; 
+
 export {
   GET_AUTOCOMPLETE_PRED,
   GET_AUTOCOMPLETE_PREY,
@@ -331,6 +381,7 @@ export {
   GET_PREY_OF,
   GET_PREY_OF_SOURCES,
   GET_PRED_OF_SOURCES,
+  GET_PENDING_DIET,
   ITEM_PAGE_PRED,
   ITEM_PAGE_PREY,
   RECORDS_PER_DECADE,

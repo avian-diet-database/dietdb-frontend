@@ -1,7 +1,7 @@
 import { gql, useMutation } from '@apollo/client';
 
 // using this one for now
-const TESTB = gql`
+const CREATE_PENDING_DIET_SKELETON = gql`
 mutation createAlternativePendingDiet($common_name: String!,
     $source: String!, $subspecies: String!, $taxonomy: String!, 
     $location_region: String!, $location_specific: String!, 
@@ -13,42 +13,8 @@ mutation createAlternativePendingDiet($common_name: String!,
 }
 `;
 
-const TEST = gql`
-mutation CreatePendingDiet(
-    $common_name: String
-    $source: String
-    $subspecies: String
-    $taxonomy: String
-    $location_region: String
-    $location_specific: String
-    $prey_kingdom: String
-    $diet_type: String
-    ) {
-    createPendingDiet(           
-        common_name: $common_name
-        source: $source
-        subspecies: $subspecies
-        taxonomy: $taxonomy
-        location_region: $location_region
-        location_specific: $location_specific
-        prey_kingdom: $prey_kingdom
-        diet_type: $diet_type
-    )
-    {
-        id
-        common_name
-        source
-        subspecies
-        taxonomy
-        location_region
-        location_specific
-        prey_kingdom
-        diet_type
-    }
-}
-`;
-
-const CREATE_PENDING_DIET_FINAL = gql`
+// To be used later... remember to add '!'
+const CREATE_PENDING_DIET_TOTAL = gql`
 mutation CreatePendingDiet(
     $common_name: string
     $Scientific_name: string
@@ -184,5 +150,5 @@ mutation CreatePendingDiet(
 `;
 
 export {
-    TEST, TESTB
+    CREATE_PENDING_DIET_SKELETON
 }
