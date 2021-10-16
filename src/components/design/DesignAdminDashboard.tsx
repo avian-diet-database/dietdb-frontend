@@ -5,6 +5,7 @@ import { DesignLargeGreenButton } from "./DesignLargeGreenButton";
 
 export interface DesignAdminDashboardProps {
     pendingData: {
+        unique_id: number,
         common_name: string,
         source: string,
         subspecies: string,
@@ -107,7 +108,28 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                             <p style={styles.pendingTableTitle}><strong style={styles.white}>Pending Approval</strong></p>
                         </div>
                         <div style={styles.pendingTableContent}>
-                            <div>{props.pendingData === undefined ? "No pending data to display" : props.pendingData.map(data => <div>{"Name: " + data.common_name+ "; Source: " + data.source + "; Subspecies: " + data.subspecies + "; Taxonomy: " + data.taxonomy + "; Region: " + data.location_region + "; Location: " + data.location_specific + "; Prey Kingdom: " + data.prey_kingdom + "; Diet Type: " + data.diet_type}</div>)}</div>
+                            <div>
+                                {props.pendingData === undefined ?
+                                "No pending data to display"
+                                : props.pendingData.map(data => 
+                                    <div>
+                                        <p>ID: {data.unique_id}</p>
+                                        <p>DOI: </p>
+                                        <p>Source: {data.source}</p>
+                                        <p>Species: </p>
+                                        <p>Subspecies: {data.subspecies}</p>
+                                        <p>New Species: </p>
+                                        <p>Taxonomy: {data.taxonomy}</p>
+                                        <p>Country: </p>
+                                        <p>State/Province: </p>
+                                        <p>Region: {data.location_region}</p>
+                                        <p>Other: </p>
+                                        <p>Location: {data.location_specific}</p>
+                                        <hr style={styles.backgroundGreen} />
+                                    </div>
+                                 )}
+                            </div>
+                            {/* <div>{props.pendingData === undefined ? "No pending data to display" : props.pendingData.map(data => <div>{"ID: " + data.unique_id + "; Source: " + data.source + "; Subspecies: " + data.subspecies + "; Taxonomy: " + data.taxonomy + "; Region: " + data.location_region + "; Location: " + data.location_specific + "; Prey Kingdom: " + data.prey_kingdom + "; Diet Type: " + data.diet_type}</div>)}</div> */}
                         </div>
                     </div>
                     {/* <div style={styles.singleButton} onClick={() => movePgToPg('1', '3')}>

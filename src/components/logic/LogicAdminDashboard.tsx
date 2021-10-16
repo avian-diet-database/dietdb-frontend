@@ -8,7 +8,7 @@ export const LogicAdminDashboard = () => {
     let pendingData;
 
     const query = GET_PENDING_DIET_SKELETON;
-    const { loading, error, data } = useQuery(query);
+    const { loading, error, data } = useQuery(query, { pollInterval: 250 });
 
     if (data) {
         pendingData = data.getPendingDiet;

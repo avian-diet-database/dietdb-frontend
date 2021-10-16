@@ -284,7 +284,8 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                             <p id="required" style={{...styles.questionTextSize}}>2. What bird species are you entering diet data for? <span style={styles.green}>*</span></p>
                             <div style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom}}>
                                 <div className="field" style={styles.noMarginBottom}>
-                                    <label className="label" style={styles.questionTextSize}>Check your species against our database!</label>
+                                    {/* <label className="label" style={styles.questionTextSize}>Check your species against our database!</label> */}
+                                    <label className="label" style={styles.questionTextSize}>Enter existing species</label>
                                     <div className="control" style={styles.inputBoxSpacing}>
                                         <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Species" value={species} name="species" onChange={setStudyInfoInputState}/>
                                     </div>
