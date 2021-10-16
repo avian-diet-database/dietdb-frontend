@@ -208,7 +208,7 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
         console.log(formData.studyInfo.subspecies)
 
         props.addData({ 
-            variables: { common_name: "common_name_to_be_implemented", source: formData.studyInfo.journal,
+            variables: { common_name: "common_name_to_be_implemented", source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastnameAuthor,
             subspecies:formData.studyInfo.subspecies, taxonomy: formData.studyInfo.taxonomy,
             location_region: formData.studyInfo.region, location_specific: formData.studyInfo.location, 
             prey_kingdom: "prey_kingdom_to_be_implemented", diet_type: "diet_type_to_be_implemented" } 

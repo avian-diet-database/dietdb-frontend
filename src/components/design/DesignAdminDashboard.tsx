@@ -107,7 +107,7 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                             <p style={styles.pendingTableTitle}><strong style={styles.white}>Pending Approval</strong></p>
                         </div>
                         <div style={styles.pendingTableContent}>
-                            <div>{props.pendingData === undefined ? "No pending data to display" : props.pendingData.map(data => <div>{"Name:" + data.common_name+ "; Subspecies: " + data.subspecies + "; Taxonomy: " + data.taxonomy + "; Region: " + data.location_region + "; Location:" + data.location_specific + "; Prey Kingdom: " + data.prey_kingdom + "; Diet Type: " + data.diet_type}</div>)}</div>
+                            <div>{props.pendingData === undefined ? "No pending data to display" : props.pendingData.map(data => <div>{"Name: " + data.common_name+ "; Source: " + data.source + "; Subspecies: " + data.subspecies + "; Taxonomy: " + data.taxonomy + "; Region: " + data.location_region + "; Location: " + data.location_specific + "; Prey Kingdom: " + data.prey_kingdom + "; Diet Type: " + data.diet_type}</div>)}</div>
                         </div>
                     </div>
                     {/* <div style={styles.singleButton} onClick={() => movePgToPg('1', '3')}>
