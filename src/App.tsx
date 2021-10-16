@@ -5,7 +5,11 @@ import { DesignNavBar } from "./components/design/DesignNavBar";
 import { LogicSearchBar } from "./components/logic/LogicSearchBar";
 import { DesignHeader } from "./components/design/DesignHeader";
 import { LogicAbout } from "./components/logic/LogicAbout";
+<<<<<<< HEAD
 import { LogicAdminDashboard } from "./components/logic/LogicAdminDashboard";
+=======
+import { LogicSubmitData } from "./components/logic/LogicSubmitData";
+>>>>>>> 3440bab5dfefb709139b6ad1d078d2f42ef851e3
 import { ItemType, ActiveItemVar, ActiveItemTypeVar } from "./cache";
 import { useReactiveVar } from "@apollo/client";
 
@@ -79,7 +83,11 @@ function App() {
                 right={" ?"}
               />
             ) : null}
+<<<<<<< HEAD
             {activeItemType === ItemType.ADMIN ? <LogicAdminDashboard /> : null}
+=======
+            {activeItemType === ItemType.SUBMIT ? <LogicSubmitData /> : null}
+>>>>>>> 3440bab5dfefb709139b6ad1d078d2f42ef851e3
           </div>
         </div>
       </section>
