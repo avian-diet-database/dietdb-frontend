@@ -372,11 +372,17 @@ query {
 }
 `; 
 
-const GET_PENDING_DIET2 = gql`
+const GET_PENDING_DIET_SKELETON = gql`
 query {
   getPendingDiet {
+    common_name
+    source
     subspecies
+    taxonomy
+    location_region
     location_specific
+    prey_kingdom
+    diet_type
   }
 }
 `; 
@@ -391,7 +397,7 @@ export {
   GET_PREY_OF_SOURCES,
   GET_PRED_OF_SOURCES,
   GET_PENDING_DIET,
-  GET_PENDING_DIET2,
+  GET_PENDING_DIET_SKELETON,
   ITEM_PAGE_PRED,
   ITEM_PAGE_PREY,
   RECORDS_PER_DECADE,
