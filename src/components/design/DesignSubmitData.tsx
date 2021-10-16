@@ -205,14 +205,14 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
         document.getElementById('page' + targetPage).style.display = 'block';
         console.log(formData);
 
-        // just hardcoded in for now to get this addData to work
-        // also console logging for now just to make sure it works.. remove later
-        console.log("does it work? " + props.addData({ 
+        console.log(formData.studyInfo.subspecies)
+
+        props.addData({ 
             variables: { common_name: "common_name_to_be_implemented", source: formData.studyInfo.journal,
             subspecies:formData.studyInfo.subspecies, taxonomy: formData.studyInfo.taxonomy,
             location_region: formData.studyInfo.region, location_specific: formData.studyInfo.location, 
             prey_kingdom: "prey_kingdom_to_be_implemented", diet_type: "diet_type_to_be_implemented" } 
-        }));
+        });
     }
 
     //const [studyInfoFormData, setStudyInfoFormData] = useState({doi:"", title:""});
