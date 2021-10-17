@@ -205,14 +205,14 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
         document.getElementById('page' + targetPage).style.display = 'block';
         console.log(formData);
 
-        // just hardcoded in for now to get this addData to work
-        // also console logging for now just to make sure it works.. remove later
-        console.log("does it work? " + props.addData({ 
-            variables: { common_name: "common_name_to_be_implemented", source: formData.studyInfo.journal,
+        console.log(formData.studyInfo.subspecies)
+
+        props.addData({ 
+            variables: { common_name: "common_name_to_be_implemented", source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastnameAuthor,
             subspecies:formData.studyInfo.subspecies, taxonomy: formData.studyInfo.taxonomy,
             location_region: formData.studyInfo.region, location_specific: formData.studyInfo.location, 
             prey_kingdom: "prey_kingdom_to_be_implemented", diet_type: "diet_type_to_be_implemented" } 
-        }));
+        });
     }
 
     //const [studyInfoFormData, setStudyInfoFormData] = useState({doi:"", title:""});
@@ -284,7 +284,8 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                             <p id="required" style={{...styles.questionTextSize}}>2. What bird species are you entering diet data for? <span style={styles.green}>*</span></p>
                             <div style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom}}>
                                 <div className="field" style={styles.noMarginBottom}>
-                                    <label className="label" style={styles.questionTextSize}>Check your species against our database!</label>
+                                    {/* <label className="label" style={styles.questionTextSize}>Check your species against our database!</label> */}
+                                    <label className="label" style={styles.questionTextSize}>Enter existing species</label>
                                     <div className="control" style={styles.inputBoxSpacing}>
                                         <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Species" value={species} name="species" onChange={setStudyInfoInputState}/>
                                     </div>
