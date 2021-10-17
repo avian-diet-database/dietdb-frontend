@@ -5,7 +5,6 @@ import { DesignLargeGreenButton } from "./DesignLargeGreenButton";
 
 export interface DesignAdminDashboardProps {
     pendingData: {
-        unique_id: number,
         common_name: string,
         source: string,
         subspecies: string,
@@ -113,17 +112,17 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                                 "No pending data to display"
                                 : props.pendingData.map(data => 
                                     <div>
-                                        <p>ID: {data.unique_id}</p>
-                                        <p>DOI: </p>
+                                        <p>ID: column to be added to db</p>
+                                        <p>DOI: column to be added to db</p>
                                         <p>Source: {data.source}</p>
-                                        <p>Species: </p>
+                                        <p>Species: column to be added to db</p>
                                         <p>Subspecies: {data.subspecies}</p>
-                                        <p>New Species: </p>
+                                        <p>New Species: column to be added to db</p>
                                         <p>Taxonomy: {data.taxonomy}</p>
-                                        <p>Country: </p>
-                                        <p>State/Province: </p>
+                                        <p>Country: column to be added to db</p>
+                                        <p>State/Province: column to be added to db</p>
                                         <p>Region: {data.location_region}</p>
-                                        <p>Other: </p>
+                                        <p>Other: column to be added to db</p>
                                         <p>Location: {data.location_specific}</p>
                                         <hr style={styles.backgroundGreen} />
                                     </div>
