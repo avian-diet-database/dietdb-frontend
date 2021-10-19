@@ -14,19 +14,38 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
         title: '',
         journal: '',
         year: '',
-        lastnameAuthor: '',
+        lastname_author: '',
         species: '',
         subspecies: '',
-        newSpecies: '',
+        new_species: '',
         taxonomy: '',
         country: '',
-        stateOrProvince: '',
-        region: '',
-        locationOther: '',
-        location: '',
+        state_province: '',
+        location_region: '',
+        location_other: '',
+        location_specific: '',
+        lat_long_yn: '',
+        latitude_dd: '',
+        longitude_dd: '',
+        elevation_yn: '',
+        altitude_min_m: '',
+        altitude_max_m: '',
+        altitude_mean_m: '',
+        habitat_type: '',
+        observation_month_begin: '',
+        observation_month_end: '',
+        observation_year_begin: '',
+        observation_year_end: '',
     }
 
-    const[{doi, title, journal, year, lastnameAuthor, species, subspecies, newSpecies, taxonomy, country, stateOrProvince, region, locationOther, location}, setStudyInfoState] = useState(initialState);
+    const[{doi, title, journal, year, lastname_author, species, subspecies, new_species, taxonomy, 
+        country, state_province, location_region, location_other, location_specific, lat_long_yn,
+        latitude_dd, longitude_dd, elevation_yn, altitude_min_m, altitude_max_m, altitude_mean_m,
+        observation_month_begin, observation_month_end, observation_year_begin, observation_year_end,
+        }, 
+        setStudyInfoState] = useState(initialState);
+
+    const [habitat_type, setHabitatType] = useState('');
 
     const setStudyInfoInputState = (e:any) => {
         const { name, value } = e.target;
@@ -55,16 +74,29 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
             title: title,
             journal: journal,
             year: year,
-            lastnameAuthor: lastnameAuthor,
+            lastname_author: lastname_author,
             species: species,
             subspecies: subspecies,
-            newSpecies: newSpecies,
+            new_species: new_species,
             taxonomy: taxonomy,
             country: country,
-            stateOrProvince: stateOrProvince,
-            region: region,
-            locationOther: locationOther,
-            location: location,        }
+            state_province: state_province,
+            location_region: location_region,
+            location_other: location_other,
+            location_specific: location_specific, 
+            lat_long_yn: lat_long_yn,
+            latitude_dd: latitude_dd,
+            longitude_dd: longitude_dd, 
+            elevation_yn: elevation_yn,
+            altitude_min_m: altitude_min_m,
+            altitude_max_m: altitude_max_m,
+            altitude_mean_m: altitude_mean_m,   
+            habitat_type: habitat_type,   
+            observation_month_begin: observation_month_begin,
+            observation_month_end: observation_month_end,
+            observation_year_begin: observation_year_begin,
+            observation_year_end: observation_year_end,
+        }
     }
 
     const styles = {
@@ -137,6 +169,9 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
         inputBox4Sections: {
             width: '230px'
         },
+        inputBox3Sections: {
+            width: '300px'
+        },
         inputBox2Sections: {
             width: '473px'
         },
@@ -150,8 +185,14 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
             display: 'flex',
             justifyContent: 'space-between',
         },
+        noMargin: {
+            margin: '0px',
+        },
         noMarginBottom: {
             marginBottom: '0px',
+        },
+        noMarginTop: {
+            marginTop: '0px',
         },
         reviewInfoContainer: {
             marginTop: '3rem',
@@ -180,6 +221,21 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
         },
         checkmark: {
             paddingTop: '2rem'
+        },
+        selectBox: {
+            borderColor: '#dbdbdb',
+        },
+        radioButtonSpacing: {
+            paddingRight: '8rem',
+        },
+        radioButtonTextSpacing: {
+            paddingLeft: '.25rem',
+        },
+        displayNone: {
+            display: 'none',
+        },
+        checkboxSpacing: {
+            paddingRight: '8rem'
         }
     
       };
@@ -200,6 +256,39 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
         document.getElementById('page' + currentPage).style.display = 'none';
         document.getElementById('page' + targetPage).style.display = 'block';
     }
+
+    function setHabitatStates(length: number) {
+        let i;
+        let habitats;
+        for(i = 1; i <= length; i++) {
+            let element = document.getElementById('habitat' + i) as HTMLInputElement;
+            console.log(element)
+            if (element.checked === true) {
+                habitats = habitats + ' ' + document.getElementById('habitat' + i).nodeValue
+            }
+            //document.getElementById('habitat' + i).ariaChecked === 'true' ? habitats = habitats + ' ' + document.getElementById('habitat' + i).nodeValue : null
+        }
+
+        setHabitatType(habitats)
+        console.log(habitats)
+        console.log(habitat_type)
+    }
+
+    function setObservationSeason(id: string) {
+        let element = document.getElementById(id) as HTMLInputElement;
+        
+        //element.checked === true 
+    }
+
+    function display(id: string, displayType?: string) {
+        displayType.length > 1 ? 
+        document.getElementById(id).style.display = displayType :
+        document.getElementById(id).style.display = 'block';
+    }
+
+    function remove(id: string) {
+        document.getElementById(id).style.display = 'none';
+    }
     
     function submitForm(targetPage: string) {
         document.getElementById('page' + targetPage).style.display = 'block';
@@ -208,19 +297,12 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
         console.log(formData.studyInfo.subspecies)
 
         props.addData({ 
-            variables: { common_name: "common_name_to_be_implemented", source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastnameAuthor,
+            variables: { common_name: "common_name_to_be_implemented", source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastname_author,
             subspecies:formData.studyInfo.subspecies, taxonomy: formData.studyInfo.taxonomy,
-            location_region: formData.studyInfo.region, location_specific: formData.studyInfo.location, 
+            location_region: formData.studyInfo.location_region, location_specific: formData.studyInfo.location_specific, 
             prey_kingdom: "prey_kingdom_to_be_implemented", diet_type: "diet_type_to_be_implemented" } 
         });
     }
-
-    //const [studyInfoFormData, setStudyInfoFormData] = useState({doi:"", title:""});
-
-    // let handleStudyInfoFormData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     setStudyInfoFormData({...studyInfoFormData, [e.target.name]: e.target.value})
-    // }
-
 
     return (
             <div className="container">
@@ -260,7 +342,7 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                                 <div className="field">
                                     <label className="label" style={styles.questionTextSize}>Last Name of First Author</label>
                                     <div className="control" style={styles.inputBoxSpacing}>
-                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox4Sections}} type="text" placeholder="Enter Last Name" value={lastnameAuthor} name="lastnameAuthor" onChange={setStudyInfoInputState}/>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox4Sections}} type="text" placeholder="Enter Last Name" value={lastname_author} name="lastnameAuthor" onChange={setStudyInfoInputState}/>
                                     </div>
                                 </div>
                             </div>
@@ -284,8 +366,7 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                             <p id="required" style={{...styles.questionTextSize}}>2. What bird species are you entering diet data for? <span style={styles.green}>*</span></p>
                             <div style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom}}>
                                 <div className="field" style={styles.noMarginBottom}>
-                                    {/* <label className="label" style={styles.questionTextSize}>Check your species against our database!</label> */}
-                                    <label className="label" style={styles.questionTextSize}>Enter existing species</label>
+                                    <label className="label" style={styles.questionTextSize}>Check your species against our database!</label>
                                     <div className="control" style={styles.inputBoxSpacing}>
                                         <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Species" value={species} name="species" onChange={setStudyInfoInputState}/>
                                     </div>
@@ -302,13 +383,17 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                                 <div className="field" style={styles.noMarginBottom}>
                                     <label className="label" style={styles.questionTextSize}>Enter Species</label>
                                     <div className="control" style={styles.inputBoxSpacing}>
-                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Species" value={newSpecies} name="newSpecies" onChange={setStudyInfoInputState}/>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Species" value={new_species} name="newSpecies" onChange={setStudyInfoInputState}/>
                                     </div>
                                 </div>
-                                <div className="field" style={styles.noMarginBottom}>
+                                <div className="field" style={{...styles.noMarginBottom}}>
                                     <label className="label" style={styles.questionTextSize}>Taxonomy</label>
-                                    <div className="control" style={styles.inputBoxSpacing}>
-                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Taxonomy" value={taxonomy} name="taxonomy" onChange={setStudyInfoInputState}/>
+                                    <div className="select is-success" style={{...styles.inputBoxSpacing, ...styles.noMargin}}>
+                                        <select style={{...styles.inputBox, ...styles.inputBox2Sections, ...styles.selectBox}} value={taxonomy} name="taxonomy" onChange={setStudyInfoInputState}>
+                                            <option>Select Taxonomy</option>
+                                            <option>taxonomy1</option>
+                                            <option>taxonomy2</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -319,14 +404,19 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                             <div style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom}}>
                                 <div className="field" style={styles.noMarginBottom}>
                                     <label className="label" style={styles.questionTextSize}>Country</label>
-                                    <div className="control" style={styles.inputBoxSpacing}>
-                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Country" value={country} name="country" onChange={setStudyInfoInputState}/>
+                                    <div className="select is-success" style={{...styles.inputBoxSpacing, ...styles.noMargin}}>
+                                        <select style={{...styles.inputBox, ...styles.inputBox2Sections, ...styles.selectBox}} value={country} name="country" onChange={setStudyInfoInputState}>
+                                            <option>Select Country</option>
+                                            <option>United States</option>
+                                            <option>Canada</option>
+                                            <option>Mexico</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="field" style={styles.noMarginBottom}>
                                     <label className="label" style={styles.questionTextSize}>Specify State/Province</label>
                                     <div className="control" style={styles.inputBoxSpacing}>
-                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Specify Area" value={stateOrProvince} name="stateOrProvince" onChange={setStudyInfoInputState}/>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Specify Area" value={state_province} name="stateOrProvince" onChange={setStudyInfoInputState}/>
                                     </div>
                                 </div>
                             </div>
@@ -334,14 +424,19 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                             <div style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom}}>
                                 <div className="field" style={styles.noMarginBottom}>
                                     <label className="label" style={styles.questionTextSize}>Region</label>
-                                    <div className="control" style={styles.inputBoxSpacing}>
-                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Region" value={region} name="region" onChange={setStudyInfoInputState}/>
+                                    <div className="select is-success" style={{...styles.inputBoxSpacing, ...styles.noMargin}}>
+                                        <select style={{...styles.inputBox, ...styles.inputBox2Sections, ...styles.selectBox}} value={location_region} name="location_region" onChange={setStudyInfoInputState}>
+                                            <option>Select Region</option>
+                                            <option>Midwest</option>
+                                            <option>Southeast</option>
+                                            <option>Northeast</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="field" style={styles.noMarginBottom}>
                                     <label className="label" style={styles.questionTextSize}>Other</label>
                                     <div className="control" style={styles.inputBoxSpacing}>
-                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Specify Area" value={locationOther} name="locationOther" onChange={setStudyInfoInputState}/>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Specify Area" value={location_other} name="locationOther" onChange={setStudyInfoInputState}/>
                                     </div>
                                 </div>
                             </div>
@@ -349,8 +444,139 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                         <div id="question4">
                             <p id="required" style={{...styles.questionTextSize}}>4. What was the specific location name? <span style={styles.green}>*</span></p>
                             <div className="control" style={styles.inputBoxSpacing}>
-                                <input className="input" style={styles.inputBox} type="text" placeholder="Enter Location" value={location} name="location" onChange={setStudyInfoInputState}/>
+                                <input className="input" style={styles.inputBox} type="text" placeholder="Enter Location" value={location_specific} name="location" onChange={setStudyInfoInputState}/>
                             </div>
+                        </div>
+                        <div id="question5">
+                            <p id="required" style={{...styles.questionTextSize}}>5. Are lat-long coordinates provided for the study location? <span style={styles.green}>*</span></p>
+                            <div className="control">
+                                <label className="radio" style={styles.radioButtonSpacing}>
+                                    <input type="radio" value="yes" name="lat_long_yn" onChange={setStudyInfoInputState} onClick={() => display('lat-long-question', 'flex')}/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Yes</span>
+                                </label>
+                                <label className="radio">
+                                    <input type="radio" value="no" name="lat_long_yn" onChange={setStudyInfoInputState} onClick={() => remove('lat-long-question')}/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>No</span>
+                                </label>
+                            </div>
+                            <div id="lat-long-question" style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom, ...styles.displayNone}}>
+                                    <div className="field" style={styles.noMarginBottom}>
+                                        <div className="control" style={styles.inputBoxSpacing}>
+                                            <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Latitude (in decimal degrees)" value={latitude_dd} name="latitude_dd" onChange={setStudyInfoInputState}/>
+                                        </div>
+                                    </div>
+                                    <div className="field" style={styles.noMarginBottom}>
+                                        <div className="control" style={styles.inputBoxSpacing}>
+                                            <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Longitutde (in decimal degrees)" value={longitude_dd} name="longitude_dd" onChange={setStudyInfoInputState}/>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div id="question6">
+                            <p id="required" style={{...styles.questionTextSize}}>6. Is elevational information provided for this study? <span style={styles.green}>*</span></p>
+                            <div className="control">
+                                <label className="radio" style={styles.radioButtonSpacing}>
+                                    <input type="radio" value="yes" name="elevation_yn" onChange={setStudyInfoInputState} onClick={() => display('elevation-question', 'flex')}/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Yes</span>
+                                </label>
+                                <label className="radio">
+                                    <input type="radio" value="no" name="elevation_yn" onChange={setStudyInfoInputState} onClick={() => remove('elevation-question')}/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>No</span>
+                                </label>
+                            </div>
+                            <div id="elevation-question" style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom, ...styles.displayNone}}>
+                                    <div className="field" style={styles.noMarginBottom}>
+                                        <div className="control" style={styles.inputBoxSpacing}>
+                                            <input className="input" style={{...styles.inputBox, ...styles.inputBox3Sections}} type="text" placeholder="Enter Minimum Elevation" value={altitude_min_m} name="altitude_min_m" onChange={setStudyInfoInputState}/>
+                                        </div>
+                                    </div>
+                                    <div className="field" style={styles.noMarginBottom}>
+                                        <div className="control" style={styles.inputBoxSpacing}>
+                                            <input className="input" style={{...styles.inputBox, ...styles.inputBox3Sections}} type="text" placeholder="Enter Maximum Elevation" value={altitude_max_m} name="altitude_max_m" onChange={setStudyInfoInputState}/>
+                                        </div>
+                                    </div>
+                                    <div className="field" style={styles.noMarginBottom}>
+                                        <div className="control" style={styles.inputBoxSpacing}>
+                                            <input className="input" style={{...styles.inputBox, ...styles.inputBox3Sections}} type="text" placeholder="Enter Mean Elevation" value={altitude_mean_m} name="altitude_mean_m" onChange={setStudyInfoInputState}/>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div id="question7">
+                            <p id="required" style={{...styles.questionTextSize}}>7. In what type of habitat was the study conducted? <span style={styles.green}>*</span></p>
+                            <label className="checkbox" style={styles.checkboxSpacing}>
+                                <input value="Habitat 1" type="checkbox"/>
+                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 1</span>
+                            </label>
+                            <label className="checkbox" style={styles.checkboxSpacing}>
+                                <input value="Habitat 2" type="checkbox"/>
+                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 2</span>
+                            </label>
+                            <label className="checkbox" style={styles.checkboxSpacing}>
+                                <input value="Habitat 3" type="checkbox"/>
+                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 3</span>
+                            </label>
+                            <label className="checkbox" style={styles.checkboxSpacing}>
+                                <input id="habitat4" value="Habitat 4" type="checkbox"/>
+                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 4</span>
+                            </label>
+                            <label className="checkbox">
+                                <input id="habitat5" value="Habitat 5" type="checkbox"/>
+                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 5</span>
+                            </label>
+                            {/* {setHabitatStates(4)} */}
+                        </div>
+                        <div id="question8">
+                            <p id="required" style={{...styles.questionTextSize}}>8. When was the diet data for this species in this study collected? <span style={styles.green}>*</span></p>
+                            <div style={styles.inputBoxMultipleSectionContainer}>
+                                <div className="field" style={styles.noMarginBottom}>
+                                    <label className="label" style={styles.questionTextSize}>Month (Beginning of Study)</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox4Sections}} type="text" placeholder="Enter Month" value={observation_month_begin} name="observation_month_begin" onChange={setStudyInfoInputState}/>
+                                    </div>
+                                </div>
+                                <div className="field" style={styles.noMarginBottom}>
+                                    <label className="label" style={styles.questionTextSize}>Year (Beginning of Study)</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox4Sections}} type="text" placeholder="Enter Year" value={observation_year_begin} name="observation_year_begin" onChange={setStudyInfoInputState} />
+                                    </div>
+                                </div>
+                                <div className="field" style={styles.noMarginBottom}>
+                                    <label className="label" style={styles.questionTextSize}>Month (End of Study)</label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox4Sections}} type="text" placeholder="Enter Month" value={observation_month_end} name="observation_month_end" onChange={setStudyInfoInputState}/>
+                                    </div>
+                                </div>
+                                <div id="required" className="field" style={styles.noMarginBottom}>
+                                    <label className="label" style={styles.questionTextSize}>Year (End of Study) <span style={styles.green}>*</span></label>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox4Sections}} type="text" placeholder="Enter Year" value={observation_year_end} name="observation_year_end" onChange={setStudyInfoInputState}/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="question9">
+                            <p id="required" style={{...styles.questionTextSize}}>9. What time of year were data collected relative to the avian life cycle in that location? <span style={styles.green}>*</span></p>
+                            <label className="checkbox" style={styles.checkboxSpacing}>
+                                <input id="breeding-season" value="breeding-season" type="checkbox"/>
+                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Breeding Season</span>
+                            </label>
+                            <label className="checkbox" style={styles.checkboxSpacing}>
+                                <input id="non-breeding-season" value="non-breeding-season" type="checkbox"/>
+                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Non-Breeding Season</span>
+                            </label>
+                            <label className="checkbox" style={styles.checkboxSpacing}>
+                                <input id="pre-breeding-migration" value="pre-breeding-migration" type="checkbox"/>
+                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Pre-Breeding Migration</span>
+                            </label>
+                            <label className="checkbox" style={styles.checkboxSpacing}>
+                                <input id="post-breeding-migration" value="post-breeding-migration" type="checkbox"/>
+                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Post-Breeding Migration</span>
+                            </label>
+                            <label className="checkbox">
+                                <input id="unspecified" value="unspecified" type="checkbox"/>
+                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Unspecified</span>
+                            </label>
                         </div>
                     </div>
                     <div style={styles.doubleButton}>
@@ -382,13 +608,18 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                         </div>
                         <div>
                             <p id="required" style={{...styles.questionTextSize}}>1. Do you have a study with <strong>quantitative</strong> data on avian diet? <span style={styles.green}>*</span></p>
-                            <p>{doi === '' ? 'Title: ' + title +'; Journal: ' + journal + '; Year: ' + year + '; Last Name of First Author: ' + lastnameAuthor : 'DOI: ' + doi}</p>
+                            <p>{doi === '' ? 'Title: ' + title +'; Journal: ' + journal + '; Year: ' + year + '; Last Name of First Author: ' + lastname_author : 'DOI: ' + doi}</p>
                             <p id="required" style={{...styles.questionTextSize}}>2. What bird species are you entering diet data for? <span style={styles.green}>*</span></p>
-                            <p>{species === '' ? 'Species: ' + newSpecies + '; Taxonomy: ' + taxonomy : 'Species: ' + species + '; Subspecies: ' + subspecies}</p>
+                            <p>{species === '' ? 'Species: ' + new_species + '; Taxonomy: ' + taxonomy : 'Species: ' + species + '; Subspecies: ' + subspecies}</p>
                             <p id="required" style={{...styles.questionTextSize}}>3. Was the data collected from within a single state, province, or country? <span style={styles.green}>*</span></p>
-                            <p>{country === '' ? 'Region: ' + region + '; Other: ' + locationOther : 'Country: ' + country + '; State/Province: ' + stateOrProvince}</p>
+                            <p>{country === '' ? 'Region: ' + location_region + '; Other: ' + location_other : 'Country: ' + country + '; State/Province: ' + state_province}</p>
                             <p id="required" style={{...styles.questionTextSize}}>4. What was the specific location name? <span style={styles.green}>*</span></p>
-                            <p>{'Location name: ' + location}</p>
+                            <p>{'Location name: ' + location_specific}</p>
+                            <p id="required" style={{...styles.questionTextSize}}>5. Are lat-long coordinates provided for the study location? <span style={styles.green}>*</span></p>
+                            <p>{lat_long_yn === 'no' ? 'No lat-long coordinates provided' : 'Latitude: ' + latitude_dd + '; Longitude: ' + longitude_dd}</p>
+                            <p id="required" style={{...styles.questionTextSize}}>6. Is elevational information provided for this study? <span style={styles.green}>*</span></p>
+                            <p>{elevation_yn === 'no' ? 'No elevational information provided' : 'Minimum Elevation: ' + altitude_min_m + '; Maximum Elevation: ' + altitude_max_m + '; Mean Elevation: ' + altitude_mean_m}</p>
+                            <p id="required" style={{...styles.questionTextSize}}>7. In what type of habitat was the study conducted? <span style={styles.green}>*</span></p>
                         </div>
                     </div>
                     <hr style={styles.backgroundGreen}/>
