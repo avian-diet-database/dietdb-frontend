@@ -3,6 +3,7 @@ import { autoType } from "d3-dsv";
 import internal from "events";
 import React, { useState } from "react";
 import { DesignGreenButton } from "../design/DesignGreenButton";
+import { DesignDots } from "../design/DesignDots";
 
 interface DesignSubmitDataProps {
     addData:(options?: MutationFunctionOptions<any, Record<string, any>>) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
@@ -36,13 +37,30 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
         observation_month_end: '',
         observation_year_begin: '',
         observation_year_end: '',
+        analysis_number: '',
+        study_type: '',
+        item_sample_size: '',
+        bird_sample_size: '',
+        sites: '',
+        sex_yn: '',
+        sex: '',
+        age_class: '',
+        study_location: '',
+        table_fig_number: '',
+        prey_common_name: '',
+        inclusive_prey_taxon: '',
+        fraction_diet: '',
+        all_prey_diet_yn: '',
+        notes: '',
     }
 
     const[{doi, title, journal, year, lastname_author, species, subspecies, new_species, taxonomy, 
         country, state_province, location_region, location_other, location_specific, lat_long_yn,
         latitude_dd, longitude_dd, elevation_yn, altitude_min_m, altitude_max_m, altitude_mean_m,
         observation_month_begin, observation_month_end, observation_year_begin, observation_year_end,
-        }, 
+        analysis_number, study_type, item_sample_size, bird_sample_size, sites, sex_yn, sex, age_class,
+        study_location, table_fig_number, prey_common_name, inclusive_prey_taxon, fraction_diet,
+        all_prey_diet_yn, notes, }, 
         setStudyInfoState] = useState(initialState);
 
     const [habitat_type, setHabitatType] = useState('');
@@ -96,6 +114,21 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
             observation_month_end: observation_month_end,
             observation_year_begin: observation_year_begin,
             observation_year_end: observation_year_end,
+            analysis_number: analysis_number,
+            study_type: study_type,
+            item_sample_size: item_sample_size,
+            bird_sample_size: bird_sample_size,
+            sites: sites,
+            sex_yn: sex_yn,
+            sex: sex,
+            age_class: age_class,
+            study_location: study_location,
+            table_fig_number: table_fig_number,
+            prey_common_name: prey_common_name,
+            inclusive_prey_taxon: inclusive_prey_taxon,
+            fraction_diet: fraction_diet,
+            all_prey_diet_yn: all_prey_diet_yn,
+            notes: notes, 
         }
     }
 
@@ -110,6 +143,12 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
             display: 'none',
         },
         formContainerPg4: {
+            display: 'none'
+        },
+        formContainerPg5: {
+            display: 'none',
+        },
+        formContainerPg6: {
             display: 'none',
             backgroundColor: 'white',
             width: '70%',
@@ -148,6 +187,9 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
         questionTextSize: {
             fontSize: '18px',
             fontWeight: 100
+        },
+        fullWidth: {
+            width: '100vw',
         },
         form: {
             paddingTop: '6rem',
@@ -236,7 +278,7 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
         },
         checkboxSpacing: {
             paddingRight: '8rem'
-        }
+        },
     
       };
     
@@ -281,7 +323,7 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
     }
 
     function display(id: string, displayType?: string) {
-        displayType.length > 1 ? 
+        displayType !== undefined ? 
         document.getElementById(id).style.display = displayType :
         document.getElementById(id).style.display = 'block';
     }
@@ -349,6 +391,10 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                         </div>
                     </div>
                     <div style={styles.singleButton} onClick={() => movePgToPg('1','2')}>
+                        <DesignDots
+                            page='1'
+                            marginRight='32%'
+                        />
                         <DesignGreenButton
                             buttonText={'Next'}
                             className={'next-pg-1'}
@@ -449,7 +495,7 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                         </div>
                         <div id="question5">
                             <p id="required" style={{...styles.questionTextSize}}>5. Are lat-long coordinates provided for the study location? <span style={styles.green}>*</span></p>
-                            <div className="control">
+                            <div className="control" style={styles.inputBoxSpacing}>
                                 <label className="radio" style={styles.radioButtonSpacing}>
                                     <input type="radio" value="yes" name="lat_long_yn" onChange={setStudyInfoInputState} onClick={() => display('lat-long-question', 'flex')}/>
                                     <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Yes</span>
@@ -474,7 +520,7 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                         </div>
                         <div id="question6">
                             <p id="required" style={{...styles.questionTextSize}}>6. Is elevational information provided for this study? <span style={styles.green}>*</span></p>
-                            <div className="control">
+                            <div className="control" style={styles.inputBoxSpacing}>
                                 <label className="radio" style={styles.radioButtonSpacing}>
                                     <input type="radio" value="yes" name="elevation_yn" onChange={setStudyInfoInputState} onClick={() => display('elevation-question', 'flex')}/>
                                     <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Yes</span>
@@ -504,27 +550,29 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                         </div>
                         <div id="question7">
                             <p id="required" style={{...styles.questionTextSize}}>7. In what type of habitat was the study conducted? <span style={styles.green}>*</span></p>
-                            <label className="checkbox" style={styles.checkboxSpacing}>
-                                <input value="Habitat 1" type="checkbox"/>
-                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 1</span>
-                            </label>
-                            <label className="checkbox" style={styles.checkboxSpacing}>
-                                <input value="Habitat 2" type="checkbox"/>
-                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 2</span>
-                            </label>
-                            <label className="checkbox" style={styles.checkboxSpacing}>
-                                <input value="Habitat 3" type="checkbox"/>
-                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 3</span>
-                            </label>
-                            <label className="checkbox" style={styles.checkboxSpacing}>
-                                <input id="habitat4" value="Habitat 4" type="checkbox"/>
-                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 4</span>
-                            </label>
-                            <label className="checkbox">
-                                <input id="habitat5" value="Habitat 5" type="checkbox"/>
-                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 5</span>
-                            </label>
-                            {/* {setHabitatStates(4)} */}
+                            <div className="control" style={styles.inputBoxSpacing}>
+                                <label className="checkbox" style={{...styles.checkboxSpacing}}>
+                                    <input value="Habitat 1" type="checkbox"/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 1</span>
+                                </label>
+                                <label className="checkbox" style={styles.checkboxSpacing}>
+                                    <input value="Habitat 2" type="checkbox"/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 2</span>
+                                </label>
+                                <label className="checkbox" style={styles.checkboxSpacing}>
+                                    <input value="Habitat 3" type="checkbox"/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 3</span>
+                                </label>
+                                <label className="checkbox" style={styles.checkboxSpacing}>
+                                    <input id="habitat4" value="Habitat 4" type="checkbox"/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 4</span>
+                                </label>
+                                <label className="checkbox">
+                                    <input id="habitat5" value="Habitat 5" type="checkbox"/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Habitat 5</span>
+                                </label>
+                                {/* {setHabitatStates(4)} */}
+                            </div>
                         </div>
                         <div id="question8">
                             <p id="required" style={{...styles.questionTextSize}}>8. When was the diet data for this species in this study collected? <span style={styles.green}>*</span></p>
@@ -557,26 +605,28 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                         </div>
                         <div id="question9">
                             <p id="required" style={{...styles.questionTextSize}}>9. What time of year were data collected relative to the avian life cycle in that location? <span style={styles.green}>*</span></p>
-                            <label className="checkbox" style={styles.checkboxSpacing}>
-                                <input id="breeding-season" value="breeding-season" type="checkbox"/>
-                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Breeding Season</span>
-                            </label>
-                            <label className="checkbox" style={styles.checkboxSpacing}>
-                                <input id="non-breeding-season" value="non-breeding-season" type="checkbox"/>
-                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Non-Breeding Season</span>
-                            </label>
-                            <label className="checkbox" style={styles.checkboxSpacing}>
-                                <input id="pre-breeding-migration" value="pre-breeding-migration" type="checkbox"/>
-                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Pre-Breeding Migration</span>
-                            </label>
-                            <label className="checkbox" style={styles.checkboxSpacing}>
-                                <input id="post-breeding-migration" value="post-breeding-migration" type="checkbox"/>
-                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Post-Breeding Migration</span>
-                            </label>
-                            <label className="checkbox">
-                                <input id="unspecified" value="unspecified" type="checkbox"/>
-                                <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Unspecified</span>
-                            </label>
+                            <div className="control" style={styles.inputBoxSpacing}>
+                                <label className="checkbox" style={styles.checkboxSpacing}>
+                                    <input id="breeding-season" value="breeding-season" type="checkbox"/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Breeding Season</span>
+                                </label>
+                                <label className="checkbox" style={styles.checkboxSpacing}>
+                                    <input id="non-breeding-season" value="non-breeding-season" type="checkbox"/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Non-Breeding Season</span>
+                                </label>
+                                <label className="checkbox" style={styles.checkboxSpacing}>
+                                    <input id="pre-breeding-migration" value="pre-breeding-migration" type="checkbox"/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Pre-Breeding Migration</span>
+                                </label>
+                                <label className="checkbox" style={styles.checkboxSpacing}>
+                                    <input id="post-breeding-migration" value="post-breeding-migration" type="checkbox"/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Post-Breeding Migration</span>
+                                </label>
+                                <label className="checkbox">
+                                    <input id="unspecified" value="unspecified" type="checkbox"/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Unspecified</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div style={styles.doubleButton}>
@@ -584,6 +634,11 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                             <DesignGreenButton
                                 buttonText={'Back'}
                                 className={'back-pg-2'}
+                            />
+                        </div>
+                        <div>
+                            <DesignDots
+                                page='2'
                             />
                         </div>
                         <div onClick={() => movePgToPg('2','3')}>
@@ -597,13 +652,241 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                 <div id="page3" style={styles.formContainerPg3}>
                     <div>
                         <p className="title is-size-1-" style={styles.alignTextCenter}>Submit Avian Data</p> 
+                        <p className="title is-size-3" style={{...styles.alignTextCenter, ...styles.studyInfoTitle}}>Analysis Information</p> 
+                        <p style={{...styles.requiredQuestion, ...styles.alignTextCenter}}>Questions marked with <span style={styles.green}>*</span> are required</p>
+                    </div>
+                    <div style={styles.form}>
+                        <div id="analysis-question1">
+                            <p id="required" style={{...styles.questionTextSize}}>1. How was the diet data quantified? <span style={styles.green}>*</span></p>
+                            <div className="field">
+                                    <div className="select is-success" style={{...styles.inputBoxSpacing}}>
+                                        <select style={{...styles.inputBox, ...styles.selectBox, ...styles.fullWidth}} value={analysis_number} name="analysis_number" onChange={setStudyInfoInputState}>
+                                            <option>Select Quantification</option>
+                                            <option>quantification1</option>
+                                            <option>quantification2</option>
+                                        </select>
+                                    </div>
+                            </div>
+                        </div>
+                        <div id="analysis-question2">
+                            <p id="required" style={{...styles.questionTextSize}}>2. How was the diet data collected? <span style={styles.green}>*</span></p>
+                            <div className="field">
+                                    <div className="select is-success" style={{...styles.inputBoxSpacing}}>
+                                        <select style={{...styles.inputBox, ...styles.selectBox, ...styles.fullWidth}} value={study_type} name="study_type" onChange={setStudyInfoInputState}>
+                                            <option>Select Method</option>
+                                            <option>method1</option>
+                                            <option>method2</option>
+                                        </select>
+                                    </div>
+                            </div>
+                        </div>
+                        <div style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom}}>
+                            <div id="analysis-question3">
+                                <p style={{...styles.questionTextSize}}>3. What is the total number of diet items this analysis is based on? Leave blank if unknown.</p>
+                                <div className="control" style={{...styles.inputBoxSpacing, ...styles.inputBoxSpacing}}>
+                                    <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Value" value={item_sample_size} name="item_sample_size" onChange={setStudyInfoInputState}/>
+                                </div>
+                            </div>
+                            <div id="analysis-question4">
+                                <p style={{...styles.questionTextSize}}>4. How many individual birds is this analysis based on? Leave blank if unknown.</p>
+                                <div className="control" style={styles.inputBoxSpacing}>
+                                    <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Value" value={bird_sample_size} name="bird_sample_size" onChange={setStudyInfoInputState}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="analysis-question5">
+                            <p style={{...styles.questionTextSize}}>5. How many distinct sites or localities are represented in this analysis? Leave blank if unknown</p>
+                            <div className="control" style={styles.inputBoxSpacing}>
+                                <input className="input" style={styles.inputBox} type="text" placeholder="Enter Value" value={sites} name="sites" onChange={setStudyInfoInputState}/>
+                            </div>
+                        </div>
+                        <div id="analysis-question6">
+                            <p style={{...styles.questionTextSize}}>6. Does this analysis refer to a particular sex?</p>
+                            <div className="control" style={styles.inputBoxSpacing}>
+                                <label className="radio" style={styles.radioButtonSpacing}>
+                                    <input type="radio" value="yes" name="sex_yn" onChange={setStudyInfoInputState} onClick={() => display('sex-question')}/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Yes</span>
+                                </label>
+                                <label className="radio">
+                                    <input type="radio" value="no" name="sex_yn" onChange={setStudyInfoInputState} onClick={() => remove('sex-question')}/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>No</span>
+                                </label>
+                            </div>
+                            <div id="sex-question" style={{...styles.noMarginBottom, ...styles.displayNone}}>
+                                <div className="field">
+                                        <div className="select is-success" style={{...styles.inputBoxSpacing}}>
+                                            <select style={{...styles.inputBox, ...styles.selectBox, ...styles.fullWidth}} value={sex} name="sex" onChange={setStudyInfoInputState}>
+                                                <option>Select Sex</option>
+                                                <option>Female</option>
+                                                <option>Male</option>
+                                            </select>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="analysis-question7">
+                            <p style={{...styles.questionTextSize}}>7. Does this analysis refer to a particular age class?</p>
+                            <div className="control" style={styles.inputBoxSpacing}>
+                                <label className="radio" style={styles.radioButtonSpacing}>
+                                    <input type="radio" value="yes" name="age_class_yn" onChange={setStudyInfoInputState} onClick={() => display('age-class-question')}/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Yes</span>
+                                </label>
+                                <label className="radio">
+                                    <input type="radio" value="no" name="age_class_yn" onChange={setStudyInfoInputState} onClick={() => remove('age-class-question')}/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>No</span>
+                                </label>
+                            </div>
+                            <div id="age-class-question" style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom, ...styles.displayNone}}>
+                                <div className="field">
+                                    <div className="select is-success" style={{...styles.inputBoxSpacing}}>
+                                        <select style={{...styles.inputBox, ...styles.selectBox, ...styles.fullWidth}} value={age_class} name="age_class" onChange={setStudyInfoInputState}>
+                                            <option>Select Age Class</option>
+                                            <option>age class 1</option>
+                                            <option>age class 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="analysis-question8">
+                            <p style={{...styles.questionTextSize}}>8. Please describe where in the published study you obtained the information for this diet analysis.</p>
+                            <div style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom}}>
+                                <div className="field">
+                                    <div className="select is-success" style={{...styles.inputBoxSpacing}}>
+                                        <select style={{...styles.inputBox, ...styles.selectBox, ...styles.inputBox2Sections}} value={study_location} name="study_location" onChange={setStudyInfoInputState}>
+                                            <option>Select Location</option>
+                                            <option>location1</option>
+                                            <option>location2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="field" style={styles.noMarginBottom}>
+                                    <div className="control" style={styles.inputBoxSpacing}>
+                                        <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Table or Figure Number" value={table_fig_number} name="table_fig_number" onChange={setStudyInfoInputState}/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style={styles.doubleButton}>
+                        <div onClick={() => movePgToPg('3','2')}>
+                            <DesignGreenButton
+                                buttonText={'Back'}
+                                className={'back-pg-3'}
+                            />
+                        </div>
+                        <div>
+                            <DesignDots
+                                page='3'
+                            />
+                        </div>
+                        <div onClick={() => movePgToPg('3','4')}>
+                            <DesignGreenButton
+                                buttonText={'Next'}
+                                className={'next-pg-3'}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div id="page4" style={styles.formContainerPg4}>
+                    <div>
+                        <p className="title is-size-1-" style={styles.alignTextCenter}>Submit Avian Data</p> 
+                        <p className="title is-size-3" style={{...styles.alignTextCenter, ...styles.studyInfoTitle}}>Diet Information</p> 
+                        <p style={{...styles.requiredQuestion, ...styles.alignTextCenter}}>Questions marked with <span style={styles.green}>*</span> are required</p>
+                    </div>
+                    <div style={styles.form}>
+                        <div id="diet-question1">
+                            <p id="required" style={{...styles.questionTextSize}}>1. Prey Name <span style={styles.green}>*</span></p>
+                            <div className="control" style={styles.inputBoxSpacing}>
+                                <input className="input" style={{...styles.inputBox}} type="text" placeholder="Search Prey Name" value={prey_common_name} name="prey_common_name" onChange={setStudyInfoInputState}/>
+                            </div>
+                            <p style={styles.questionTextSize}>Please clarify the taxonomic classification of this name.</p>
+                            <p style={styles.questionTextSize}>First, what is the taxonomic level of this name?</p>
+                            <div className="field">
+                                    <div className="select is-success" style={{...styles.inputBoxSpacing}}>
+                                        <select style={{...styles.inputBox, ...styles.selectBox, ...styles.fullWidth}} value={inclusive_prey_taxon} name="inclusive_prey_taxon" onChange={setStudyInfoInputState}>
+                                            <option>Select Taxonomic Level</option>
+                                            <option>Kingdom</option>
+                                            <option>Phylum</option>
+                                            <option>Class</option>
+                                            <option>Order</option>
+                                            <option>Suborder</option>
+                                            <option>Family</option>
+                                            <option>Genus</option>
+                                        </select>
+                                    </div>
+                            </div>
+                        </div>
+                        <div id="diet-question2">
+                            <p id="required" style={{...styles.questionTextSize}}>2. Percent of the diet?</p>
+                            <div className="control" style={styles.inputBoxSpacing}>
+                                <input className="input" style={{...styles.inputBox}} type="text" placeholder="Enter Value" value={fraction_diet} name="fraction_diet" onChange={setStudyInfoInputState}/>
+                            </div>
+                        </div>
+                        <div id="diet-question3">
+                            <p style={{...styles.questionTextSize}}>3. Does the value entered above reflect the % of the diet for all members of this prey name (inclusive), or only those members of the prey name that weren’t identified more finely (not inclusive)? Hover over info button for examples.</p>
+                            <div className="control" style={styles.inputBoxSpacing}>
+                                <label className="radio" style={styles.radioButtonSpacing}>
+                                    <input type="radio" value="yes" name="all_prey_diet_yn" onChange={setStudyInfoInputState}/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>Yes (inclusive)</span>
+                                </label>
+                                <label className="radio">
+                                    <input type="radio" value="no" name="all_prey_diet_yn" onChange={setStudyInfoInputState}/>
+                                    <span style={{...styles.radioButtonTextSpacing, ...styles.questionTextSize}}>No (not inclusive)</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div style={{...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom}}>
+                            <div id="diet-question4">
+                                <p style={{...styles.questionTextSize}}>4. Does this prey entry refer to a particular life stage?</p>
+                                <div className="control" style={{...styles.inputBoxSpacing, ...styles.inputBoxSpacing}}>
+                                    <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Value" value={item_sample_size} name="item_sample_size" onChange={setStudyInfoInputState}/>
+                                </div>
+                            </div>
+                            <div id="diet-question5">
+                                <p style={{...styles.questionTextSize}}>5. Does this prey entry refer to a particular prey part? <span style={styles.green}>*</span></p>
+                                <div className="control" style={styles.inputBoxSpacing}>
+                                    <input className="input" style={{...styles.inputBox, ...styles.inputBox2Sections}} type="text" placeholder="Enter Value" value={bird_sample_size} name="bird_sample_size" onChange={setStudyInfoInputState}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="diet-question6">
+                            <p style={{...styles.questionTextSize}}>6. If you have any miscellaneous notes about this prey item you may describe them here.</p>
+                            <div className="control" style={styles.inputBoxSpacing}>
+                                <input className="input" style={{...styles.inputBox}} type="text" placeholder="Enter Notes" value={notes} name="notes" onChange={setStudyInfoInputState}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div style={styles.doubleButton}>
+                        <div onClick={() => movePgToPg('4','3')}>
+                            <DesignGreenButton
+                                buttonText={'Back'}
+                                className={'back-pg-4'}
+                            />
+                        </div>
+                        <div>
+                            <DesignDots
+                                page='4'
+                            />
+                        </div>
+                        <div onClick={() => movePgToPg('4','5')}>
+                            <DesignGreenButton
+                                buttonText={'Next'}
+                                className={'next-pg-4'}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div id="page5" style={styles.formContainerPg5}>
+                    <div>
+                        <p className="title is-size-1-" style={styles.alignTextCenter}>Submit Avian Data</p> 
                         <p className="title is-size-3" style={{...styles.alignTextCenter, ...styles.studyInfoTitle}}>Review Information</p>
                     </div>
                     <div style={styles.reviewInfoContainer}>
                         <div style={styles.reviewInfoTitleContainer}>
                             <p className="title is-size-3" style={{...styles.alignTextCenter, ...styles.studyInfoTitle}}>Study-Related Information</p>
-                            <div onClick={() => movePgToPg('3', '1')}>
-                                <button className="button edit-study-info-pg-3" style={styles.editButton}>Edit</button>
+                            <div onClick={() => movePgToPg('5', '1')}>
+                                <button className="button edit-study-info-pg-5" style={styles.editButton}>Edit</button>
                             </div>
                         </div>
                         <div>
@@ -624,35 +907,39 @@ export const DesignSubmitData = (props:DesignSubmitDataProps) => {
                     </div>
                     <hr style={styles.backgroundGreen}/>
                     <div style={styles.doubleButton}>
-                        <div onClick={() => movePgToPg('3','2')}>
+                        <div onClick={() => movePgToPg('5','4')}>
                             <DesignGreenButton
                                 buttonText={'Back'}
-                                className={'back-pg-3'}
+                                className={'back-pg-5'}
                             />
                         </div>
-                        
+                        <div>
+                            <DesignDots
+                                page='5'
+                            />
+                        </div>
                         <div onClick={() => submitForm('4')}>
                             <DesignGreenButton
                                 buttonText={'Submit'}
-                                className={'submit-pg-3'}
+                                className={'submit-pg-5'}
                             />
                         </div>
                         
                     </div>
                 </div>
-                <div id="page4" style={styles.formContainerPg4}>
+                <div id="page6" style={styles.formContainerPg6}>
                     <div style={styles.checkmark}>[put checkmark here]</div>
                     <p style={styles.formSuccessTitle}>Form Successfully Submitted!</p>
-                    <div style={styles.popupButton} onClick={() => movePgToPg('4', '1', 'sameAnalysis')}>
+                    <div style={styles.popupButton} onClick={() => movePgToPg('6', '1', 'sameAnalysis')}>
                         <DesignGreenButton
                             buttonText={'Add another analysis'}
-                            className={'add-analysis-pg-4'}
+                            className={'add-analysis-pg-6'}
                         />
                     </div>
-                    <div style={styles.popupButton} onClick={() => movePgToPg('4', '1', 'reset')}>
+                    <div style={styles.popupButton} onClick={() => movePgToPg('6', '1', 'reset')}>
                         <DesignGreenButton
                             buttonText={'Done'}
-                            className={'done-pg-4'}
+                            className={'done-pg-6'}
                         />
                     </div>
                 </div>
