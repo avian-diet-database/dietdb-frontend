@@ -6,6 +6,8 @@ import { LogicSearchBar } from "./components/logic/LogicSearchBar";
 import { DesignHeader } from "./components/design/DesignHeader";
 import { LogicAbout } from "./components/logic/LogicAbout";
 import { LogicLogin } from "./components/logic/LogicLogin";
+import { LogicAdminDashboard } from "./components/logic/LogicAdminDashboard";
+import { LogicSubmitData } from "./components/logic/LogicSubmitData";
 import { ItemType, ActiveItemVar, ActiveItemTypeVar } from "./cache";
 import { useReactiveVar } from "@apollo/client";
 
@@ -82,6 +84,8 @@ function App() {
 
             {/* // Login page */}
             {activeItemType === ItemType.LOGIN ? <LogicLogin/> : null}
+            {activeItemType === ItemType.ADMIN ? <LogicAdminDashboard /> : null}
+            {activeItemType === ItemType.SUBMIT ? <LogicSubmitData /> : null}
           </div>
         </div>
       </section>

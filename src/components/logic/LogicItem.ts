@@ -25,6 +25,8 @@ export const LogicItem = () => {
   const skip = activeItem.length < 1;
   const { loading, error, data } = useQuery(query, { skip });
 
+
+
   const filterVals = isPred ? "getFilterValuesPred" : "getFilterValuesPrey";
   const numRecStud = isPred
     ? "getNumRecordsAndStudiesPred"
@@ -36,6 +38,7 @@ export const LogicItem = () => {
   let stages: string[] = [];
   let numRecords: number = 0;
   let numStudies: number = 0;
+
 
   if (data && data[filterVals]) {
     startYears = data[filterVals].startYears;
