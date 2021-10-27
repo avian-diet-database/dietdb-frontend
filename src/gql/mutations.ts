@@ -1,5 +1,17 @@
 import { gql, useMutation } from '@apollo/client';
 
+const CREATE_USER = gql `
+mutation createUser($full_name: String!,
+    $username: String!, $email: String!, $password: String!, 
+    $adminPassword: String!, $isVerified: String!, 
+    $isAdmin: String!) {
+        createUser(full_name: $full_name,
+            username: $username, email: $email, password: $password, 
+            adminPassword: $adminPassword, isVerified: $isVerified, 
+            isAdmin: $isAdmin)
+    }
+`;
+
 // using this one for now
 const CREATE_PENDING_DIET_SKELETON = gql`
 mutation createAlternativePendingDiet($common_name: String!,
@@ -150,5 +162,6 @@ mutation CreatePendingDiet(
 `;
 
 export {
-    CREATE_PENDING_DIET_SKELETON
+    CREATE_PENDING_DIET_SKELETON,
+    CREATE_USER
 }

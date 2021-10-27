@@ -1,4 +1,6 @@
+import { useMutation } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
+import { CREATE_USER } from '../../gql/mutations';
 import { LogicSignup } from "../logic/LogicSignup";
 
 interface DesignLoginProps {
@@ -23,6 +25,9 @@ const requiredFields = [
 
 export const DesignLogin = () =>  {
   const [isSignup, setIsSignup] = useState(false);
+  
+  // AddUser calls GQL mutation to submit a new sign up to the database
+  const [addUser, {loading, error, data}] = useMutation(CREATE_USER);
 
   return (
     !isSignup ?
@@ -33,7 +38,7 @@ export const DesignLogin = () =>  {
       <div className="formContainer" style={formContainerStyles}>
         <div className="container">
         {requiredFields.map((field) => (
-            <div className="field">
+            <div className="field" key={field+"-login-field"}>
               <label className="label">{field}</label>
               <div className="control">
                 <input
@@ -56,6 +61,7 @@ export const DesignLogin = () =>  {
       </div>
     </div> :
     <LogicSignup
-    setIsSignup={setIsSignup}/>
+      setIsSignup={setIsSignup}
+      addUser={addUser}/>
   );
 };
