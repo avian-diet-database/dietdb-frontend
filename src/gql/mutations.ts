@@ -3,12 +3,12 @@ import { gql, useMutation } from '@apollo/client';
 const CREATE_USER = gql `
 mutation createUser($full_name: String!,
     $username: String!, $email: String!, $password: String!, 
-    $adminPassword: String!, $isVerified: String!, 
-    $isAdmin: String!) {
+    $admin_password: String!, $is_verified: String!, 
+    $is_admin: String!) {
         createUser(full_name: $full_name,
             username: $username, email: $email, password: $password, 
-            adminPassword: $adminPassword, isVerified: $isVerified, 
-            isAdmin: $isAdmin)
+            admin_password: $admin_password, is_verified: $is_verified, 
+            is_admin: $is_admin)
     }
 `;
 
