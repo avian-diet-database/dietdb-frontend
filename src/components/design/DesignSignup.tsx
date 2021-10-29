@@ -34,7 +34,7 @@ function getFormLabels(field: string) {
       return "Password";
     case "confirm_password":
       return "Confirm Password";
-    case "adminPassword":
+    case "admin_password":
       return "Admin Password";
   }
 }
@@ -47,7 +47,7 @@ export const DesignSignup: React.FC<DesignSignupProps> = (props: DesignSignupPro
       email: "",
       password: "",
       confirm_password: "",
-      adminPassword: "",
+      admin_password: "",
     }
   );
 
@@ -63,7 +63,6 @@ export const DesignSignup: React.FC<DesignSignupProps> = (props: DesignSignupPro
   
   function submitSignup() {
       console.log("submitting");
-      console.log(signupState);
 
       if (!(signupState.password === signupState.confirm_password)) {
         setValidPasswords(false);
@@ -78,8 +77,8 @@ export const DesignSignup: React.FC<DesignSignupProps> = (props: DesignSignupPro
           username:signupState.username, 
           email: signupState.email,
           password: signupState.password,
-          adminPassword: signupState.adminPassword, isVerified: "false", 
-          isAdmin: resolveAdminPassword(signupState.adminPassword) } 
+          admin_password: signupState.admin_password, is_verified: "false", 
+          is_admin: resolveAdminPassword(signupState.admin_password) } 
       });
   }
 
@@ -97,7 +96,7 @@ export const DesignSignup: React.FC<DesignSignupProps> = (props: DesignSignupPro
         <div className="container">
           {Object.keys(signupState).map((field) => (
             <div className="field" key={field+"-signup-field"}>
-              {field === "adminPassword" ? <label className="label">{getFormLabels(field)}</label> 
+              {field === "admin_password" ? <label className="label">{getFormLabels(field)}</label> 
                 : <label className="label">{getFormLabels(field)}<span style={greenTextStyles}> *</span></label>}
               <div className="control">
                 <input

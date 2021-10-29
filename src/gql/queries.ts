@@ -401,6 +401,24 @@ query {
 }
 `; 
 
+const GET_USER_BY_LOGIN = gql`
+query(
+  $email: String!
+  $password: String
+) {
+  getFiltersPred(
+    email: $email
+    password: $password
+  ) {
+    full_name
+    username
+    email
+    is_verified
+    is_admin
+  }
+}
+`;
+
 export {
   GET_AUTOCOMPLETE_PRED,
   GET_AUTOCOMPLETE_PREY,
