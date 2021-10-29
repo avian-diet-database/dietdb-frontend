@@ -1,9 +1,9 @@
-import { FetchResult, MutationFunctionOptions } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
+import { CREATE_USER } from "../../gql/mutations";
 
 interface DesignSignupProps {
   setIsSignup: React.Dispatch<React.SetStateAction<boolean>>,
-  addUser:(options?: MutationFunctionOptions<any, Record<string, any>>) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
 }
 
 const formContainerStyles = {
@@ -40,6 +40,9 @@ function getFormLabels(field: string) {
 }
 
 export const DesignSignup: React.FC<DesignSignupProps> = (props: DesignSignupProps) => {
+  // AddUser calls GQL mutation to submit a new sign up to the database
+  const [addUser, {loading, error, data}] = useMutation(CREATE_USER);
+
   const[signupState, setSignupState] = useState(
     {
       full_name: "",
@@ -55,10 +58,7 @@ export const DesignSignup: React.FC<DesignSignupProps> = (props: DesignSignupPro
 
   const setSignupInputState = (e:any) => {
     const { name, value } = e.target;
-    console.log(name);
-    console.log(value);
     setSignupState(prevState => ({ ...prevState, [name]: value }));
-    console.log(signupState);
   }
   
   function submitSignup() {
@@ -71,7 +71,7 @@ export const DesignSignup: React.FC<DesignSignupProps> = (props: DesignSignupPro
         setValidPasswords(true);
       }
 
-      props.addUser({ 
+      addUser({ 
         variables: { 
           full_name: signupState.full_name,
           username:signupState.username, 
@@ -104,7 +104,7 @@ export const DesignSignup: React.FC<DesignSignupProps> = (props: DesignSignupPro
                   type="text"
                   placeholder={getFormLabels(field)}
                   name={field}
-                  onChange = {setSignupInputState}
+                  onChange={setSignupInputState}
                 ></input>
                 {field === "password" && !validPasswords ? <p style={redTextStyles}>Your passwords do not match. Please try again.</p> : null}
               </div>

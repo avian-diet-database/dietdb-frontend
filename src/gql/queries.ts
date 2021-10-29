@@ -404,9 +404,9 @@ query {
 const GET_USER_BY_LOGIN = gql`
 query(
   $email: String!
-  $password: String
+  $password: String!
 ) {
-  getFiltersPred(
+  getUserByLogin(
     email: $email
     password: $password
   ) {
@@ -435,5 +435,6 @@ export {
   RECORDS_PER_DECADE,
   RECORDS_PER_SEASON,
   RECORDS_PER_DIET_TYPE,
-  GET_USERS
+  GET_USERS,
+  GET_USER_BY_LOGIN
 };
