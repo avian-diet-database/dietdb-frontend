@@ -45,6 +45,13 @@ export const DesignLogin = (props: DesignLoginProps) =>  {
       email: "",
       password: "",
     },
+    // onCompleted: (): any => props.setUser({
+    //   full_name: data.getUserByLogin.full_name,
+    //   username: data.getUserByLogin.full_name,
+    //   email: data.getUserByLogin.full_name,
+    //   is_verified: data.getUserByLogin.full_name,
+    //   is_admin: data.getUserByLogin.full_name,
+    // })
   });
 
   function submitLogin() {
