@@ -4,7 +4,6 @@ import internal from "events";
 import React, { useState } from "react";
 import { DesignGreenButton } from "../design/DesignGreenButton";
 import { DesignDots } from "../design/DesignDots";
-import { isWhiteSpaceLike } from "typescript";
 
 interface DesignSubmitDataProps {
     addData: (options?: MutationFunctionOptions<any, Record<string, any>>) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
