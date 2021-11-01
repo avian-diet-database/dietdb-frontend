@@ -418,7 +418,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             <div className="field">
                                 <label className="label" style={styles.questionTextSize}>Last Name of First Author</label>
                                 <div className="control" style={styles.inputBoxSpacing}>
-                                    <input className="input" style={{ ...styles.inputBox, ...styles.inputBox4Sections }} type="text" placeholder="Enter Last Name" value={lastname_author} name="lastnameAuthor" onChange={setStudyInfoInputState} />
+                                    <input className="input" style={{ ...styles.inputBox, ...styles.inputBox4Sections }} type="text" placeholder="Enter Last Name" value={lastname_author} name="lastname_author" onChange={setStudyInfoInputState} />
                                 </div>
                             </div>
                         </div>
