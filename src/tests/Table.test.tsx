@@ -4,7 +4,7 @@ import {
   TableSort,
   TableActionType,
 } from "../components/logic/TableSorting";
-import { ItemType } from "../App";
+import { ItemType } from "../cache";
 import { renderHook, act } from "@testing-library/react-hooks";
 import { Prey } from "../types/Prey";
 import { Predator } from "../types/Predator";
