@@ -123,3 +123,7 @@ const createMap = (data: any[]) => {
 
   return DesignMap({ customFill: customConfig(), maxRecords: maxCount });
 };
+
+export {
+  numToColor, createMap
+}

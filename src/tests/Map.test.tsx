@@ -10,6 +10,6 @@ test("Number of Records to Color", () => {
 test("Creating a map from state data", () => {
   let input: any[] = [];
   let res = createMap(input);
-  let expected = DesignMap({customFill:{}});
+  let expected = DesignMap({customFill:{}, maxRecords:0});
   expect(res).toEqual(expected);
 });
