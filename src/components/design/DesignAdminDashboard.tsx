@@ -90,13 +90,8 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
   };
 
   function movePgToPg(currentPage: string, targetPage: string) {
-    if (document.getElementById("page" + currentPage) !== null && document.getElementById("page" + targetPage) !== null) {
       document.getElementById("page" + currentPage).style.display = "none";
       document.getElementById("page" + targetPage).style.display = "block";
-    } else {
-      console.log("null:" + "page"+currentPage);
-      console.log("null:" + "page"+targetPage);
-    }
   }
 
   return (
@@ -109,6 +104,7 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
         </div>
         <div>
           <div
+            data-testid="dashboard-button-3"
             style={{
               ...styles.backgroundGreen,
               ...styles.tableHeader,
@@ -168,9 +164,9 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
             <p>table stuff here</p>
           </div>
         </div>
-        <div style={styles.singleButton}>
+        <div id="dashboard-button-2" data-testid="dashboard-button-2" style={styles.singleButton} onClick={() => movePgToPg("2", "1")}>
           <DesignLargeGreenButton
-            onClick={() => movePgToPg("2", "1")}
+            // onClick={() => movePgToPg("2", "1")}
             buttonText={"Back to Dashboard"}
             className={"back-dashboard-button-pg-2"}
           />
@@ -193,9 +189,9 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
             <p>table stuff here</p>
           </div>
         </div>
-        <div id="dashboard-button" style={styles.singleButton}>
+        <div id="dashboard-button" data-testid="dashboard-button" style={styles.singleButton} onClick={() => movePgToPg("3", "1")}>
           <DesignLargeGreenButton
-            onClick={() => movePgToPg("3", "1")}
+            // onClick={() => movePgToPg("3", "1")}
             buttonText={"Back to Dashboard"}
             className={"back-dashboard-button-pg-3"}
           />

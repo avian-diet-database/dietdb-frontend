@@ -1,7 +1,6 @@
 import { DesignLargeGreenButton } from "../design/DesignLargeGreenButton";
 
 interface LogicLargeGreenButtonProps {
-    onClick: any;
     buttonText: string;
     className: string;
 }

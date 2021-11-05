@@ -3,6 +3,7 @@ import { LogicAdminDashboard } from "../components/logic/LogicAdminDashboard";
 import TestRenderer from 'react-test-renderer';
 import { DesignLargeGreenButton } from "../components/design/DesignLargeGreenButton";
 import React from "react";
+import { fireEvent, getByTestId, render } from "@testing-library/react";
 
 test("LogicAdminDashboard is calling DesignAdminDashboard", () => {
     let pendingData: {
@@ -40,8 +41,6 @@ test("LogicAdminDashboard is calling DesignAdminDashboard", () => {
     expect(res.toString()).toEqual(expected.toString());
   });
 
-  // DON'T KNOW HOW TO TEST ONCLICK. ALSO MOVEPGTOPG GIVES NULL ERROR
-  // WHICH IS WHY I ADDED !== NULL STATEMENT (LINE 93) IN DESIGNADMINDASHBOARD
   test("OnClick triggers movePgtoPg function", () => {
     let pendingData = [{      
       common_name: "common_name",
@@ -52,15 +51,12 @@ test("LogicAdminDashboard is calling DesignAdminDashboard", () => {
       location_specific: "location_specific",
       prey_kingdom: "prey_kingdom",
       diet_type: "diet_type"}];
-      
-    const fn = jest.fn();
-    let tree = TestRenderer.create(<DesignAdminDashboard pendingData={pendingData}></DesignAdminDashboard>);
-    const button = tree.root.findAllByType(DesignLargeGreenButton);
 
-    for(let i = 0; i < button.length; i++) {
-      console.log(button[i].props);
-      button[i].props.onClick();
-      // expect(fn.mock.calls.length).toBe(i+1);
-      expect(3).toEqual(3);
-    }
+      const {container} = render(<DesignAdminDashboard pendingData={pendingData}></DesignAdminDashboard>);
+      const button = getByTestId(container, 'dashboard-button');
+      const button2 = getByTestId(container, 'dashboard-button-2');
+      const button3 = getByTestId(container, 'dashboard-button-3');
+      fireEvent.click(button);
+      fireEvent.click(button2);
+      fireEvent.click(button3);
   });
