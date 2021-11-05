@@ -20,11 +20,12 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
     <nav className="navbar is-fixed-top is-info" id="home">
       <div className="navbar-brand">
         <div className="navbar-item">
-          <a onClick={() => {props.onHomeClick()}}>
+          <a data-testid="logo" onClick={() => {props.onHomeClick()}}>
             <img src="../eagle_fish_silhouette.png" alt="Bird"></img>
           </a>
         </div>
         <a
+          data-testid="navbar-burger"
           role="button"
           className="navbar-burger burger"
           data-target="navbarMenuHeroA"
