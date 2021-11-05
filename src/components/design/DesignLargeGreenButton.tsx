@@ -1,6 +1,7 @@
 import React from 'react';
 
 interface DesignLargeGreenButtonProps {
+  onClick: any;
   buttonText: string;
   className: string;
 }
@@ -16,7 +17,7 @@ const buttonStyle = {
 
 export const DesignLargeGreenButton = (props: DesignLargeGreenButtonProps) => {
   return (
-    <button className={"button " + props.className} style={buttonStyle}>
+    <button className={"button " + props.className} style={buttonStyle} onClick={props.onClick}>
       {props.buttonText}
     </ button>)
 }

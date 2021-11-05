@@ -90,8 +90,13 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
   };
 
   function movePgToPg(currentPage: string, targetPage: string) {
-    document.getElementById("page" + currentPage).style.display = "none";
-    document.getElementById("page" + targetPage).style.display = "block";
+    if (document.getElementById("page" + currentPage) !== null && document.getElementById("page" + targetPage) !== null) {
+      document.getElementById("page" + currentPage).style.display = "none";
+      document.getElementById("page" + targetPage).style.display = "block";
+    } else {
+      console.log("null:" + "page"+currentPage);
+      console.log("null:" + "page"+targetPage);
+    }
   }
 
   return (
@@ -119,8 +124,8 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
             <div>
               {props.pendingData === undefined
                 ? "No pending data to display"
-                : props.pendingData.map((data) => (
-                    <div>
+                : props.pendingData.map((data, index) => (
+                    <div key={"data-"+index}>
                       <p>ID: column to be added to db</p>
                       <p>DOI: column to be added to db</p>
                       <p>Source: {data.source}</p>
@@ -163,8 +168,9 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
             <p>table stuff here</p>
           </div>
         </div>
-        <div style={styles.singleButton} onClick={() => movePgToPg("2", "1")}>
+        <div style={styles.singleButton}>
           <DesignLargeGreenButton
+            onClick={() => movePgToPg("2", "1")}
             buttonText={"Back to Dashboard"}
             className={"back-dashboard-button-pg-2"}
           />
@@ -187,8 +193,9 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
             <p>table stuff here</p>
           </div>
         </div>
-        <div style={styles.singleButton} onClick={() => movePgToPg("3", "1")}>
+        <div id="dashboard-button" style={styles.singleButton}>
           <DesignLargeGreenButton
+            onClick={() => movePgToPg("3", "1")}
             buttonText={"Back to Dashboard"}
             className={"back-dashboard-button-pg-3"}
           />
