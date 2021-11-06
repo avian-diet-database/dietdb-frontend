@@ -1,6 +1,4 @@
 import { FetchResult, MutationFunctionOptions } from "@apollo/client";
-import { autoType } from "d3-dsv";
-import internal from "events";
 import React, { useState } from "react";
 import { DesignGreenButton } from "../design/DesignGreenButton";
 import { DesignDots } from "../design/DesignDots";
@@ -329,32 +327,32 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         document.getElementById('page' + targetPage).style.display = 'block';
     }
 
-    function setHabitatStates(length: number) {
-        let i;
-        let habitats;
-        for (i = 1; i <= length; i++) {
-            let element = document.getElementById('habitat' + i) as HTMLInputElement;
-            console.log(element)
-            if (element.checked === true) {
-                habitats = habitats + ' ' + document.getElementById('habitat' + i).nodeValue
-            }
-            //document.getElementById('habitat' + i).ariaChecked === 'true' ? habitats = habitats + ' ' + document.getElementById('habitat' + i).nodeValue : null
-        }
+    // function setHabitatStates(length: number) {
+    //     let i;
+    //     let habitats;
+    //     for (i = 1; i <= length; i++) {
+    //         let element = document.getElementById('habitat' + i) as HTMLInputElement;
+    //         console.log(element)
+    //         if (element.checked === true) {
+    //             habitats = habitats + ' ' + document.getElementById('habitat' + i).nodeValue
+    //         }
+    //         //document.getElementById('habitat' + i).ariaChecked === 'true' ? habitats = habitats + ' ' + document.getElementById('habitat' + i).nodeValue : null
+    //     }
 
-        setHabitatType(habitats)
-        console.log(habitats)
-        console.log(habitat_type)
-    }
+    //     setHabitatType(habitats)
+    //     console.log(habitats)
+    //     console.log(habitat_type)
+    // }
 
-    function addPreyEntry() {
+    // function addPreyEntry() {
 
-    }
+    // }
 
-    function setObservationSeason(id: string) {
-        let element = document.getElementById(id) as HTMLInputElement;
+    // function setObservationSeason(id: string) {
+    //     let element = document.getElementById(id) as HTMLInputElement;
 
-        //element.checked === true 
-    }
+    //     //element.checked === true 
+    // }
 
     function display(id: string, displayType?: string) {
         displayType !== undefined ?
@@ -368,7 +366,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
     function submitForm(targetPage: string) {
         document.getElementById('page' + targetPage).style.display = 'block';
-        console.log(formData);
+        // console.log(formData);
 
         props.addData({
             variables: {
@@ -424,7 +422,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         </div>
                     </div>
                 </div>
-                <div style={styles.singleButton} onClick={() => movePgToPg('1', '2')}>
+                <div id="submit-move-button-1" data-testid="submit-move-button-1"style={styles.singleButton} onClick={() => movePgToPg('1', '2')}>
                     <DesignDots
                         page='1'
                         marginRight='32%'
@@ -531,11 +529,11 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p id="required" style={{ ...styles.questionTextSize }}>5. Are lat-long coordinates provided for the study location? <span style={styles.green}>*</span></p>
                         <div className="control" style={styles.inputBoxSpacing}>
                             <label className="radio" style={styles.radioButtonSpacing}>
-                                <input type="radio" value="yes" name="lat_long_yn" onChange={setStudyInfoInputState} onClick={() => display('lat-long-question', 'flex')} />
+                                <input data-testid="display-3" type="radio" value="yes" name="lat_long_yn" onChange={setStudyInfoInputState} onClick={() => display('lat-long-question', 'flex')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Yes</span>
                             </label>
                             <label className="radio">
-                                <input type="radio" value="no" name="lat_long_yn" onChange={setStudyInfoInputState} onClick={() => remove('lat-long-question')} />
+                                <input data-testid="remove-3" type="radio" value="no" name="lat_long_yn" onChange={setStudyInfoInputState} onClick={() => remove('lat-long-question')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>No</span>
                             </label>
                         </div>
@@ -556,11 +554,11 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p id="required" style={{ ...styles.questionTextSize }}>6. Is elevational information provided for this study? <span style={styles.green}>*</span></p>
                         <div className="control" style={styles.inputBoxSpacing}>
                             <label className="radio" style={styles.radioButtonSpacing}>
-                                <input type="radio" value="yes" name="elevation_yn" onChange={setStudyInfoInputState} onClick={() => display('elevation-question', 'flex')} />
+                                <input data-testid="display-4" type="radio" value="yes" name="elevation_yn" onChange={setStudyInfoInputState} onClick={() => display('elevation-question', 'flex')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Yes</span>
                             </label>
                             <label className="radio">
-                                <input type="radio" value="no" name="elevation_yn" onChange={setStudyInfoInputState} onClick={() => remove('elevation-question')} />
+                                <input data-testid="remove-4" type="radio" value="no" name="elevation_yn" onChange={setStudyInfoInputState} onClick={() => remove('elevation-question')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>No</span>
                             </label>
                         </div>
@@ -664,18 +662,18 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     </div>
                 </div>
                 <div style={styles.doubleButton}>
-                    <div onClick={() => movePgToPg('2', '1')}>
+                    <div id="submit-move-button-2" data-testid="submit-move-button-2" onClick={() => movePgToPg('2', '1')}>
                         <DesignGreenButton
                             buttonText={'Back'}
                             className={'back-pg-2'}
                         />
                     </div>
-                    <div>
+                    <div id="dot-1" data-testid="dot-1">
                         <DesignDots
                             page='2'
                         />
                     </div>
-                    <div onClick={() => movePgToPg('2', '3')}>
+                    <div id="submit-move-button-3" data-testid="submit-move-button-3" onClick={() => movePgToPg('2', '3')}>
                         <DesignGreenButton
                             buttonText={'Next'}
                             className={'next-pg-2'}
@@ -738,11 +736,11 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p style={{ ...styles.questionTextSize }}>6. Does this analysis refer to a particular sex?</p>
                         <div className="control" style={styles.inputBoxSpacing}>
                             <label className="radio" style={styles.radioButtonSpacing}>
-                                <input type="radio" value="yes" name="sex_yn" onChange={setStudyInfoInputState} onClick={() => display('sex-question')} />
+                                <input data-testid="display-2" type="radio" value="yes" name="sex_yn" onChange={setStudyInfoInputState} onClick={() => display('sex-question')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Yes</span>
                             </label>
                             <label className="radio">
-                                <input type="radio" value="no" name="sex_yn" onChange={setStudyInfoInputState} onClick={() => remove('sex-question')} />
+                                <input data-testid="remove-2" type="radio" value="no" name="sex_yn" onChange={setStudyInfoInputState} onClick={() => remove('sex-question')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>No</span>
                             </label>
                         </div>
@@ -762,11 +760,11 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p style={{ ...styles.questionTextSize }}>7. Does this analysis refer to a particular age class?</p>
                         <div className="control" style={styles.inputBoxSpacing}>
                             <label className="radio" style={styles.radioButtonSpacing}>
-                                <input type="radio" value="yes" name="age_class_yn" onChange={setStudyInfoInputState} onClick={() => display('age-class-question')} />
+                                <input data-testid="display-1" type="radio" value="yes" name="age_class_yn" onChange={setStudyInfoInputState} onClick={() => display('age-class-question')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Yes</span>
                             </label>
                             <label className="radio">
-                                <input type="radio" value="no" name="age_class_yn" onChange={setStudyInfoInputState} onClick={() => remove('age-class-question')} />
+                                <input data-testid="remove-1" type="radio" value="no" name="age_class_yn" onChange={setStudyInfoInputState} onClick={() => remove('age-class-question')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>No</span>
                             </label>
                         </div>
@@ -803,18 +801,18 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     </div>
                 </div>
                 <div style={styles.doubleButton}>
-                    <div onClick={() => movePgToPg('3', '2')}>
+                    <div id="submit-move-button-4" data-testid="submit-move-button-4" onClick={() => movePgToPg('3', '2')}>
                         <DesignGreenButton
                             buttonText={'Back'}
                             className={'back-pg-3'}
                         />
                     </div>
-                    <div>
+                    <div id="dot-2" data-testid="dot-2">
                         <DesignDots
                             page='3'
                         />
                     </div>
-                    <div onClick={() => movePgToPg('3', '4')}>
+                    <div id="submit-move-button-5" data-testid="submit-move-button-5" onClick={() => movePgToPg('3', '4')}>
                         <DesignGreenButton
                             buttonText={'Next'}
                             className={'next-pg-3'}
@@ -989,18 +987,18 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     </div>
                 </div> */}
                 <div style={styles.doubleButton}>
-                    <div onClick={() => movePgToPg('4', '3')}>
+                    <div id="submit-move-button-6" data-testid="submit-move-button-6" onClick={() => movePgToPg('4', '3')}>
                         <DesignGreenButton
                             buttonText={'Back'}
                             className={'back-pg-4'}
                         />
                     </div>
-                    <div>
+                    <div id="dot-3" data-testid="dot-3">
                         <DesignDots
                             page='4'
                         />
                     </div>
-                    <div onClick={() => movePgToPg('4', '5')}>
+                    <div id="submit-move-button-7" data-testid="submit-move-button-7" onClick={() => movePgToPg('4', '5')}>
                         <DesignGreenButton
                             buttonText={'Next'}
                             className={'next-pg-4'}
@@ -1016,7 +1014,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 <div style={styles.reviewInfoContainer}>
                     <div style={styles.reviewInfoTitleContainer}>
                         <p className="title is-size-3" style={{ ...styles.alignTextCenter, ...styles.studyInfoTitle }}>Study-Related Information</p>
-                        <div onClick={() => movePgToPg('5', '1')}>
+                        <div id="edit-button-3" data-testid="edit-button-3" onClick={() => movePgToPg('5', '1')}>
                             <button className="button edit-study-info-pg-5" style={styles.editButton}>Edit</button>
                         </div>
                     </div>
@@ -1045,7 +1043,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 <div style={styles.reviewInfoContainer}>
                     <div style={styles.reviewInfoTitleContainer}>
                         <p className="title is-size-3" style={{ ...styles.alignTextCenter, ...styles.studyInfoTitle }}>Analysis Information</p>
-                        <div onClick={() => movePgToPg('5', '3')}>
+                        <div id="edit-button-2" data-testid="edit-button-2" onClick={() => movePgToPg('5', '3')}>
                             <button className="button edit-analysis-info-pg-5" style={styles.editButton}>Edit</button>
                         </div>
                     </div>
@@ -1072,7 +1070,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 <div style={styles.reviewInfoContainer}>
                     <div style={styles.reviewInfoTitleContainer}>
                         <p className="title is-size-3" style={{ ...styles.alignTextCenter, ...styles.studyInfoTitle }}>Diet Information</p>
-                        <div onClick={() => movePgToPg('5', '4')}>
+                        <div id="edit-button-1" data-testid="edit-button-1" onClick={() => movePgToPg('5', '4')}>
                             <button className="button edit-diet-info-pg-5" style={styles.editButton}>Edit</button>
                         </div>
                     </div>
@@ -1093,18 +1091,18 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 </div>
                 <hr style={styles.backgroundGreen} />
                 <div style={styles.doubleButton}>
-                    <div onClick={() => movePgToPg('5', '4')}>
+                    <div id="submit-move-button-8" data-testid="submit-move-button-8" onClick={() => movePgToPg('5', '4')}>
                         <DesignGreenButton
                             buttonText={'Back'}
                             className={'back-pg-5'}
                         />
                     </div>
-                    <div>
+                    <div id="dot-4" data-testid="dot-4">
                         <DesignDots
                             page='5'
                         />
                     </div>
-                    <div onClick={() => submitForm('6')}>
+                    <div id="submit-button" data-testid="submit-button" onClick={() => submitForm('6')}>
                         <DesignGreenButton
                             buttonText={'Submit'}
                             className={'submit-pg-5'}
@@ -1116,13 +1114,13 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             <div id="page6" style={styles.formContainerPg6}>
                 <div style={styles.checkmark}>[put checkmark here]</div>
                 <p style={styles.formSuccessTitle}>Form Successfully Submitted!</p>
-                <div style={styles.popupButton} onClick={() => movePgToPg('6', '1', 'sameAnalysis')}>
+                <div id="submit-move-button-9" data-testid="submit-move-button-9" style={styles.popupButton} onClick={() => movePgToPg('6', '1', 'sameAnalysis')}>
                     <DesignGreenButton
                         buttonText={'Add another analysis'}
                         className={'add-analysis-pg-6'}
                     />
                 </div>
-                <div style={styles.popupButton} onClick={() => movePgToPg('6', '1', 'reset')}>
+                <div id="submit-move-button-10" data-testid="submit-move-button-10" style={styles.popupButton} onClick={() => movePgToPg('6', '1', 'reset')}>
                     <DesignGreenButton
                         buttonText={'Done'}
                         className={'done-pg-6'}
