@@ -65,10 +65,10 @@ export const DesignLogin = (props: DesignLoginProps) =>  {
     if (data !== undefined) {
       props.setUser({
         full_name: data.getUserByLogin.full_name,
-        username: data.getUserByLogin.full_name,
-        email: data.getUserByLogin.full_name,
-        is_verified: data.getUserByLogin.full_name,
-        is_admin: data.getUserByLogin.full_name,
+        username: data.getUserByLogin.username,
+        email: data.getUserByLogin.email,
+        is_verified: data.getUserByLogin.is_verified,
+        is_admin: data.getUserByLogin.is_admin,
       });
     }
   }

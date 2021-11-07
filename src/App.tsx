@@ -63,6 +63,13 @@ function App() {
         onLogoutClick={() => {
           ActiveItemVar("");
           ActiveItemTypeVar(ItemType.NA);
+          setUser({
+            full_name: "",
+            username: "",
+            email: "",
+            is_verified: "",
+            is_admin: "",
+          });
         }}
       />
       <section className={"hero is-large"}>
