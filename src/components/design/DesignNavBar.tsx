@@ -103,10 +103,12 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
           {props.user.full_name === "" ? <p>Welcome!</p> : <p>Welcome, {props.user.full_name}!</p>}
           </a>
         <a className={"navbar-item"} onClick={() => {props.onAdminClick()}}>
-            Admin
+            {props.user.is_admin === "true" ? <p>Admin</p> : null}
           </a>
-          <a className={"navbar-item"} onClick={() => {props.onLoginClick()}}>
-            Login (Note: THIS IS DEV ENVIRONMENT!!)
+          <a className={"navbar-item"}>
+          {console.log("Admin status: " + props.user.full_name)}
+            {props.user.full_name === "" ? <p onClick={() => {props.onLoginClick()}}>Login (Note: THIS IS DEV ENVIRONMENT!!)</p> : 
+            <p onClick={() => {props.onLogoutClick()}}>Log Out</p>}
           </a>
           <span className="navbar-item">
             <a
