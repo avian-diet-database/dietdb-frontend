@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { LogicFooter } from "./components/logic/LogicFooter";
 import { LogicItem } from "./components/logic/LogicItem";
 import { DesignNavBar } from "./components/design/DesignNavBar";
 import { LogicSearchBar } from "./components/logic/LogicSearchBar";
 import { DesignHeader } from "./components/design/DesignHeader";
 import { LogicAbout } from "./components/logic/LogicAbout";
+import { LogicLogin } from "./components/logic/LogicLogin";
 import { LogicAdminDashboard } from "./components/logic/LogicAdminDashboard";
 import { LogicSubmitData } from "./components/logic/LogicSubmitData";
 import { ItemType, ActiveItemVar, ActiveItemTypeVar } from "./cache";
@@ -12,9 +13,19 @@ import { useReactiveVar } from "@apollo/client";
 
 function App() {
   const activeItemType = useReactiveVar(ActiveItemTypeVar);
+  const [user, setUser] = useState({
+    full_name: "",
+    username: "",
+    email: "",
+    is_verified: "",
+    is_admin: "",
+  });
+
   return (
     <div>
       <DesignNavBar
+        user={user}
+        setUser={setUser}
         onHomeClick={() => {
           ActiveItemVar("");
           ActiveItemTypeVar(ItemType.NA);
@@ -80,6 +91,9 @@ function App() {
                 right={" ?"}
               />
             ) : null}
+
+            {/* // Login page */}
+            {activeItemType === ItemType.LOGIN ? <LogicLogin setUser={setUser}/> : null}
             {activeItemType === ItemType.ADMIN ? <LogicAdminDashboard /> : null}
             {activeItemType === ItemType.SUBMIT ? <LogicSubmitData /> : null}
           </div>
