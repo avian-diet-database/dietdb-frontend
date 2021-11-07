@@ -1,11 +1,10 @@
 import { DesignSubmitData } from "../components/design/DesignSubmitData";
 import { LogicSubmitData } from "../components/logic/LogicSubmitData";
 import { CREATE_PENDING_DIET_SKELETON } from "../gql/mutations";
-import TestRenderer, { act } from 'react-test-renderer';
+import TestRenderer from 'react-test-renderer';
 import { DesignDots } from "../components/design/DesignDots";
 import React from "react";
 import { fireEvent, getByTestId, render } from "@testing-library/react";
-import { ApolloProvider, FetchResult, MutationFunctionOptions, useMutation } from "@apollo/client";
 import { MockedProvider } from '@apollo/client/testing';
 
 test("LogicSubmitData should call DesignSubmitData without error", () => {
@@ -122,16 +121,16 @@ test("Edit buttons trigger movePgtoPg functions OnClick()", () => {
     }
 });
 
-test("Submit button triggers submitForm function OnClick()", () => {
+test("Submit button triggers submitForm function OnClick()", async () => {
     let pendingData = [{
-        common_name: "common_name",
-        source: "source",
-        subspecies: "subspecies",
-        taxonomy: "taxonomy",
-        location_region: "location_region",
-        location_specific: "location_specific",
-        prey_kingdom: "prey_kingdom",
-        diet_type: "diet_type",
+        common_name: "common_name_to_be_implemented",
+        source: ", , , ",
+        subspecies: "",
+        taxonomy: "",
+        location_region: "",
+        location_specific: "",
+        prey_kingdom: "prey_kingdom_to_be_implemented",
+        diet_type: "diet_type_to_be_implemented",
     }];
 
     const mocks = [
@@ -139,14 +138,14 @@ test("Submit button triggers submitForm function OnClick()", () => {
             request: {
                 query: CREATE_PENDING_DIET_SKELETON,
                 variables: {
-                    common_name: "data",
-                    source: "data",
-                    subspecies: "data",
-                    taxonomy: "data",
-                    location_region: "data",
-                    location_specific: "data",
-                    prey_kingdom: "data",
-                    diet_type: "data",
+                    common_name: "common_name_to_be_implemented",
+                    source: ", , , ",
+                    subspecies: "",
+                    taxonomy: "",
+                    location_region: "",
+                    location_specific: "",
+                    prey_kingdom: "prey_kingdom_to_be_implemented",
+                    diet_type: "diet_type_to_be_implemented",
                 }
             },
             result: {
@@ -157,9 +156,9 @@ test("Submit button triggers submitForm function OnClick()", () => {
 
     const { container } = render(<MockedProvider mocks={mocks} addTypename={false}>
         <LogicSubmitData />
-    </MockedProvider>)
+    </MockedProvider>);
 
-    fireEvent.click(getByTestId(container, 'submit-button'))
+    fireEvent.click(getByTestId(container, 'submit-button'));
 
 
 });
@@ -276,6 +275,10 @@ test("Remove should make input box appear OnClick()", () => {
 
 
 
+
+function waitFor(arg0: () => void): { container: any; } | PromiseLike<{ container: any; }> {
+    throw new Error("Function not implemented.");
+}
 // let container: any = null;
 // beforeEach(() => {
 //   // setup a DOM element as a render target
