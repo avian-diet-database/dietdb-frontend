@@ -26,13 +26,19 @@ const requiredFields = ["Email", "Password"];
 export const DesignLogin = (props: DesignLoginProps) => {
   const [isSignup, setIsSignup] = useState(false);
   const [loginState, setLoginState] = useState({
-    Email: "",
-    Password: "",
+    Email: "email",
+    Password: "password",
   });
+  const [toggleSubmit, setToggleSubmit] = useState(false);
+
+  useEffect(() => {
+    refetch({ email: loginState.Email });
+  }, [loginState]);
 
   const setLoginInputState = (e: any) => {
     const { name, value } = e.target;
     setLoginState((prevState) => ({ ...prevState, [name]: value }));
+    // console.log(""+loginState.Email+loginState.Password);
   };
 
   // GetUserByLogin calls GQL query to confirm if a login request is successful (user exists in the database)
@@ -40,27 +46,10 @@ export const DesignLogin = (props: DesignLoginProps) => {
     variables: {
       email: "",
     },
-    // onCompleted: (): any => props.setUser({
-    //   full_name: data.getUserByLogin.full_name,
-    //   username: data.getUserByLogin.full_name,
-    //   email: data.getUserByLogin.full_name,
-    //   is_verified: data.getUserByLogin.full_name,
-    //   is_admin: data.getUserByLogin.full_name,
-    // })
   });
 
   function submitLogin() {
-    // Call another GQL query based on user input
-    console.log(
-      "logging in with email " +
-        loginState.Email +
-        " and password " +
-        loginState.Password
-    );
-    refetch({
-      email: loginState.Email,
-    });
-    console.log(data);
+    // setToggleSubmit(!toggleSubmit.valueOf);
     if (data !== undefined) {
       bcrypt.compare(
         loginState.Password,
@@ -97,13 +86,23 @@ export const DesignLogin = (props: DesignLoginProps) => {
             <div className="field" key={field + "-login-field"}>
               <label className="label">{field}</label>
               <div className="control">
-                <input
-                  className="input"
-                  type="text"
-                  placeholder={field}
-                  name={field}
-                  onChange={setLoginInputState}
-                ></input>
+                {field === "Password" ? (
+                  <input
+                    className="input"
+                    type="password"
+                    placeholder={field}
+                    name={field}
+                    onChange={setLoginInputState}
+                  ></input>
+                ) : (
+                  <input
+                    className="input"
+                    type="text"
+                    placeholder={field}
+                    name={field}
+                    onChange={setLoginInputState}
+                  ></input>
+                )}
               </div>
             </div>
           ))}

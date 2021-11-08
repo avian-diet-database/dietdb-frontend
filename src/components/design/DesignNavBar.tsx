@@ -131,7 +131,6 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
             </a>
           ) : null}
           <a className={"navbar-item"}>
-            {console.log("Admin status: " + props.user.full_name)}
             {props.user.full_name === "" ? (
               <p
                 onClick={() => {
