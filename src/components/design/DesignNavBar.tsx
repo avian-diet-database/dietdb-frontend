@@ -3,8 +3,22 @@ import { ItemType, ActiveItemTypeVar } from "../../cache";
 import { useReactiveVar } from "@apollo/client";
 
 interface DesignNavBarProps {
-  user:any,
-  setUser:any,
+  user: {
+    full_name: string;
+    username: string;
+    email: string;
+    is_verified: string;
+    is_admin: string;
+  };
+  setUser: React.Dispatch<
+    React.SetStateAction<{
+      full_name: string;
+      username: string;
+      email: string;
+      is_verified: string;
+      is_admin: string;
+    }>
+  >;
   onPredatorClick: () => void;
   onPreyClick: () => void;
   onHomeClick: () => void;
@@ -22,7 +36,11 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
     <nav className="navbar is-fixed-top is-info" id="home">
       <div className="navbar-brand">
         <div className="navbar-item">
-          <a onClick={() => {props.onHomeClick()}}>
+          <a
+            onClick={() => {
+              props.onHomeClick();
+            }}
+          >
             <img src="../eagle_fish_silhouette.png" alt="Bird"></img>
           </a>
         </div>
@@ -56,9 +74,7 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
               setMobileActive(false);
               props.onAboutClick();
             }}
-            className={
-              "navbar-item"
-            }
+            className={"navbar-item"}
           >
             About
           </a>
@@ -91,24 +107,48 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
               setMobileActive(false);
               props.onSubmitDataClick();
             }}
-            className={
-              "navbar-item"
-            }
+            className={"navbar-item"}
           >
             Submit Data
           </a>
         </div>
         <div className="navbar-end">
-        <a className={"navbar-item"}>
-          {props.user.full_name === "" ? <p>Welcome!</p> : <p>Welcome, {props.user.full_name}!</p>}
-          </a>
-        <a className={"navbar-item"} onClick={() => {props.onAdminClick()}}>
-            {props.user.is_admin === "true" ? <p>Admin</p> : null}
-          </a>
           <a className={"navbar-item"}>
-          {console.log("Admin status: " + props.user.full_name)}
-            {props.user.full_name === "" ? <p onClick={() => {props.onLoginClick()}}>Login (Note: THIS IS DEV ENVIRONMENT!!)</p> : 
-            <p onClick={() => {props.onLogoutClick()}}>Log Out</p>}
+            {props.user.full_name === "" ? (
+              <p>Welcome!</p>
+            ) : (
+              <p>Welcome, {props.user.full_name}!</p>
+            )}
+          </a>
+          {props.user.is_admin === "true" ? (
+            <a
+              className={"navbar-item"}
+              onClick={() => {
+                props.onAdminClick();
+              }}
+            >
+              <p>Admin</p>
+            </a>
+          ) : null}
+          <a className={"navbar-item"}>
+            {console.log("Admin status: " + props.user.full_name)}
+            {props.user.full_name === "" ? (
+              <p
+                onClick={() => {
+                  props.onLoginClick();
+                }}
+              >
+                Login (Note: THIS IS DEV ENVIRONMENT!!)
+              </p>
+            ) : (
+              <p
+                onClick={() => {
+                  props.onLogoutClick();
+                }}
+              >
+                Log Out
+              </p>
+            )}
           </a>
           <span className="navbar-item">
             <a
