@@ -3,6 +3,8 @@ import { ItemType, ActiveItemTypeVar } from "../../cache";
 import { useReactiveVar } from "@apollo/client";
 
 interface DesignNavBarProps {
+  user:any,
+  setUser:any,
   onPredatorClick: () => void;
   onPreyClick: () => void;
   onHomeClick: () => void;
@@ -98,13 +100,15 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
         </div>
         <div className="navbar-end">
         <a className={"navbar-item"}>
-            Welcome, John Doe!
+          {props.user.full_name === "" ? <p>Welcome!</p> : <p>Welcome, {props.user.full_name}!</p>}
           </a>
         <a className={"navbar-item"} onClick={() => {props.onAdminClick()}}>
-            Admin
+            {props.user.is_admin === "true" ? <p>Admin</p> : null}
           </a>
-          <a className={"navbar-item"} onClick={() => {props.onLogoutClick()}}>
-            Logout (Note: THIS IS DEV ENVIRONMENT!!)
+          <a className={"navbar-item"}>
+          {console.log("Admin status: " + props.user.full_name)}
+            {props.user.full_name === "" ? <p onClick={() => {props.onLoginClick()}}>Login (Note: THIS IS DEV ENVIRONMENT!!)</p> : 
+            <p onClick={() => {props.onLogoutClick()}}>Log Out</p>}
           </a>
           <span className="navbar-item">
             <a

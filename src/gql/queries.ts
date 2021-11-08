@@ -387,6 +387,38 @@ query {
 }
 `; 
 
+const GET_USERS = gql`
+query {
+  getUsers {
+    full_name
+    username
+    email
+    password
+    admin_password
+    is_verified
+    is_admin
+  }
+}
+`; 
+
+const GET_USER_BY_LOGIN = gql`
+query(
+  $email: String!
+  $password: String!
+) {
+  getUserByLogin(
+    email: $email
+    password: $password
+  ) {
+    full_name
+    username
+    email
+    is_verified
+    is_admin
+  }
+}
+`;
+
 export {
   GET_AUTOCOMPLETE_PRED,
   GET_AUTOCOMPLETE_PREY,
@@ -403,4 +435,6 @@ export {
   RECORDS_PER_DECADE,
   RECORDS_PER_SEASON,
   RECORDS_PER_DIET_TYPE,
+  GET_USERS,
+  GET_USER_BY_LOGIN
 };
