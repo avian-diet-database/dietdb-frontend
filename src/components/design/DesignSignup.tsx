@@ -120,7 +120,7 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
               <div className="control">
                 <input
                   className="input"
-                  type="text"
+                  type={field === "password" || field === "confirm_password" || field === "admin_password" ? "password" : "input"}
                   placeholder={getFormLabels(field)}
                   name={field}
                   onChange={setSignupInputState}

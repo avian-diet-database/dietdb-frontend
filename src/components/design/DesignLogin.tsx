@@ -86,23 +86,13 @@ export const DesignLogin = (props: DesignLoginProps) => {
             <div className="field" key={field + "-login-field"}>
               <label className="label">{field}</label>
               <div className="control">
-                {field === "Password" ? (
                   <input
                     className="input"
-                    type="password"
+                    type={field === "Password" ? "password" : "input"}
                     placeholder={field}
                     name={field}
                     onChange={setLoginInputState}
                   ></input>
-                ) : (
-                  <input
-                    className="input"
-                    type="text"
-                    placeholder={field}
-                    name={field}
-                    onChange={setLoginInputState}
-                  ></input>
-                )}
               </div>
             </div>
           ))}
