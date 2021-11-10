@@ -6,6 +6,7 @@ import { DesignGreenButton } from "../design/DesignGreenButton";
 import { DesignDots } from "../design/DesignDots";
 import { formInputData } from "../data/formInputData";
 import { KeyObject } from "crypto";
+import { buildExecutionContext } from "graphql/execution/execute";
 
 interface DesignSubmitDataProps {
     addData: (options?: MutationFunctionOptions<any, Record<string, any>>) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
@@ -32,7 +33,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         altitude_min_m: '',
         altitude_max_m: '',
         altitude_mean_m: '',
-        habitat_type: '',
         observation_month_begin: '',
         observation_month_end: '',
         observation_year_begin: '',
@@ -55,8 +55,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         all_prey_diet_yn: '',
         notes: '',
         observation_season: '',
-        prey_stage: '',
-        prey_part: '',
         family: '',
         prey_kingdom: '',
         prey_phylum: '',
@@ -69,15 +67,15 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         prey_name_ITIS_ID: '',
         prey_name_status: '',
         enter_species_manually: '',
-        
+
 
 
     }
 
-    let prey_name_arr: string[] = [];
-    let prey_diet_arr: string[] = [];
-    let prey_stage_arr: string[] = [];
-    let prey_part_arr: string[] = [];
+    const prey_name_arr: string[] = [];
+    const prey_diet_arr: string[] = [];
+    const prey_stage_arr: string[] = [];
+    const prey_part_arr: string[] = [];
 
     const preySubmissionsInitialState = {
         submissions: {
@@ -88,7 +86,10 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         },
     }
 
-    const[preySubmissions, setPreySubmissions] = useState(preySubmissionsInitialState);
+    const [preySubmissions, setPreySubmissions] = useState(preySubmissionsInitialState);
+    const [habitat_type, setHabitatType] = useState([]);
+    const [prey_part, setPreyPart] = useState([]);
+    const [prey_stage, setPreyStage] = useState([]);
 
     const [{ doi, title, journal, year, lastname_author, subspecies, taxonomy,
         location_region, location_other, location_specific, lat_long_yn,
@@ -96,7 +97,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         observation_month_begin, observation_month_end, observation_year_begin, observation_year_end,
         analysis_number, study_type, item_sample_size, bird_sample_size, sites, sex_yn, sex, age_class_yn,
         age_class, within_study_data_source, table_fig_number, prey_common_name, inclusive_prey_taxon, fraction_diet,
-        all_prey_diet_yn, notes, observation_season, prey_stage, prey_part, scientific_name, common_name,
+        all_prey_diet_yn, notes, observation_season, scientific_name, common_name,
         family, diet_type, prey_kingdom, enter_species_manually,
         prey_phylum,
         prey_class,
@@ -108,8 +109,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         prey_name_ITIS_ID,
         prey_name_status },
         setStudyInfoState] = useState(initialState);
-
-    const [habitat_type, setHabitatType] = useState('');
 
     const setStudyInfoInputState = (e: any) => {
         const { name, value } = e.target;
@@ -395,51 +394,71 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         document.getElementById('page' + targetPage).style.display = 'block';
     }
 
-    function setHabitatStates(length: number) {
-        let i;
-        let habitats;
-        for (i = 1; i <= length; i++) {
-            let element = document.getElementById('habitat' + i) as HTMLInputElement;
-            console.log(element)
-            if (element.checked === true) {
-                habitats = habitats + ' ' + document.getElementById('habitat' + i).nodeValue
+    // get checked values and set them
+    function getCheckedBoxes(id: string, setVarState: any) {
+        let checkboxes = document.getElementsByName(id)
+        let checkboxesChecked = [];
+        // loop over them all
+        for (let i = 0; i < checkboxes.length; i++) {
+            // And stick the checked ones onto an array...
+            let box = checkboxes[i] as HTMLInputElement;
+            if (box.checked) {
+                checkboxesChecked.push(box.value);
             }
-            //document.getElementById('habitat' + i).ariaChecked === 'true' ? habitats = habitats + ' ' + document.getElementById('habitat' + i).nodeValue : null
         }
 
-        setHabitatType(habitats)
-        console.log(habitats)
-        console.log(habitat_type)
+        // set values
+        setVarState(checkboxesChecked);
     }
+
+    // function setHabitatStates(length: number) {
+    //     let i;
+    //     let habitats;
+    //     for (i = 1; i <= length; i++) {
+    //         let element = document.getElementById('habitat' + i) as HTMLInputElement;
+    //         console.log(element)
+    //         if (element.checked === true) {
+    //             habitats = habitats + ' ' + document.getElementById('habitat' + i).nodeValue
+    //         }
+    //         //document.getElementById('habitat' + i).ariaChecked === 'true' ? habitats = habitats + ' ' + document.getElementById('habitat' + i).nodeValue : null
+    //     }
+
+    //     setHabitatType(habitats)
+    //     console.log(habitats)
+    //     console.log(habitat_type)
+    // }
 
     function addPreyEntry() {
         //add validation part here
-
+        console.log(prey_name_arr)
         // if(prey_common_name === "" || prey_part === "") { -> add this part when setstate for preypart is implemented
-        if(prey_common_name === "") {
+        if (prey_common_name === "") {
             //return error here 
         } else {
             const table = document.getElementById('prey-table');
-            let diet_submission = 
-            `<div style='display: flex; padding: .75rem 0'>
+            let diet_submission =
+                `<div style='display: flex; padding: .75rem 0'>
                 <p style='width: 130px; overflow-wrap: break-word'>${prey_common_name}</p>
                 <p style='width: 100px; overflow-wrap: break-word'>${fraction_diet}</p>
                 <p style='width: 275px; overflow-wrap: break-word'>${prey_stage}</p>
                 <p style='width: 320px; overflow-wrap: break-word'>${prey_part}</p>
              </div>
              <hr style="background-color: #01B684; margin: 0" />`
-             let diet_container = document.createElement('div');
-             diet_container.innerHTML = diet_submission;
+            let diet_container = document.createElement('div');
+            diet_container.innerHTML = diet_submission;
 
             table.append(diet_container);
+            console.log(prey_name_arr)
 
-            prey_name_arr.push(prey_common_name);
+            prey_name_arr[prey_name_arr.length] = prey_common_name;
             prey_diet_arr.push(fraction_diet);
-            prey_stage_arr.push(prey_stage);
-            prey_part_arr.push(prey_part);
+            // prey_stage_arr.push(prey_stage);
+            // prey_part_arr.push(prey_part);
 
-            setPreySubmissions({submissions: {name: prey_name_arr, diet: prey_diet_arr, stage: prey_stage_arr, part: prey_part_arr} });
-            console.log(preySubmissions);
+            console.log(prey_name_arr)
+
+            setPreySubmissions({ submissions: { name: prey_name_arr, diet: prey_diet_arr, stage: prey_stage_arr, part: prey_part_arr } });
+            console.log(formData.studyInfo.prey_submissions);
             //setStudyInfoState({prey_common_name: ''})
         }
     }
@@ -688,13 +707,13 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     <div id="question7">
                         <p id="required" style={{ ...styles.questionTextSize }}>7. In what type of habitat was the study conducted? <span style={styles.green}>*</span></p>
                         <div className="control" style={styles.inputBoxSpacing}>
-                            {formInputData.habitats.map((habitat, index) => 
+                            {formInputData.habitats.map((habitat, index) =>
                                 <label className="checkbox" style={{ ...styles.checkboxSpacing }}>
-                                    <input value={habitat} type="checkbox" />
+                                    <input name="habitat" value={habitat} type="checkbox" />
                                     <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>{habitat}</span>
                                 </label>
                             )}
-                            
+
                             {/* {setHabitatStates(4)} */}
                         </div>
                     </div>
@@ -765,7 +784,8 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             page='2'
                         />
                     </div>
-                    <div onClick={() => movePgToPg('2', '3')}>
+                    <div onClick={() => {movePgToPg('2', '3');  
+                    getCheckedBoxes("habitat", setHabitatType);}}>
                         <DesignGreenButton
                             buttonText={'Next'}
                             className={'next-pg-2'}
@@ -875,7 +895,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             <div className="field">
                                 <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
                                     <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.inputBox2Sections }} value={within_study_data_source
-                    } name="within_study_data_source
+                                    } name="within_study_data_source
                     " onChange={setStudyInfoInputState}>
                                         <option>Select Location</option>
                                         {formInputData.published_locations.map(published_location => <option>{published_location}</option>)}
@@ -996,11 +1016,14 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <div id="diet-question5">
                             <p style={{ ...styles.questionTextSize }}>5. Does this prey entry refer to a particular prey part? <span style={styles.green}>*</span></p>
                             <div className="control" style={styles.inputBoxSpacing}>
-                                <label className="checkbox" style={styles.checkboxSpacing}>
-                                    <input id="bark" value="bark" type="checkbox" />
-                                    <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>bark</span>
-                                </label>
-                                <label className="checkbox" style={styles.checkboxSpacing}>
+                                {formInputData.prey_parts.map(prey_part => 
+                                    <label className="checkbox" style={styles.checkboxSpacing}>
+                                        <input name="prey-part" id={prey_part} value={prey_part} type="checkbox" />
+                                        <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>{prey_part}</span>
+                                    </label>
+                                )}
+                                
+                                {/* <label className="checkbox" style={styles.checkboxSpacing}>
                                     <input id="fruit" value="fruit" type="checkbox" />
                                     <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>fruit</span>
                                 </label>
@@ -1051,7 +1074,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                                 <label className="checkbox">
                                     <input id="spore" value="spore" type="checkbox" />
                                     <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>spore</span>
-                                </label>
+                                </label> */}
                             </div>
                         </div>
                     </div>
@@ -1063,7 +1086,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     </div>
                 </div>
                 <div style={styles.addPreyButtonContainer} onClick={() => addPreyEntry()}>
-                    <DesignGreenButton 
+                    <DesignGreenButton
                         buttonText={'Add another prey?'}
                         className={'add-prey-pg-4'}
                     />
@@ -1093,7 +1116,11 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             page='4'
                         />
                     </div>
-                    <div onClick={() => movePgToPg('4', '5')}>
+                    <div onClick={() => {
+                        movePgToPg('4', '5'); 
+                        getCheckedBoxes("prey-part", setPreyPart); 
+                        getCheckedBoxes("prey-stage", setPreyStage);
+                    }}>
                         <DesignGreenButton
                             buttonText={'Next'}
                             className={'next-pg-4'}
@@ -1159,7 +1186,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p>{age_class_yn === 'yes' ? 'Age Class: ' + age_class : 'Analysis does not refer to a particular age class'}</p>
                         <p style={{ ...styles.questionTextSize }}>8. Please describe where in the published study you obtained the information for this diet analysis.</p>
                         <p>{'Location: ' + within_study_data_source
-         + '; Table/Figure Number: ' + table_fig_number}</p>
+                            + '; Table/Figure Number: ' + table_fig_number}</p>
                     </div>
                 </div>
                 <hr style={styles.backgroundGreen} />

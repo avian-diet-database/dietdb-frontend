@@ -6,6 +6,7 @@ export const formInputData = {
     methods: ["behavioral observation","crop contents","DNA sequencing","emetic","esophagus contents","fecal contents","nest debris","pellet contents","prey remains","stomach contents"],
     age_classes: ["chick/nestling","juvenile/immature","adult"],
     published_locations: ["In the text","Table","Figure"],
+    prey_parts: ["bark", "statoblasts", "sap", "oogonium", "pollen", "fruit", "bud", "vegetation", "seed", "spore", "root", "gall", "feces", "flower"],
     
 
 }
