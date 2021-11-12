@@ -64,8 +64,8 @@ When local changes are pushed onto GitHub, the changes will be built automatical
 - react-vis
 - Typescript
 
-Our architecture decision records can be found in the ADR.md file
-For Data Submission Implementation in Fall 2021, our architecture decision records can be found in the ADR-fa2021.md file
+Fall 2020 architecture decision records can be found in the ADR.md file.
+For Data Submission Implementation in Fall 2021, our architecture decision records can be found in the ADR-fa2021.md file.
 
 
 ## 5. Contributing
