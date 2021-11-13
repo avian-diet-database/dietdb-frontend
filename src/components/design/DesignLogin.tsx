@@ -46,7 +46,7 @@ export const DesignLogin = (props: DesignLoginProps) => {
       Email: "",
       Password: "",
     });
-  }, [isSignup]);
+  }, [isSignup, isReset]);
 
   const setLoginInputState = (e: any) => {
     const { name, value } = e.target;
@@ -62,6 +62,7 @@ export const DesignLogin = (props: DesignLoginProps) => {
 
   function submitLogin() {
     if (data !== undefined) {
+      setLoginFailed(false);
       bcrypt.compare(
         loginState.Password,
         data.getUserByEmail.password,
@@ -70,6 +71,7 @@ export const DesignLogin = (props: DesignLoginProps) => {
             throw err;
           } else {
             if (passwordMatches) {
+              setLoginFailed(false);
               props.setUser({
                 full_name: data.getUserByEmail.full_name,
                 username: data.getUserByEmail.username,
@@ -77,6 +79,8 @@ export const DesignLogin = (props: DesignLoginProps) => {
                 is_verified: data.getUserByEmail.is_verified,
                 is_admin: data.getUserByEmail.is_admin,
               });
+            } else {
+              setLoginFailed(true);
             }
           }
         }
