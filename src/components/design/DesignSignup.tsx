@@ -142,7 +142,9 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
 
   // Confirms if admin password entered by user matches configured admin password
   function resolveAdminPassword(password: string) {
-    return (password === "adminpass") + "";
+    console.log("ENVS"+process.env.NODE_ENV);
+    console.log("ENVS"+process.env.ADMIN_PASS);
+    return (password === "adminpass" || password === process.env.ADMIN_PASS) + "";
   }
 
   return (
