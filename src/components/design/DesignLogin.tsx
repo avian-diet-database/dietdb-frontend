@@ -1,6 +1,5 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { CREATE_USER } from "../../gql/mutations";
 import { GET_USER_BY_EMAIL } from "../../gql/queries";
 import { LogicSignup } from "../logic/LogicSignup";
 import bcrypt from "bcryptjs";
@@ -29,7 +28,6 @@ export const DesignLogin = (props: DesignLoginProps) => {
     Email: "email",
     Password: "password",
   });
-  const [toggleSubmit, setToggleSubmit] = useState(false);
 
   useEffect(() => {
     refetch({ email: loginState.Email });
@@ -49,7 +47,6 @@ export const DesignLogin = (props: DesignLoginProps) => {
   });
 
   function submitLogin() {
-    // setToggleSubmit(!toggleSubmit.valueOf);
     if (data !== undefined) {
       bcrypt.compare(
         loginState.Password,

@@ -1,6 +1,7 @@
-import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import React, { useEffect, useState } from "react";
 import { CREATE_USER } from "../../gql/mutations";
+import { GET_USER_BY_EMAIL } from "../../gql/queries";
 import bcrypt from "bcryptjs";
 
 interface DesignSignupProps {
@@ -44,7 +45,10 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
   props: DesignSignupProps
 ) => {
   // AddUser calls GQL mutation to submit a new sign up to the database
-  const [addUser, { loading, error, data }] = useMutation(CREATE_USER);
+  const [
+    addUser,
+    { loading: createLoading, error: createError, data: createData },
+  ] = useMutation(CREATE_USER);
 
   const [signupState, setSignupState] = useState({
     full_name: "",
@@ -55,15 +59,55 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
     admin_password: "",
   });
 
+  // Used to ensure signup doesn't use an existing email
+  const {
+    loading: userLoading,
+    error: userError,
+    data: userData,
+    refetch,
+  } = useQuery(GET_USER_BY_EMAIL, {
+    variables: {
+      email: signupState.email,
+    },
+  });
+
   const [validPasswords, setValidPasswords] = useState(true);
+  const [isValidNewEmail, setIsValidNewEmail] = useState(true);
+  const [isValidEmailFormat, setIsValidEmailFormat] = useState(true);
 
   const setSignupInputState = (e: any) => {
     const { name, value } = e.target;
     setSignupState((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  // Return true if email format is valid
+  const emailFormatChecker = (email: string) => {
+    let regEx = new RegExp(
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+    let valid = regEx.test(email);
+    console.log(valid);
+    return regEx.test(email);
+  };
+
   function submitSignup() {
     console.log("submitting");
+    refetch({ email: signupState.email });
+    console.log(userData);
+
+    if (userData !== undefined) {
+      setIsValidNewEmail(false);
+      return;
+    } else {
+      setIsValidNewEmail(true);
+    }
+
+    if (!emailFormatChecker(signupState.email)) {
+      setIsValidEmailFormat(false);
+      return;
+    } else {
+      setIsValidEmailFormat(true);
+    }
 
     if (!(signupState.password === signupState.confirm_password)) {
       setValidPasswords(false);
@@ -84,13 +128,13 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
             username: signupState.username,
             email: signupState.email,
             password: hash,
-            // password: signupState.password,
             admin_password: signupState.admin_password,
             // Note: is_verified field added in case of future email verification implementation
             is_verified: "false",
             is_admin: resolveAdminPassword(signupState.admin_password),
           },
         });
+        props.setIsSignup(false);
       }
     });
   }
@@ -120,7 +164,13 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
               <div className="control">
                 <input
                   className="input"
-                  type={field === "password" || field === "confirm_password" || field === "admin_password" ? "password" : "input"}
+                  type={
+                    field === "password" ||
+                    field === "confirm_password" ||
+                    field === "admin_password"
+                      ? "password"
+                      : "input"
+                  }
                   placeholder={getFormLabels(field)}
                   name={field}
                   onChange={setSignupInputState}
@@ -128,6 +178,16 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
                 {field === "password" && !validPasswords ? (
                   <p style={redTextStyles}>
                     Your passwords do not match. Please try again.
+                  </p>
+                ) : null}
+                {field === "email" && !isValidNewEmail ? (
+                  <p style={redTextStyles}>
+                    An account with email "{signupState.email}" already exists.
+                  </p>
+                ) : null}
+                {field === "email" && !isValidEmailFormat ? (
+                  <p style={redTextStyles}>
+                    Email is not valid. Please try again.
                   </p>
                 ) : null}
               </div>
