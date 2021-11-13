@@ -402,9 +402,7 @@ query {
 `; 
 
 const GET_USER_BY_EMAIL = gql`
-query(
-  $email: String!
-) {
+query($email: String!) {
   getUserByEmail(
     email: $email
   ) {
@@ -414,6 +412,20 @@ query(
     password
     is_verified
     is_admin
+  }
+}
+`;
+
+const GET_USER_BY_EMAIL_AND_SECURITY_QUESTION = gql`
+query($email: String!, $security_question: String!) {
+  getUserByEmailAndSecurityQuestion(email: $email, security_question: $security_question) {
+    full_name
+    username
+    email
+    password
+    is_verified
+    is_admin
+    security_question
   }
 }
 `;
@@ -435,5 +447,6 @@ export {
   RECORDS_PER_SEASON,
   RECORDS_PER_DIET_TYPE,
   GET_USERS,
-  GET_USER_BY_EMAIL
+  GET_USER_BY_EMAIL,
+  GET_USER_BY_EMAIL_AND_SECURITY_QUESTION
 };

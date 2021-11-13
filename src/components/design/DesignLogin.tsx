@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { GET_USER_BY_EMAIL } from "../../gql/queries";
 import { LogicSignup } from "../logic/LogicSignup";
+import { LogicResetPassword } from "../logic/LogicResetPassword";
 import bcrypt from "bcryptjs";
 
 interface DesignLoginProps {
@@ -20,9 +21,15 @@ const greenTextStyles = {
   color: "#33CC99",
 };
 
+const redTextStyles = {
+  color: "#FF0000",
+};
+
 const requiredFields = ["Email", "Password"];
 
 export const DesignLogin = (props: DesignLoginProps) => {
+  const [loginFailed, setLoginFailed] = useState(false);
+  const [isReset, setIsReset] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
   const [loginState, setLoginState] = useState({
     Email: "email",
@@ -36,7 +43,6 @@ export const DesignLogin = (props: DesignLoginProps) => {
   const setLoginInputState = (e: any) => {
     const { name, value } = e.target;
     setLoginState((prevState) => ({ ...prevState, [name]: value }));
-    // console.log(""+loginState.Email+loginState.Password);
   };
 
   // GetUserByLogin calls GQL query to confirm if a login request is successful (user exists in the database)
@@ -63,16 +69,17 @@ export const DesignLogin = (props: DesignLoginProps) => {
                 is_verified: data.getUserByEmail.is_verified,
                 is_admin: data.getUserByEmail.is_admin,
               });
-            } else {
-              console.log("Password does not match");
             }
           }
         }
       );
+    } else {
+      setLoginFailed(true);
     }
   }
 
   return !isSignup ? (
+    !isReset ? 
     <div>
       <div className="container has-text-centered">
         <h1 className="title is-1">Login</h1>
@@ -94,11 +101,22 @@ export const DesignLogin = (props: DesignLoginProps) => {
             </div>
           ))}
         </div>
+        {loginFailed ? <div className="errorPrompt" style={signupPromptStyles}>
+          <p style={redTextStyles}>Your login information was incorrect. Please try again.</p>
+        </div> : null}
         <div className="signupPrompt" style={signupPromptStyles}>
           <p>
             New user?{" "}
             <a style={greenTextStyles} onClick={() => setIsSignup(true)}>
               Sign up!
+            </a>
+          </p>
+        </div>
+        <div className="recoveryPrompt" style={signupPromptStyles}>
+          <p>
+            Forgot password?{" "}
+            <a style={greenTextStyles} onClick={() => setIsReset(true)}>
+              Reset it!
             </a>
           </p>
         </div>
@@ -110,8 +128,9 @@ export const DesignLogin = (props: DesignLoginProps) => {
           </p>
         </div>
       </div>
-    </div>
+    </div>:
+    <LogicResetPassword setIsReset={setIsReset}/>
   ) : (
-    <LogicSignup setIsSignup={setIsSignup} />
+    <LogicSignup setIsSignup={setIsSignup}/>
   );
 };

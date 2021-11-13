@@ -94,9 +94,7 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
   };
 
   function submitSignup() {
-    console.log("submitting");
     refetch({ email: signupState.email });
-    console.log(userData);
 
     if (userData !== undefined) {
       setIsValidNewEmail(false);
@@ -120,7 +118,7 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
     }
 
     let saltRounds = 10;
-    bcrypt.hash(signupState.password, saltRounds, function (err, hash) {
+    bcrypt.hash(signupState.password, saltRounds, function (err, hashedPassword) {
       if (err) {
         throw err;
       } else {
@@ -130,11 +128,12 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
             full_name: signupState.full_name,
             username: signupState.username,
             email: signupState.email,
-            password: hash,
+            password: hashedPassword,
             admin_password: signupState.admin_password,
             // Note: is_verified field added in case of future email verification implementation
             is_verified: "false",
             is_admin: resolveAdminPassword(signupState.admin_password),
+            security_question: signupState.security_question
           },
         });
         props.setIsSignup(false);

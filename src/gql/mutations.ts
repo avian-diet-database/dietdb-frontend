@@ -12,6 +12,12 @@ mutation createUser($full_name: String!,
     }
 `;
 
+const RESET_PASSWORD = gql `
+mutation resetPassword($email: String!, $password: String!) {
+        resetPassword(email: $email, password: $password)
+    }
+`;
+
 // using this one for now
 const CREATE_PENDING_DIET_SKELETON = gql`
 mutation createAlternativePendingDiet($common_name: String!,
@@ -163,5 +169,6 @@ mutation CreatePendingDiet(
 
 export {
     CREATE_PENDING_DIET_SKELETON,
-    CREATE_USER
+    CREATE_USER,
+    RESET_PASSWORD
 }
