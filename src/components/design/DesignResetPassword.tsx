@@ -74,7 +74,6 @@ export const DesignResetPassword: React.FC<DesignResetProps> = (
     }
 
     refetch({ email: resetState.email, security_question: resetState.security_question});
-    console.log(userData);
 
     if (userData === undefined) {
       setValidAccount(false);

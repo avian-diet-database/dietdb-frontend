@@ -37,7 +37,7 @@ function getFormLabels(field: string) {
     case "confirm_password":
       return "Confirm Password";
     case "admin_password":
-      return "Admin Password (*only needed if signing up as Admin)";
+      return "Admin Password (only needed if signing up as Admin)";
     case "security_question":
       return "Security Question: What is your favorite bird species?";
   }
@@ -89,7 +89,6 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
     let valid = regEx.test(email);
-    console.log(valid);
     return regEx.test(email);
   };
 
