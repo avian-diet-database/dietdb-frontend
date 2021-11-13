@@ -1,11 +1,12 @@
-import { useMutation, useQuery } from '@apollo/client';
-import React, { useEffect, useState } from 'react';
-import { CREATE_USER } from '../../gql/mutations';
-import { GET_USER_BY_LOGIN  } from '../../gql/queries';
+import { useQuery } from "@apollo/client";
+import React, { useEffect, useState } from "react";
+import { GET_USER_BY_EMAIL } from "../../gql/queries";
 import { LogicSignup } from "../logic/LogicSignup";
+import { LogicResetPassword } from "../logic/LogicResetPassword";
+import bcrypt from "bcryptjs";
 
 interface DesignLoginProps {
-  setUser:any,
+  setUser: any;
 }
 
 const formContainerStyles = {
@@ -17,97 +18,127 @@ const signupPromptStyles = {
 };
 
 const greenTextStyles = {
-    color: "#33CC99",
-}
+  color: "#33CC99",
+};
 
-const requiredFields = [
-  "Email",
-  "Password",
-];
+const redTextStyles = {
+  color: "#FF0000",
+};
 
-export const DesignLogin = (props: DesignLoginProps) =>  {
+const requiredFields = ["Email", "Password"];
+
+export const DesignLogin = (props: DesignLoginProps) => {
+  const [loginFailed, setLoginFailed] = useState(false);
+  const [isReset, setIsReset] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
-  const [loginState, setLoginState] = useState(
-    {
+  const [loginState, setLoginState] = useState({
+    Email: "",
+    Password: "",
+  });
+
+  useEffect(() => {
+    refetch({ email: loginState.Email });
+  }, [loginState]);
+
+  useEffect(() => {
+    setLoginFailed(false);
+    setLoginState({
       Email: "",
       Password: "",
-    }
-  );
+    });
+  }, [isSignup]);
 
-  const setLoginInputState = (e:any) => {
+  const setLoginInputState = (e: any) => {
     const { name, value } = e.target;
-    setLoginState(prevState => ({ ...prevState, [name]: value }));
-  }
+    setLoginState((prevState) => ({ ...prevState, [name]: value }));
+  };
 
   // GetUserByLogin calls GQL query to confirm if a login request is successful (user exists in the database)
-  const { loading, error, data, refetch } = useQuery(GET_USER_BY_LOGIN, {
+  const { loading, error, data, refetch } = useQuery(GET_USER_BY_EMAIL, {
     variables: {
       email: "",
-      password: "",
     },
-    // onCompleted: (): any => props.setUser({
-    //   full_name: data.getUserByLogin.full_name,
-    //   username: data.getUserByLogin.full_name,
-    //   email: data.getUserByLogin.full_name,
-    //   is_verified: data.getUserByLogin.full_name,
-    //   is_admin: data.getUserByLogin.full_name,
-    // })
   });
 
   function submitLogin() {
-    // Call another GQL query based on user input
-    console.log("logging in with email "+loginState.Email+" and password "+loginState.Password);
-    refetch({
-      email: loginState.Email,
-      password: loginState.Password,
-    });
-    console.log(data);
     if (data !== undefined) {
-      props.setUser({
-        full_name: data.getUserByLogin.full_name,
-        username: data.getUserByLogin.username,
-        email: data.getUserByLogin.email,
-        is_verified: data.getUserByLogin.is_verified,
-        is_admin: data.getUserByLogin.is_admin,
-      });
+      bcrypt.compare(
+        loginState.Password,
+        data.getUserByEmail.password,
+        (err, passwordMatches) => {
+          if (err) {
+            throw err;
+          } else {
+            if (passwordMatches) {
+              props.setUser({
+                full_name: data.getUserByEmail.full_name,
+                username: data.getUserByEmail.username,
+                email: data.getUserByEmail.email,
+                is_verified: data.getUserByEmail.is_verified,
+                is_admin: data.getUserByEmail.is_admin,
+              });
+            }
+          }
+        }
+      );
+    } else {
+      setLoginFailed(true);
     }
   }
 
-  return (
-    !isSignup ?
+  return !isSignup ? (
+    !isReset ? 
     <div>
       <div className="container has-text-centered">
         <h1 className="title is-1">Login</h1>
       </div>
       <div className="formContainer" style={formContainerStyles}>
         <div className="container">
-        {requiredFields.map((field) => (
-            <div className="field" key={field+"-login-field"}>
+          {requiredFields.map((field) => (
+            <div className="field" key={field + "-login-field"}>
               <label className="label">{field}</label>
               <div className="control">
-                <input
-                  className="input"
-                  type="text"
-                  placeholder={field}
-                  name={field}
-                  onChange={setLoginInputState}
-                ></input>
+                  <input
+                    className="input"
+                    type={field === "Password" ? "password" : "input"}
+                    placeholder={field}
+                    name={field}
+                    onChange={setLoginInputState}
+                  ></input>
               </div>
             </div>
           ))}
         </div>
+        {loginFailed ? <div className="errorPrompt" style={signupPromptStyles}>
+          <p style={redTextStyles}>Your login information was incorrect. Please try again.</p>
+        </div> : null}
         <div className="signupPrompt" style={signupPromptStyles}>
-          <p>New user? <a style={greenTextStyles} onClick={() => setIsSignup(true)}>Sign up!</a></p>
+          <p>
+            New user?{" "}
+            <a style={greenTextStyles} onClick={() => setIsSignup(true)}>
+              Sign up!
+            </a>
+          </p>
+        </div>
+        <div className="recoveryPrompt" style={signupPromptStyles}>
+          <p>
+            Forgot password?{" "}
+            <a style={greenTextStyles} onClick={() => setIsReset(true)}>
+              Reset it!
+            </a>
+          </p>
         </div>
         <div className="field is-grouped is-grouped-centered">
           <p className="control">
-            <a className="button is-info" onClick={submitLogin}>Submit</a>
+            <button className="button is-info" onClick={submitLogin} disabled={loginState.Email===""||loginState.Password===""}>
+              Submit
+            </button>
           </p>
         </div>
       </div>
-    </div> :
-    <LogicSignup
-      setIsSignup={setIsSignup}
-    />
+    </div>:
+    <LogicResetPassword setIsReset={setIsReset}/>
+  ) : (
+    <LogicSignup setIsSignup={setIsSignup}/>
   );
 };
