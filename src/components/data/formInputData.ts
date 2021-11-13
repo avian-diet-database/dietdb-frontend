@@ -7,6 +7,42 @@ export const formInputData = {
     age_classes: ["chick/nestling","juvenile/immature","adult"],
     published_locations: ["In the text","Table","Figure"],
     prey_parts: ["bark", "statoblasts", "sap", "oogonium", "pollen", "fruit", "bud", "vegetation", "seed", "spore", "root", "gall", "feces", "flower"],
-    
+    taxonomy_levels: ["Kingdom", "Phylum", "Class", "Order", "Suborder", "Family", "Genus", "Species"],
+    kingdoms: ["Animalia","Bacteria","Chromista","Fungi","Plantae","Protozoa","Non-biological","Unknown"],
+    animalia_phylums: ["Annelida","Arthropoda","Bryozoa","Chaetognatha","Chordata","Cnidaria","Echinodermata","Mollusca","Nematoda","Nematomorpha","Nemertea","Platyhelminthes","Porifera"],
+    bacteria_phylums: ["Cyanobacteria"],
+    chromista_phylums: ["Heterokontophyta","Ochrophyta","Phaeophyta","Xanthophyta"],
+    fungi_phylums: ["Ascomycota","Basidiomycota"],
+    plantae_phylums: ["Bryophyta","Charophyta","Chlorophyta","Rhodophyta","Tracheophyta"],
+    protozoa_phylums: ["Ciliophora", "Protozoa"],
+    annelida_classes: ["Clitellata", "Polychaeta"],
+    arthropoda_classes: ["Branchiopoda","Cephalocarida","Chilopoda","Collembola","Diplopoda","Euchelicerata","Insecta","Malacostraca","Maxillopoda","Ostracoda"],
+    bryozoa_classes: ["Gymnolaemata", "Phylactolaemata"],
+    chordata_classes: ["Actinopterygii","Amphibia","Aves","Cephalaspidomorphi","Chondrichthyes","Chondrostei","Holostei","Mammalia","Reptilia","Teleostei","Thaliacea"],
+    cnidaria_classes: ["Anthozoa", "Hydrozoa", "Scyphozoa"],
+    echinodermata_classes: ["Asteroidea","Echinoidea","Holothuroidea","Ophiuroidea"],
+    mollusca_classes: ["Bivalvia","Cephalopoda","Gastropoda","Polyplacophora","Solenogastres"],
+    nematoda_classes: ["Chromadorea", "Dorylaimea"],
+    nemertea_classes: ["Enopla"],
+    platyhelminthes_classes: ["Trepaxonemata"],
+    porifera_classes: ["Demospongiae"],
+    cyanobacteria_classes: ["Cyanophyceae"],
+    heterokontophyta_classes: ["Phaeophyceae"],
+    ochrophyta_classes: ["Phaeophyceae"],
+    phaeophyta_classes: ["Phaeophyceae"],
+    xanthophyta_classes: ["Xanthophyceae"],
+    ascomycota_classes: ["Sordariomycetes", "Lecanoromycetes"],
+    basidiomycota_classes: ["Agaricomycetes"],
+    bryophyta_classes: ["Bryopsida", "Polytrichopsida"],
+    charophyta_classes: ["Charophyceae", "Conjugatophyceae"],
+    chlorophyta_classes: ["Chlorophyceae", "Ulvophyceae"],
+    rhodophyta_classes: ["Bangiophyceae", "Florideophyceae"],
+    tracheophyta_classes: ["Gnetopsida","Lycopodiopsida","Magnoliopsida","Pinopsida","Polypodiopsida"],
+    ciliophora_classes: ["Ciliatea"],
+    protozoa_classes: ["Granuloreticulosea"],
+
+
+
+
 
 }
