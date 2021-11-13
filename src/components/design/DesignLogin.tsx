@@ -32,13 +32,21 @@ export const DesignLogin = (props: DesignLoginProps) => {
   const [isReset, setIsReset] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
   const [loginState, setLoginState] = useState({
-    Email: "email",
-    Password: "password",
+    Email: "",
+    Password: "",
   });
 
   useEffect(() => {
     refetch({ email: loginState.Email });
   }, [loginState]);
+
+  useEffect(() => {
+    setLoginFailed(false);
+    setLoginState({
+      Email: "",
+      Password: "",
+    });
+  }, [isSignup]);
 
   const setLoginInputState = (e: any) => {
     const { name, value } = e.target;

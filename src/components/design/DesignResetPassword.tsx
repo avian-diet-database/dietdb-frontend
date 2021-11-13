@@ -122,7 +122,7 @@ export const DesignResetPassword: React.FC<DesignResetProps> = (
             </div>
           ))}
         </div>
-        {!validAccount ? <div className="noAccountError" style={signupPromptStyles}>
+        {!validAccount && validPasswords ? <div className="noAccountError" style={signupPromptStyles}>
           <p style={redTextStyles}>No account with that email and security question answer exists. Please try again.</p>
         </div> : null}
         {!validPasswords ? <div className="matchingPasswordsError" style={signupPromptStyles}>
