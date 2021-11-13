@@ -104,9 +104,9 @@ export const DesignLogin = (props: DesignLoginProps) => {
         </div>
         <div className="field is-grouped is-grouped-centered">
           <p className="control">
-            <a className="button is-info" onClick={submitLogin}>
+            <button className="button is-info" onClick={submitLogin} disabled={loginState.Email===""||loginState.Password===""}>
               Submit
-            </a>
+            </button>
           </p>
         </div>
       </div>

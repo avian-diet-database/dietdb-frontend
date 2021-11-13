@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CREATE_USER } from "../../gql/mutations";
 import { GET_USER_BY_EMAIL } from "../../gql/queries";
 import bcrypt from "bcryptjs";
@@ -37,7 +37,9 @@ function getFormLabels(field: string) {
     case "confirm_password":
       return "Confirm Password";
     case "admin_password":
-      return "Admin Password";
+      return "Admin Password (*only needed if signing up as Admin)";
+    case "security_question":
+      return "Security Question: What is your favorite bird species?";
   }
 }
 
@@ -57,6 +59,7 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
     password: "",
     confirm_password: "",
     admin_password: "",
+    security_question: "",
   });
 
   // Used to ensure signup doesn't use an existing email
@@ -204,9 +207,10 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
         </div>
         <div className="field is-grouped is-grouped-centered">
           <p className="control">
-            <a className="button is-info" onClick={submitSignup}>
+            <button className="button is-info" onClick={submitSignup} disabled={signupState.full_name===""
+          || signupState.username===""||signupState.email===""||signupState.password===""||signupState.confirm_password===""||signupState.security_question===""}>
               Submit
-            </a>
+            </button>
           </p>
         </div>
       </div>
