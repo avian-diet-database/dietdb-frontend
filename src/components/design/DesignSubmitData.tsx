@@ -24,7 +24,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         subspecies: '',
         taxonomy: '',
         location_region: '',
-        location_other: '',
         location_specific: '',
         lat_long_yn: '',
         latitude_dd: '',
@@ -42,6 +41,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         study_type: '',
         item_sample_size: '',
         bird_sample_size: '',
+        new_species_yn: '',
         sites: '',
         sex_yn: '',
         sex: '',
@@ -66,7 +66,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         prey_scientific_name: '',
         prey_name_ITIS_ID: '',
         prey_name_status: '',
-        enter_species_manually: '',
 
 
 
@@ -92,24 +91,25 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     const [prey_stage, setPreyStage] = useState([]);
     const [observation_season, setObservationSeason] = useState([]);
     //const [prey_common_name, setPreyCommonName] = useState([]);
-    const [prey_kingdom, setPreyKingdom] = useState('');
-    const [prey_phylum, setPreyPhylum] = useState('');
-    const [prey_class, setPreyClass] = useState('');
-    const [prey_order, setPreyOrder] = useState('');
-    const [prey_suborder, setPreySuborder] = useState('');
-    const [prey_family, setPreyFamily] = useState('');
-    const [prey_genus, setPreyGenus] = useState('');
-    const [prey_scientific_name, setPreyScientificName] = useState('');
+    // const [prey_kingdom, setPreyKingdom] = useState('');
+    // const [prey_phylum, setPreyPhylum] = useState('');
+    // const [prey_class, setPreyClass] = useState('');
+    // const [prey_order, setPreyOrder] = useState('');
+    // const [prey_suborder, setPreySuborder] = useState('');
+    // const [prey_family, setPreyFamily] = useState('');
+    // const [prey_genus, setPreyGenus] = useState('');
+    // const [prey_scientific_name, setPreyScientificName] = useState('');
 
 
     const [{ doi, title, journal, year, lastname_author, subspecies, taxonomy,
-        location_region, location_other, location_specific, lat_long_yn,
-        latitude_dd, longitude_dd, elevation_yn, altitude_min_m, altitude_max_m, altitude_mean_m,
+        location_region, location_specific, lat_long_yn,
+        latitude_dd, longitude_dd, elevation_yn, altitude_min_m, altitude_max_m, altitude_mean_m, new_species_yn,
         observation_month_begin, observation_month_end, observation_year_begin, observation_year_end,
         analysis_number, study_type, item_sample_size, bird_sample_size, sites, sex_yn, sex, age_class_yn,
         age_class, within_study_data_source, table_fig_number, prey_common_name, inclusive_prey_taxon, fraction_diet,
-        all_prey_diet_yn, notes, scientific_name, common_name,
-        family, diet_type, enter_species_manually,
+        all_prey_diet_yn, notes, scientific_name, common_name, prey_kingdom, prey_phylum, prey_class, prey_order, prey_scientific_name, prey_family,
+        prey_genus, prey_suborder,
+        family, diet_type,
         prey_name_ITIS_ID,
         prey_name_status },
         setStudyInfoState] = useState(initialState);
@@ -118,15 +118,18 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         const { name, value } = e.target;
         setStudyInfoState(prevState => ({ ...prevState, [name]: value }));
 
-        if (name === "inclusive_prey_taxon") {
-            if (value !== ("Kingdom" || "Phylum" || "Class")) {
-                generateTextTaxonomyOptions(value);
-            } else if (value === "Kingdom") {
-                generateKingdomOptions();
-            }
-        }
+        // if (name === "inclusive_prey_taxon") {
+        //     // if (value !== ("Kingdom" || "Phylum" || "Class")) {
+        //     //     generateTextTaxonomyOptions(value);
+        //     // }
+        //     // } else if (value === "Kingdom") {
+        //     //     generateKingdomOptions();
+        //     // }
+        // }
 
-        // if (name === "prey_kingdom")
+        // if (name === "prey_kingdom") {
+        //     generatePhylumOptions();
+        // }
     }
 
     let formData = {
@@ -137,11 +140,11 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             year: year,
             lastname_author: lastname_author,
             scientific_name: scientific_name,
+            new_species_yn: new_species_yn,
             common_name: common_name,
             subspecies: subspecies,
             taxonomy: taxonomy,
             location_region: location_region,
-            location_other: location_other,
             location_specific: location_specific,
             lat_long_yn: lat_long_yn,
             latitude_dd: latitude_dd,
@@ -186,7 +189,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             prey_scientific_name: prey_scientific_name,
             prey_name_ITIS_ID: prey_name_ITIS_ID,
             prey_name_status: prey_name_status,
-            enter_species_manually: enter_species_manually,
             prey_submissions: preySubmissions,
 
         }
@@ -388,8 +390,9 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             color: '#363636',
             width: '320px',
         },
-        kingdomInputContainer: {
-            display: 'none',
+        taxonomicSpacing: {
+            marginTop: '0',
+            marginBottom: '0.5rem',
         }
 
     };
@@ -487,123 +490,167 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     // })
 
     function generateKingdomOptions() {
-        document.getElementById('kingdom-inputs').style.display = "block";
-        // const inputSelectStyle = 'width: 100vw; background-color: white; border-color: #dbdbdb;';
-
-        // const mainDiv = document.getElementById('additional-taxon-fields');
-
-        // let kingdomInput = `
-        //     <div class="field">
-        //         <div class="select is-success" style={{ ...styles.inputBoxSpacing }}>
-        //             <select style="${inputSelectStyle}" value="${prey_kingdom}" name="prey_kingdom">
-        //                 ${formInputData.kingdoms.map(kingdom => <option>{JSON.stringify(kingdom)}</option>)}
-        //             </select>
-        //         </div>
-        //     </div> `
-
-        // let kingdomDiv = document.createElement('div');
-        // kingdomDiv.innerHTML = kingdomInput;
-
-        // mainDiv.innerHTML = '';
-        // mainDiv.append(kingdomDiv);
-
+        // document.getElementById('additional-taxon-fields').innerHTML = ''
+        // let kingdom = document.getElementById('kingdom-inputs');
+        // kingdom.style.display = 'block';
+        return <div id="kingdom-inputs" className="field" style={styles.noMargin}>
+            <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setStudyInfoInputState}>
+                    <option>Select a Kingdom</option>
+                    {formInputData.kingdoms.map(kingdom => <option>{kingdom}</option>)}
+                </select>
+            </div>
+        </div>
     }
 
-    function generateTextTaxonomyOptions(taxonomy: string) {
-
-        const containerStyle = 'margin-top: .5rem; margin-bottom: .5rem;';
-        const inputTextBoxStyle = 'background-color: white; width: 100%;';
-        const inputSelectStyle = 'width: 100vw; background-color: white; border-color: #dbdbdb;';
-
-        const mainDiv = document.getElementById('additional-taxon-fields');
-
-        let orderInput =
-            `<div class="control" style="${containerStyle}">
-                <input id="prey_order" class="input" style="${inputTextBoxStyle}" type="text" placeholder="Enter Order" value="${prey_order}" name="prey_order" />
-            </div>`
-
-        let orderDiv = document.createElement('div');
-        orderDiv.innerHTML = orderInput;
-
-        let suborderInput =
-            `<div class="control" style="${containerStyle}">
-                <input class="input" style="${inputTextBoxStyle}" type="text" placeholder="Enter Suborder" value="${prey_suborder}" name="prey_suborder" />
-            </div>`
-
-        let suborderDiv = document.createElement('div');
-        suborderDiv.innerHTML = suborderInput;
-
-        let familyInput =
-            `<div class="control" style="${containerStyle}">
-                <input class="input" style="${inputTextBoxStyle}" type="text" placeholder="Enter Family" value="${prey_family}" name="prey_family" />
-            </div>`
-
-        let familyDiv = document.createElement('div');
-        familyDiv.innerHTML = familyInput;
-
-        let genusInput =
-            `<div class="control" style="${containerStyle}">
-                <input class="input" style="${inputTextBoxStyle}" type="text" placeholder="Enter Genus" value="${prey_genus}" name="prey_genus" />
-            </div>`
-
-        let genusDiv = document.createElement('div');
-        genusDiv.innerHTML = genusInput;
-
-        let speciesInput =
-            `<div class="control" style="${containerStyle}">
-                <input class="input" style="${inputTextBoxStyle}" type="text" placeholder="Enter Scientific Name" value="${prey_scientific_name}" name="prey_scientific_name" />
-            </div>`
-
-        let speciesDiv = document.createElement('div');
-        speciesDiv.innerHTML = speciesInput;
-
-        switch (taxonomy) {
-            case 'Order':
-                mainDiv.innerHTML = '';
-                mainDiv.append(orderDiv)
-                mainDiv.append(suborderDiv);
-                mainDiv.append(familyDiv);
-                mainDiv.append(genusDiv);
-                mainDiv.append(speciesDiv);
-                break;
-            case 'Suborder':
-                mainDiv.innerHTML = '';
-                mainDiv.append(suborderDiv);
-                mainDiv.append(familyDiv);
-                mainDiv.append(genusDiv);
-                mainDiv.append(speciesDiv);
-                break;
-            case 'Family':
-                mainDiv.innerHTML = '';
-                mainDiv.append(familyDiv);
-                mainDiv.append(genusDiv);
-                mainDiv.append(speciesDiv);
-                break;
-            case 'Genus':
-                mainDiv.innerHTML = '';
-                mainDiv.append(genusDiv);
-                mainDiv.append(speciesDiv);
-                break;
-            case 'Species':
-                mainDiv.innerHTML = '';
-                mainDiv.append(speciesDiv);
-                break;
-
-        }
+    function generatePhylumOptions(phylum_data: string[]) {
+        return <div id="phylum-inputs" className="field" style={styles.noMargin}>
+            <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
+                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_phylum} name="prey_phylum" onChange={setStudyInfoInputState}>
+                    <option>Select a Phylum</option>
+                    {phylum_data.map(phylum => <option>{phylum}</option>)}
+                </select>
+            </div>
+        </div>
     }
 
-    function setDietInfo() {
-        let order = document.getElementById('prey_order') as HTMLInputElement;
-        let suborder = document.getElementById('prey_suborder') as HTMLInputElement;
-        let family = document.getElementById('prey_family') as HTMLInputElement;
-        let genus = document.getElementById('prey_genus') as HTMLInputElement;
-        let scientific_name = document.getElementById('prey_scientific_name') as HTMLInputElement;
-        setPreyOrder(order.value);
-        // set(suborder.value);
-        // setPreyOrder(family.value);
-        // setPreyOrder(genus.value);
-        // setPreyOrder(scientific_name.value);
+    function generateClassOptions(class_data: string[]) {
+        return <div id="phylum-inputs" className="field" style={styles.noMargin}>
+            <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
+                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_class} name="prey_class" onChange={setStudyInfoInputState}>
+                    <option>Select a Class</option>
+                    {class_data.map(class_ => <option>{class_}</option>)}
+                </select>
+            </div>
+        </div>
     }
+
+    function generateOrderOptions() {
+        return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Order" value={prey_order} name="prey_order" onChange={setStudyInfoInputState} />
+        </div>
+    }
+
+    function generateSuborderOptions() {
+        return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Suborder" value={prey_suborder} name="prey_suborder" onChange={setStudyInfoInputState} />
+        </div>
+    }
+
+    function generateFamilyOptions() {
+        return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Family" value={prey_family} name="prey_family" onChange={setStudyInfoInputState} />
+        </div>
+    }
+
+    function generateGenusOptions() {
+        return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Genus" value={prey_genus} name="prey_genus" onChange={setStudyInfoInputState} />
+        </div>
+    }
+
+    function generateSpeciesOptions() {
+        return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Scientific Name" value={prey_scientific_name} name="prey_scientific_name" onChange={setStudyInfoInputState} />
+        </div>
+    }
+
+    // function generateTextTaxonomyOptions(taxonomy: string) {
+
+    //     const containerStyle = 'margin-top: .5rem; margin-bottom: .5rem;';
+    //     const inputTextBoxStyle = 'background-color: white; width: 100%;';
+    //     const inputSelectStyle = 'width: 100vw; background-color: white; border-color: #dbdbdb;';
+    //     // const kingdom_phylum_class = document.getElementById('kingdom-phylum-class-inputs');
+
+    //     const mainDiv = document.getElementById('additional-taxon-fields');
+
+    //     let orderInput =
+    //         `<div class="control" style="${containerStyle}">
+    //             <input id="prey_order" class="input" style="${inputTextBoxStyle}" type="text" placeholder="Enter Order" value="${prey_order}" name="prey_order" />
+    //         </div>`
+
+    //     let orderDiv = document.createElement('div');
+    //     orderDiv.innerHTML = orderInput;
+
+    //     let suborderInput =
+    //         `<div class="control" style="${containerStyle}">
+    //             <input class="input" style="${inputTextBoxStyle}" type="text" placeholder="Enter Suborder" value="${prey_suborder}" name="prey_suborder" />
+    //         </div>`
+
+    //     let suborderDiv = document.createElement('div');
+    //     suborderDiv.innerHTML = suborderInput;
+
+    //     let familyInput =
+    //         `<div class="control" style="${containerStyle}">
+    //             <input class="input" style="${inputTextBoxStyle}" type="text" placeholder="Enter Family" value="${prey_family}" name="prey_family" />
+    //         </div>`
+
+    //     let familyDiv = document.createElement('div');
+    //     familyDiv.innerHTML = familyInput;
+
+    //     let genusInput =
+    //         `<div class="control" style="${containerStyle}">
+    //             <input class="input" style="${inputTextBoxStyle}" type="text" placeholder="Enter Genus" value="${prey_genus}" name="prey_genus" />
+    //         </div>`
+
+    //     let genusDiv = document.createElement('div');
+    //     genusDiv.innerHTML = genusInput;
+
+    //     let speciesInput =
+    //         `<div class="control" style="${containerStyle}">
+    //             <input class="input" style="${inputTextBoxStyle}" type="text" placeholder="Enter Scientific Name" value="${prey_scientific_name}" name="prey_scientific_name" />
+    //         </div>`
+
+    //     let speciesDiv = document.createElement('div');
+    //     speciesDiv.innerHTML = speciesInput;
+
+    //     switch (taxonomy) {
+    //         case 'Order':
+    //             mainDiv.innerHTML = '';
+    //             mainDiv.append(orderDiv)
+    //             mainDiv.append(suborderDiv);
+    //             mainDiv.append(familyDiv);
+    //             mainDiv.append(genusDiv);
+    //             mainDiv.append(speciesDiv);
+    //             break;
+    //         case 'Suborder':
+    //             mainDiv.innerHTML = '';
+    //             mainDiv.append(suborderDiv);
+    //             mainDiv.append(familyDiv);
+    //             mainDiv.append(genusDiv);
+    //             mainDiv.append(speciesDiv);
+    //             break;
+    //         case 'Family':
+    //             mainDiv.innerHTML = '';
+    //             mainDiv.append(familyDiv);
+    //             mainDiv.append(genusDiv);
+    //             mainDiv.append(speciesDiv);
+    //             break;
+    //         case 'Genus':
+    //             mainDiv.innerHTML = '';
+    //             mainDiv.append(genusDiv);
+    //             mainDiv.append(speciesDiv);
+    //             break;
+    //         case 'Species':
+    //             mainDiv.innerHTML = '';
+    //             mainDiv.append(speciesDiv);
+    //             break;
+
+    //     }
+    // }
+
+    // function setDietInfo() {
+    //     let order = document.getElementById('prey_order') as HTMLInputElement;
+    //     let suborder = document.getElementById('prey_suborder') as HTMLInputElement;
+    //     let family = document.getElementById('prey_family') as HTMLInputElement;
+    //     let genus = document.getElementById('prey_genus') as HTMLInputElement;
+    //     let scientific_name = document.getElementById('prey_scientific_name') as HTMLInputElement;
+    //     setPreyOrder(order.value);
+    //     // set(suborder.value);
+    //     // setPreyOrder(family.value);
+    //     // setPreyOrder(genus.value);
+    //     // setPreyOrder(scientific_name.value);
+    // }
 
     // displays specified HTMLElement
     function display(id: string, displayType?: string) {
@@ -696,22 +743,26 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 <div style={styles.form}>
                     <div id="question2">
                         <p id="required" style={{ ...styles.questionTextSize }}>2. What bird species are you entering diet data for? <span style={styles.green}>*</span></p>
-                        <div style={{ ...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom }}>
+                        <div style={{ ...styles.noMarginBottom }}>
                             <div className="field" style={styles.noMarginBottom}>
                                 <label className="label" style={styles.questionTextSize}>Please enter the scientific name.</label>
                                 <div className="control" style={styles.inputBoxSpacing}>
-                                    <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Enter Scientific Name" value={scientific_name} name="scientific_name" onChange={setStudyInfoInputState} />
-                                </div>
-                            </div>
-                            <div className="field" style={styles.noMarginBottom}>
-                                <label className="label" style={styles.questionTextSize}>Subspecies</label>
-                                <div className="control" style={styles.inputBoxSpacing}>
-                                    <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Enter Common Name" value={common_name} name="common_name" onChange={setStudyInfoInputState} />
+                                    <input className="input" style={{ ...styles.inputBox}} type="text" placeholder="Enter Scientific Name" value={scientific_name} name="scientific_name" onChange={setStudyInfoInputState} />
                                 </div>
                             </div>
                         </div>
-                        <span id="required" style={{ ...styles.questionTextSize }}>New species? Enter it in manually</span>
-                        <div style={{ ...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom }}>
+                        <span id="required" style={{ ...styles.questionTextSize }}>New species? Enter it in manually.</span>
+                        <div className="control" style={styles.inputBoxSpacing}>
+                            <label className="radio" style={styles.radioButtonSpacing}>
+                                <input type="radio" value="yes" name="new_species_yn" onChange={setStudyInfoInputState} onClick={() => display('new-species-question', 'flex')} />
+                                <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Yes</span>
+                            </label>
+                            <label className="radio">
+                                <input type="radio" value="no" name="new_species_yn" onChange={setStudyInfoInputState} onClick={() => remove('new-species-question')} />
+                                <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>No</span>
+                            </label>
+                        </div>
+                        <div id="new-species-question" style={{ ...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom, ...styles.displayNone }}>
                             <div className="field" style={styles.noMarginBottom}>
                                 <label className="label" style={styles.questionTextSize}>Enter Scientific Name</label>
                                 <div className="control" style={styles.inputBoxSpacing}>
@@ -775,9 +826,9 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                                 </div>
                             </div>
                             <div className="field" style={styles.noMarginBottom}>
-                                <label className="label" style={styles.questionTextSize}>Other</label>
+                                <label className="label" style={styles.questionTextSize}>Other (if other regions not applicable)</label>
                                 <div className="control" style={styles.inputBoxSpacing}>
-                                    <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Specify Area" value={location_other} name="location_other" onChange={setStudyInfoInputState} />
+                                    <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Specify Area" value={location_region} name="location_region" onChange={setStudyInfoInputState} />
                                 </div>
                             </div>
                         </div>
@@ -1088,23 +1139,57 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         </div>
                         <p style={styles.questionTextSize}>Please clarify the taxonomic classification of this name.</p>
                         <p style={styles.questionTextSize}>First, what is the taxonomic level of this name?</p>
-                        <div className="field">
+                        <div className="field" style={styles.noMargin}>
                             <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                                <select id="inclusive-prey-taxon" style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={inclusive_prey_taxon} name="inclusive_prey_taxon" onChange={setStudyInfoInputState}>
+                                <select id="inclusive-prey-taxon" style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={inclusive_prey_taxon} name="inclusive_prey_taxon" onChange={setStudyInfoInputState}>
                                     <option>Select Taxonomic Level</option>
                                     {formInputData.taxonomy_levels.map(taxonomy_level => <option>{taxonomy_level}</option>)}
                                 </select>
                             </div>
                         </div>
-                        <div id="additional-taxon-fields" className="field">
-                        <div id="kingdom-inputs" className="field" style={styles.kingdomInputContainer}>
-                <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={prey_kingdom} name="prey_kingdom">
-                        ${formInputData.kingdoms.map(kingdom => <option>{kingdom}</option>)}
-                    </select>
-                </div>
-            </div> 
-                        </div>
+                        {inclusive_prey_taxon === "Kingdom" ? generateKingdomOptions() : null}
+                        {inclusive_prey_taxon === "Phylum" ? generatePhylumOptions(formInputData.phylums) :
+                            prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
+                                prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
+                                    prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
+                                        prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
+                                            prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
+                                                prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null}
+                        {inclusive_prey_taxon === "Class" ? generateClassOptions(formInputData.classes) :
+                            prey_phylum === "Annelida" ? generateClassOptions(formInputData.annelida_classes) :
+                                prey_phylum === "Arthropoda" ? generateClassOptions(formInputData.arthropoda_classes) :
+                                    prey_phylum === "Bryozoa" ? generateClassOptions(formInputData.bryozoa_classes) :
+                                        prey_phylum === "Chordata" ? generateClassOptions(formInputData.chordata_classes) :
+                                            prey_phylum === "Cnidaria" ? generateClassOptions(formInputData.cnidaria_classes) :
+                                                prey_phylum === "Echinodermata" ? generateClassOptions(formInputData.echinodermata_classes) :
+                                                    prey_phylum === "Mollusca" ? generateClassOptions(formInputData.mollusca_classes) :
+                                                        prey_phylum === "Nematoda" ? generateClassOptions(formInputData.nematoda_classes) :
+                                                            prey_phylum === "Nemertea" ? generateClassOptions(formInputData.nemertea_classes) :
+                                                                prey_phylum === "Platyhelminthes" ? generateClassOptions(formInputData.platyhelminthes_classes) :
+                                                                    prey_phylum === "Porifera" ? generateClassOptions(formInputData.porifera_classes) :
+                                                                        prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) :
+                                                                            prey_phylum === "Heterokontophyta" ? generateClassOptions(formInputData.heterokontophyta_classes) :
+                                                                                prey_phylum === "Ochrophyta" ? generateClassOptions(formInputData.ochrophyta_classes) :
+                                                                                    prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                                                                                        prey_phylum === "Xanthophyta" ? generateClassOptions(formInputData.xanthophyta_classes) :
+                                                                                            prey_phylum === "Ascomycota" ? generateClassOptions(formInputData.ascomycota_classes) :
+                                                                                                prey_phylum === "Basidiomycota" ? generateClassOptions(formInputData.basidiomycota_classes) :
+                                                                                                    prey_phylum === "Bryophyta" ? generateClassOptions(formInputData.bryophyta_classes) :
+                                                                                                        prey_phylum === "Charophyta" ? generateClassOptions(formInputData.charophyta_classes) :
+                                                                                                            prey_phylum === "Chlorophyta" ? generateClassOptions(formInputData.chlorophyta_classes) :
+                                                                                                                prey_phylum === "Rhodophyta" ? generateClassOptions(formInputData.rhodophyta_classes) :
+                                                                                                                    prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                                                                                                                        prey_phylum === "Tracheophyta" ? generateClassOptions(formInputData.tracheophyta_classes) :
+                                                                                                                            prey_phylum === "Ciliophora" ? generateClassOptions(formInputData.ciliophora_classes) :
+                                                                                                                                prey_phylum === "Protozoa" ? generateClassOptions(formInputData.protozoa_classes) :
+                                                                                                                                    prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) : null}
+                        {inclusive_prey_taxon === "Order" ? generateOrderOptions() : prey_class != "" ? generateOrderOptions() : null}
+                        {inclusive_prey_taxon === "Suborder" ? generateSuborderOptions() : prey_order != "" ? generateSuborderOptions() : null}
+                        {inclusive_prey_taxon === "Family" ? generateFamilyOptions() : prey_suborder != "" ? generateFamilyOptions() : null}
+                        {inclusive_prey_taxon === "Genus" ? generateGenusOptions() : prey_family != "" ? generateGenusOptions() : null}
+                        {inclusive_prey_taxon === "Species" ? generateSpeciesOptions() : prey_genus != "" ? generateSpeciesOptions() : null}
+                        {/* <div id="additional-taxon-fields" className="field">
+                        </div> */}
                     </div>
                     <div id="diet-question2">
                         <p id="required" style={{ ...styles.questionTextSize }}>2. Percent of the diet?</p>
@@ -1266,7 +1351,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         movePgToPg('4', '5');
                         getCheckedBoxes("prey-part", setPreyPart);
                         getCheckedBoxes("prey-stage", setPreyStage);
-                        setDietInfo();
+                        //setDietInfo();
                     }}>
                         <DesignGreenButton
                             buttonText={'Next'}
@@ -1291,7 +1376,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p id="required" style={{ ...styles.questionTextSize }}>1. Do you have a study with <strong>quantitative</strong> data on avian diet? <span style={styles.green}>*</span></p>
                         <p>{doi === '' ? 'Title: ' + title + '; Journal: ' + journal + '; Year: ' + year + '; Last Name of First Author: ' + lastname_author : 'DOI: ' + doi}</p>
                         <p id="required" style={{ ...styles.questionTextSize }}>2. What bird species are you entering diet data for? <span style={styles.green}>*</span></p>
-                        <p>{enter_species_manually === 'yes' ? 'Scientific Name: ' + scientific_name + '; Common Name: ' + common_name + '; Family: ' + family + '; Taxonomy: ' + taxonomy : 'Scientific Name: ' + scientific_name + '; Common Name: ' + common_name}</p>
+                        <p>{new_species_yn === 'yes' ? 'Scientific Name: ' + scientific_name + '; Common Name: ' + common_name + '; Family: ' + family + '; Taxonomy: ' + taxonomy : 'Scientific Name: ' + scientific_name}</p>
                         <p id="required" style={{ ...styles.questionTextSize }}>3. Was the data collected from within a single state, province, or country? <span style={styles.green}>*</span></p>
                         <p>{'Location: ' + location_region + '; Specific Location: ' + location_specific}</p>
                         <p id="required" style={{ ...styles.questionTextSize }}>4. What was the specific location name? <span style={styles.green}>*</span></p>
