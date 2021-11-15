@@ -1214,6 +1214,14 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <div id="diet-question4">
                             <p style={{ ...styles.questionTextSize }}>4. Does this prey entry refer to a particular life stage?</p>
                             <div className="control" style={styles.inputBoxSpacing}>
+                                {formInputData.prey_stage.map(prey_stage =>
+                                    <label className="checkbox" style={styles.checkboxSpacing}>
+                                        <input name="prey-stage" id={prey_stage} value={prey_stage} type="checkbox" onChange={() => getCheckedBoxes("prey-stage", setPreyStage)}/>
+                                        <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>{prey_stage}</span>
+                                    </label>
+                                )}
+                            </div>
+                            {/* <div className="control" style={styles.inputBoxSpacing}>
                                 <label className="checkbox" style={styles.checkboxSpacing}>
                                     <input id="adult" value="adult" type="checkbox" />
                                     <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>adult</span>
@@ -1242,14 +1250,14 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                                     <input id="teneral" value="teneral" type="checkbox" />
                                     <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>teneral</span>
                                 </label>
-                            </div>
+                            </div> */}
                         </div>
                         <div id="diet-question5">
                             <p style={{ ...styles.questionTextSize }}>5. Does this prey entry refer to a particular prey part? <span style={styles.green}>*</span></p>
                             <div className="control" style={styles.inputBoxSpacing}>
                                 {formInputData.prey_parts.map(prey_part =>
                                     <label className="checkbox" style={styles.checkboxSpacing}>
-                                        <input name="prey-part" id={prey_part} value={prey_part} type="checkbox" />
+                                        <input name="prey-part" id={prey_part} value={prey_part} type="checkbox" onChange={() => getCheckedBoxes("prey-part", setPreyPart)}/>
                                         <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>{prey_part}</span>
                                     </label>
                                 )}
@@ -1316,7 +1324,8 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         </div>
                     </div>
                 </div>
-                <div style={styles.addPreyButtonContainer} onClick={() => addPreyEntry()}>
+                <div style={styles.addPreyButtonContainer} onClick={() => {
+                    addPreyEntry()}}>
                     <DesignGreenButton
                         buttonText={'Add another prey?'}
                         className={'add-prey-pg-4'}
