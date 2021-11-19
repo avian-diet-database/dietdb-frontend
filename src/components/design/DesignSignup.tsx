@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { CREATE_USER } from "../../gql/mutations";
 import { GET_USER_BY_EMAIL } from "../../gql/queries";
 import bcrypt from "bcryptjs";
+import { adminData } from "../data/adminPassword";
 
 interface DesignSignupProps {
   setIsSignup: React.Dispatch<React.SetStateAction<boolean>>;
@@ -143,7 +144,9 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
   function resolveAdminPassword(password: string) {
     let result = bcrypt.compareSync(
       password,
-      "$2a$12$m224hTQKsts79racH37PT.nTm7WI5/aZgEIr8bqqOSBn6ZsfCNQBm"
+      // A hashed and salted master admin password is stored in adminData
+      // https://bcrypt-generator.com/ used to manually generate new hashed and salted password
+      adminData.adminPassword
     );
     return (result + "");
   }
