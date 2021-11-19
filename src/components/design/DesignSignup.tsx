@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { CREATE_USER } from "../../gql/mutations";
 import { GET_USER_BY_EMAIL } from "../../gql/queries";
 import bcrypt from "bcryptjs";
+import { adminData } from "../data/adminPassword";
 
 interface DesignSignupProps {
   setIsSignup: React.Dispatch<React.SetStateAction<boolean>>;
@@ -88,7 +89,6 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
     let regEx = new RegExp(
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
-    let valid = regEx.test(email);
     return regEx.test(email);
   };
 
@@ -142,9 +142,11 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
 
   // Confirms if admin password entered by user matches configured admin password
   function resolveAdminPassword(password: string) {
-    console.log("ENVS"+process.env.NODE_ENV);
-    console.log("ENVS"+process.env.ADMIN_PASS);
-    return (password === "adminpass" || password === process.env.ADMIN_PASS) + "";
+    let result = bcrypt.compareSync(
+      password,
+      adminData.adminPassword
+    );
+    return (result + "");
   }
 
   return (
