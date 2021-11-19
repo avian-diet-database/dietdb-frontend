@@ -144,8 +144,6 @@ export const DesignSignup: React.FC<DesignSignupProps> = (
   function resolveAdminPassword(password: string) {
     let result = bcrypt.compareSync(
       password,
-      // A hashed and salted master admin password is stored in adminData
-      // https://bcrypt-generator.com/ used to manually generate new hashed and salted password
       adminData.adminPassword
     );
     return (result + "");
