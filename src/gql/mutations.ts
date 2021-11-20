@@ -1,6 +1,24 @@
-import { gql, useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
 
-// using this one for now
+const CREATE_USER = gql `
+mutation createUser($full_name: String!,
+    $username: String!, $email: String!, $password: String!, 
+    $admin_password: String!, $is_verified: String!, 
+    $is_admin: String!, $security_question: String!) {
+        createUser(full_name: $full_name,
+            username: $username, email: $email, password: $password, 
+            admin_password: $admin_password, is_verified: $is_verified, 
+            is_admin: $is_admin, security_question: $security_question)
+    }
+`;
+
+const RESET_PASSWORD = gql `
+mutation resetPassword($email: String!, $password: String!) {
+        resetPassword(email: $email, password: $password)
+    }
+`;
+
+// Using this one for now
 const CREATE_PENDING_DIET_SKELETON = gql`
 mutation createAlternativePendingDiet($common_name: String!,
     $source: String!, $subspecies: String!, $taxonomy: String!, 
@@ -13,11 +31,11 @@ mutation createAlternativePendingDiet($common_name: String!,
 }
 `;
 
-// To be used later... remember to add '!'
+// Replace CREATE_PENDING_DIET_SKELETON with this to test full submission form mutation
 const CREATE_PENDING_DIET_TOTAL = gql`
 mutation CreatePendingDiet(
-    $common_name: string
-    $Scientific_name: string
+    $common_name: string!
+    $scientific_name: string
     $subspecies: string
     $family: string
     $taxonomy: string
@@ -26,7 +44,7 @@ mutation CreatePendingDiet(
     $altitude_min_m: string
     $altitude_max_m: string
     $altitude_mean_m: string
-    $location_region: string
+    $location_region: string!
     $location_specific: string
     $habitat_type: string
     $observation_month_begin: number
@@ -35,7 +53,7 @@ mutation CreatePendingDiet(
     $observation_year_end: number
     $observation_season: string
     $analysis_number: string
-    $prey_kingdom: string
+    $prey_kingdom: string!
     $prey_phylum: string
     $prey_class: string
     $prey_order: string
@@ -46,16 +64,27 @@ mutation CreatePendingDiet(
     $inclusive_prey_taxon: string
     $prey_name_ITIS_ID: string
     $prey_name_status: string
-    $rey_stage: string
+    $prey_stage: string
     $prey_part: string
+    $prey_common_name: string
     $fraction_diet: string
+    $diet_type: string!
     $item_sample_size: number
     $bird_sample_size: number
     $sites: string
     $study_type: string
     $notes: string
     $entered_by: string
-    $source: string
+    $source: string!
+    $doi: string
+    $sex: string
+    $age_class: string
+    $within_study_data_source: string
+    $table_fig_number: string
+    $title: string
+    $lastname_author: string
+    $year: number
+    $journal: string
     ) {
     createPendingDiet(           
         common_name: $common_name
@@ -100,6 +129,15 @@ mutation CreatePendingDiet(
         notes: $notes
         entered_by: $entered_by
         source: $source
+        doi: $string
+        sex: $string
+        age_class: $string
+        within_study_data_source: $string
+        table_fig_number: $string
+        title: $string
+        lastname_author: $string
+        year: $number
+        journal: $string
     )
     {
         id
@@ -145,10 +183,21 @@ mutation CreatePendingDiet(
         notes
         entered_by
         source
+        doi
+        sex
+        age_class
+        within_study_data_source
+        table_fig_number
+        title
+        lastname_author
+        year
+        journal
     }
 }
 `;
 
 export {
-    CREATE_PENDING_DIET_SKELETON
+    CREATE_PENDING_DIET_SKELETON,
+    CREATE_USER,
+    RESET_PASSWORD
 }
