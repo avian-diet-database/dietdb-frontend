@@ -387,6 +387,49 @@ query {
 }
 `; 
 
+const GET_USERS = gql`
+query {
+  getUsers {
+    full_name
+    username
+    email
+    password
+    admin_password
+    is_verified
+    is_admin
+  }
+}
+`; 
+
+const GET_USER_BY_EMAIL = gql`
+query($email: String!) {
+  getUserByEmail(
+    email: $email
+  ) {
+    full_name
+    username
+    email
+    password
+    is_verified
+    is_admin
+  }
+}
+`;
+
+const GET_USER_BY_EMAIL_AND_SECURITY_QUESTION = gql`
+query($email: String!, $security_question: String!) {
+  getUserByEmailAndSecurityQuestion(email: $email, security_question: $security_question) {
+    full_name
+    username
+    email
+    password
+    is_verified
+    is_admin
+    security_question
+  }
+}
+`;
+
 export {
   GET_AUTOCOMPLETE_PRED,
   GET_AUTOCOMPLETE_PREY,
@@ -403,4 +446,7 @@ export {
   RECORDS_PER_DECADE,
   RECORDS_PER_SEASON,
   RECORDS_PER_DIET_TYPE,
+  GET_USERS,
+  GET_USER_BY_EMAIL,
+  GET_USER_BY_EMAIL_AND_SECURITY_QUESTION
 };
