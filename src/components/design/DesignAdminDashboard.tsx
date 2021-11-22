@@ -136,28 +136,24 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                                 <p style={{...styles.pendingTableColName, ...styles.pendingYearTitle}}>Year</p>
                                 <p style={{...styles.pendingTableColName, ...styles.pendingUserTitle}}>User</p>
                             </div>
-                            <div><div style={styles.pendingTableColNameContainer}>
-                                        <p style={styles.pendingIDTitle}>id here</p>
-                                        <p style={styles.pendingAuthorTitle}>author here</p>
-                                        <p style={styles.pendingTitleTitle}>title</p>
-                                        <p style={styles.pendingYearTitle}>year</p>
-                                        <p style={styles.pendingUserTitle}>user</p>
-                                        <p style={styles.green}>View</p>
-                                        <hr style={styles.backgroundGreen} />
-                                    </div>
-                                {/* {props.pendingData === undefined ?
+                            <div>
+                            {props.pendingData === undefined ?
                                 "No pending data to display"
-                                : props.pendingData.map(data => 
+                                : props.pendingData.map((data, index) => 
+                                <div>
                                     <div style={styles.pendingTableColNameContainer}>
-                                        <p>id here</p>
-                                        <p>author here</p>
-                                        <p>title</p>
-                                        <p>year</p>
-                                        <p>user</p>
-                                        <p style={styles.viewButton}>View</p>
+                                    <p style={styles.pendingIDTitle}>{index}</p>
+                                        <p style={styles.pendingAuthorTitle}>{data.source.split(',')[0]}</p>
+                                        <p style={styles.pendingTitleTitle}>{data.source.split(',')[1]}</p>
+                                        <p style={styles.pendingYearTitle}>{data.source.split(',')[2]}</p>
+                                        <p style={styles.pendingUserTitle}>{data.source.split(',')[4]}</p>
+                                        <p style={styles.green}>View</p>
+                                        
+                                        </div>
                                         <hr style={styles.backgroundGreen} />
-                                    </div>
-                                 )} */}
+                                        </div>
+                                 )}
+                                
                             </div>
                             {/* <div>{props.pendingData === undefined ? "No pending data to display" : props.pendingData.map(data => <div>{"ID: " + data.unique_id + "; Source: " + data.source + "; Subspecies: " + data.subspecies + "; Taxonomy: " + data.taxonomy + "; Region: " + data.location_region + "; Location: " + data.location_specific + "; Prey Kingdom: " + data.prey_kingdom + "; Diet Type: " + data.diet_type}</div>)}</div> */}
                         </div>
