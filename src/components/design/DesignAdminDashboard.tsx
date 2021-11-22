@@ -1,5 +1,4 @@
 import React from "react";
-import { StringLiteralLike, Type } from "typescript";
 import { GET_PENDING_DIET } from "../../gql/queries";
 import { DesignLargeGreenButton } from "./DesignLargeGreenButton";
 
@@ -87,7 +86,30 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
             fontSize: '16px',
             backgroundColor: '#01B684',
             color: 'white',
-        }
+        },
+        pendingTableColNameContainer: {
+            display: 'flex',
+        },
+        pendingTableColName: {
+            color: '#363636',
+            fontWeight: 700,
+            fontSize: '18px',
+        },
+        pendingIDTitle: {
+            width: '80px',
+        }, 
+        pendingAuthorTitle: {
+            width: '170px',
+        },
+        pendingTitleTitle: {
+            width: '320px',
+        },
+        pendingYearTitle: {
+            width: '120px',
+        },
+        pendingUserTitle: {
+            width: '120px',
+        },
     
       };
     
@@ -107,26 +129,31 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                             <p style={styles.pendingTableTitle}><strong style={styles.white}>Pending Approval</strong></p>
                         </div>
                         <div style={styles.pendingTableContent}>
+                            <div style={styles.pendingTableColNameContainer}>
+                                <p style={{...styles.pendingTableColName, ...styles.pendingIDTitle}}>ID</p>
+                                <p style={{...styles.pendingTableColName, ...styles.pendingAuthorTitle}}>Author</p>
+                                <p style={{...styles.pendingTableColName, ...styles.pendingTitleTitle}}>Title</p>
+                                <p style={{...styles.pendingTableColName, ...styles.pendingYearTitle}}>Year</p>
+                                <p style={{...styles.pendingTableColName, ...styles.pendingUserTitle}}>User</p>
+                            </div>
                             <div>
-                                {props.pendingData === undefined ?
+                            {props.pendingData === undefined ?
                                 "No pending data to display"
-                                : props.pendingData.map(data => 
-                                    <div>
-                                        <p>ID: column to be added to db</p>
-                                        <p>DOI: column to be added to db</p>
-                                        <p>Source: {data.source}</p>
-                                        <p>Species: column to be added to db</p>
-                                        <p>Subspecies: {data.subspecies}</p>
-                                        <p>New Species: column to be added to db</p>
-                                        <p>Taxonomy: {data.taxonomy}</p>
-                                        <p>Country: column to be added to db</p>
-                                        <p>State/Province: column to be added to db</p>
-                                        <p>Region: {data.location_region}</p>
-                                        <p>Other: column to be added to db</p>
-                                        <p>Location: {data.location_specific}</p>
+                                : props.pendingData.map((data, index) => 
+                                <div>
+                                    <div style={styles.pendingTableColNameContainer}>
+                                    <p style={styles.pendingIDTitle}>{index}</p>
+                                        <p style={styles.pendingAuthorTitle}>{data.source.split(',')[0]}</p>
+                                        <p style={styles.pendingTitleTitle}>{data.source.split(',')[1]}</p>
+                                        <p style={styles.pendingYearTitle}>{data.source.split(',')[2]}</p>
+                                        <p style={styles.pendingUserTitle}>{data.source.split(',')[4]}</p>
+                                        <p style={styles.green}>View</p>
+                                        
+                                        </div>
                                         <hr style={styles.backgroundGreen} />
-                                    </div>
+                                        </div>
                                  )}
+                                
                             </div>
                             {/* <div>{props.pendingData === undefined ? "No pending data to display" : props.pendingData.map(data => <div>{"ID: " + data.unique_id + "; Source: " + data.source + "; Subspecies: " + data.subspecies + "; Taxonomy: " + data.taxonomy + "; Region: " + data.location_region + "; Location: " + data.location_specific + "; Prey Kingdom: " + data.prey_kingdom + "; Diet Type: " + data.diet_type}</div>)}</div> */}
                         </div>

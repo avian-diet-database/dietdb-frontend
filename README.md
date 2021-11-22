@@ -39,7 +39,7 @@ Launches the app from the build folder. This will not live-update, run build in 
 
 
 ### Warranty
-These instructions were last tested on Nov. 9th, 2020 by Muyan Pan on Windows 10
+These instructions were last tested on Nov. 12th, 2021 by https://github.com/pichhim on Windows 10
 
 ## 2. Testing 
 `npm test`
@@ -64,7 +64,8 @@ When local changes are pushed onto GitHub, the changes will be built automatical
 - react-vis
 - Typescript
 
-Our architecture decision records can be found in the ADR.md file
+Fall 2020 architecture decision records can be found in the ADR.md file.
+For Data Submission Implementation in Fall 2021, our architecture decision records can be found in the ADR-fa2021.md file.
 
 
 ## 5. Contributing
@@ -75,21 +76,27 @@ Use JavaScript linter [ESLint](https://eslint.org/)
 
 Use [JavaScript](https://standardjs.com/) Standard Style
 
-Follow the [OneFlow model](https://www.endoflineblog.com/oneflow-a-git-branching-model-and-workflow) and workflow with only master branch in remote repository
+Follow the [Gitflow Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) and with separate branches created for each major feature
 
-### [Website Link](https://comp523fa2020.github.io/Overview/)
+### [Website Link Fall 2020](https://comp523fa2020.github.io/Overview/)
+### [Website Link Fall 2021](https://tarheels.live/comp523project/)
 
 ## 6. Authors
 
 ### Frontend
-- Teddy Randby
-- Muyan Pan
+- Teddy Randby (Fall 2020)
+- Muyan Pan (Fall 2020)
+- Eden Chou (Fall 2021)
+- Pich Him (Fall 2021)
 
 ### Backend
-- Thomas Le
+- Thomas Le (Fall 2020)
+- Kevin Le (Fall 2020)
+- Pich Him (Fall 2021)
 
 ## 7. TODO
 - Refactor with a state management library - like Redux. 
+- Build in UI for user profiles for each user to keep track of approval progress on their submissions.
 
 ## 8. Licenses
 
@@ -101,4 +108,4 @@ MIT license
 
 - Professor Allen Hurlbert for providing the R queries and consistent feedbacks
 - Jacob Yackenovich for mentoring us weekly and answering our questions
- 
+- Derek Chadwell for mentorship during Fall 2021 semester
