@@ -83,7 +83,7 @@ mutation CreatePendingDiet(
     $sex: String
     $age_class: String
     $within_study_data_source: String
-    $table_fig_number: String
+    $table_fig Int: String
     $title: String
     $lastname_author: String
     $year: Int
@@ -138,7 +138,7 @@ mutation CreatePendingDiet(
         sex: $sex
         age_class: $age_class
         within_study_data_source: $within_study_data_source
-        table_fig_number: $table_fig_number
+        table_fig Int: $table_fig Int
         title: $title
         lastname_author: $lastname_author
         year: $year
@@ -151,59 +151,59 @@ mutation CreatePendingDiet(
 
 const APPROVE_PENDING_DIET = gql`
 mutation ApprovePendingDiet(
-    $common_name: string!
-    $scientific_name: string
-    $subspecies: string
-    $family: string
-    $taxonomy: string
-    $longitude_dd: string
-    $latitude_dd: string
-    $altitude_min_m: string
-    $altitude_max_m: string
-    $altitude_mean_m: string
-    $location_region: string!
-    $location_specific: string
-    $habitat_type: string
-    $observation_month_begin: number
-    $observation_month_end: number
-    $observation_year_begin: number
-    $observation_year_end: number
-    $observation_season: string
-    $analysis_number: string
-    $prey_kingdom: string!
-    $prey_phylum: string
-    $prey_class: string
-    $prey_order: string
-    $prey_suborder: string
-    $prey_family: string
-    $prey_genus: string
-    $prey_scientific_name: string
-    $inclusive_prey_taxon: string
-    $prey_name_ITIS_ID: string
-    $prey_name_status: string
-    $prey_stage: string
-    $prey_part: string
-    $prey_common_name: string
-    $fraction_diet: string
-    $diet_type: string!
-    $item_sample_size: number
-    $bird_sample_size: number
-    $sites: string
-    $study_type: string
-    $notes: string
-    $entered_by: string
-    $source: string!
-    $doi: string
-    $sex: string
-    $age_class: string
-    $within_study_data_source: string
-    $table_fig_number: string
-    $title: string
-    $lastname_author: string
-    $year: number
-    $journal: string
-    $total_percent_diet: number
-    $unique_id: number
+    $common_name: String!
+    $scientific_name: String
+    $subspecies: String
+    $family: String
+    $taxonomy: String
+    $longitude_dd: String
+    $latitude_dd: String
+    $altitude_min_m: String
+    $altitude_max_m: String
+    $altitude_mean_m: String
+    $location_region: String!
+    $location_specific: String
+    $habitat_type: String
+    $observation_month_begin: Int
+    $observation_month_end: Int
+    $observation_year_begin: Int
+    $observation_year_end: Int
+    $observation_season: String
+    $analysis_number: String
+    $prey_kingdom: String!
+    $prey_phylum: String
+    $prey_class: String
+    $prey_order: String
+    $prey_suborder: String
+    $prey_family: String
+    $prey_genus: String
+    $prey_scientific_name: String
+    $inclusive_prey_taxon: String
+    $prey_name_ITIS_ID: String
+    $prey_name_status: String
+    $prey_stage: String
+    $prey_part: String
+    $prey_common_name: String
+    $fraction_diet: String
+    $diet_type: String!
+    $item_sample_size: Int
+    $bird_sample_size: Int
+    $sites: String
+    $study_type: String
+    $notes: String
+    $entered_by: String
+    $source: String!
+    $doi: String
+    $sex: String
+    $age_class: String
+    $within_study_data_source: String
+    $table_fig Int: String
+    $title: String
+    $lastname_author: String
+    $year: Int
+    $journal: String
+    $total_percent_diet: Int
+    $unique_id: Int
     ) {
     approvePendingDiet(           
         common_name: $common_name
@@ -248,76 +248,76 @@ mutation ApprovePendingDiet(
         notes: $notes
         entered_by: $entered_by
         source: $source
-        doi: $string
-        sex: $string
-        age_class: $string
-        within_study_data_source: $string
-        table_fig_number: $string
-        title: $string
-        lastname_author: $string
-        year: $number
-        journal: $string
-        total_percent_diet: $number
-        unique_id: $number
+        doi: $doi
+        sex: $sex
+        age_class: $age_class
+        within_study_data_source: $within_study_data_source
+        table_fig: $table_fig
+        title: $title
+        lastname_author: $lastname_author
+        year: $year
+        journal: $journal
+        total_percent_diet: total_percent_diet
+        unique_id: $unique_id
     )
 }
 `;
 
 const DENY_PENDING_DIET = gql`
 mutation DenyPendingDiet(
-    $common_name: string!
-    $scientific_name: string
-    $subspecies: string
-    $family: string
-    $taxonomy: string
-    $longitude_dd: string
-    $latitude_dd: string
-    $altitude_min_m: string
-    $altitude_max_m: string
-    $altitude_mean_m: string
-    $location_region: string!
-    $location_specific: string
-    $habitat_type: string
-    $observation_month_begin: number
-    $observation_month_end: number
-    $observation_year_begin: number
-    $observation_year_end: number
-    $observation_season: string
-    $analysis_number: string
-    $prey_kingdom: string!
-    $prey_phylum: string
-    $prey_class: string
-    $prey_order: string
-    $prey_suborder: string
-    $prey_family: string
-    $prey_genus: string
-    $prey_scientific_name: string
-    $inclusive_prey_taxon: string
-    $prey_name_ITIS_ID: string
-    $prey_name_status: string
-    $prey_stage: string
-    $prey_part: string
-    $prey_common_name: string
-    $fraction_diet: string
-    $diet_type: string!
-    $item_sample_size: number
-    $bird_sample_size: number
-    $sites: string
-    $study_type: string
-    $notes: string
-    $entered_by: string
-    $source: string!
-    $doi: string
-    $sex: string
-    $age_class: string
-    $within_study_data_source: string
-    $table_fig_number: string
-    $title: string
-    $lastname_author: string
-    $year: number
-    $journal: string
-    $total_percent_diet: number
-    $unique_id: number
+    $common_name: String!
+    $scientific_name: String
+    $subspecies: String
+    $family: String
+    $taxonomy: String
+    $longitude_dd: String
+    $latitude_dd: String
+    $altitude_min_m: String
+    $altitude_max_m: String
+    $altitude_mean_m: String
+    $location_region: String!
+    $location_specific: String
+    $habitat_type: String
+    $observation_month_begin: Int
+    $observation_month_end: Int
+    $observation_year_begin: Int
+    $observation_year_end: Int
+    $observation_season: String
+    $analysis_number: String
+    $prey_kingdom: String!
+    $prey_phylum: String
+    $prey_class: String
+    $prey_order: String
+    $prey_suborder: String
+    $prey_family: String
+    $prey_genus: String
+    $prey_scientific_name: String
+    $inclusive_prey_taxon: String
+    $prey_name_ITIS_ID: String
+    $prey_name_status: String
+    $prey_stage: String
+    $prey_part: String
+    $prey_common_name: String
+    $fraction_diet: String
+    $diet_type: String!
+    $item_sample_size: Int
+    $bird_sample_size: Int
+    $sites: String
+    $study_type: String
+    $notes: String
+    $entered_by: String
+    $source: String!
+    $doi: String
+    $sex: String
+    $age_class: String
+    $within_study_data_source: String
+    $table_fig Int: String
+    $title: String
+    $lastname_author: String
+    $year: Int
+    $journal: String
+    $total_percent_diet: Int
+    $unique_id: Int
     ) {
     denyPendingDiet(           
         common_name: $common_name
@@ -362,17 +362,17 @@ mutation DenyPendingDiet(
         notes: $notes
         entered_by: $entered_by
         source: $source
-        doi: $string
-        sex: $string
-        age_class: $string
-        within_study_data_source: $string
-        table_fig_number: $string
-        title: $string
-        lastname_author: $string
-        year: $number
-        journal: $string
-        total_percent_diet: $number
-        unique_id: $number
+        doi: $doi
+        sex: $sex
+        age_class: $age_class
+        within_study_data_source: $within_study_data_source
+        table_fig: $table_fig
+        title: $title
+        lastname_author: $lastname_author
+        year: $year
+        journal: $journal
+        total_percent_diet: total_percent_diet
+        unique_id: $unique_id
     )
 }
 `;
