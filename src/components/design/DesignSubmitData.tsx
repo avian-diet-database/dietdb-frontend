@@ -744,12 +744,75 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
         props.addData({
             variables: {
-                common_name: "common_name_to_be_implemented", source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastname_author,
-                subspecies: formData.studyInfo.subspecies, taxonomy: formData.studyInfo.taxonomy,
-                location_region: formData.studyInfo.location_region, location_specific: formData.studyInfo.location_specific,
-                prey_kingdom: "prey_kingdom_to_be_implemented", diet_type: "diet_type_to_be_implemented"
+                common_name: "COMMON NAME HERE -- TEST 1",
+        scientific_name: "scientific_name",
+        subspecies: "subspecies",
+        family: "family",
+        taxonomy: "taxonomy",
+        longitude_dd: "longitude_dd",
+        latitude_dd: "latitude_dd",
+        altitude_min_m: "altitude_min_m",
+        altitude_max_m: "altitude_max_m",
+        altitude_mean_m: "altitude_mean_m",
+        location_region: "location_region",
+        location_specific: "location_specific",
+        habitat_type: "habitat_type",
+        observation_month_begin: 1,
+        observation_month_end: 12,
+        observation_year_begin: 2000,
+        observation_year_end: 2009,
+        observation_season: "observation_season",
+        analysis_number: "analysis_number",
+        prey_kingdom: "prey_kingdom",
+        prey_phylum: "prey_phylum",
+        prey_class: "prey_class",
+        prey_order: "prey_order",
+        prey_suborder: "prey_suborder",
+        prey_family: "prey_family",
+        prey_genus: "prey_genus",
+        prey_scientific_name: "prey_scientific_name",
+        inclusive_prey_taxon: "inclusive_prey_taxon",
+        prey_name_ITIS_ID: "prey_name_ITIS_ID",
+        prey_name_status: "prey_name_status",
+        prey_stage: "prey_stage",
+        prey_part: "prey_part",
+        prey_common_name: "prey_common_name",
+        fraction_diet: "fraction_diet",
+        diet_type: "diet_type",
+        item_sample_size: 3,
+        bird_sample_size: 200,
+        sites: "sites",
+        study_type: "study_type",
+        notes: "notes",
+        entered_by: "entered_by",
+        source: "source",
+        doi: "string",
+        sex: "string",
+        age_class: "string",
+        within_study_data_source: "string",
+        table_fig_number: "string",
+        title: "string",
+        lastname_author: "string",
+        year: 2012,
+        journal: "string",
+        total_percent_diet: 100,
+        new_species: true,
             }
         });
+
+        // props.addData({
+        //     variables: {
+        //         common_name: "common_name_to_be_implemented", 
+        //         source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastname_author,
+        //         subspecies: formData.studyInfo.subspecies, 
+        //         taxonomy: formData.studyInfo.taxonomy,
+        //         location_region: formData.studyInfo.location_region, 
+        //         location_specific: formData.studyInfo.location_specific,
+        //         prey_kingdom: "prey_kingdom_to_be_implemented", 
+        //         diet_type: "diet_type_to_be_implemented",
+
+        //     }
+        // });
     }
 
     return (
