@@ -1,15 +1,22 @@
 import { FetchResult, MutationFunctionOptions } from "@apollo/client";
 import { autoType } from "d3-dsv";
 import internal from "events";
-import React, { useState } from "react";
+import React, { ReactChild, ReactElement, useState } from "react";
 import { DesignGreenButton } from "../design/DesignGreenButton";
 import { DesignDots } from "../design/DesignDots";
+import { DesignErrorPage } from "./DesignErrorPage";
 import { formInputData } from "../data/formInputData";
 import { KeyObject } from "crypto";
 import { buildExecutionContext } from "graphql/execution/execute";
+import { JsxElement } from "typescript";
 
 interface DesignSubmitDataProps {
     addData: (options?: MutationFunctionOptions<any, Record<string, any>>) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
+}
+
+// removes specified HTMLElement
+export function remove(id: string) {
+    document.getElementById(id).style.display = 'none';
 }
 
 export const DesignSubmitData = (props: DesignSubmitDataProps) => {
@@ -17,7 +24,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         doi: '',
         title: '',
         journal: '',
-        year: '',
+        year: undefined as number,
         lastname_author: '',
         scientific_name: '',
         common_name: '',
@@ -32,15 +39,15 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         altitude_min_m: '',
         altitude_max_m: '',
         altitude_mean_m: '',
-        observation_month_begin: '',
-        observation_month_end: '',
-        observation_year_begin: '',
-        observation_year_end: '',
+        observation_month_begin: undefined as number,
+        observation_month_end: undefined as number,
+        observation_year_begin: undefined as number,
+        observation_year_end: undefined as number,
         analysis_number: '',
         diet_type: '',
         study_type: '',
-        item_sample_size: '',
-        bird_sample_size: '',
+        item_sample_size: undefined as number,
+        bird_sample_size: undefined as number,
         new_species_yn: '',
         sites: '',
         sex_yn: '',
@@ -71,25 +78,30 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
     }
 
-    const prey_name_arr: string[] = [];
-    const prey_diet_arr: string[] = [];
-    const prey_stage_arr: string[] = [];
-    const prey_part_arr: string[] = [];
+    // const prey_name_arr: string[] = [];
+    // const prey_diet_arr: string[] = [];
+    // const prey_stage_arr: string[] = [];
+    // const prey_part_arr: string[] = [];
 
-    const preySubmissionsInitialState = {
-        submissions: {
-            name: prey_name_arr,
-            diet: prey_diet_arr,
-            stage: prey_stage_arr,
-            part: prey_part_arr,
-        },
-    }
+    const [prey_name_arr, setPreyNameArr] = useState([]);
+    const [prey_diet_arr, setPreyDietArr] = useState([]);
+    const [prey_stage_arr, setPreyStageArr] = useState([]);
+    const [prey_part_arr, setPreyPartArr] = useState([]);
 
-    const [preySubmissions, setPreySubmissions] = useState(preySubmissionsInitialState);
+    // const preySubmissionsInitialState = {
+    //     submissions: {
+
+    //     }
+    
+    // }
+
+    const [preySubmissions, setPreySubmissions] = useState([]);
+    const [total_percent_diet, setTotalPercentDiet] = useState(0);
     const [habitat_type, setHabitatType] = useState([]);
     const [prey_part, setPreyPart] = useState([]);
     const [prey_stage, setPreyStage] = useState([]);
     const [observation_season, setObservationSeason] = useState([]);
+    
     //const [prey_common_name, setPreyCommonName] = useState([]);
     // const [prey_kingdom, setPreyKingdom] = useState('');
     // const [prey_phylum, setPreyPhylum] = useState('');
@@ -116,8 +128,14 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
     const setStudyInfoInputState = (e: any) => {
         const { name, value } = e.target;
-        setStudyInfoState(prevState => ({ ...prevState, [name]: value }));
 
+        // change values to int, retrieved as string from form
+        if (name === ("observation_month_begin" || "observation_month_end" || "observation_year_begin" || "observation_year_end" || "item_sample_size" || "bird_sample_size" || "year")) {
+            // let val = Number(value)
+            setStudyInfoState(prevState => ({ ...prevState, [name]: value }));
+        } else {
+            setStudyInfoState(prevState => ({ ...prevState, [name]: value }));
+        }
         // if (name === "inclusive_prey_taxon") {
         //     // if (value !== ("Kingdom" || "Phylum" || "Class")) {
         //     //     generateTextTaxonomyOptions(value);
@@ -130,6 +148,48 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         // if (name === "prey_kingdom") {
         //     generatePhylumOptions();
         // }
+        if (name === "inclusive_prey_taxon") {
+            switch (inclusive_prey_taxon) {
+                case "Kingdom":
+                    document.getElementById("taxon-fields").innerHTML = "";
+                    generateKingdomOptions();
+                    break;
+                case "Phylum":
+                    document.getElementById("taxon-fields").innerHTML = "";
+                    generateKingdomOptions();
+                    generatePhylumOptions(formInputData.animalia_phylums);
+                    break;
+                case "Class":
+                    document.getElementById("taxon-fields").innerHTML = "";
+                    break;
+                case "Order":
+                    document.getElementById("taxon-fields").innerHTML = "";
+                    break;
+                case "Suborder":
+                    document.getElementById("taxon-fields").innerHTML = "";
+                    break;
+                case "Family":
+                    document.getElementById("taxon-fields").innerHTML = "";
+                    break;
+                case "Genus":
+                    document.getElementById("taxon-fields").innerHTML = "";
+                    break;
+                
+            }
+        }
+
+        if (name === "prey_kingdom" && inclusive_prey_taxon != "Kingdom") {
+            // prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
+            //                     prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
+            //                         prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
+            //                             prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
+            //                                 prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
+            //                                     prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null}
+            if (value === "Animalia") {
+                document.getElementById("phylum-inputs").replaceWith(generatePhylumOptions(formInputData.animalia_phylums).toString());
+
+            }
+        }
     }
 
     let formData = {
@@ -339,7 +399,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             display: 'none',
         },
         checkboxSpacing: {
-            paddingRight: '8rem'
+            width: '300px'
         },
         addPreyButtonContainer: {
             display: 'flex',
@@ -450,11 +510,29 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
     function addPreyEntry() {
         //add validation part here
-        console.log(prey_name_arr)
         // if(prey_common_name === "" || prey_part === "") { -> add this part when setstate for preypart is implemented
         if (prey_common_name === "") {
             //return error here 
         } else {
+            let total = total_percent_diet + parseInt(fraction_diet);
+
+            setTotalPercentDiet(total);
+
+            const submission = {
+                prey_common_name: prey_common_name,
+                inclusive_prey_taxon: inclusive_prey_taxon,
+                prey_kingdom: prey_kingdom,
+                fraction_diet: fraction_diet,
+                prey_stage: prey_stage,
+                prey_part: prey_part,
+                all_prey_diet_yn: all_prey_diet_yn,
+                total_percent_diet: total,
+                notes: notes,
+            }
+
+            preySubmissions.push(submission)
+            setPreySubmissions(preySubmissions);
+
             const table = document.getElementById('prey-table');
             let diet_submission =
                 `<div style='display: flex; padding: .75rem 0'>
@@ -468,16 +546,13 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             diet_container.innerHTML = diet_submission;
 
             table.append(diet_container);
-            console.log(prey_name_arr)
 
             prey_name_arr[prey_name_arr.length] = prey_common_name;
             prey_diet_arr.push(fraction_diet);
             // prey_stage_arr.push(prey_stage);
             // prey_part_arr.push(prey_part);
 
-            console.log(prey_name_arr)
-
-            setPreySubmissions({ submissions: { name: prey_name_arr, diet: prey_diet_arr, stage: prey_stage_arr, part: prey_part_arr } });
+            // setPreySubmissions({ submissions: { name: prey_name_arr, diet: prey_diet_arr, stage: prey_stage_arr, part: prey_part_arr } });
             console.log(formData.studyInfo.prey_submissions);
             //setStudyInfoState({prey_common_name: ''})
         }
@@ -657,11 +732,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         displayType !== undefined ?
             document.getElementById(id).style.display = displayType :
             document.getElementById(id).style.display = 'block';
-    }
-
-    // removes specified HTMLElement
-    function remove(id: string) {
-        document.getElementById(id).style.display = 'none';
     }
 
     // submits form
@@ -1135,7 +1205,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     <div id="diet-question1">
                         <p id="required" style={{ ...styles.questionTextSize }}>1. Prey Name <span style={styles.green}>*</span></p>
                         <div className="control" style={styles.inputBoxSpacing}>
-                            <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Search Prey Name" value={prey_common_name} name="prey_common_name" onChange={setStudyInfoInputState} />
+                            <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Prey Name" value={prey_common_name} name="prey_common_name" onChange={setStudyInfoInputState} />
                         </div>
                         <p style={styles.questionTextSize}>Please clarify the taxonomic classification of this name.</p>
                         <p style={styles.questionTextSize}>First, what is the taxonomic level of this name?</p>
@@ -1147,7 +1217,10 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                                 </select>
                             </div>
                         </div>
-                        {inclusive_prey_taxon === "Kingdom" ? generateKingdomOptions() : null}
+                        <div id="taxon-fields">
+
+                        </div>
+                        {/* {inclusive_prey_taxon === "Kingdom" ? generateKingdomOptions() : null}
                         {inclusive_prey_taxon === "Phylum" ? generatePhylumOptions(formInputData.phylums) :
                             prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
                                 prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
@@ -1187,7 +1260,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         {inclusive_prey_taxon === "Suborder" ? generateSuborderOptions() : prey_order != "" ? generateSuborderOptions() : null}
                         {inclusive_prey_taxon === "Family" ? generateFamilyOptions() : prey_suborder != "" ? generateFamilyOptions() : null}
                         {inclusive_prey_taxon === "Genus" ? generateGenusOptions() : prey_family != "" ? generateGenusOptions() : null}
-                        {inclusive_prey_taxon === "Species" ? generateSpeciesOptions() : prey_genus != "" ? generateSpeciesOptions() : null}
+                        {inclusive_prey_taxon === "Species" ? generateSpeciesOptions() : prey_genus != "" ? generateSpeciesOptions() : null} */}
                         {/* <div id="additional-taxon-fields" className="field">
                         </div> */}
                     </div>
@@ -1440,8 +1513,8 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     </div>
                     <div>
                         <p id="required" style={{ ...styles.questionTextSize }}>1. Prey Name and Taxonomic Level <span style={styles.green}>*</span></p>
-                        <p>{'Prey Name: ' + prey_common_name + '; Taxonomic Level: ' + inclusive_prey_taxon}</p>
-                        <p>{"Kingdom: " + (prey_kingdom === "" ? "Does not apply" : prey_kingdom)}</p>
+                        <p>{'Prey Name: ' + preySubmissions.map(submission => submission.prey_common_name) + '; Taxonomic Level: ' + preySubmissions.map(submission => submission.inclusive_prey_taxon)}</p>
+                        <p>{"Kingdom: " + preySubmissions.map(submission => (submission.prey_kingdom === "" ? "Does not apply" : submission.prey_kingdom))}</p>
                         <p>{"Phylum: " + (prey_phylum === "" ? "Does not apply" : prey_phylum)}</p>
                         <p>{"Order: " + (prey_order === "" ? "Does not apply" : prey_order)}</p>
                         <p>{"Suborder: " + (prey_suborder === "" ? "Does not apply" : prey_suborder)}</p>
@@ -1450,15 +1523,15 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p>{"Species: " + (prey_scientific_name === "" ? "Does not apply" : prey_scientific_name)}</p>
 
                         <p style={{ ...styles.questionTextSize }}>2. Percent of the diet?</p>
-                        <p>{'% diet: ' + fraction_diet}</p>
+                        <p>{'% diet: ' + preySubmissions.map(submission => submission.fraction_diet)}</p>
                         <p style={{ ...styles.questionTextSize }}>3. Does the value entered above reflect the % of the diet for all members of this prey name (inclusive), or only those members of the prey name that weren’t identified more finely (not inclusive)?</p>
-                        <p>{all_prey_diet_yn}</p>
+                        <p>{preySubmissions.map(submission => submission.all_prey_diet_yn + ', ')}</p>
                         <p style={{ ...styles.questionTextSize }}>4. Does this prey entry refer to a particular life stage?</p>
-                        <p>{'Life Stage(s): ' + prey_stage}</p>
+                        <p>{'Life Stage(s): ' + preySubmissions.map(submission => submission.prey_stage)}</p>
                         <p id="required" style={{ ...styles.questionTextSize }}>5. Does this prey entry refer to a particular prey part?<span style={styles.green}>*</span></p>
-                        <p>{'Prey Part(s): ' + prey_part}</p>
+                        <p>{'Prey Part(s): ' + preySubmissions.map(submission => submission.prey_part)}</p>
                         <p style={{ ...styles.questionTextSize }}>6. If you have any miscellaneous notes about this prey item you may describe them here.</p>
-                        <p>{notes}</p>
+                        <p>{'Notes: ' + preySubmissions.map(submission => submission.notes)}</p>
                     </div>
                 </div>
                 <hr style={styles.backgroundGreen} />
