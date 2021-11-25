@@ -73,6 +73,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         prey_scientific_name: '',
         prey_name_ITIS_ID: '',
         prey_name_status: '',
+        total_percent_diet: undefined as number,
 
 
 
@@ -164,6 +165,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     break;
                 case "Order":
                     document.getElementById("taxon-fields").innerHTML = "";
+                    generateOrderOptions();
                     break;
                 case "Suborder":
                     document.getElementById("taxon-fields").innerHTML = "";
@@ -250,6 +252,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             prey_name_ITIS_ID: prey_name_ITIS_ID,
             prey_name_status: prey_name_status,
             prey_submissions: preySubmissions,
+            total_percent_diet: total_percent_diet,
 
         }
     }
@@ -514,7 +517,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         if (prey_common_name === "") {
             //return error here 
         } else {
-            let total = total_percent_diet + parseInt(fraction_diet);
+            let total = total_percent_diet + parseFloat(fraction_diet);
 
             setTotalPercentDiet(total);
 
