@@ -6,9 +6,6 @@ import { DesignGreenButton } from "../design/DesignGreenButton";
 import { DesignDots } from "../design/DesignDots";
 import { DesignErrorPage } from "./DesignErrorPage";
 import { formInputData } from "../data/formInputData";
-import { KeyObject } from "crypto";
-import { buildExecutionContext } from "graphql/execution/execute";
-import { JsxElement } from "typescript";
 
 interface DesignSubmitDataProps {
     addData: (options?: MutationFunctionOptions<any, Record<string, any>>) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
@@ -82,18 +79,18 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     // const prey_name_arr: string[] = [];
     // const prey_diet_arr: string[] = [];
     // const prey_stage_arr: string[] = [];
-    // const prey_part_arr: string[] = [];
+    // // const prey_part_arr: string[] = [];
 
-    const [prey_name_arr, setPreyNameArr] = useState([]);
-    const [prey_diet_arr, setPreyDietArr] = useState([]);
-    const [prey_stage_arr, setPreyStageArr] = useState([]);
-    const [prey_part_arr, setPreyPartArr] = useState([]);
+    // const [prey_name_arr, setPreyNameArr] = useState([]);
+    // const [prey_diet_arr, setPreyDietArr] = useState([]);
+    // const [prey_stage_arr, setPreyStageArr] = useState([]);
+    // const [prey_part_arr, setPreyPartArr] = useState([]);
 
     // const preySubmissionsInitialState = {
     //     submissions: {
 
     //     }
-    
+
     // }
 
     const [preySubmissions, setPreySubmissions] = useState([]);
@@ -102,7 +99,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     const [prey_part, setPreyPart] = useState([]);
     const [prey_stage, setPreyStage] = useState([]);
     const [observation_season, setObservationSeason] = useState([]);
-    
+
     //const [prey_common_name, setPreyCommonName] = useState([]);
     // const [prey_kingdom, setPreyKingdom] = useState('');
     // const [prey_phylum, setPreyPhylum] = useState('');
@@ -149,49 +146,49 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         // if (name === "prey_kingdom") {
         //     generatePhylumOptions();
         // }
-        if (name === "inclusive_prey_taxon") {
-            switch (inclusive_prey_taxon) {
-                case "Kingdom":
-                    document.getElementById("taxon-fields").innerHTML = "";
-                    generateKingdomOptions();
-                    break;
-                case "Phylum":
-                    document.getElementById("taxon-fields").innerHTML = "";
-                    generateKingdomOptions();
-                    generatePhylumOptions(formInputData.animalia_phylums);
-                    break;
-                case "Class":
-                    document.getElementById("taxon-fields").innerHTML = "";
-                    break;
-                case "Order":
-                    document.getElementById("taxon-fields").innerHTML = "";
-                    generateOrderOptions();
-                    break;
-                case "Suborder":
-                    document.getElementById("taxon-fields").innerHTML = "";
-                    break;
-                case "Family":
-                    document.getElementById("taxon-fields").innerHTML = "";
-                    break;
-                case "Genus":
-                    document.getElementById("taxon-fields").innerHTML = "";
-                    break;
-                
-            }
-        }
+        // if (name === "inclusive_prey_taxon") {
+        //     switch (inclusive_prey_taxon) {
+        //         case "Kingdom":
+        //             document.getElementById("taxon-fields").innerHTML = "";
+        //             generateKingdomOptions();
+        //             break;
+        //         case "Phylum":
+        //             document.getElementById("taxon-fields").innerHTML = "";
+        //             generateKingdomOptions();
+        //             generatePhylumOptions(formInputData.animalia_phylums);
+        //             break;
+        //         case "Class":
+        //             document.getElementById("taxon-fields").innerHTML = "";
+        //             break;
+        //         case "Order":
+        //             document.getElementById("taxon-fields").innerHTML = "";
+        //             generateOrderOptions();
+        //             break;
+        //         case "Suborder":
+        //             document.getElementById("taxon-fields").innerHTML = "";
+        //             break;
+        //         case "Family":
+        //             document.getElementById("taxon-fields").innerHTML = "";
+        //             break;
+        //         case "Genus":
+        //             document.getElementById("taxon-fields").innerHTML = "";
+        //             break;
 
-        if (name === "prey_kingdom" && inclusive_prey_taxon != "Kingdom") {
-            // prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
-            //                     prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
-            //                         prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
-            //                             prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
-            //                                 prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
-            //                                     prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null}
-            if (value === "Animalia") {
-                document.getElementById("phylum-inputs").replaceWith(generatePhylumOptions(formInputData.animalia_phylums).toString());
+        //     }
+        // }
 
-            }
-        }
+        // if (name === "prey_kingdom" && inclusive_prey_taxon != "Kingdom") {
+        //     // prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
+        //     //                     prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
+        //     //                         prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
+        //     //                             prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
+        //     //                                 prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
+        //     //                                     prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null}
+        //     if (value === "Animalia") {
+        //         document.getElementById("phylum-inputs").replaceWith(generatePhylumOptions(formInputData.animalia_phylums).toString());
+
+        //     }
+        // }
     }
 
     let formData = {
@@ -460,6 +457,8 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
     };
 
+
+
     function movePgToPg(currentPage: string, targetPage: string, command?: string) {
         if (currentPage == '6') {
             document.getElementById('page5').style.display = 'none';
@@ -511,6 +510,10 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     //     console.log(habitat_type)
     // }
 
+    function removeInnerHTML(id: string) {
+        document.getElementById(id).innerHTML = "";
+    }
+
     function addPreyEntry() {
         //add validation part here
         // if(prey_common_name === "" || prey_part === "") { -> add this part when setstate for preypart is implemented
@@ -525,11 +528,16 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 prey_common_name: prey_common_name,
                 inclusive_prey_taxon: inclusive_prey_taxon,
                 prey_kingdom: prey_kingdom,
+                prey_phylum: prey_phylum,
+                prey_class: prey_class,
+                prey_order: prey_order,
+                prey_suborder: prey_suborder,
+                prey_family: prey_family,
+                prey_genus: prey_genus,
                 fraction_diet: fraction_diet,
                 prey_stage: prey_stage,
                 prey_part: prey_part,
                 all_prey_diet_yn: all_prey_diet_yn,
-                total_percent_diet: total,
                 notes: notes,
             }
 
@@ -550,8 +558,8 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
             table.append(diet_container);
 
-            prey_name_arr[prey_name_arr.length] = prey_common_name;
-            prey_diet_arr.push(fraction_diet);
+            // prey_name_arr[prey_name_arr.length] = prey_common_name;
+            // prey_diet_arr.push(fraction_diet);
             // prey_stage_arr.push(prey_stage);
             // prey_part_arr.push(prey_part);
 
@@ -567,11 +575,23 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     //     select.value === "Order" ? console.log("i have been clicked") : "poo"
     // })
 
+    function resetTaxons() {
+        let taxons = document.getElementsByClassName('taxon') as HTMLCollectionOf<HTMLElement>;
+        for (let i = 0; i < taxons.length; i++) {
+            taxons[i].style.display = "none";
+        }
+    }
+
     function generateKingdomOptions() {
         // document.getElementById('additional-taxon-fields').innerHTML = ''
         // let kingdom = document.getElementById('kingdom-inputs');
         // kingdom.style.display = 'block';
-        return <div id="kingdom-inputs" className="field" style={styles.noMargin}>
+
+        if (document.getElementsByClassName('taxon').length > 1) {
+            resetTaxons();
+        }
+
+        return <div id="kingdom-inputs" className="field taxon" style={styles.noMargin}>
             <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
                 <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setStudyInfoInputState}>
                     <option>Select a Kingdom</option>
@@ -581,15 +601,38 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         </div>
     }
 
-    function generatePhylumOptions(phylum_data: string[]) {
-        return <div id="phylum-inputs" className="field" style={styles.noMargin}>
-            <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_phylum} name="prey_phylum" onChange={setStudyInfoInputState}>
-                    <option>Select a Phylum</option>
-                    {phylum_data.map(phylum => <option>{phylum}</option>)}
-                </select>
+    function generatePhylumOptions(phylum_data: string[], no_phylum?: boolean) {
+
+        if (document.getElementsByClassName('taxon').length > 2) {
+            resetTaxons();
+        }
+
+        if (no_phylum === true) {
+            return <div id="kingdom-inputs" className="field taxon" style={{...styles.noMargin, ...styles.noMarginBottom}}>
+                <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setStudyInfoInputState}>
+                        <option>Select a Kingdom</option>
+                        {formInputData.kingdoms.map(kingdom => <option>{kingdom}</option>)}
+                    </select>
+                </div>
             </div>
-        </div>
+        } else {
+            return <div><div id="kingdom-inputs" className="field taxon" style={{...styles.noMargin, ...styles.noMarginBottom}}>
+                <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setStudyInfoInputState}>
+                        <option>Select a Kingdom</option>
+                        {formInputData.kingdoms.map(kingdom => <option>{kingdom}</option>)}
+                    </select>
+                </div>
+            </div><div id="phylum-inputs" className="field taxon" style={styles.noMargin}>
+                    <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
+                        <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_phylum} name="prey_phylum" onChange={setStudyInfoInputState}>
+                            <option>Select a Phylum</option>
+                            {phylum_data.map(phylum => <option>{phylum}</option>)}
+                        </select>
+                    </div>
+                </div></div>
+        }
     }
 
     function generateClassOptions(class_data: string[]) {
@@ -601,6 +644,28 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 </select>
             </div>
         </div>
+        //     return <div><div id="kingdom-inputs" className="field taxon" style={styles.noMargin}>
+        //     <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+        //         <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setStudyInfoInputState}>
+        //             <option>Select a Kingdom</option>
+        //             {formInputData.kingdoms.map(kingdom => <option>{kingdom}</option>)}
+        //         </select>
+        //     </div>
+        // </div><div id="phylum-inputs" className="field taxon" style={styles.noMargin}>
+        //         <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
+        //             <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_phylum} name="prey_phylum" onChange={setStudyInfoInputState}>
+        //                 <option>Select a Phylum</option>
+        //                 {phylum_data.map(phylum => <option>{phylum}</option>)}
+        //             </select>
+        //         </div>
+        // </div><div id="phylum-inputs" className="field" style={styles.noMargin}>
+        //     <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
+        //         <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_class} name="prey_class" onChange={setStudyInfoInputState}>
+        //             <option>Select a Class</option>
+        //             {class_data.map(class_ => <option>{class_}</option>)}
+        //         </select>
+        //     </div>
+        // </div></div>
     }
 
     function generateOrderOptions() {
@@ -730,6 +795,46 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     //     // setPreyOrder(scientific_name.value);
     // }
 
+    function phylum(taxon: string) {
+        return (inclusive_prey_taxon === taxon && (prey_kingdom === "" || prey_kingdom === "Unknown" || prey_kingdom === "Non-biological" || prey_kingdom === "Select a Kingdom") ? generatePhylumOptions(formInputData.phylums, true) :
+        inclusive_prey_taxon === taxon && prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
+            inclusive_prey_taxon === taxon && prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
+                inclusive_prey_taxon === taxon && prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
+                    inclusive_prey_taxon === taxon && prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
+                        inclusive_prey_taxon === taxon && prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
+                            inclusive_prey_taxon === taxon && prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null)
+    }
+
+    function classes(taxon: string) {
+        return (inclusive_prey_taxon === taxon && prey_phylum === "Annelida" ? generateClassOptions(formInputData.annelida_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Arthropoda" ? generateClassOptions(formInputData.arthropoda_classes) :
+                                inclusive_prey_taxon === taxon && prey_phylum === "Bryozoa" ? generateClassOptions(formInputData.bryozoa_classes) : 
+                                inclusive_prey_taxon === taxon && prey_phylum === "Chordata" ? generateClassOptions(formInputData.chordata_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Cnidaria" ? generateClassOptions(formInputData.cnidaria_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Echinodermata" ? generateClassOptions(formInputData.echinodermata_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Mollusca" ? generateClassOptions(formInputData.mollusca_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Nematoda" ? generateClassOptions(formInputData.nematoda_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Nemertea" ? generateClassOptions(formInputData.nemertea_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Platyhelminthes" ? generateClassOptions(formInputData.platyhelminthes_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Porifera" ? generateClassOptions(formInputData.porifera_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Heterokontophyta" ? generateClassOptions(formInputData.heterokontophyta_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Ochrophyta" ? generateClassOptions(formInputData.ochrophyta_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Xanthophyta" ? generateClassOptions(formInputData.xanthophyta_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Ascomycota" ? generateClassOptions(formInputData.ascomycota_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Basidiomycota" ? generateClassOptions(formInputData.basidiomycota_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Bryophyta" ? generateClassOptions(formInputData.bryophyta_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Charophyta" ? generateClassOptions(formInputData.charophyta_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Chlorophyta" ? generateClassOptions(formInputData.chlorophyta_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Rhodophyta" ? generateClassOptions(formInputData.rhodophyta_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Tracheophyta" ? generateClassOptions(formInputData.tracheophyta_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Ciliophora" ? generateClassOptions(formInputData.ciliophora_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Protozoa" ? generateClassOptions(formInputData.protozoa_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) : null)
+    }
+
     // displays specified HTMLElement
     function display(id: string, displayType?: string) {
         displayType !== undefined ?
@@ -820,7 +925,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             <div className="field" style={styles.noMarginBottom}>
                                 <label className="label" style={styles.questionTextSize}>Please enter the scientific name.</label>
                                 <div className="control" style={styles.inputBoxSpacing}>
-                                    <input className="input" style={{ ...styles.inputBox}} type="text" placeholder="Enter Scientific Name" value={scientific_name} name="scientific_name" onChange={setStudyInfoInputState} />
+                                    <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Enter Scientific Name" value={scientific_name} name="scientific_name" onChange={setStudyInfoInputState} />
                                 </div>
                             </div>
                         </div>
@@ -1221,51 +1326,113 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             </div>
                         </div>
                         <div id="taxon-fields">
-
                         </div>
-                        {/* {inclusive_prey_taxon === "Kingdom" ? generateKingdomOptions() : null}
-                        {inclusive_prey_taxon === "Phylum" ? generatePhylumOptions(formInputData.phylums) :
-                            prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
-                                prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
-                                    prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
-                                        prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
-                                            prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
-                                                prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null}
-                        {inclusive_prey_taxon === "Class" ? generateClassOptions(formInputData.classes) :
-                            prey_phylum === "Annelida" ? generateClassOptions(formInputData.annelida_classes) :
-                                prey_phylum === "Arthropoda" ? generateClassOptions(formInputData.arthropoda_classes) :
-                                    prey_phylum === "Bryozoa" ? generateClassOptions(formInputData.bryozoa_classes) :
-                                        prey_phylum === "Chordata" ? generateClassOptions(formInputData.chordata_classes) :
-                                            prey_phylum === "Cnidaria" ? generateClassOptions(formInputData.cnidaria_classes) :
-                                                prey_phylum === "Echinodermata" ? generateClassOptions(formInputData.echinodermata_classes) :
-                                                    prey_phylum === "Mollusca" ? generateClassOptions(formInputData.mollusca_classes) :
-                                                        prey_phylum === "Nematoda" ? generateClassOptions(formInputData.nematoda_classes) :
-                                                            prey_phylum === "Nemertea" ? generateClassOptions(formInputData.nemertea_classes) :
-                                                                prey_phylum === "Platyhelminthes" ? generateClassOptions(formInputData.platyhelminthes_classes) :
-                                                                    prey_phylum === "Porifera" ? generateClassOptions(formInputData.porifera_classes) :
-                                                                        prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) :
-                                                                            prey_phylum === "Heterokontophyta" ? generateClassOptions(formInputData.heterokontophyta_classes) :
-                                                                                prey_phylum === "Ochrophyta" ? generateClassOptions(formInputData.ochrophyta_classes) :
-                                                                                    prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
-                                                                                        prey_phylum === "Xanthophyta" ? generateClassOptions(formInputData.xanthophyta_classes) :
-                                                                                            prey_phylum === "Ascomycota" ? generateClassOptions(formInputData.ascomycota_classes) :
-                                                                                                prey_phylum === "Basidiomycota" ? generateClassOptions(formInputData.basidiomycota_classes) :
-                                                                                                    prey_phylum === "Bryophyta" ? generateClassOptions(formInputData.bryophyta_classes) :
-                                                                                                        prey_phylum === "Charophyta" ? generateClassOptions(formInputData.charophyta_classes) :
-                                                                                                            prey_phylum === "Chlorophyta" ? generateClassOptions(formInputData.chlorophyta_classes) :
-                                                                                                                prey_phylum === "Rhodophyta" ? generateClassOptions(formInputData.rhodophyta_classes) :
-                                                                                                                    prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
-                                                                                                                        prey_phylum === "Tracheophyta" ? generateClassOptions(formInputData.tracheophyta_classes) :
-                                                                                                                            prey_phylum === "Ciliophora" ? generateClassOptions(formInputData.ciliophora_classes) :
-                                                                                                                                prey_phylum === "Protozoa" ? generateClassOptions(formInputData.protozoa_classes) :
-                                                                                                                                    prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) : null}
-                        {inclusive_prey_taxon === "Order" ? generateOrderOptions() : prey_class != "" ? generateOrderOptions() : null}
+                        {inclusive_prey_taxon === "Kingdom" ? generateKingdomOptions() : null}
+                        {phylum("Phylum")}
+                        {phylum("Class")}
+                        {classes("Class")}
+                        {inclusive_prey_taxon === "Order" ? phylum("Order") : null}
+                        {inclusive_prey_taxon === "Order" ? classes("Order") : null}
+                        {inclusive_prey_taxon === "Order" ? generateOrderOptions() : null}
+                        {inclusive_prey_taxon === "Suborder" ? phylum("Suborder") : null}
+                        {inclusive_prey_taxon === "Suborder" ? classes("Suborder") : null}
+                        {inclusive_prey_taxon === "Suborder" ? generateOrderOptions() : null}
+                        {inclusive_prey_taxon === "Suborder" ? generateSuborderOptions() : null}
+                        {inclusive_prey_taxon === "Family" ? phylum("Family") : null}
+                        {inclusive_prey_taxon === "Family" ? classes("Family") : null}
+                        {inclusive_prey_taxon === "Family" ? generateOrderOptions() : null}
+                        {inclusive_prey_taxon === "Family" ? generateSuborderOptions() : null}
+                        {inclusive_prey_taxon === "Family" ? generateFamilyOptions() : null}
+                        {inclusive_prey_taxon === "Genus" ? phylum("Genus") : null}
+                        {inclusive_prey_taxon === "Genus" ? classes("Genus") : null}
+                        {inclusive_prey_taxon === "Genus" ? generateOrderOptions() : null}
+                        {inclusive_prey_taxon === "Genus" ? generateSuborderOptions() : null}
+                        {inclusive_prey_taxon === "Genus" ? generateFamilyOptions() : null}
+                        {inclusive_prey_taxon === "Genus" ? generateGenusOptions() : null}
+                        {inclusive_prey_taxon === "Species" ? phylum("Species") : null}
+                        {inclusive_prey_taxon === "Species" ? classes("Species") : null}
+                        {inclusive_prey_taxon === "Species" ? generateOrderOptions() : null}
+                        {inclusive_prey_taxon === "Species" ? generateSuborderOptions() : null}
+                        {inclusive_prey_taxon === "Species" ? generateFamilyOptions() : null}
+                        {inclusive_prey_taxon === "Species" ? generateGenusOptions() : null}
+
+                        {/* {inclusive_prey_taxon === "Phylum" && (prey_kingdom === "" || prey_kingdom === "Unknown" || prey_kingdom === "Non-biological" || prey_kingdom === "Select a Kingdom") ? generatePhylumOptions(formInputData.phylums, true) :
+                            inclusive_prey_taxon === "Phylum" && prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
+                                inclusive_prey_taxon === "Phylum" && prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
+                                    inclusive_prey_taxon === "Phylum" && prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
+                                        inclusive_prey_taxon === "Phylum" && prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
+                                            inclusive_prey_taxon === "Phylum" && prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
+                                                inclusive_prey_taxon === "Phylum" && prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null} */}
+
+                        {/* {inclusive_prey_taxon === "Class" && (prey_kingdom === "" || prey_kingdom === "Unknown" || prey_kingdom === "Non-biological" || prey_kingdom === "Select a Kingdom") ? generatePhylumOptions(formInputData.phylums, true) :
+                            inclusive_prey_taxon === "Class" && prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
+                                inclusive_prey_taxon === "Class" && prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
+                                    inclusive_prey_taxon === "Class" && prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
+                                        inclusive_prey_taxon === "Class" && prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
+                                            inclusive_prey_taxon === "Class" && prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
+                                                inclusive_prey_taxon === "Class" && prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null} */}
+                        {/* {inclusive_prey_taxon === "Class" && prey_phylum === "Annelida" ? generateClassOptions(formInputData.annelida_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Arthropoda" ? generateClassOptions(formInputData.arthropoda_classes) :
+                                inclusive_prey_taxon === "Class" && prey_phylum === "Bryozoa" ? generateClassOptions(formInputData.bryozoa_classes) : 
+                                inclusive_prey_taxon === "Class" && prey_phylum === "Chordata" ? generateClassOptions(formInputData.chordata_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Cnidaria" ? generateClassOptions(formInputData.cnidaria_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Echinodermata" ? generateClassOptions(formInputData.echinodermata_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Mollusca" ? generateClassOptions(formInputData.mollusca_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Nematoda" ? generateClassOptions(formInputData.nematoda_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Nemertea" ? generateClassOptions(formInputData.nemertea_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Platyhelminthes" ? generateClassOptions(formInputData.platyhelminthes_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Porifera" ? generateClassOptions(formInputData.porifera_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Heterokontophyta" ? generateClassOptions(formInputData.heterokontophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Ochrophyta" ? generateClassOptions(formInputData.ochrophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Xanthophyta" ? generateClassOptions(formInputData.xanthophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Ascomycota" ? generateClassOptions(formInputData.ascomycota_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Basidiomycota" ? generateClassOptions(formInputData.basidiomycota_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Bryophyta" ? generateClassOptions(formInputData.bryophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Charophyta" ? generateClassOptions(formInputData.charophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Chlorophyta" ? generateClassOptions(formInputData.chlorophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Rhodophyta" ? generateClassOptions(formInputData.rhodophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Tracheophyta" ? generateClassOptions(formInputData.tracheophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Ciliophora" ? generateClassOptions(formInputData.ciliophora_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Protozoa" ? generateClassOptions(formInputData.protozoa_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) : null} */}
+
+                        {/* {inclusive_prey_taxon === "Class" && prey_kingdom === "" && prey_phylum === "" ? generateClassOptions(formInputData.classes, formInputData.phylums) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Annelida" ? generateClassOptions(formInputData.annelida_classes, formInputData.animalia_phylums) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Arthropoda" ? generateClassOptions(formInputData.arthropoda_classes, formInputData.animalia_phylums) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Bryozoa" ? generateClassOptions(formInputData.bryozoa_classes, formInputData.animalia_phylums) : null} */}
+                        {/* inclusive_prey_taxon === "Class" && prey_phylum === "Chordata" ? generateClassOptions(formInputData.chordata_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Cnidaria" ? generateClassOptions(formInputData.cnidaria_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Echinodermata" ? generateClassOptions(formInputData.echinodermata_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Mollusca" ? generateClassOptions(formInputData.mollusca_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Nematoda" ? generateClassOptions(formInputData.nematoda_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Nemertea" ? generateClassOptions(formInputData.nemertea_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Platyhelminthes" ? generateClassOptions(formInputData.platyhelminthes_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Porifera" ? generateClassOptions(formInputData.porifera_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Heterokontophyta" ? generateClassOptions(formInputData.heterokontophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Ochrophyta" ? generateClassOptions(formInputData.ochrophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Xanthophyta" ? generateClassOptions(formInputData.xanthophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Ascomycota" ? generateClassOptions(formInputData.ascomycota_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Basidiomycota" ? generateClassOptions(formInputData.basidiomycota_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Bryophyta" ? generateClassOptions(formInputData.bryophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Charophyta" ? generateClassOptions(formInputData.charophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Chlorophyta" ? generateClassOptions(formInputData.chlorophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Rhodophyta" ? generateClassOptions(formInputData.rhodophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Tracheophyta" ? generateClassOptions(formInputData.tracheophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Ciliophora" ? generateClassOptions(formInputData.ciliophora_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Protozoa" ? generateClassOptions(formInputData.protozoa_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) : null} */}
+                         {/* {inclusive_prey_taxon === "Order" ? generateOrderOptions() : prey_class != "" ? generateOrderOptions() : null}
                         {inclusive_prey_taxon === "Suborder" ? generateSuborderOptions() : prey_order != "" ? generateSuborderOptions() : null}
                         {inclusive_prey_taxon === "Family" ? generateFamilyOptions() : prey_suborder != "" ? generateFamilyOptions() : null}
                         {inclusive_prey_taxon === "Genus" ? generateGenusOptions() : prey_family != "" ? generateGenusOptions() : null}
                         {inclusive_prey_taxon === "Species" ? generateSpeciesOptions() : prey_genus != "" ? generateSpeciesOptions() : null} */}
-                        {/* <div id="additional-taxon-fields" className="field">
-                        </div> */}
+
                     </div>
                     <div id="diet-question2">
                         <p id="required" style={{ ...styles.questionTextSize }}>2. Percent of the diet?</p>
@@ -1292,7 +1459,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             <div className="control" style={styles.inputBoxSpacing}>
                                 {formInputData.prey_stage.map(prey_stage =>
                                     <label className="checkbox" style={styles.checkboxSpacing}>
-                                        <input name="prey-stage" id={prey_stage} value={prey_stage} type="checkbox" onChange={() => getCheckedBoxes("prey-stage", setPreyStage)}/>
+                                        <input name="prey-stage" id={prey_stage} value={prey_stage} type="checkbox" onChange={() => getCheckedBoxes("prey-stage", setPreyStage)} />
                                         <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>{prey_stage}</span>
                                     </label>
                                 )}
@@ -1333,7 +1500,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             <div className="control" style={styles.inputBoxSpacing}>
                                 {formInputData.prey_parts.map(prey_part =>
                                     <label className="checkbox" style={styles.checkboxSpacing}>
-                                        <input name="prey-part" id={prey_part} value={prey_part} type="checkbox" onChange={() => getCheckedBoxes("prey-part", setPreyPart)}/>
+                                        <input name="prey-part" id={prey_part} value={prey_part} type="checkbox" onChange={() => getCheckedBoxes("prey-part", setPreyPart)} />
                                         <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>{prey_part}</span>
                                     </label>
                                 )}
@@ -1401,7 +1568,8 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     </div>
                 </div>
                 <div style={styles.addPreyButtonContainer} onClick={() => {
-                    addPreyEntry()}}>
+                    addPreyEntry()
+                }}>
                     <DesignGreenButton
                         buttonText={'Add another prey?'}
                         className={'add-prey-pg-4'}
@@ -1516,14 +1684,14 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     </div>
                     <div>
                         <p id="required" style={{ ...styles.questionTextSize }}>1. Prey Name and Taxonomic Level <span style={styles.green}>*</span></p>
-                        <p>{'Prey Name: ' + preySubmissions.map(submission => submission.prey_common_name) + '; Taxonomic Level: ' + preySubmissions.map(submission => submission.inclusive_prey_taxon)}</p>
-                        <p>{"Kingdom: " + preySubmissions.map(submission => (submission.prey_kingdom === "" ? "Does not apply" : submission.prey_kingdom))}</p>
-                        <p>{"Phylum: " + (prey_phylum === "" ? "Does not apply" : prey_phylum)}</p>
-                        <p>{"Order: " + (prey_order === "" ? "Does not apply" : prey_order)}</p>
-                        <p>{"Suborder: " + (prey_suborder === "" ? "Does not apply" : prey_suborder)}</p>
-                        <p>{"Family: " + (prey_family === "" ? "Does not apply" : prey_family)}</p>
-                        <p>{"Genus: " + (prey_genus === "" ? "Does not apply" : prey_genus)}</p>
-                        <p>{"Species: " + (prey_scientific_name === "" ? "Does not apply" : prey_scientific_name)}</p>
+                        <p>{preySubmissions.length > 0 ? 'Prey Name: ' + preySubmissions.map(submission => submission.prey_common_name) + '; Taxonomic Level: ' + preySubmissions.map(submission => submission.inclusive_prey_taxon) : 'Prey Name: ' + prey_common_name + '; Taxonomic Level: ' + inclusive_prey_taxon}</p>
+                        <p>{preySubmissions.length > 0 ? "Kingdom: " + preySubmissions.map(submission => (submission.prey_kingdom === "" ? "Does not apply" : submission.prey_kingdom)) : prey_kingdom === "" ? "Kingdom: Does not apply" : "Kingdom: " + prey_kingdom}</p>
+                        <p>{preySubmissions.length > 0 ? "Phylum: " + preySubmissions.map(submission => (submission.prey_phylum === "" ? "Does not apply" : submission.prey_phylum)) : prey_phylum === "" ? "Phylum: Does not apply" : "Phylum: " + prey_phylum}</p>
+                        <p>{preySubmissions.length > 0 ? "Order: " + preySubmissions.map(submission => (submission.prey_order === "" ? "Does not apply" : submission.prey_order)) : prey_order === "" ? "Order: Does not apply" : "Order: " + prey_order}</p>
+                        <p>{preySubmissions.length > 0 ? "Suborder: " + preySubmissions.map(submission => (submission.prey_suborder === "" ? "Does not apply" : submission.prey_suborder)) : prey_suborder === "" ? "Suborder: Does not apply" : "Suborder: " + prey_suborder}</p>
+                        <p>{preySubmissions.length > 0 ? "Family: " + preySubmissions.map(submission => (submission.prey_family === "" ? "Does not apply" : submission.prey_family)) : prey_family === "" ? "Family: Does not apply" : "Family: " + prey_family}</p>
+                        <p>{preySubmissions.length > 0 ? "Genus: " + preySubmissions.map(submission => (submission.prey_genus === "" ? "Does not apply" : submission.prey_genus)) : prey_genus === "" ? "Genus: Does not apply" : "Genus: " + prey_genus}</p>
+                        <p>{preySubmissions.length > 0 ? "Species: " + preySubmissions.map(submission => (submission.prey_common_name === "" ? "Does not apply" : submission.prey_common_name)) : prey_common_name === "" ? "Species: Does not apply" : "Species: " + prey_common_name}</p>
 
                         <p style={{ ...styles.questionTextSize }}>2. Percent of the diet?</p>
                         <p>{'% diet: ' + preySubmissions.map(submission => submission.fraction_diet)}</p>
