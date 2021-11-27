@@ -1,6 +1,4 @@
 import { FetchResult, MutationFunctionOptions } from "@apollo/client";
-import { autoType } from "d3-dsv";
-import internal from "events";
 import React, { ReactChild, ReactElement, useState } from "react";
 import { DesignGreenButton } from "../design/DesignGreenButton";
 import { DesignDots } from "../design/DesignDots";
@@ -100,7 +98,24 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     const [prey_stage, setPreyStage] = useState([]);
     const [observation_season, setObservationSeason] = useState([]);
 
-    //const [prey_common_name, setPreyCommonName] = useState([]);
+    const taxonInitialState = {
+        prey_common_name: '',
+        prey_kingdom: '',
+        prey_phylum: '',
+        prey_class: '',
+        prey_order: '',
+        prey_suborder: '',
+        prey_family: '',
+        prey_genus: '',
+    }
+
+    const[{prey_common_name, prey_kingdom, prey_phylum, prey_class, prey_order, prey_suborder, prey_family, prey_genus}, setTaxon] = useState(taxonInitialState)
+
+    const setTaxonState = (e: any) => {
+        const { name, value } = e.target;
+        setTaxon(prevState => ({ ...prevState, [name]: value }));
+    }
+    // const [prey_common_name, setPreyCommonName] = useState([]);
     // const [prey_kingdom, setPreyKingdom] = useState('');
     // const [prey_phylum, setPreyPhylum] = useState('');
     // const [prey_class, setPreyClass] = useState('');
@@ -108,7 +123,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     // const [prey_suborder, setPreySuborder] = useState('');
     // const [prey_family, setPreyFamily] = useState('');
     // const [prey_genus, setPreyGenus] = useState('');
-    // const [prey_scientific_name, setPreyScientificName] = useState('');
 
 
     const [{ doi, title, journal, year, lastname_author, subspecies, taxonomy,
@@ -116,9 +130,10 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         latitude_dd, longitude_dd, elevation_yn, altitude_min_m, altitude_max_m, altitude_mean_m, new_species_yn,
         observation_month_begin, observation_month_end, observation_year_begin, observation_year_end,
         analysis_number, study_type, item_sample_size, bird_sample_size, sites, sex_yn, sex, age_class_yn,
-        age_class, within_study_data_source, table_fig_number, prey_common_name, inclusive_prey_taxon, fraction_diet,
-        all_prey_diet_yn, notes, scientific_name, common_name, prey_kingdom, prey_phylum, prey_class, prey_order, prey_scientific_name, prey_family,
-        prey_genus, prey_suborder,
+        age_class, within_study_data_source, table_fig_number, inclusive_prey_taxon, fraction_diet,
+        all_prey_diet_yn, notes, scientific_name, common_name, 
+        // prey_kingdom, prey_phylum, prey_class, prey_order, prey_scientific_name, prey_family,
+        // prey_genus, prey_suborder, prey_common_name,
         family, diet_type,
         prey_name_ITIS_ID,
         prey_name_status },
@@ -245,7 +260,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             prey_suborder: prey_suborder,
             prey_family: prey_family,
             prey_genus: prey_genus,
-            prey_scientific_name: prey_scientific_name,
             prey_name_ITIS_ID: prey_name_ITIS_ID,
             prey_name_status: prey_name_status,
             prey_submissions: preySubmissions,
@@ -558,13 +572,17 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
             table.append(diet_container);
 
+            // reset taxons
+            setTaxon({ ...taxonInitialState });
+
+
             // prey_name_arr[prey_name_arr.length] = prey_common_name;
             // prey_diet_arr.push(fraction_diet);
             // prey_stage_arr.push(prey_stage);
             // prey_part_arr.push(prey_part);
 
             // setPreySubmissions({ submissions: { name: prey_name_arr, diet: prey_diet_arr, stage: prey_stage_arr, part: prey_part_arr } });
-            console.log(formData.studyInfo.prey_submissions);
+            // console.log(formData.studyInfo.prey_submissions);
             //setStudyInfoState({prey_common_name: ''})
         }
     }
@@ -593,7 +611,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
         return <div id="kingdom-inputs" className="field taxon" style={styles.noMargin}>
             <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
-                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setStudyInfoInputState}>
+                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setTaxonState}>
                     <option>Select a Kingdom</option>
                     {formInputData.kingdoms.map(kingdom => <option>{kingdom}</option>)}
                 </select>
@@ -610,7 +628,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         if (no_phylum === true) {
             return <div id="kingdom-inputs" className="field taxon" style={{...styles.noMargin, ...styles.noMarginBottom}}>
                 <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
-                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setStudyInfoInputState}>
+                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setTaxonState}>
                         <option>Select a Kingdom</option>
                         {formInputData.kingdoms.map(kingdom => <option>{kingdom}</option>)}
                     </select>
@@ -619,14 +637,14 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         } else {
             return <div><div id="kingdom-inputs" className="field taxon" style={{...styles.noMargin, ...styles.noMarginBottom}}>
                 <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
-                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setStudyInfoInputState}>
+                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setTaxonState}>
                         <option>Select a Kingdom</option>
                         {formInputData.kingdoms.map(kingdom => <option>{kingdom}</option>)}
                     </select>
                 </div>
             </div><div id="phylum-inputs" className="field taxon" style={styles.noMargin}>
                     <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                        <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_phylum} name="prey_phylum" onChange={setStudyInfoInputState}>
+                        <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_phylum} name="prey_phylum" onChange={setTaxonState}>
                             <option>Select a Phylum</option>
                             {phylum_data.map(phylum => <option>{phylum}</option>)}
                         </select>
@@ -638,7 +656,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     function generateClassOptions(class_data: string[]) {
         return <div id="phylum-inputs" className="field" style={styles.noMargin}>
             <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
-                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_class} name="prey_class" onChange={setStudyInfoInputState}>
+                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_class} name="prey_class" onChange={setTaxonState}>
                     <option>Select a Class</option>
                     {class_data.map(class_ => <option>{class_}</option>)}
                 </select>
@@ -670,33 +688,33 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
     function generateOrderOptions() {
         return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
-            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Order" value={prey_order} name="prey_order" onChange={setStudyInfoInputState} />
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Order" value={prey_order} name="prey_order" onChange={setTaxonState} />
         </div>
     }
 
     function generateSuborderOptions() {
         return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
-            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Suborder" value={prey_suborder} name="prey_suborder" onChange={setStudyInfoInputState} />
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Suborder" value={prey_suborder} name="prey_suborder" onChange={setTaxonState} />
         </div>
     }
 
     function generateFamilyOptions() {
         return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
-            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Family" value={prey_family} name="prey_family" onChange={setStudyInfoInputState} />
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Family" value={prey_family} name="prey_family" onChange={setTaxonState} />
         </div>
     }
 
     function generateGenusOptions() {
         return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
-            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Genus" value={prey_genus} name="prey_genus" onChange={setStudyInfoInputState} />
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Genus" value={prey_genus} name="prey_genus" onChange={setTaxonState} />
         </div>
     }
 
-    function generateSpeciesOptions() {
-        return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
-            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Scientific Name" value={prey_scientific_name} name="prey_scientific_name" onChange={setStudyInfoInputState} />
-        </div>
-    }
+    // function generateSpeciesOptions() {
+    //     return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
+    //         <input className="input" style={styles.inputBox} type="text" placeholder="Enter Scientific Name" value={prey_common} name="prey_scientific_name" onChange={setStudyInfoInputState} />
+    //     </div>
+    // }
 
     // function generateTextTaxonomyOptions(taxonomy: string) {
 
@@ -1313,7 +1331,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     <div id="diet-question1">
                         <p id="required" style={{ ...styles.questionTextSize }}>1. Prey Name <span style={styles.green}>*</span></p>
                         <div className="control" style={styles.inputBoxSpacing}>
-                            <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Prey Name" value={prey_common_name} name="prey_common_name" onChange={setStudyInfoInputState} />
+                            <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Prey Name" value={prey_common_name} name="prey_common_name" onChange={setTaxonState} />
                         </div>
                         <p style={styles.questionTextSize}>Please clarify the taxonomic classification of this name.</p>
                         <p style={styles.questionTextSize}>First, what is the taxonomic level of this name?</p>
