@@ -83,7 +83,7 @@ mutation CreatePendingDiet(
     $sex: String
     $age_class: String
     $within_study_data_source: String
-    $table_fig Int: String
+    $table_fig_number: String
     $title: String
     $lastname_author: String
     $year: Int
@@ -138,7 +138,7 @@ mutation CreatePendingDiet(
         sex: $sex
         age_class: $age_class
         within_study_data_source: $within_study_data_source
-        table_fig Int: $table_fig Int
+        table_fig_number: $table_fig_number
         title: $title
         lastname_author: $lastname_author
         year: $year
@@ -197,7 +197,7 @@ mutation ApprovePendingDiet(
     $sex: String
     $age_class: String
     $within_study_data_source: String
-    $table_fig Int: String
+    $table_fig_number: String
     $title: String
     $lastname_author: String
     $year: Int
@@ -252,7 +252,7 @@ mutation ApprovePendingDiet(
         sex: $sex
         age_class: $age_class
         within_study_data_source: $within_study_data_source
-        table_fig: $table_fig
+        table_fig_number: $table_fig_number
         title: $title
         lastname_author: $lastname_author
         year: $year
@@ -311,7 +311,7 @@ mutation DenyPendingDiet(
     $sex: String
     $age_class: String
     $within_study_data_source: String
-    $table_fig Int: String
+    $table_fig_number: String
     $title: String
     $lastname_author: String
     $year: Int
@@ -366,7 +366,7 @@ mutation DenyPendingDiet(
         sex: $sex
         age_class: $age_class
         within_study_data_source: $within_study_data_source
-        table_fig: $table_fig
+        table_fig_number: $table_fig_number
         title: $title
         lastname_author: $lastname_author
         year: $year
