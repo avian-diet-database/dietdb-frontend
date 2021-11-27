@@ -202,7 +202,7 @@ mutation ApprovePendingDiet(
     $lastname_author: String
     $year: Int
     $journal: String
-    $total_percent_diet: Int
+    $total_percent_diet: Float
     $unique_id: Int
     ) {
     approvePendingDiet(           
@@ -257,7 +257,7 @@ mutation ApprovePendingDiet(
         lastname_author: $lastname_author
         year: $year
         journal: $journal
-        total_percent_diet: total_percent_diet
+        total_percent_diet: $total_percent_diet
         unique_id: $unique_id
     )
 }
@@ -316,7 +316,7 @@ mutation DenyPendingDiet(
     $lastname_author: String
     $year: Int
     $journal: String
-    $total_percent_diet: Int
+    $total_percent_diet: Float
     $unique_id: Int
     ) {
     denyPendingDiet(           
@@ -371,7 +371,7 @@ mutation DenyPendingDiet(
         lastname_author: $lastname_author
         year: $year
         journal: $journal
-        total_percent_diet: total_percent_diet
+        total_percent_diet: $total_percent_diet
         unique_id: $unique_id
     )
 }
