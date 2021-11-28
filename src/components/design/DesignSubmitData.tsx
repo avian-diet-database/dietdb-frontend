@@ -1,27 +1,31 @@
 import { FetchResult, MutationFunctionOptions } from "@apollo/client";
-import { autoType } from "d3-dsv";
-import internal from "events";
-import React, { useState } from "react";
+import React, { ReactChild, ReactElement, useState } from "react";
 import { DesignGreenButton } from "../design/DesignGreenButton";
 import { DesignDots } from "../design/DesignDots";
+import { DesignErrorPage } from "./DesignErrorPage";
 import { formInputData } from "../data/formInputData";
-import { KeyObject } from "crypto";
-import { buildExecutionContext } from "graphql/execution/execute";
 
 interface DesignSubmitDataProps {
     addData: (options?: MutationFunctionOptions<any, Record<string, any>>) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
 }
 
+// removes specified HTMLElement
+export function remove(id: string) {
+    document.getElementById(id).style.display = 'none';
+}
+
 export const DesignSubmitData = (props: DesignSubmitDataProps) => {
-    const initialState = {
+    const studyInfoInitialState = {
         doi: '',
         title: '',
         journal: '',
-        year: '',
+        year: undefined as number,
         lastname_author: '',
         scientific_name: '',
-        common_name: '',
         subspecies: '',
+        new_species_yn: '',
+        common_name: '',
+        family: '',
         taxonomy: '',
         location_region: '',
         location_specific: '',
@@ -32,16 +36,22 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         altitude_min_m: '',
         altitude_max_m: '',
         altitude_mean_m: '',
-        observation_month_begin: '',
-        observation_month_end: '',
-        observation_year_begin: '',
-        observation_year_end: '',
+        observation_month_begin: undefined as number,
+        observation_month_end: undefined as number,
+        observation_year_begin: undefined as number,
+        observation_year_end: undefined as number,
+        observation_season: '',
+        entered_by: ''
+
+
+    }
+
+    const analysisInfoInitialState = {
         analysis_number: '',
         diet_type: '',
         study_type: '',
-        item_sample_size: '',
-        bird_sample_size: '',
-        new_species_yn: '',
+        item_sample_size: undefined as number,
+        bird_sample_size: undefined as number,
         sites: '',
         sex_yn: '',
         sex: '',
@@ -49,13 +59,45 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         age_class: '',
         within_study_data_source: '',
         table_fig_number: '',
-        prey_common_name: '',
+
+    }
+
+    const dietInfoInitialState = {
         inclusive_prey_taxon: '',
         fraction_diet: '',
         all_prey_diet_yn: '',
         notes: '',
-        observation_season: '',
-        family: '',
+        prey_name_ITIS_ID: '',
+        prey_name_status: '',
+        total_percent_diet: undefined as number,
+    }
+
+    // const prey_name_arr: string[] = [];
+    // const prey_diet_arr: string[] = [];
+    // const prey_stage_arr: string[] = [];
+    // // const prey_part_arr: string[] = [];
+
+    // const [prey_name_arr, setPreyNameArr] = useState([]);
+    // const [prey_diet_arr, setPreyDietArr] = useState([]);
+    // const [prey_stage_arr, setPreyStageArr] = useState([]);
+    // const [prey_part_arr, setPreyPartArr] = useState([]);
+
+    // const preySubmissionsstudyInfoInitialState = {
+    //     submissions: {
+
+    //     }
+
+    // }
+
+    const [preySubmissions, setPreySubmissions] = useState([]);
+    const [total_percent_diet, setTotalPercentDiet] = useState(0);
+    const [habitat_type, setHabitatType] = useState([]);
+    const [prey_part, setPreyPart] = useState([]);
+    const [prey_stage, setPreyStage] = useState([]);
+    const [observation_season, setObservationSeason] = useState([]);
+
+    const taxonstudyInfoInitialState = {
+        prey_common_name: '',
         prey_kingdom: '',
         prey_phylum: '',
         prey_class: '',
@@ -64,33 +106,15 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         prey_family: '',
         prey_genus: '',
         prey_scientific_name: '',
-        prey_name_ITIS_ID: '',
-        prey_name_status: '',
-
-
-
     }
 
-    const prey_name_arr: string[] = [];
-    const prey_diet_arr: string[] = [];
-    const prey_stage_arr: string[] = [];
-    const prey_part_arr: string[] = [];
+    const [{ prey_common_name, prey_kingdom, prey_phylum, prey_class, prey_order, prey_suborder, prey_family, prey_genus, prey_scientific_name }, setTaxon] = useState(taxonstudyInfoInitialState)
 
-    const preySubmissionsInitialState = {
-        submissions: {
-            name: prey_name_arr,
-            diet: prey_diet_arr,
-            stage: prey_stage_arr,
-            part: prey_part_arr,
-        },
+    const setTaxonState = (e: any) => {
+        const { name, value } = e.target;
+        setTaxon(prevState => ({ ...prevState, [name]: value }));
     }
-
-    const [preySubmissions, setPreySubmissions] = useState(preySubmissionsInitialState);
-    const [habitat_type, setHabitatType] = useState([]);
-    const [prey_part, setPreyPart] = useState([]);
-    const [prey_stage, setPreyStage] = useState([]);
-    const [observation_season, setObservationSeason] = useState([]);
-    //const [prey_common_name, setPreyCommonName] = useState([]);
+    // const [prey_common_name, setPreyCommonName] = useState([]);
     // const [prey_kingdom, setPreyKingdom] = useState('');
     // const [prey_phylum, setPreyPhylum] = useState('');
     // const [prey_class, setPreyClass] = useState('');
@@ -98,26 +122,45 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     // const [prey_suborder, setPreySuborder] = useState('');
     // const [prey_family, setPreyFamily] = useState('');
     // const [prey_genus, setPreyGenus] = useState('');
-    // const [prey_scientific_name, setPreyScientificName] = useState('');
 
 
-    const [{ doi, title, journal, year, lastname_author, subspecies, taxonomy,
-        location_region, location_specific, lat_long_yn,
+    const [{ doi, title, journal, year, lastname_author, taxonomy,
+        location_region, subspecies, location_specific, lat_long_yn,
         latitude_dd, longitude_dd, elevation_yn, altitude_min_m, altitude_max_m, altitude_mean_m, new_species_yn,
         observation_month_begin, observation_month_end, observation_year_begin, observation_year_end,
-        analysis_number, study_type, item_sample_size, bird_sample_size, sites, sex_yn, sex, age_class_yn,
-        age_class, within_study_data_source, table_fig_number, prey_common_name, inclusive_prey_taxon, fraction_diet,
-        all_prey_diet_yn, notes, scientific_name, common_name, prey_kingdom, prey_phylum, prey_class, prey_order, prey_scientific_name, prey_family,
-        prey_genus, prey_suborder,
-        family, diet_type,
+        scientific_name, common_name, entered_by,
+        family },
+        setStudyInfoState] = useState(studyInfoInitialState);
+
+    const [{ analysis_number, study_type, item_sample_size, bird_sample_size, sites, sex_yn, sex, age_class_yn,
+        age_class, within_study_data_source, table_fig_number, diet_type }, setAnalysisInfoState] = useState(analysisInfoInitialState)
+
+    const [{ inclusive_prey_taxon, fraction_diet,
+        all_prey_diet_yn, notes,
         prey_name_ITIS_ID,
-        prey_name_status },
-        setStudyInfoState] = useState(initialState);
+        prey_name_status }, setDietInfoState] = useState(dietInfoInitialState);
+
+    
+        const setAnalysisInfoInputState = (e: any) => {
+            const { name, value } = e.target;
+            setAnalysisInfoState(prevState => ({ ...prevState, [name]: value }));
+        }
+
+        const setDietInfoInputState = (e: any) => {
+            const { name, value } = e.target;
+            setDietInfoState(prevState => ({ ...prevState, [name]: value }));
+        }
 
     const setStudyInfoInputState = (e: any) => {
         const { name, value } = e.target;
-        setStudyInfoState(prevState => ({ ...prevState, [name]: value }));
 
+        // change values to int, retrieved as string from form
+        if (name === ("observation_month_begin" || "observation_month_end" || "observation_year_begin" || "observation_year_end" || "item_sample_size" || "bird_sample_size" || "year")) {
+            // let val = Number(value)
+            setStudyInfoState(prevState => ({ ...prevState, [name]: parseInt(value) }));
+        } else {
+            setStudyInfoState(prevState => ({ ...prevState, [name]: value }));
+        }
         // if (name === "inclusive_prey_taxon") {
         //     // if (value !== ("Kingdom" || "Phylum" || "Class")) {
         //     //     generateTextTaxonomyOptions(value);
@@ -130,6 +173,49 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         // if (name === "prey_kingdom") {
         //     generatePhylumOptions();
         // }
+        // if (name === "inclusive_prey_taxon") {
+        //     switch (inclusive_prey_taxon) {
+        //         case "Kingdom":
+        //             document.getElementById("taxon-fields").innerHTML = "";
+        //             generateKingdomOptions();
+        //             break;
+        //         case "Phylum":
+        //             document.getElementById("taxon-fields").innerHTML = "";
+        //             generateKingdomOptions();
+        //             generatePhylumOptions(formInputData.animalia_phylums);
+        //             break;
+        //         case "Class":
+        //             document.getElementById("taxon-fields").innerHTML = "";
+        //             break;
+        //         case "Order":
+        //             document.getElementById("taxon-fields").innerHTML = "";
+        //             generateOrderOptions();
+        //             break;
+        //         case "Suborder":
+        //             document.getElementById("taxon-fields").innerHTML = "";
+        //             break;
+        //         case "Family":
+        //             document.getElementById("taxon-fields").innerHTML = "";
+        //             break;
+        //         case "Genus":
+        //             document.getElementById("taxon-fields").innerHTML = "";
+        //             break;
+
+        //     }
+        // }
+
+        // if (name === "prey_kingdom" && inclusive_prey_taxon != "Kingdom") {
+        //     // prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
+        //     //                     prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
+        //     //                         prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
+        //     //                             prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
+        //     //                                 prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
+        //     //                                     prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null}
+        //     if (value === "Animalia") {
+        //         document.getElementById("phylum-inputs").replaceWith(generatePhylumOptions(formInputData.animalia_phylums).toString());
+
+        //     }
+        // }
     }
 
     let formData = {
@@ -141,8 +227,9 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             lastname_author: lastname_author,
             scientific_name: scientific_name,
             new_species_yn: new_species_yn,
-            common_name: common_name,
             subspecies: subspecies,
+            common_name: common_name,
+            family: family,
             taxonomy: taxonomy,
             location_region: location_region,
             location_specific: location_specific,
@@ -158,6 +245,10 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             observation_month_end: observation_month_end,
             observation_year_begin: observation_year_begin,
             observation_year_end: observation_year_end,
+            observation_season: observation_season,
+            entered_by: entered_by,
+        },
+        analysisInfo: {
             analysis_number: analysis_number,
             diet_type: diet_type,
             study_type: study_type,
@@ -170,15 +261,15 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             age_class: age_class,
             within_study_data_source: within_study_data_source,
             table_fig_number: table_fig_number,
+        },
+        dietInfo: {
             prey_common_name: prey_common_name,
             inclusive_prey_taxon: inclusive_prey_taxon,
             fraction_diet: fraction_diet,
             all_prey_diet_yn: all_prey_diet_yn,
             notes: notes,
-            observation_season: observation_season,
             prey_stage: prey_stage,
             prey_part: prey_part,
-            family: family,
             prey_kingdom: prey_kingdom,
             prey_phylum: prey_phylum,
             prey_class: prey_class,
@@ -186,11 +277,11 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             prey_suborder: prey_suborder,
             prey_family: prey_family,
             prey_genus: prey_genus,
-            prey_scientific_name: prey_scientific_name,
+            prey_scientific_name: prey_scientific_name, 
             prey_name_ITIS_ID: prey_name_ITIS_ID,
             prey_name_status: prey_name_status,
             prey_submissions: preySubmissions,
-
+            total_percent_diet: total_percent_diet,
         }
     }
 
@@ -339,7 +430,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             display: 'none',
         },
         checkboxSpacing: {
-            paddingRight: '8rem'
+            width: '300px'
         },
         addPreyButtonContainer: {
             display: 'flex',
@@ -397,6 +488,8 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
     };
 
+
+
     function movePgToPg(currentPage: string, targetPage: string, command?: string) {
         if (currentPage == '6') {
             document.getElementById('page5').style.display = 'none';
@@ -404,7 +497,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
         switch (command) {
             case 'reset':
-                setStudyInfoState({ ...initialState });
+                setStudyInfoState({ ...studyInfoInitialState });
                 break;
             case 'sameAnalysis':
             // use setState to revert other sections of form back to initial state
@@ -448,13 +541,42 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     //     console.log(habitat_type)
     // }
 
+    function removeInnerHTML(id: string) {
+        document.getElementById(id).innerHTML = "";
+    }
+
     function addPreyEntry() {
         //add validation part here
-        console.log(prey_name_arr)
         // if(prey_common_name === "" || prey_part === "") { -> add this part when setstate for preypart is implemented
         if (prey_common_name === "") {
             //return error here 
         } else {
+            let total = total_percent_diet + parseFloat(fraction_diet);
+
+            setTotalPercentDiet(total);
+
+            const submission = {
+                prey_common_name: prey_common_name,
+                inclusive_prey_taxon: inclusive_prey_taxon,
+                prey_kingdom: prey_kingdom,
+                prey_phylum: prey_phylum,
+                prey_class: prey_class,
+                prey_order: prey_order,
+                prey_suborder: prey_suborder,
+                prey_family: prey_family,
+                prey_genus: prey_genus,
+                prey_scientific_name: prey_scientific_name,
+                fraction_diet: fraction_diet,
+                prey_stage: prey_stage,
+                prey_part: prey_part,
+                all_prey_diet_yn: all_prey_diet_yn,
+                notes: notes,
+            }
+
+            preySubmissions.push(submission)
+            setPreySubmissions(preySubmissions);
+
+            console.log(preySubmissions)
             const table = document.getElementById('prey-table');
             let diet_submission =
                 `<div style='display: flex; padding: .75rem 0'>
@@ -468,17 +590,18 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             diet_container.innerHTML = diet_submission;
 
             table.append(diet_container);
-            console.log(prey_name_arr)
 
-            prey_name_arr[prey_name_arr.length] = prey_common_name;
-            prey_diet_arr.push(fraction_diet);
+            // reset taxons
+            setTaxon({ ...taxonstudyInfoInitialState });
+
+
+            // prey_name_arr[prey_name_arr.length] = prey_common_name;
+            // prey_diet_arr.push(fraction_diet);
             // prey_stage_arr.push(prey_stage);
             // prey_part_arr.push(prey_part);
 
-            console.log(prey_name_arr)
-
-            setPreySubmissions({ submissions: { name: prey_name_arr, diet: prey_diet_arr, stage: prey_stage_arr, part: prey_part_arr } });
-            console.log(formData.studyInfo.prey_submissions);
+            // setPreySubmissions({ submissions: { name: prey_name_arr, diet: prey_diet_arr, stage: prey_stage_arr, part: prey_part_arr } });
+            // console.log(formData.studyInfo.prey_submissions);
             //setStudyInfoState({prey_common_name: ''})
         }
     }
@@ -489,13 +612,25 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     //     select.value === "Order" ? console.log("i have been clicked") : "poo"
     // })
 
+    function resetTaxons() {
+        let taxons = document.getElementsByClassName('taxon') as HTMLCollectionOf<HTMLElement>;
+        for (let i = 0; i < taxons.length; i++) {
+            taxons[i].style.display = "none";
+        }
+    }
+
     function generateKingdomOptions() {
         // document.getElementById('additional-taxon-fields').innerHTML = ''
         // let kingdom = document.getElementById('kingdom-inputs');
         // kingdom.style.display = 'block';
-        return <div id="kingdom-inputs" className="field" style={styles.noMargin}>
+
+        if (document.getElementsByClassName('taxon').length > 1) {
+            resetTaxons();
+        }
+
+        return <div id="kingdom-inputs" className="field taxon" style={styles.noMargin}>
             <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
-                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setStudyInfoInputState}>
+                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setTaxonState}>
                     <option>Select a Kingdom</option>
                     {formInputData.kingdoms.map(kingdom => <option>{kingdom}</option>)}
                 </select>
@@ -503,58 +638,138 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         </div>
     }
 
-    function generatePhylumOptions(phylum_data: string[]) {
-        return <div id="phylum-inputs" className="field" style={styles.noMargin}>
-            <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_phylum} name="prey_phylum" onChange={setStudyInfoInputState}>
-                    <option>Select a Phylum</option>
-                    {phylum_data.map(phylum => <option>{phylum}</option>)}
-                </select>
+    function generatePhylumOptions(phylum_data: string[], no_phylum?: boolean) {
+
+        if (document.getElementsByClassName('taxon').length > 2) {
+            resetTaxons();
+        }
+
+        if (no_phylum === true) {
+            return <div id="kingdom-inputs" className="field taxon" style={{ ...styles.noMargin, ...styles.noMarginBottom }}>
+                <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setTaxonState}>
+                        <option>Select a Kingdom</option>
+                        {formInputData.kingdoms.map(kingdom => <option>{kingdom}</option>)}
+                    </select>
+                </div>
             </div>
-        </div>
+        } else {
+            return <div><div id="kingdom-inputs" className="field taxon" style={{ ...styles.noMargin, ...styles.noMarginBottom }}>
+                <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setTaxonState}>
+                        <option>Select a Kingdom</option>
+                        {formInputData.kingdoms.map(kingdom => <option>{kingdom}</option>)}
+                    </select>
+                </div>
+            </div><div id="phylum-inputs" className="field taxon" style={styles.noMargin}>
+                    <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
+                        <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_phylum} name="prey_phylum" onChange={setTaxonState}>
+                            <option>Select a Phylum</option>
+                            {phylum_data.map(phylum => <option>{phylum}</option>)}
+                        </select>
+                    </div>
+                </div></div>
+        }
     }
 
     function generateClassOptions(class_data: string[]) {
         return <div id="phylum-inputs" className="field" style={styles.noMargin}>
             <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
-                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_class} name="prey_class" onChange={setStudyInfoInputState}>
+                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_class} name="prey_class" onChange={setTaxonState}>
                     <option>Select a Class</option>
                     {class_data.map(class_ => <option>{class_}</option>)}
                 </select>
             </div>
         </div>
+        //     return <div><div id="kingdom-inputs" className="field taxon" style={styles.noMargin}>
+        //     <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+        //         <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setStudyInfoInputState}>
+        //             <option>Select a Kingdom</option>
+        //             {formInputData.kingdoms.map(kingdom => <option>{kingdom}</option>)}
+        //         </select>
+        //     </div>
+        // </div><div id="phylum-inputs" className="field taxon" style={styles.noMargin}>
+        //         <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
+        //             <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_phylum} name="prey_phylum" onChange={setStudyInfoInputState}>
+        //                 <option>Select a Phylum</option>
+        //                 {phylum_data.map(phylum => <option>{phylum}</option>)}
+        //             </select>
+        //         </div>
+        // </div><div id="phylum-inputs" className="field" style={styles.noMargin}>
+        //     <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
+        //         <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_class} name="prey_class" onChange={setStudyInfoInputState}>
+        //             <option>Select a Class</option>
+        //             {class_data.map(class_ => <option>{class_}</option>)}
+        //         </select>
+        //     </div>
+        // </div></div>
     }
 
     function generateOrderOptions() {
         return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
-            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Order" value={prey_order} name="prey_order" onChange={setStudyInfoInputState} />
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Order" value={prey_order} name="prey_order" onChange={setTaxonState} />
         </div>
     }
 
     function generateSuborderOptions() {
         return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
-            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Suborder" value={prey_suborder} name="prey_suborder" onChange={setStudyInfoInputState} />
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Suborder" value={prey_suborder} name="prey_suborder" onChange={setTaxonState} />
         </div>
     }
 
     function generateFamilyOptions() {
         return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
-            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Family" value={prey_family} name="prey_family" onChange={setStudyInfoInputState} />
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Family" value={prey_family} name="prey_family" onChange={setTaxonState} />
         </div>
     }
 
     function generateGenusOptions() {
         return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
-            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Genus" value={prey_genus} name="prey_genus" onChange={setStudyInfoInputState} />
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Genus" value={prey_genus} name="prey_genus" onChange={setTaxonState} />
         </div>
     }
 
     function generateSpeciesOptions() {
         return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
-            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Scientific Name" value={prey_scientific_name} name="prey_scientific_name" onChange={setStudyInfoInputState} />
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Scientific Name" value={prey_scientific_name} name="prey_scientific_name" onChange={setTaxonState} />
         </div>
     }
 
+    function generateCanadaOptions() {
+        return <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+        <select style={{ ...styles.inputBox, ...styles.inputBox2Sections, ...styles.selectBox }} value={location_region} name="location_region" onChange={setStudyInfoInputState}>
+            <option>Select State/Province</option>
+            {formInputData.state_province_canada.map(canada => <option>{canada}</option>)}
+        </select>
+    </div>
+    }
+
+    function generateAustraliaOptions() {
+        return <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+        <select style={{ ...styles.inputBox, ...styles.inputBox2Sections, ...styles.selectBox }} value={location_region} name="location_region" onChange={setStudyInfoInputState}>
+            <option>Select State/Province</option>
+            {formInputData.state_province_australia.map(australia => <option>{australia}</option>)}
+        </select>
+    </div>
+    }
+
+    function generateMexicoOptions() {
+        return <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+        <select style={{ ...styles.inputBox, ...styles.inputBox2Sections, ...styles.selectBox }} value={location_region} name="location_region" onChange={setStudyInfoInputState}>
+            <option>Select State/Province</option>
+            {formInputData.state_province_mexico.map(mexico => <option>{mexico}</option>)}
+        </select>
+    </div>
+    }
+
+    function generateUSOptions() {
+        return <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+        <select style={{ ...styles.inputBox, ...styles.inputBox2Sections, ...styles.selectBox }} value={location_region} name="location_region" onChange={setStudyInfoInputState}>
+            <option>Select State/Province</option>
+            {formInputData.state_province_us.map(us => <option>{us}</option>)}
+        </select>
+    </div>
+    }
     // function generateTextTaxonomyOptions(taxonomy: string) {
 
     //     const containerStyle = 'margin-top: .5rem; margin-bottom: .5rem;';
@@ -652,6 +867,46 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     //     // setPreyOrder(scientific_name.value);
     // }
 
+    function phylum(taxon: string) {
+        return (inclusive_prey_taxon === taxon && (prey_kingdom === "" || prey_kingdom === "Unknown" || prey_kingdom === "Non-biological" || prey_kingdom === "Select a Kingdom") ? generatePhylumOptions(formInputData.phylums, true) :
+            inclusive_prey_taxon === taxon && prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
+                inclusive_prey_taxon === taxon && prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
+                    inclusive_prey_taxon === taxon && prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
+                        inclusive_prey_taxon === taxon && prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
+                            inclusive_prey_taxon === taxon && prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
+                                inclusive_prey_taxon === taxon && prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null)
+    }
+
+    function classes(taxon: string) {
+        return (inclusive_prey_taxon === taxon && prey_phylum === "Annelida" ? generateClassOptions(formInputData.annelida_classes) :
+            inclusive_prey_taxon === taxon && prey_phylum === "Arthropoda" ? generateClassOptions(formInputData.arthropoda_classes) :
+                inclusive_prey_taxon === taxon && prey_phylum === "Bryozoa" ? generateClassOptions(formInputData.bryozoa_classes) :
+                    inclusive_prey_taxon === taxon && prey_phylum === "Chordata" ? generateClassOptions(formInputData.chordata_classes) :
+                        inclusive_prey_taxon === taxon && prey_phylum === "Cnidaria" ? generateClassOptions(formInputData.cnidaria_classes) :
+                            inclusive_prey_taxon === taxon && prey_phylum === "Echinodermata" ? generateClassOptions(formInputData.echinodermata_classes) :
+                                inclusive_prey_taxon === taxon && prey_phylum === "Mollusca" ? generateClassOptions(formInputData.mollusca_classes) :
+                                    inclusive_prey_taxon === taxon && prey_phylum === "Nematoda" ? generateClassOptions(formInputData.nematoda_classes) :
+                                        inclusive_prey_taxon === taxon && prey_phylum === "Nemertea" ? generateClassOptions(formInputData.nemertea_classes) :
+                                            inclusive_prey_taxon === taxon && prey_phylum === "Platyhelminthes" ? generateClassOptions(formInputData.platyhelminthes_classes) :
+                                                inclusive_prey_taxon === taxon && prey_phylum === "Porifera" ? generateClassOptions(formInputData.porifera_classes) :
+                                                    inclusive_prey_taxon === taxon && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) :
+                                                        inclusive_prey_taxon === taxon && prey_phylum === "Heterokontophyta" ? generateClassOptions(formInputData.heterokontophyta_classes) :
+                                                            inclusive_prey_taxon === taxon && prey_phylum === "Ochrophyta" ? generateClassOptions(formInputData.ochrophyta_classes) :
+                                                                inclusive_prey_taxon === taxon && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                                                                    inclusive_prey_taxon === taxon && prey_phylum === "Xanthophyta" ? generateClassOptions(formInputData.xanthophyta_classes) :
+                                                                        inclusive_prey_taxon === taxon && prey_phylum === "Ascomycota" ? generateClassOptions(formInputData.ascomycota_classes) :
+                                                                            inclusive_prey_taxon === taxon && prey_phylum === "Basidiomycota" ? generateClassOptions(formInputData.basidiomycota_classes) :
+                                                                                inclusive_prey_taxon === taxon && prey_phylum === "Bryophyta" ? generateClassOptions(formInputData.bryophyta_classes) :
+                                                                                    inclusive_prey_taxon === taxon && prey_phylum === "Charophyta" ? generateClassOptions(formInputData.charophyta_classes) :
+                                                                                        inclusive_prey_taxon === taxon && prey_phylum === "Chlorophyta" ? generateClassOptions(formInputData.chlorophyta_classes) :
+                                                                                            inclusive_prey_taxon === taxon && prey_phylum === "Rhodophyta" ? generateClassOptions(formInputData.rhodophyta_classes) :
+                                                                                                inclusive_prey_taxon === taxon && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                                                                                                    inclusive_prey_taxon === taxon && prey_phylum === "Tracheophyta" ? generateClassOptions(formInputData.tracheophyta_classes) :
+                                                                                                        inclusive_prey_taxon === taxon && prey_phylum === "Ciliophora" ? generateClassOptions(formInputData.ciliophora_classes) :
+                                                                                                            inclusive_prey_taxon === taxon && prey_phylum === "Protozoa" ? generateClassOptions(formInputData.protozoa_classes) :
+                                                                                                                inclusive_prey_taxon === taxon && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) : null)
+    }
+
     // displays specified HTMLElement
     function display(id: string, displayType?: string) {
         displayType !== undefined ?
@@ -659,24 +914,43 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             document.getElementById(id).style.display = 'block';
     }
 
-    // removes specified HTMLElement
-    function remove(id: string) {
-        document.getElementById(id).style.display = 'none';
-    }
-
     // submits form
     function submitForm(targetPage: string) {
         document.getElementById('page' + targetPage).style.display = 'block';
-        console.log(formData);
 
-        props.addData({
-            variables: {
-                common_name: "common_name_to_be_implemented", source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastname_author,
-                subspecies: formData.studyInfo.subspecies, taxonomy: formData.studyInfo.taxonomy,
-                location_region: formData.studyInfo.location_region, location_specific: formData.studyInfo.location_specific,
-                prey_kingdom: "prey_kingdom_to_be_implemented", diet_type: "diet_type_to_be_implemented"
+        if (preySubmissions.length > 0) {
+            for (let i = 0; i < preySubmissions.length; i++) {
+                props.addData({
+                    variables: {
+                        common_name: formData.studyInfo.common_name, scientific_name: formData.studyInfo.scientific_name, subspecies: formData.studyInfo.subspecies, family: formData.studyInfo.family, source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastname_author,
+                        taxonomy: formData.studyInfo.taxonomy, longitude_dd: formData.studyInfo.longitude_dd, latitude_dd: formData.studyInfo.latitude_dd, altitude_max_m: formData.studyInfo.altitude_max_m, altitude_mean_m: formData.studyInfo.altitude_mean_m, altitude_min_m: formData.studyInfo.altitude_min_m,
+                        location_region: formData.studyInfo.location_region, location_specific: formData.studyInfo.location_specific, habitat_type: formData.studyInfo.habitat_type, observation_month_begin: formData.studyInfo.observation_month_begin, observation_month_end: formData.studyInfo.observation_month_begin,
+                        observation_year_begin: formData.studyInfo.observation_year_begin, observation_year_end: formData.studyInfo.observation_year_end, observation_season: formData.studyInfo.observation_season, analysis_number: formData.analysisInfo.analysis_number, prey_kingdom: preySubmissions[i].submission.prey_kingdom, 
+                        prey_phylum: preySubmissions[i].submission.prey_phylum, prey_order: preySubmissions[i].submission.prey_order, prey_suborder: preySubmissions[i].submission.prey_suborder, prey_family: preySubmissions[i].submission.prey_family, prey_genus: preySubmissions[i].submission.prey_genus, 
+                        prey_scientific_name: preySubmissions[i].submission.prey_scientific_name, inclusive_prey_taxon: preySubmissions[i].submission.inclusive_prey_taxon, prey_name_ITIS_ID: formData.dietInfo.prey_name_ITIS_ID, prey_name_status: formData.dietInfo.prey_name_status, 
+                        prey_stage: preySubmissions[i].submission.prey_stage, prey_part: preySubmissions[i].submission.prey_part, prey_common_name: preySubmissions[i].submission.prey_common_name, fraction_diet: preySubmissions[i].submission.fraction_diet, diet_type: formData.analysisInfo.diet_type,
+                        item_sample_size: formData.analysisInfo.item_sample_size, bird_sample_size: formData.analysisInfo.bird_sample_size, sites: formData.analysisInfo.sites, study_type: formData.analysisInfo.study_type, notes: formData.dietInfo.notes, 
+                        entered_by: formData.studyInfo.entered_by, doi: formData.studyInfo.doi, sex: formData.analysisInfo.sex, age_class: formData.analysisInfo.age_class, within_study_data_source: formData.analysisInfo.within_study_data_source,
+                        table_fig_number: formData.analysisInfo.table_fig_number, title: formData.studyInfo.title, lastname_author: formData.studyInfo.lastname_author, year: formData.studyInfo.year, journal: formData.studyInfo.journal
+                    }
+                });
             }
-        });
+        } else {
+            props.addData({
+                variables: {
+                    common_name: formData.studyInfo.common_name, scientific_name: formData.studyInfo.scientific_name, subspecies: formData.studyInfo.subspecies, family: formData.studyInfo.family, source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastname_author,
+                    taxonomy: formData.studyInfo.taxonomy, longitude_dd: formData.studyInfo.longitude_dd, latitude_dd: formData.studyInfo.latitude_dd, altitude_max_m: formData.studyInfo.altitude_max_m, altitude_mean_m: formData.studyInfo.altitude_mean_m, altitude_min_m: formData.studyInfo.altitude_min_m,
+                    location_region: formData.studyInfo.location_region, location_specific: formData.studyInfo.location_specific, habitat_type: formData.studyInfo.habitat_type, observation_month_begin: formData.studyInfo.observation_month_begin, observation_month_end: formData.studyInfo.observation_month_begin,
+                    observation_year_begin: formData.studyInfo.observation_year_begin, observation_year_end: formData.studyInfo.observation_year_end, observation_season: formData.studyInfo.observation_season, analysis_number: formData.analysisInfo.analysis_number, prey_kingdom: formData.dietInfo.prey_kingdom, 
+                    prey_phylum: formData.dietInfo.prey_phylum, prey_order: formData.dietInfo.prey_order, prey_suborder: formData.dietInfo.prey_suborder, prey_family: formData.dietInfo.prey_family, prey_genus: formData.dietInfo.prey_genus, 
+                    prey_scientific_name: formData.dietInfo.prey_scientific_name, inclusive_prey_taxon: formData.dietInfo.inclusive_prey_taxon, prey_name_ITIS_ID: formData.dietInfo.prey_name_ITIS_ID, prey_name_status: formData.dietInfo.prey_name_status, 
+                    prey_stage: formData.dietInfo.prey_stage, prey_part: formData.dietInfo.prey_part, prey_common_name: formData.dietInfo.prey_common_name, fraction_diet: formData.dietInfo.fraction_diet, diet_type: formData.analysisInfo.diet_type,
+                    item_sample_size: formData.analysisInfo.item_sample_size, bird_sample_size: formData.analysisInfo.bird_sample_size, sites: formData.analysisInfo.sites, study_type: formData.analysisInfo.study_type, notes: formData.dietInfo.notes, 
+                    entered_by: formData.studyInfo.entered_by, doi: formData.studyInfo.doi, sex: formData.analysisInfo.sex, age_class: formData.analysisInfo.age_class, within_study_data_source: formData.analysisInfo.within_study_data_source,
+                    table_fig_number: formData.analysisInfo.table_fig_number, title: formData.studyInfo.title, lastname_author: formData.studyInfo.lastname_author, year: formData.studyInfo.year, journal: formData.studyInfo.journal
+                }
+            });
+        }
     }
 
     return (
@@ -747,7 +1021,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             <div className="field" style={styles.noMarginBottom}>
                                 <label className="label" style={styles.questionTextSize}>Please enter the scientific name.</label>
                                 <div className="control" style={styles.inputBoxSpacing}>
-                                    <input className="input" style={{ ...styles.inputBox}} type="text" placeholder="Enter Scientific Name" value={scientific_name} name="scientific_name" onChange={setStudyInfoInputState} />
+                                    <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Enter Scientific Name" value={scientific_name} name="scientific_name" onChange={setStudyInfoInputState} />
                                 </div>
                             </div>
                         </div>
@@ -807,9 +1081,10 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             </div>
                             <div className="field" style={styles.noMarginBottom}>
                                 <label className="label" style={styles.questionTextSize}>Specify State/Province</label>
-                                <div className="control" style={styles.inputBoxSpacing}>
-                                    <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Specify Area" value={location_region} name="location_region" onChange={setStudyInfoInputState} />
-                                </div>
+                                {location_region === "Canada" ? generateCanadaOptions() : location_region === "Mexico" ? generateMexicoOptions() :
+                                location_region === "Australia" ? generateAustraliaOptions() : location_region === "USA" ? generateUSOptions() : <div className="control" style={styles.inputBoxSpacing}>
+                                <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Specify Area" value={location_region} name="location_region" onChange={setStudyInfoInputState} />
+                            </div>}
                             </div>
                         </div>
                         <p style={styles.questionTextSize}>If <span style={styles.green}>no</span>, select a region.</p>
@@ -819,17 +1094,17 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                                 <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
                                     <select style={{ ...styles.inputBox, ...styles.inputBox2Sections, ...styles.selectBox }} value={location_region} name="location_region" onChange={setStudyInfoInputState}>
                                         <option>Select Region</option>
-                                        <option>Midwest</option>
-                                        <option>Southeast</option>
-                                        <option>Northeast</option>
+                                        {formInputData.regions.map(region => <option>{region}</option>)}
                                     </select>
                                 </div>
                             </div>
                             <div className="field" style={styles.noMarginBottom}>
                                 <label className="label" style={styles.questionTextSize}>Other (if other regions not applicable)</label>
-                                <div className="control" style={styles.inputBoxSpacing}>
+                                {location_region === "" ? <div className="control" style={styles.inputBoxSpacing}>
                                     <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Specify Area" value={location_region} name="location_region" onChange={setStudyInfoInputState} />
-                                </div>
+                                </div> : <div className="control" style={styles.inputBoxSpacing}>
+                                    <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Specify Area" name="location_region" />
+                                </div>}
                             </div>
                         </div>
                     </div>
@@ -999,7 +1274,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p id="required" style={{ ...styles.questionTextSize }}>1. How was the diet data quantified? <span style={styles.green}>*</span></p>
                         <div className="field">
                             <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={diet_type} name="diet_type" onChange={setStudyInfoInputState}>
+                                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={diet_type} name="diet_type" onChange={setAnalysisInfoInputState}>
                                     <option>Select Quantification</option>
                                     {formInputData.quantifications.map(quantification => <option>{quantification}</option>)}
                                 </select>
@@ -1010,7 +1285,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p id="required" style={{ ...styles.questionTextSize }}>2. How was the diet data collected? <span style={styles.green}>*</span></p>
                         <div className="field">
                             <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={study_type} name="study_type" onChange={setStudyInfoInputState}>
+                                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={study_type} name="study_type" onChange={setAnalysisInfoInputState}>
                                     <option>Select Method</option>
                                     {formInputData.methods.map(method => <option>{method}</option>)}
                                 </select>
@@ -1021,38 +1296,38 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <div id="analysis-question3">
                             <p style={{ ...styles.questionTextSize }}>3. What is the total number of diet items this analysis is based on? Leave blank if unknown.</p>
                             <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.inputBoxSpacing }}>
-                                <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Enter Value" value={item_sample_size} name="item_sample_size" onChange={setStudyInfoInputState} />
+                                <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Enter Value" value={item_sample_size} name="item_sample_size" onChange={setAnalysisInfoInputState} />
                             </div>
                         </div>
                         <div id="analysis-question4">
                             <p style={{ ...styles.questionTextSize }}>4. How many individual birds is this analysis based on? Leave blank if unknown.</p>
                             <div className="control" style={styles.inputBoxSpacing}>
-                                <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Enter Value" value={bird_sample_size} name="bird_sample_size" onChange={setStudyInfoInputState} />
+                                <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Enter Value" value={bird_sample_size} name="bird_sample_size" onChange={setAnalysisInfoInputState} />
                             </div>
                         </div>
                     </div>
                     <div id="analysis-question5">
                         <p style={{ ...styles.questionTextSize }}>5. How many distinct sites or localities are represented in this analysis? Leave blank if unknown.</p>
                         <div className="control" style={styles.inputBoxSpacing}>
-                            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Value" value={sites} name="sites" onChange={setStudyInfoInputState} />
+                            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Value" value={sites} name="sites" onChange={setAnalysisInfoInputState} />
                         </div>
                     </div>
                     <div id="analysis-question6">
                         <p style={{ ...styles.questionTextSize }}>6. Does this analysis refer to a particular sex?</p>
                         <div className="control" style={styles.inputBoxSpacing}>
                             <label className="radio" style={styles.radioButtonSpacing}>
-                                <input type="radio" value="yes" name="sex_yn" onChange={setStudyInfoInputState} onClick={() => display('sex-question')} />
+                                <input type="radio" value="yes" name="sex_yn" onChange={setAnalysisInfoInputState} onClick={() => display('sex-question')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Yes</span>
                             </label>
                             <label className="radio">
-                                <input type="radio" value="no" name="sex_yn" onChange={setStudyInfoInputState} onClick={() => remove('sex-question')} />
+                                <input type="radio" value="no" name="sex_yn" onChange={setAnalysisInfoInputState} onClick={() => remove('sex-question')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>No</span>
                             </label>
                         </div>
                         <div id="sex-question" style={{ ...styles.noMarginBottom, ...styles.displayNone }}>
                             <div className="field">
                                 <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={sex} name="sex" onChange={setStudyInfoInputState}>
+                                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={sex} name="sex" onChange={setAnalysisInfoInputState}>
                                         <option>Select Sex</option>
                                         <option>Female</option>
                                         <option>Male</option>
@@ -1065,18 +1340,18 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p style={{ ...styles.questionTextSize }}>7. Does this analysis refer to a particular age class?</p>
                         <div className="control" style={styles.inputBoxSpacing}>
                             <label className="radio" style={styles.radioButtonSpacing}>
-                                <input type="radio" value="yes" name="age_class_yn" onChange={setStudyInfoInputState} onClick={() => display('age-class-question')} />
+                                <input type="radio" value="yes" name="age_class_yn" onChange={setAnalysisInfoInputState} onClick={() => display('age-class-question')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Yes</span>
                             </label>
                             <label className="radio">
-                                <input type="radio" value="no" name="age_class_yn" onChange={setStudyInfoInputState} onClick={() => remove('age-class-question')} />
+                                <input type="radio" value="no" name="age_class_yn" onChange={setAnalysisInfoInputState} onClick={() => remove('age-class-question')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>No</span>
                             </label>
                         </div>
                         <div id="age-class-question" style={{ ...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom, ...styles.displayNone }}>
                             <div className="field">
                                 <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={age_class} name="age_class" onChange={setStudyInfoInputState}>
+                                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={age_class} name="age_class" onChange={setAnalysisInfoInputState}>
                                         <option>Select Age Class</option>
                                         {formInputData.age_classes.map(age_class => <option>{age_class}</option>)}
                                     </select>
@@ -1091,7 +1366,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                                 <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
                                     <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.inputBox2Sections }} value={within_study_data_source
                                     } name="within_study_data_source
-                    " onChange={setStudyInfoInputState}>
+                    " onChange={setAnalysisInfoInputState}>
                                         <option>Select Location</option>
                                         {formInputData.published_locations.map(published_location => <option>{published_location}</option>)}
                                     </select>
@@ -1099,7 +1374,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             </div>
                             <div className="field" style={styles.noMarginBottom}>
                                 <div className="control" style={styles.inputBoxSpacing}>
-                                    <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Enter Table or Figure Number" value={table_fig_number} name="table_fig_number" onChange={setStudyInfoInputState} />
+                                    <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Enter Table or Figure Number" value={table_fig_number} name="table_fig_number" onChange={setAnalysisInfoInputState} />
                                 </div>
                             </div>
                         </div>
@@ -1135,77 +1410,143 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     <div id="diet-question1">
                         <p id="required" style={{ ...styles.questionTextSize }}>1. Prey Name <span style={styles.green}>*</span></p>
                         <div className="control" style={styles.inputBoxSpacing}>
-                            <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Search Prey Name" value={prey_common_name} name="prey_common_name" onChange={setStudyInfoInputState} />
+                            <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Prey Name" value={prey_common_name} name="prey_common_name" onChange={setTaxonState} />
                         </div>
                         <p style={styles.questionTextSize}>Please clarify the taxonomic classification of this name.</p>
                         <p style={styles.questionTextSize}>First, what is the taxonomic level of this name?</p>
                         <div className="field" style={styles.noMargin}>
                             <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                                <select id="inclusive-prey-taxon" style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={inclusive_prey_taxon} name="inclusive_prey_taxon" onChange={setStudyInfoInputState}>
+                                <select id="inclusive-prey-taxon" style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={inclusive_prey_taxon} name="inclusive_prey_taxon" onChange={setDietInfoInputState}>
                                     <option>Select Taxonomic Level</option>
                                     {formInputData.taxonomy_levels.map(taxonomy_level => <option>{taxonomy_level}</option>)}
                                 </select>
                             </div>
                         </div>
+                        <div id="taxon-fields">
+                        </div>
                         {inclusive_prey_taxon === "Kingdom" ? generateKingdomOptions() : null}
-                        {inclusive_prey_taxon === "Phylum" ? generatePhylumOptions(formInputData.phylums) :
-                            prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
-                                prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
-                                    prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
-                                        prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
-                                            prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
-                                                prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null}
-                        {inclusive_prey_taxon === "Class" ? generateClassOptions(formInputData.classes) :
-                            prey_phylum === "Annelida" ? generateClassOptions(formInputData.annelida_classes) :
-                                prey_phylum === "Arthropoda" ? generateClassOptions(formInputData.arthropoda_classes) :
-                                    prey_phylum === "Bryozoa" ? generateClassOptions(formInputData.bryozoa_classes) :
-                                        prey_phylum === "Chordata" ? generateClassOptions(formInputData.chordata_classes) :
-                                            prey_phylum === "Cnidaria" ? generateClassOptions(formInputData.cnidaria_classes) :
-                                                prey_phylum === "Echinodermata" ? generateClassOptions(formInputData.echinodermata_classes) :
-                                                    prey_phylum === "Mollusca" ? generateClassOptions(formInputData.mollusca_classes) :
-                                                        prey_phylum === "Nematoda" ? generateClassOptions(formInputData.nematoda_classes) :
-                                                            prey_phylum === "Nemertea" ? generateClassOptions(formInputData.nemertea_classes) :
-                                                                prey_phylum === "Platyhelminthes" ? generateClassOptions(formInputData.platyhelminthes_classes) :
-                                                                    prey_phylum === "Porifera" ? generateClassOptions(formInputData.porifera_classes) :
-                                                                        prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) :
-                                                                            prey_phylum === "Heterokontophyta" ? generateClassOptions(formInputData.heterokontophyta_classes) :
-                                                                                prey_phylum === "Ochrophyta" ? generateClassOptions(formInputData.ochrophyta_classes) :
-                                                                                    prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
-                                                                                        prey_phylum === "Xanthophyta" ? generateClassOptions(formInputData.xanthophyta_classes) :
-                                                                                            prey_phylum === "Ascomycota" ? generateClassOptions(formInputData.ascomycota_classes) :
-                                                                                                prey_phylum === "Basidiomycota" ? generateClassOptions(formInputData.basidiomycota_classes) :
-                                                                                                    prey_phylum === "Bryophyta" ? generateClassOptions(formInputData.bryophyta_classes) :
-                                                                                                        prey_phylum === "Charophyta" ? generateClassOptions(formInputData.charophyta_classes) :
-                                                                                                            prey_phylum === "Chlorophyta" ? generateClassOptions(formInputData.chlorophyta_classes) :
-                                                                                                                prey_phylum === "Rhodophyta" ? generateClassOptions(formInputData.rhodophyta_classes) :
-                                                                                                                    prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
-                                                                                                                        prey_phylum === "Tracheophyta" ? generateClassOptions(formInputData.tracheophyta_classes) :
-                                                                                                                            prey_phylum === "Ciliophora" ? generateClassOptions(formInputData.ciliophora_classes) :
-                                                                                                                                prey_phylum === "Protozoa" ? generateClassOptions(formInputData.protozoa_classes) :
-                                                                                                                                    prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) : null}
-                        {inclusive_prey_taxon === "Order" ? generateOrderOptions() : prey_class != "" ? generateOrderOptions() : null}
+                        {phylum("Phylum")}
+                        {phylum("Class")}
+                        {classes("Class")}
+                        {inclusive_prey_taxon === "Order" ? phylum("Order") : null}
+                        {inclusive_prey_taxon === "Order" ? classes("Order") : null}
+                        {inclusive_prey_taxon === "Order" ? generateOrderOptions() : null}
+                        {inclusive_prey_taxon === "Suborder" ? phylum("Suborder") : null}
+                        {inclusive_prey_taxon === "Suborder" ? classes("Suborder") : null}
+                        {inclusive_prey_taxon === "Suborder" ? generateOrderOptions() : null}
+                        {inclusive_prey_taxon === "Suborder" ? generateSuborderOptions() : null}
+                        {inclusive_prey_taxon === "Family" ? phylum("Family") : null}
+                        {inclusive_prey_taxon === "Family" ? classes("Family") : null}
+                        {inclusive_prey_taxon === "Family" ? generateOrderOptions() : null}
+                        {inclusive_prey_taxon === "Family" ? generateSuborderOptions() : null}
+                        {inclusive_prey_taxon === "Family" ? generateFamilyOptions() : null}
+                        {inclusive_prey_taxon === "Genus" ? phylum("Genus") : null}
+                        {inclusive_prey_taxon === "Genus" ? classes("Genus") : null}
+                        {inclusive_prey_taxon === "Genus" ? generateOrderOptions() : null}
+                        {inclusive_prey_taxon === "Genus" ? generateSuborderOptions() : null}
+                        {inclusive_prey_taxon === "Genus" ? generateFamilyOptions() : null}
+                        {inclusive_prey_taxon === "Genus" ? generateGenusOptions() : null}
+                        {inclusive_prey_taxon === "Species" ? phylum("Species") : null}
+                        {inclusive_prey_taxon === "Species" ? classes("Species") : null}
+                        {inclusive_prey_taxon === "Species" ? generateOrderOptions() : null}
+                        {inclusive_prey_taxon === "Species" ? generateSuborderOptions() : null}
+                        {inclusive_prey_taxon === "Species" ? generateFamilyOptions() : null}
+                        {inclusive_prey_taxon === "Species" ? generateGenusOptions() : null}
+                        {inclusive_prey_taxon === "Species" ? generateSpeciesOptions() : null}
+
+                        {/* {inclusive_prey_taxon === "Phylum" && (prey_kingdom === "" || prey_kingdom === "Unknown" || prey_kingdom === "Non-biological" || prey_kingdom === "Select a Kingdom") ? generatePhylumOptions(formInputData.phylums, true) :
+                            inclusive_prey_taxon === "Phylum" && prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
+                                inclusive_prey_taxon === "Phylum" && prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
+                                    inclusive_prey_taxon === "Phylum" && prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
+                                        inclusive_prey_taxon === "Phylum" && prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
+                                            inclusive_prey_taxon === "Phylum" && prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
+                                                inclusive_prey_taxon === "Phylum" && prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null} */}
+
+                        {/* {inclusive_prey_taxon === "Class" && (prey_kingdom === "" || prey_kingdom === "Unknown" || prey_kingdom === "Non-biological" || prey_kingdom === "Select a Kingdom") ? generatePhylumOptions(formInputData.phylums, true) :
+                            inclusive_prey_taxon === "Class" && prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
+                                inclusive_prey_taxon === "Class" && prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
+                                    inclusive_prey_taxon === "Class" && prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
+                                        inclusive_prey_taxon === "Class" && prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
+                                            inclusive_prey_taxon === "Class" && prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
+                                                inclusive_prey_taxon === "Class" && prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null} */}
+                        {/* {inclusive_prey_taxon === "Class" && prey_phylum === "Annelida" ? generateClassOptions(formInputData.annelida_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Arthropoda" ? generateClassOptions(formInputData.arthropoda_classes) :
+                                inclusive_prey_taxon === "Class" && prey_phylum === "Bryozoa" ? generateClassOptions(formInputData.bryozoa_classes) : 
+                                inclusive_prey_taxon === "Class" && prey_phylum === "Chordata" ? generateClassOptions(formInputData.chordata_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Cnidaria" ? generateClassOptions(formInputData.cnidaria_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Echinodermata" ? generateClassOptions(formInputData.echinodermata_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Mollusca" ? generateClassOptions(formInputData.mollusca_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Nematoda" ? generateClassOptions(formInputData.nematoda_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Nemertea" ? generateClassOptions(formInputData.nemertea_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Platyhelminthes" ? generateClassOptions(formInputData.platyhelminthes_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Porifera" ? generateClassOptions(formInputData.porifera_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Heterokontophyta" ? generateClassOptions(formInputData.heterokontophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Ochrophyta" ? generateClassOptions(formInputData.ochrophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Xanthophyta" ? generateClassOptions(formInputData.xanthophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Ascomycota" ? generateClassOptions(formInputData.ascomycota_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Basidiomycota" ? generateClassOptions(formInputData.basidiomycota_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Bryophyta" ? generateClassOptions(formInputData.bryophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Charophyta" ? generateClassOptions(formInputData.charophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Chlorophyta" ? generateClassOptions(formInputData.chlorophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Rhodophyta" ? generateClassOptions(formInputData.rhodophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Tracheophyta" ? generateClassOptions(formInputData.tracheophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Ciliophora" ? generateClassOptions(formInputData.ciliophora_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Protozoa" ? generateClassOptions(formInputData.protozoa_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) : null} */}
+
+                        {/* {inclusive_prey_taxon === "Class" && prey_kingdom === "" && prey_phylum === "" ? generateClassOptions(formInputData.classes, formInputData.phylums) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Annelida" ? generateClassOptions(formInputData.annelida_classes, formInputData.animalia_phylums) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Arthropoda" ? generateClassOptions(formInputData.arthropoda_classes, formInputData.animalia_phylums) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Bryozoa" ? generateClassOptions(formInputData.bryozoa_classes, formInputData.animalia_phylums) : null} */}
+                        {/* inclusive_prey_taxon === "Class" && prey_phylum === "Chordata" ? generateClassOptions(formInputData.chordata_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Cnidaria" ? generateClassOptions(formInputData.cnidaria_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Echinodermata" ? generateClassOptions(formInputData.echinodermata_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Mollusca" ? generateClassOptions(formInputData.mollusca_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Nematoda" ? generateClassOptions(formInputData.nematoda_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Nemertea" ? generateClassOptions(formInputData.nemertea_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Platyhelminthes" ? generateClassOptions(formInputData.platyhelminthes_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Porifera" ? generateClassOptions(formInputData.porifera_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Heterokontophyta" ? generateClassOptions(formInputData.heterokontophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Ochrophyta" ? generateClassOptions(formInputData.ochrophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Xanthophyta" ? generateClassOptions(formInputData.xanthophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Ascomycota" ? generateClassOptions(formInputData.ascomycota_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Basidiomycota" ? generateClassOptions(formInputData.basidiomycota_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Bryophyta" ? generateClassOptions(formInputData.bryophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Charophyta" ? generateClassOptions(formInputData.charophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Chlorophyta" ? generateClassOptions(formInputData.chlorophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Rhodophyta" ? generateClassOptions(formInputData.rhodophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Tracheophyta" ? generateClassOptions(formInputData.tracheophyta_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Ciliophora" ? generateClassOptions(formInputData.ciliophora_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Protozoa" ? generateClassOptions(formInputData.protozoa_classes) :
+                            inclusive_prey_taxon === "Class" && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) : null} */}
+                        {/* {inclusive_prey_taxon === "Order" ? generateOrderOptions() : prey_class != "" ? generateOrderOptions() : null}
                         {inclusive_prey_taxon === "Suborder" ? generateSuborderOptions() : prey_order != "" ? generateSuborderOptions() : null}
                         {inclusive_prey_taxon === "Family" ? generateFamilyOptions() : prey_suborder != "" ? generateFamilyOptions() : null}
                         {inclusive_prey_taxon === "Genus" ? generateGenusOptions() : prey_family != "" ? generateGenusOptions() : null}
-                        {inclusive_prey_taxon === "Species" ? generateSpeciesOptions() : prey_genus != "" ? generateSpeciesOptions() : null}
-                        {/* <div id="additional-taxon-fields" className="field">
-                        </div> */}
+                        {inclusive_prey_taxon === "Species" ? generateSpeciesOptions() : prey_genus != "" ? generateSpeciesOptions() : null} */}
+
                     </div>
                     <div id="diet-question2">
                         <p id="required" style={{ ...styles.questionTextSize }}>2. Percent of the diet?</p>
                         <div className="control" style={styles.inputBoxSpacing}>
-                            <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Enter Value" value={fraction_diet} name="fraction_diet" onChange={setStudyInfoInputState} />
+                            <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Enter Value" value={fraction_diet} name="fraction_diet" onChange={setDietInfoInputState} />
                         </div>
                     </div>
                     <div id="diet-question3">
                         <p style={{ ...styles.questionTextSize }}>3. Does the value entered above reflect the % of the diet for all members of this prey name (inclusive), or only those members of the prey name that weren’t identified more finely (not inclusive)? Hover over info button for examples.</p>
                         <div className="control" style={styles.inputBoxSpacing}>
                             <label className="radio" style={styles.radioButtonSpacing}>
-                                <input type="radio" value="yes" name="all_prey_diet_yn" onChange={setStudyInfoInputState} />
+                                <input type="radio" value="yes" name="all_prey_diet_yn" onChange={setDietInfoInputState} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Yes (inclusive)</span>
                             </label>
                             <label className="radio">
-                                <input type="radio" value="no" name="all_prey_diet_yn" onChange={setStudyInfoInputState} />
+                                <input type="radio" value="no" name="all_prey_diet_yn" onChange={setDietInfoInputState} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>No (not inclusive)</span>
                             </label>
                         </div>
@@ -1216,7 +1557,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             <div className="control" style={styles.inputBoxSpacing}>
                                 {formInputData.prey_stage.map(prey_stage =>
                                     <label className="checkbox" style={styles.checkboxSpacing}>
-                                        <input name="prey-stage" id={prey_stage} value={prey_stage} type="checkbox" onChange={() => getCheckedBoxes("prey-stage", setPreyStage)}/>
+                                        <input name="prey-stage" id={prey_stage} value={prey_stage} type="checkbox" onChange={() => getCheckedBoxes("prey-stage", setPreyStage)} />
                                         <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>{prey_stage}</span>
                                     </label>
                                 )}
@@ -1257,7 +1598,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             <div className="control" style={styles.inputBoxSpacing}>
                                 {formInputData.prey_parts.map(prey_part =>
                                     <label className="checkbox" style={styles.checkboxSpacing}>
-                                        <input name="prey-part" id={prey_part} value={prey_part} type="checkbox" onChange={() => getCheckedBoxes("prey-part", setPreyPart)}/>
+                                        <input name="prey-part" id={prey_part} value={prey_part} type="checkbox" onChange={() => getCheckedBoxes("prey-part", setPreyPart)} />
                                         <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>{prey_part}</span>
                                     </label>
                                 )}
@@ -1320,12 +1661,13 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     <div id="diet-question6">
                         <p style={{ ...styles.questionTextSize }}>6. If you have any miscellaneous notes about this prey item you may describe them here.</p>
                         <div className="control" style={styles.inputBoxSpacing}>
-                            <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Enter Notes" value={notes} name="notes" onChange={setStudyInfoInputState} />
+                            <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Enter Notes" value={notes} name="notes" onChange={setDietInfoInputState} />
                         </div>
                     </div>
                 </div>
                 <div style={styles.addPreyButtonContainer} onClick={() => {
-                    addPreyEntry()}}>
+                    addPreyEntry()
+                }}>
                     <DesignGreenButton
                         buttonText={'Add another prey?'}
                         className={'add-prey-pg-4'}
@@ -1440,25 +1782,25 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     </div>
                     <div>
                         <p id="required" style={{ ...styles.questionTextSize }}>1. Prey Name and Taxonomic Level <span style={styles.green}>*</span></p>
-                        <p>{'Prey Name: ' + prey_common_name + '; Taxonomic Level: ' + inclusive_prey_taxon}</p>
-                        <p>{"Kingdom: " + (prey_kingdom === "" ? "Does not apply" : prey_kingdom)}</p>
-                        <p>{"Phylum: " + (prey_phylum === "" ? "Does not apply" : prey_phylum)}</p>
-                        <p>{"Order: " + (prey_order === "" ? "Does not apply" : prey_order)}</p>
-                        <p>{"Suborder: " + (prey_suborder === "" ? "Does not apply" : prey_suborder)}</p>
-                        <p>{"Family: " + (prey_family === "" ? "Does not apply" : prey_family)}</p>
-                        <p>{"Genus: " + (prey_genus === "" ? "Does not apply" : prey_genus)}</p>
-                        <p>{"Species: " + (prey_scientific_name === "" ? "Does not apply" : prey_scientific_name)}</p>
+                        <p>{preySubmissions.length > 0 ? 'Prey Name: ' + preySubmissions.map(submission => submission.prey_common_name) + '; Taxonomic Level: ' + preySubmissions.map(submission => submission.inclusive_prey_taxon) : 'Prey Name: ' + prey_common_name + '; Taxonomic Level: ' + inclusive_prey_taxon}</p>
+                        <p>{preySubmissions.length > 0 ? "Kingdom: " + preySubmissions.map(submission => (submission.prey_kingdom === "" ? "Does not apply" : submission.prey_kingdom)) : prey_kingdom === "" ? "Kingdom: Does not apply" : "Kingdom: " + prey_kingdom}</p>
+                        <p>{preySubmissions.length > 0 ? "Phylum: " + preySubmissions.map(submission => (submission.prey_phylum === "" ? "Does not apply" : submission.prey_phylum)) : prey_phylum === "" ? "Phylum: Does not apply" : "Phylum: " + prey_phylum}</p>
+                        <p>{preySubmissions.length > 0 ? "Order: " + preySubmissions.map(submission => (submission.prey_order === "" ? "Does not apply" : submission.prey_order)) : prey_order === "" ? "Order: Does not apply" : "Order: " + prey_order}</p>
+                        <p>{preySubmissions.length > 0 ? "Suborder: " + preySubmissions.map(submission => (submission.prey_suborder === "" ? "Does not apply" : submission.prey_suborder)) : prey_suborder === "" ? "Suborder: Does not apply" : "Suborder: " + prey_suborder}</p>
+                        <p>{preySubmissions.length > 0 ? "Family: " + preySubmissions.map(submission => (submission.prey_family === "" ? "Does not apply" : submission.prey_family)) : prey_family === "" ? "Family: Does not apply" : "Family: " + prey_family}</p>
+                        <p>{preySubmissions.length > 0 ? "Genus: " + preySubmissions.map(submission => (submission.prey_genus === "" ? "Does not apply" : submission.prey_genus)) : prey_genus === "" ? "Genus: Does not apply" : "Genus: " + prey_genus}</p>
+                        <p>{preySubmissions.length > 0 ? "Species: " + preySubmissions.map(submission => (submission.prey_scientific_name === "" ? "Does not apply" : submission.prey_scientific_name)) : prey_scientific_name === "" ? "Species: Does not apply" : "Species: " + prey_scientific_name}</p>
 
                         <p style={{ ...styles.questionTextSize }}>2. Percent of the diet?</p>
-                        <p>{'% diet: ' + fraction_diet}</p>
+                        <p>{preySubmissions.length > 0 ? "% diet: " + preySubmissions.map(submission => submission.fraction_diet) : "% diet: " + fraction_diet}</p>
                         <p style={{ ...styles.questionTextSize }}>3. Does the value entered above reflect the % of the diet for all members of this prey name (inclusive), or only those members of the prey name that weren’t identified more finely (not inclusive)?</p>
-                        <p>{all_prey_diet_yn}</p>
+                        <p>{preySubmissions.length > 0 ? preySubmissions.map(submission => submission.all_prey_diet_yn) : all_prey_diet_yn}</p>
                         <p style={{ ...styles.questionTextSize }}>4. Does this prey entry refer to a particular life stage?</p>
-                        <p>{'Life Stage(s): ' + prey_stage}</p>
+                        <p>{preySubmissions.length > 0 ? "Life Stage(s): " + preySubmissions.map(submission => submission.prey_stage) : "Life Stage(s): " + prey_stage}</p>
                         <p id="required" style={{ ...styles.questionTextSize }}>5. Does this prey entry refer to a particular prey part?<span style={styles.green}>*</span></p>
-                        <p>{'Prey Part(s): ' + prey_part}</p>
+                        <p>{preySubmissions.length > 0 ? "Prey Part(s): " + preySubmissions.map(submission => submission.prey_part) : "Prey Part(s): " + prey_part}</p>
                         <p style={{ ...styles.questionTextSize }}>6. If you have any miscellaneous notes about this prey item you may describe them here.</p>
-                        <p>{notes}</p>
+                        <p>{preySubmissions.length > 0 ? "Notes: " + preySubmissions.map(submission => submission.notes) : "Notes: " + notes}</p>
                     </div>
                 </div>
                 <hr style={styles.backgroundGreen} />
