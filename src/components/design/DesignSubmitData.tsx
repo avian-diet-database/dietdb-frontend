@@ -586,6 +586,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             setPreySubmissions(preySubmissions);
 
             console.log(preySubmissions)
+            // console.log(preySubmissions[0].submission.prey_kingdom)
             const table = document.getElementById('prey-table');
             let diet_submission =
                 `<div style='display: flex; padding: .75rem 0'>
@@ -934,13 +935,13 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         common_name: formData.studyInfo.common_name, new_species: formData.studyInfo.new_species_yn, scientific_name: formData.studyInfo.scientific_name, subspecies: formData.studyInfo.subspecies, family: formData.studyInfo.family, source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastname_author,
                         taxonomy: formData.studyInfo.taxonomy, longitude_dd: formData.studyInfo.longitude_dd, latitude_dd: formData.studyInfo.latitude_dd, altitude_max_m: formData.studyInfo.altitude_max_m, altitude_mean_m: formData.studyInfo.altitude_mean_m, altitude_min_m: formData.studyInfo.altitude_min_m,
                         location_region: formData.studyInfo.location_region, location_specific: formData.studyInfo.location_specific, habitat_type: formData.studyInfo.habitat_type.toString(), observation_month_begin: Number(formData.studyInfo.observation_month_begin), observation_month_end: Number(formData.studyInfo.observation_month_begin),
-                        observation_year_begin: Number(formData.studyInfo.observation_year_begin), observation_year_end: Number(formData.studyInfo.observation_year_end), observation_season: formData.studyInfo.observation_season.toString(), analysis_number: formData.analysisInfo.analysis_number, prey_kingdom: preySubmissions[i].submission.prey_kingdom, 
-                        prey_phylum: preySubmissions[i].submission.prey_phylum, prey_order: preySubmissions[i].submission.prey_order, prey_suborder: preySubmissions[i].submission.prey_suborder, prey_family: preySubmissions[i].submission.prey_family, prey_genus: preySubmissions[i].submission.prey_genus, 
-                        prey_scientific_name: preySubmissions[i].submission.prey_scientific_name, inclusive_prey_taxon: preySubmissions[i].submission.inclusive_prey_taxon, prey_name_ITIS_ID: formData.dietInfo.prey_name_ITIS_ID, prey_name_status: formData.dietInfo.prey_name_status, 
-                        prey_stage: preySubmissions[i].submission.prey_stage.toString(), prey_part: preySubmissions[i].submission.prey_part.toString(), prey_common_name: preySubmissions[i].submission.prey_common_name, fraction_diet: preySubmissions[i].submission.fraction_diet, diet_type: formData.analysisInfo.diet_type,
+                        observation_year_begin: Number(formData.studyInfo.observation_year_begin), observation_year_end: Number(formData.studyInfo.observation_year_end), observation_season: formData.studyInfo.observation_season.toString(), analysis_number: formData.analysisInfo.analysis_number, prey_kingdom: preySubmissions[i].prey_kingdom, 
+                        prey_phylum: preySubmissions[i].prey_phylum, prey_order: preySubmissions[i].prey_order, prey_suborder: preySubmissions[i].prey_suborder, prey_family: preySubmissions[i].prey_family, prey_genus: preySubmissions[i].prey_genus, 
+                        prey_scientific_name: preySubmissions[i].prey_scientific_name, inclusive_prey_taxon: preySubmissions[i].inclusive_prey_taxon, prey_name_ITIS_ID: formData.dietInfo.prey_name_ITIS_ID, prey_name_status: formData.dietInfo.prey_name_status, 
+                        prey_stage: preySubmissions[i].prey_stage.toString(), prey_part: preySubmissions[i].prey_part.toString(), prey_common_name: preySubmissions[i].prey_common_name, fraction_diet: preySubmissions[i].fraction_diet, diet_type: formData.analysisInfo.diet_type,
                         item_sample_size: formData.analysisInfo.item_sample_size, bird_sample_size: formData.analysisInfo.bird_sample_size, sites: formData.analysisInfo.sites, study_type: formData.analysisInfo.study_type, notes: formData.dietInfo.notes, 
                         entered_by: formData.studyInfo.entered_by, doi: formData.studyInfo.doi, sex: formData.analysisInfo.sex, age_class: formData.analysisInfo.age_class, within_study_data_source: formData.analysisInfo.within_study_data_source,
-                        table_fig_number: formData.analysisInfo.table_fig_number, title: formData.studyInfo.title, lastname_author: formData.studyInfo.lastname_author, year: formData.studyInfo.year, journal: formData.studyInfo.journal
+                        table_fig_number: formData.analysisInfo.table_fig_number, title: formData.studyInfo.title, lastname_author: formData.studyInfo.lastname_author, year: Number(formData.studyInfo.year), journal: formData.studyInfo.journal, total_percent_diet: formData.dietInfo.total_percent_diet
                     }
                 });
             }
@@ -956,7 +957,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     prey_stage: formData.dietInfo.prey_stage.toString(), prey_part: formData.dietInfo.prey_part.toString(), prey_common_name: formData.dietInfo.prey_common_name, fraction_diet: formData.dietInfo.fraction_diet, diet_type: formData.analysisInfo.diet_type,
                     item_sample_size: formData.analysisInfo.item_sample_size, bird_sample_size: formData.analysisInfo.bird_sample_size, sites: formData.analysisInfo.sites, study_type: formData.analysisInfo.study_type, notes: formData.dietInfo.notes, 
                     entered_by: formData.studyInfo.entered_by, doi: formData.studyInfo.doi, sex: formData.analysisInfo.sex, age_class: formData.analysisInfo.age_class, within_study_data_source: formData.analysisInfo.within_study_data_source,
-                    table_fig_number: formData.analysisInfo.table_fig_number, title: formData.studyInfo.title, lastname_author: formData.studyInfo.lastname_author, year: Number(formData.studyInfo.year), journal: formData.studyInfo.journal
+                    table_fig_number: formData.analysisInfo.table_fig_number, title: formData.studyInfo.title, lastname_author: formData.studyInfo.lastname_author, year: Number(formData.studyInfo.year), journal: formData.studyInfo.journal, total_percent_diet: formData.dietInfo.total_percent_diet
                 }
             });
         }
