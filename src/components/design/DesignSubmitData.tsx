@@ -15,14 +15,16 @@ export function remove(id: string) {
 }
 
 export const DesignSubmitData = (props: DesignSubmitDataProps) => {
-    const initialState = {
+    const studyInfoInitialState = {
         doi: '',
         title: '',
         journal: '',
         year: undefined as number,
         lastname_author: '',
         scientific_name: '',
+        new_species_yn: '',
         common_name: '',
+        family: '',
         subspecies: '',
         taxonomy: '',
         location_region: '',
@@ -38,12 +40,17 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         observation_month_end: undefined as number,
         observation_year_begin: undefined as number,
         observation_year_end: undefined as number,
+        observation_season: '',
+
+
+    }
+
+    const analysisInfoInitialState = {
         analysis_number: '',
         diet_type: '',
         study_type: '',
         item_sample_size: undefined as number,
         bird_sample_size: undefined as number,
-        new_species_yn: '',
         sites: '',
         sex_yn: '',
         sex: '',
@@ -51,27 +58,17 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         age_class: '',
         within_study_data_source: '',
         table_fig_number: '',
-        prey_common_name: '',
+
+    }
+
+    const dietInfoInitialState = {
         inclusive_prey_taxon: '',
         fraction_diet: '',
         all_prey_diet_yn: '',
         notes: '',
-        observation_season: '',
-        family: '',
-        prey_kingdom: '',
-        prey_phylum: '',
-        prey_class: '',
-        prey_order: '',
-        prey_suborder: '',
-        prey_family: '',
-        prey_genus: '',
-        prey_scientific_name: '',
         prey_name_ITIS_ID: '',
         prey_name_status: '',
         total_percent_diet: undefined as number,
-
-
-
     }
 
     // const prey_name_arr: string[] = [];
@@ -84,7 +81,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     // const [prey_stage_arr, setPreyStageArr] = useState([]);
     // const [prey_part_arr, setPreyPartArr] = useState([]);
 
-    // const preySubmissionsInitialState = {
+    // const preySubmissionsstudyInfoInitialState = {
     //     submissions: {
 
     //     }
@@ -98,7 +95,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     const [prey_stage, setPreyStage] = useState([]);
     const [observation_season, setObservationSeason] = useState([]);
 
-    const taxonInitialState = {
+    const taxonstudyInfoInitialState = {
         prey_common_name: '',
         prey_kingdom: '',
         prey_phylum: '',
@@ -109,7 +106,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         prey_genus: '',
     }
 
-    const[{prey_common_name, prey_kingdom, prey_phylum, prey_class, prey_order, prey_suborder, prey_family, prey_genus}, setTaxon] = useState(taxonInitialState)
+    const [{ prey_common_name, prey_kingdom, prey_phylum, prey_class, prey_order, prey_suborder, prey_family, prey_genus }, setTaxon] = useState(taxonstudyInfoInitialState)
 
     const setTaxonState = (e: any) => {
         const { name, value } = e.target;
@@ -125,19 +122,32 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     // const [prey_genus, setPreyGenus] = useState('');
 
 
-    const [{ doi, title, journal, year, lastname_author, subspecies, taxonomy,
+    const [{ doi, title, journal, year, lastname_author, taxonomy,
         location_region, location_specific, lat_long_yn,
         latitude_dd, longitude_dd, elevation_yn, altitude_min_m, altitude_max_m, altitude_mean_m, new_species_yn,
         observation_month_begin, observation_month_end, observation_year_begin, observation_year_end,
-        analysis_number, study_type, item_sample_size, bird_sample_size, sites, sex_yn, sex, age_class_yn,
-        age_class, within_study_data_source, table_fig_number, inclusive_prey_taxon, fraction_diet,
-        all_prey_diet_yn, notes, scientific_name, common_name, 
-        // prey_kingdom, prey_phylum, prey_class, prey_order, prey_scientific_name, prey_family,
-        // prey_genus, prey_suborder, prey_common_name,
-        family, diet_type,
+        scientific_name, common_name,
+        family },
+        setStudyInfoState] = useState(studyInfoInitialState);
+
+    const [{ analysis_number, study_type, item_sample_size, bird_sample_size, sites, sex_yn, sex, age_class_yn,
+        age_class, within_study_data_source, table_fig_number, diet_type }, setAnalysisInfoState] = useState(analysisInfoInitialState)
+
+    const [{ inclusive_prey_taxon, fraction_diet,
+        all_prey_diet_yn, notes,
         prey_name_ITIS_ID,
-        prey_name_status },
-        setStudyInfoState] = useState(initialState);
+        prey_name_status }, setDietInfoState] = useState(dietInfoInitialState);
+
+    
+        const setAnalysisInfoInputState = (e: any) => {
+            const { name, value } = e.target;
+            setAnalysisInfoState(prevState => ({ ...prevState, [name]: value }));
+        }
+
+        const setDietInfoInputState = (e: any) => {
+            const { name, value } = e.target;
+            setDietInfoState(prevState => ({ ...prevState, [name]: value }));
+        }
 
     const setStudyInfoInputState = (e: any) => {
         const { name, value } = e.target;
@@ -145,7 +155,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         // change values to int, retrieved as string from form
         if (name === ("observation_month_begin" || "observation_month_end" || "observation_year_begin" || "observation_year_end" || "item_sample_size" || "bird_sample_size" || "year")) {
             // let val = Number(value)
-            setStudyInfoState(prevState => ({ ...prevState, [name]: value }));
+            setStudyInfoState(prevState => ({ ...prevState, [name]: parseInt(value) }));
         } else {
             setStudyInfoState(prevState => ({ ...prevState, [name]: value }));
         }
@@ -216,7 +226,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             scientific_name: scientific_name,
             new_species_yn: new_species_yn,
             common_name: common_name,
-            subspecies: subspecies,
             taxonomy: taxonomy,
             location_region: location_region,
             location_specific: location_specific,
@@ -232,6 +241,9 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             observation_month_end: observation_month_end,
             observation_year_begin: observation_year_begin,
             observation_year_end: observation_year_end,
+            observation_season: observation_season,
+        },
+        analysisInfo: {
             analysis_number: analysis_number,
             diet_type: diet_type,
             study_type: study_type,
@@ -244,12 +256,13 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             age_class: age_class,
             within_study_data_source: within_study_data_source,
             table_fig_number: table_fig_number,
+        },
+        dietInfo: {
             prey_common_name: prey_common_name,
             inclusive_prey_taxon: inclusive_prey_taxon,
             fraction_diet: fraction_diet,
             all_prey_diet_yn: all_prey_diet_yn,
             notes: notes,
-            observation_season: observation_season,
             prey_stage: prey_stage,
             prey_part: prey_part,
             family: family,
@@ -264,7 +277,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             prey_name_status: prey_name_status,
             prey_submissions: preySubmissions,
             total_percent_diet: total_percent_diet,
-
         }
     }
 
@@ -480,7 +492,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
         switch (command) {
             case 'reset':
-                setStudyInfoState({ ...initialState });
+                setStudyInfoState({ ...studyInfoInitialState });
                 break;
             case 'sameAnalysis':
             // use setState to revert other sections of form back to initial state
@@ -573,7 +585,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             table.append(diet_container);
 
             // reset taxons
-            setTaxon({ ...taxonInitialState });
+            setTaxon({ ...taxonstudyInfoInitialState });
 
 
             // prey_name_arr[prey_name_arr.length] = prey_common_name;
@@ -626,7 +638,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         }
 
         if (no_phylum === true) {
-            return <div id="kingdom-inputs" className="field taxon" style={{...styles.noMargin, ...styles.noMarginBottom}}>
+            return <div id="kingdom-inputs" className="field taxon" style={{ ...styles.noMargin, ...styles.noMarginBottom }}>
                 <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
                     <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setTaxonState}>
                         <option>Select a Kingdom</option>
@@ -635,7 +647,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 </div>
             </div>
         } else {
-            return <div><div id="kingdom-inputs" className="field taxon" style={{...styles.noMargin, ...styles.noMarginBottom}}>
+            return <div><div id="kingdom-inputs" className="field taxon" style={{ ...styles.noMargin, ...styles.noMarginBottom }}>
                 <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
                     <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={prey_kingdom} name="prey_kingdom" onChange={setTaxonState}>
                         <option>Select a Kingdom</option>
@@ -815,42 +827,42 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
     function phylum(taxon: string) {
         return (inclusive_prey_taxon === taxon && (prey_kingdom === "" || prey_kingdom === "Unknown" || prey_kingdom === "Non-biological" || prey_kingdom === "Select a Kingdom") ? generatePhylumOptions(formInputData.phylums, true) :
-        inclusive_prey_taxon === taxon && prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
-            inclusive_prey_taxon === taxon && prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
-                inclusive_prey_taxon === taxon && prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
-                    inclusive_prey_taxon === taxon && prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
-                        inclusive_prey_taxon === taxon && prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
-                            inclusive_prey_taxon === taxon && prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null)
+            inclusive_prey_taxon === taxon && prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
+                inclusive_prey_taxon === taxon && prey_kingdom === "Bacteria" ? generatePhylumOptions(formInputData.bacteria_phylums) :
+                    inclusive_prey_taxon === taxon && prey_kingdom === "Chromista" ? generatePhylumOptions(formInputData.chromista_phylums) :
+                        inclusive_prey_taxon === taxon && prey_kingdom === "Fungi" ? generatePhylumOptions(formInputData.fungi_phylums) :
+                            inclusive_prey_taxon === taxon && prey_kingdom === "Plantae" ? generatePhylumOptions(formInputData.plantae_phylums) :
+                                inclusive_prey_taxon === taxon && prey_kingdom === "Protozoa" ? generatePhylumOptions(formInputData.protozoa_phylums) : null)
     }
 
     function classes(taxon: string) {
         return (inclusive_prey_taxon === taxon && prey_phylum === "Annelida" ? generateClassOptions(formInputData.annelida_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Arthropoda" ? generateClassOptions(formInputData.arthropoda_classes) :
-                                inclusive_prey_taxon === taxon && prey_phylum === "Bryozoa" ? generateClassOptions(formInputData.bryozoa_classes) : 
-                                inclusive_prey_taxon === taxon && prey_phylum === "Chordata" ? generateClassOptions(formInputData.chordata_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Cnidaria" ? generateClassOptions(formInputData.cnidaria_classes) :
+            inclusive_prey_taxon === taxon && prey_phylum === "Arthropoda" ? generateClassOptions(formInputData.arthropoda_classes) :
+                inclusive_prey_taxon === taxon && prey_phylum === "Bryozoa" ? generateClassOptions(formInputData.bryozoa_classes) :
+                    inclusive_prey_taxon === taxon && prey_phylum === "Chordata" ? generateClassOptions(formInputData.chordata_classes) :
+                        inclusive_prey_taxon === taxon && prey_phylum === "Cnidaria" ? generateClassOptions(formInputData.cnidaria_classes) :
                             inclusive_prey_taxon === taxon && prey_phylum === "Echinodermata" ? generateClassOptions(formInputData.echinodermata_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Mollusca" ? generateClassOptions(formInputData.mollusca_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Nematoda" ? generateClassOptions(formInputData.nematoda_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Nemertea" ? generateClassOptions(formInputData.nemertea_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Platyhelminthes" ? generateClassOptions(formInputData.platyhelminthes_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Porifera" ? generateClassOptions(formInputData.porifera_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Heterokontophyta" ? generateClassOptions(formInputData.heterokontophyta_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Ochrophyta" ? generateClassOptions(formInputData.ochrophyta_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Xanthophyta" ? generateClassOptions(formInputData.xanthophyta_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Ascomycota" ? generateClassOptions(formInputData.ascomycota_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Basidiomycota" ? generateClassOptions(formInputData.basidiomycota_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Bryophyta" ? generateClassOptions(formInputData.bryophyta_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Charophyta" ? generateClassOptions(formInputData.charophyta_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Chlorophyta" ? generateClassOptions(formInputData.chlorophyta_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Rhodophyta" ? generateClassOptions(formInputData.rhodophyta_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Tracheophyta" ? generateClassOptions(formInputData.tracheophyta_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Ciliophora" ? generateClassOptions(formInputData.ciliophora_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Protozoa" ? generateClassOptions(formInputData.protozoa_classes) :
-                            inclusive_prey_taxon === taxon && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) : null)
+                                inclusive_prey_taxon === taxon && prey_phylum === "Mollusca" ? generateClassOptions(formInputData.mollusca_classes) :
+                                    inclusive_prey_taxon === taxon && prey_phylum === "Nematoda" ? generateClassOptions(formInputData.nematoda_classes) :
+                                        inclusive_prey_taxon === taxon && prey_phylum === "Nemertea" ? generateClassOptions(formInputData.nemertea_classes) :
+                                            inclusive_prey_taxon === taxon && prey_phylum === "Platyhelminthes" ? generateClassOptions(formInputData.platyhelminthes_classes) :
+                                                inclusive_prey_taxon === taxon && prey_phylum === "Porifera" ? generateClassOptions(formInputData.porifera_classes) :
+                                                    inclusive_prey_taxon === taxon && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) :
+                                                        inclusive_prey_taxon === taxon && prey_phylum === "Heterokontophyta" ? generateClassOptions(formInputData.heterokontophyta_classes) :
+                                                            inclusive_prey_taxon === taxon && prey_phylum === "Ochrophyta" ? generateClassOptions(formInputData.ochrophyta_classes) :
+                                                                inclusive_prey_taxon === taxon && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                                                                    inclusive_prey_taxon === taxon && prey_phylum === "Xanthophyta" ? generateClassOptions(formInputData.xanthophyta_classes) :
+                                                                        inclusive_prey_taxon === taxon && prey_phylum === "Ascomycota" ? generateClassOptions(formInputData.ascomycota_classes) :
+                                                                            inclusive_prey_taxon === taxon && prey_phylum === "Basidiomycota" ? generateClassOptions(formInputData.basidiomycota_classes) :
+                                                                                inclusive_prey_taxon === taxon && prey_phylum === "Bryophyta" ? generateClassOptions(formInputData.bryophyta_classes) :
+                                                                                    inclusive_prey_taxon === taxon && prey_phylum === "Charophyta" ? generateClassOptions(formInputData.charophyta_classes) :
+                                                                                        inclusive_prey_taxon === taxon && prey_phylum === "Chlorophyta" ? generateClassOptions(formInputData.chlorophyta_classes) :
+                                                                                            inclusive_prey_taxon === taxon && prey_phylum === "Rhodophyta" ? generateClassOptions(formInputData.rhodophyta_classes) :
+                                                                                                inclusive_prey_taxon === taxon && prey_phylum === "Phaeophyta" ? generateClassOptions(formInputData.phaeophyta_classes) :
+                                                                                                    inclusive_prey_taxon === taxon && prey_phylum === "Tracheophyta" ? generateClassOptions(formInputData.tracheophyta_classes) :
+                                                                                                        inclusive_prey_taxon === taxon && prey_phylum === "Ciliophora" ? generateClassOptions(formInputData.ciliophora_classes) :
+                                                                                                            inclusive_prey_taxon === taxon && prey_phylum === "Protozoa" ? generateClassOptions(formInputData.protozoa_classes) :
+                                                                                                                inclusive_prey_taxon === taxon && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) : null)
     }
 
     // displays specified HTMLElement
@@ -867,8 +879,8 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
         props.addData({
             variables: {
-                common_name: "common_name_to_be_implemented", source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastname_author,
-                subspecies: formData.studyInfo.subspecies, taxonomy: formData.studyInfo.taxonomy,
+                common_name: "f", source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastname_author,
+                 taxonomy: formData.studyInfo.taxonomy,
                 location_region: formData.studyInfo.location_region, location_specific: formData.studyInfo.location_specific,
                 prey_kingdom: "prey_kingdom_to_be_implemented", diet_type: "diet_type_to_be_implemented"
             }
@@ -1195,7 +1207,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p id="required" style={{ ...styles.questionTextSize }}>1. How was the diet data quantified? <span style={styles.green}>*</span></p>
                         <div className="field">
                             <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={diet_type} name="diet_type" onChange={setStudyInfoInputState}>
+                                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={diet_type} name="diet_type" onChange={setAnalysisInfoInputState}>
                                     <option>Select Quantification</option>
                                     {formInputData.quantifications.map(quantification => <option>{quantification}</option>)}
                                 </select>
@@ -1206,7 +1218,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p id="required" style={{ ...styles.questionTextSize }}>2. How was the diet data collected? <span style={styles.green}>*</span></p>
                         <div className="field">
                             <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={study_type} name="study_type" onChange={setStudyInfoInputState}>
+                                <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={study_type} name="study_type" onChange={setAnalysisInfoInputState}>
                                     <option>Select Method</option>
                                     {formInputData.methods.map(method => <option>{method}</option>)}
                                 </select>
@@ -1217,38 +1229,38 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <div id="analysis-question3">
                             <p style={{ ...styles.questionTextSize }}>3. What is the total number of diet items this analysis is based on? Leave blank if unknown.</p>
                             <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.inputBoxSpacing }}>
-                                <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Enter Value" value={item_sample_size} name="item_sample_size" onChange={setStudyInfoInputState} />
+                                <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Enter Value" value={item_sample_size} name="item_sample_size" onChange={setAnalysisInfoInputState} />
                             </div>
                         </div>
                         <div id="analysis-question4">
                             <p style={{ ...styles.questionTextSize }}>4. How many individual birds is this analysis based on? Leave blank if unknown.</p>
                             <div className="control" style={styles.inputBoxSpacing}>
-                                <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Enter Value" value={bird_sample_size} name="bird_sample_size" onChange={setStudyInfoInputState} />
+                                <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Enter Value" value={bird_sample_size} name="bird_sample_size" onChange={setAnalysisInfoInputState} />
                             </div>
                         </div>
                     </div>
                     <div id="analysis-question5">
                         <p style={{ ...styles.questionTextSize }}>5. How many distinct sites or localities are represented in this analysis? Leave blank if unknown.</p>
                         <div className="control" style={styles.inputBoxSpacing}>
-                            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Value" value={sites} name="sites" onChange={setStudyInfoInputState} />
+                            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Value" value={sites} name="sites" onChange={setAnalysisInfoInputState} />
                         </div>
                     </div>
                     <div id="analysis-question6">
                         <p style={{ ...styles.questionTextSize }}>6. Does this analysis refer to a particular sex?</p>
                         <div className="control" style={styles.inputBoxSpacing}>
                             <label className="radio" style={styles.radioButtonSpacing}>
-                                <input type="radio" value="yes" name="sex_yn" onChange={setStudyInfoInputState} onClick={() => display('sex-question')} />
+                                <input type="radio" value="yes" name="sex_yn" onChange={setAnalysisInfoInputState} onClick={() => display('sex-question')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Yes</span>
                             </label>
                             <label className="radio">
-                                <input type="radio" value="no" name="sex_yn" onChange={setStudyInfoInputState} onClick={() => remove('sex-question')} />
+                                <input type="radio" value="no" name="sex_yn" onChange={setAnalysisInfoInputState} onClick={() => remove('sex-question')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>No</span>
                             </label>
                         </div>
                         <div id="sex-question" style={{ ...styles.noMarginBottom, ...styles.displayNone }}>
                             <div className="field">
                                 <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={sex} name="sex" onChange={setStudyInfoInputState}>
+                                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={sex} name="sex" onChange={setAnalysisInfoInputState}>
                                         <option>Select Sex</option>
                                         <option>Female</option>
                                         <option>Male</option>
@@ -1261,18 +1273,18 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p style={{ ...styles.questionTextSize }}>7. Does this analysis refer to a particular age class?</p>
                         <div className="control" style={styles.inputBoxSpacing}>
                             <label className="radio" style={styles.radioButtonSpacing}>
-                                <input type="radio" value="yes" name="age_class_yn" onChange={setStudyInfoInputState} onClick={() => display('age-class-question')} />
+                                <input type="radio" value="yes" name="age_class_yn" onChange={setAnalysisInfoInputState} onClick={() => display('age-class-question')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Yes</span>
                             </label>
                             <label className="radio">
-                                <input type="radio" value="no" name="age_class_yn" onChange={setStudyInfoInputState} onClick={() => remove('age-class-question')} />
+                                <input type="radio" value="no" name="age_class_yn" onChange={setAnalysisInfoInputState} onClick={() => remove('age-class-question')} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>No</span>
                             </label>
                         </div>
                         <div id="age-class-question" style={{ ...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom, ...styles.displayNone }}>
                             <div className="field">
                                 <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={age_class} name="age_class" onChange={setStudyInfoInputState}>
+                                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth }} value={age_class} name="age_class" onChange={setAnalysisInfoInputState}>
                                         <option>Select Age Class</option>
                                         {formInputData.age_classes.map(age_class => <option>{age_class}</option>)}
                                     </select>
@@ -1287,7 +1299,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                                 <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
                                     <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.inputBox2Sections }} value={within_study_data_source
                                     } name="within_study_data_source
-                    " onChange={setStudyInfoInputState}>
+                    " onChange={setAnalysisInfoInputState}>
                                         <option>Select Location</option>
                                         {formInputData.published_locations.map(published_location => <option>{published_location}</option>)}
                                     </select>
@@ -1295,7 +1307,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             </div>
                             <div className="field" style={styles.noMarginBottom}>
                                 <div className="control" style={styles.inputBoxSpacing}>
-                                    <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Enter Table or Figure Number" value={table_fig_number} name="table_fig_number" onChange={setStudyInfoInputState} />
+                                    <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Enter Table or Figure Number" value={table_fig_number} name="table_fig_number" onChange={setAnalysisInfoInputState} />
                                 </div>
                             </div>
                         </div>
@@ -1337,7 +1349,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p style={styles.questionTextSize}>First, what is the taxonomic level of this name?</p>
                         <div className="field" style={styles.noMargin}>
                             <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                                <select id="inclusive-prey-taxon" style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={inclusive_prey_taxon} name="inclusive_prey_taxon" onChange={setStudyInfoInputState}>
+                                <select id="inclusive-prey-taxon" style={{ ...styles.inputBox, ...styles.selectBox, ...styles.fullWidth, ...styles.taxonomicSpacing }} value={inclusive_prey_taxon} name="inclusive_prey_taxon" onChange={setDietInfoInputState}>
                                     <option>Select Taxonomic Level</option>
                                     {formInputData.taxonomy_levels.map(taxonomy_level => <option>{taxonomy_level}</option>)}
                                 </select>
@@ -1445,7 +1457,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             inclusive_prey_taxon === "Class" && prey_phylum === "Ciliophora" ? generateClassOptions(formInputData.ciliophora_classes) :
                             inclusive_prey_taxon === "Class" && prey_phylum === "Protozoa" ? generateClassOptions(formInputData.protozoa_classes) :
                             inclusive_prey_taxon === "Class" && prey_phylum === "Cyanobacteria" ? generateClassOptions(formInputData.cyanobacteria_classes) : null} */}
-                         {/* {inclusive_prey_taxon === "Order" ? generateOrderOptions() : prey_class != "" ? generateOrderOptions() : null}
+                        {/* {inclusive_prey_taxon === "Order" ? generateOrderOptions() : prey_class != "" ? generateOrderOptions() : null}
                         {inclusive_prey_taxon === "Suborder" ? generateSuborderOptions() : prey_order != "" ? generateSuborderOptions() : null}
                         {inclusive_prey_taxon === "Family" ? generateFamilyOptions() : prey_suborder != "" ? generateFamilyOptions() : null}
                         {inclusive_prey_taxon === "Genus" ? generateGenusOptions() : prey_family != "" ? generateGenusOptions() : null}
@@ -1455,18 +1467,18 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     <div id="diet-question2">
                         <p id="required" style={{ ...styles.questionTextSize }}>2. Percent of the diet?</p>
                         <div className="control" style={styles.inputBoxSpacing}>
-                            <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Enter Value" value={fraction_diet} name="fraction_diet" onChange={setStudyInfoInputState} />
+                            <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Enter Value" value={fraction_diet} name="fraction_diet" onChange={setDietInfoInputState} />
                         </div>
                     </div>
                     <div id="diet-question3">
                         <p style={{ ...styles.questionTextSize }}>3. Does the value entered above reflect the % of the diet for all members of this prey name (inclusive), or only those members of the prey name that weren’t identified more finely (not inclusive)? Hover over info button for examples.</p>
                         <div className="control" style={styles.inputBoxSpacing}>
                             <label className="radio" style={styles.radioButtonSpacing}>
-                                <input type="radio" value="yes" name="all_prey_diet_yn" onChange={setStudyInfoInputState} />
+                                <input type="radio" value="yes" name="all_prey_diet_yn" onChange={setDietInfoInputState} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Yes (inclusive)</span>
                             </label>
                             <label className="radio">
-                                <input type="radio" value="no" name="all_prey_diet_yn" onChange={setStudyInfoInputState} />
+                                <input type="radio" value="no" name="all_prey_diet_yn" onChange={setDietInfoInputState} />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>No (not inclusive)</span>
                             </label>
                         </div>
@@ -1581,7 +1593,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     <div id="diet-question6">
                         <p style={{ ...styles.questionTextSize }}>6. If you have any miscellaneous notes about this prey item you may describe them here.</p>
                         <div className="control" style={styles.inputBoxSpacing}>
-                            <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Enter Notes" value={notes} name="notes" onChange={setStudyInfoInputState} />
+                            <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Enter Notes" value={notes} name="notes" onChange={setDietInfoInputState} />
                         </div>
                     </div>
                 </div>
@@ -1712,15 +1724,15 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p>{preySubmissions.length > 0 ? "Species: " + preySubmissions.map(submission => (submission.prey_common_name === "" ? "Does not apply" : submission.prey_common_name)) : prey_common_name === "" ? "Species: Does not apply" : "Species: " + prey_common_name}</p>
 
                         <p style={{ ...styles.questionTextSize }}>2. Percent of the diet?</p>
-                        <p>{'% diet: ' + preySubmissions.map(submission => submission.fraction_diet)}</p>
+                        <p>{preySubmissions.length > 0 ? "% diet: " + preySubmissions.map(submission => submission.fraction_diet) : fraction_diet}</p>
                         <p style={{ ...styles.questionTextSize }}>3. Does the value entered above reflect the % of the diet for all members of this prey name (inclusive), or only those members of the prey name that weren’t identified more finely (not inclusive)?</p>
-                        <p>{preySubmissions.map(submission => submission.all_prey_diet_yn + ', ')}</p>
+                        <p>{preySubmissions.length > 0 ? preySubmissions.map(submission => submission.all_prey_diet_yn) : all_prey_diet_yn}</p>
                         <p style={{ ...styles.questionTextSize }}>4. Does this prey entry refer to a particular life stage?</p>
-                        <p>{'Life Stage(s): ' + preySubmissions.map(submission => submission.prey_stage)}</p>
+                        <p>{preySubmissions.length > 0 ? "Life Stage(s): " + preySubmissions.map(submission => submission.prey_stage) : prey_stage}</p>
                         <p id="required" style={{ ...styles.questionTextSize }}>5. Does this prey entry refer to a particular prey part?<span style={styles.green}>*</span></p>
-                        <p>{'Prey Part(s): ' + preySubmissions.map(submission => submission.prey_part)}</p>
+                        <p>{preySubmissions.length > 0 ? "Prey Part(s): " + preySubmissions.map(submission => submission.prey_part) : prey_part}</p>
                         <p style={{ ...styles.questionTextSize }}>6. If you have any miscellaneous notes about this prey item you may describe them here.</p>
-                        <p>{'Notes: ' + preySubmissions.map(submission => submission.notes)}</p>
+                        <p>{preySubmissions.length > 0 ? "Notes: " + preySubmissions.map(submission => submission.notes) : notes}</p>
                     </div>
                 </div>
                 <hr style={styles.backgroundGreen} />
