@@ -22,10 +22,10 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         year: undefined as number,
         lastname_author: '',
         scientific_name: '',
+        subspecies: '',
         new_species_yn: '',
         common_name: '',
         family: '',
-        subspecies: '',
         taxonomy: '',
         location_region: '',
         location_specific: '',
@@ -41,6 +41,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         observation_year_begin: undefined as number,
         observation_year_end: undefined as number,
         observation_season: '',
+        entered_by: ''
 
 
     }
@@ -104,9 +105,10 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         prey_suborder: '',
         prey_family: '',
         prey_genus: '',
+        prey_scientific_name: '',
     }
 
-    const [{ prey_common_name, prey_kingdom, prey_phylum, prey_class, prey_order, prey_suborder, prey_family, prey_genus }, setTaxon] = useState(taxonstudyInfoInitialState)
+    const [{ prey_common_name, prey_kingdom, prey_phylum, prey_class, prey_order, prey_suborder, prey_family, prey_genus, prey_scientific_name }, setTaxon] = useState(taxonstudyInfoInitialState)
 
     const setTaxonState = (e: any) => {
         const { name, value } = e.target;
@@ -123,10 +125,10 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
 
     const [{ doi, title, journal, year, lastname_author, taxonomy,
-        location_region, location_specific, lat_long_yn,
+        location_region, subspecies, location_specific, lat_long_yn,
         latitude_dd, longitude_dd, elevation_yn, altitude_min_m, altitude_max_m, altitude_mean_m, new_species_yn,
         observation_month_begin, observation_month_end, observation_year_begin, observation_year_end,
-        scientific_name, common_name,
+        scientific_name, common_name, entered_by,
         family },
         setStudyInfoState] = useState(studyInfoInitialState);
 
@@ -225,7 +227,9 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             lastname_author: lastname_author,
             scientific_name: scientific_name,
             new_species_yn: new_species_yn,
+            subspecies: subspecies,
             common_name: common_name,
+            family: family,
             taxonomy: taxonomy,
             location_region: location_region,
             location_specific: location_specific,
@@ -242,6 +246,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             observation_year_begin: observation_year_begin,
             observation_year_end: observation_year_end,
             observation_season: observation_season,
+            entered_by: entered_by,
         },
         analysisInfo: {
             analysis_number: analysis_number,
@@ -265,7 +270,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             notes: notes,
             prey_stage: prey_stage,
             prey_part: prey_part,
-            family: family,
             prey_kingdom: prey_kingdom,
             prey_phylum: prey_phylum,
             prey_class: prey_class,
@@ -273,6 +277,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             prey_suborder: prey_suborder,
             prey_family: prey_family,
             prey_genus: prey_genus,
+            prey_scientific_name: prey_scientific_name, 
             prey_name_ITIS_ID: prey_name_ITIS_ID,
             prey_name_status: prey_name_status,
             prey_submissions: preySubmissions,
@@ -560,6 +565,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 prey_suborder: prey_suborder,
                 prey_family: prey_family,
                 prey_genus: prey_genus,
+                prey_scientific_name: prey_scientific_name,
                 fraction_diet: fraction_diet,
                 prey_stage: prey_stage,
                 prey_part: prey_part,
@@ -570,6 +576,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             preySubmissions.push(submission)
             setPreySubmissions(preySubmissions);
 
+            console.log(preySubmissions)
             const table = document.getElementById('prey-table');
             let diet_submission =
                 `<div style='display: flex; padding: .75rem 0'>
@@ -722,12 +729,47 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         </div>
     }
 
-    // function generateSpeciesOptions() {
-    //     return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
-    //         <input className="input" style={styles.inputBox} type="text" placeholder="Enter Scientific Name" value={prey_common} name="prey_scientific_name" onChange={setStudyInfoInputState} />
-    //     </div>
-    // }
+    function generateSpeciesOptions() {
+        return <div className="control" style={{ ...styles.inputBoxSpacing, ...styles.taxonomicSpacing }}>
+            <input className="input" style={styles.inputBox} type="text" placeholder="Enter Scientific Name" value={prey_scientific_name} name="prey_scientific_name" onChange={setTaxonState} />
+        </div>
+    }
 
+    function generateCanadaOptions() {
+        return <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+        <select style={{ ...styles.inputBox, ...styles.inputBox2Sections, ...styles.selectBox }} value={location_region} name="location_region" onChange={setStudyInfoInputState}>
+            <option>Select State/Province</option>
+            {formInputData.state_province_canada.map(canada => <option>{canada}</option>)}
+        </select>
+    </div>
+    }
+
+    function generateAustraliaOptions() {
+        return <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+        <select style={{ ...styles.inputBox, ...styles.inputBox2Sections, ...styles.selectBox }} value={location_region} name="location_region" onChange={setStudyInfoInputState}>
+            <option>Select State/Province</option>
+            {formInputData.state_province_australia.map(australia => <option>{australia}</option>)}
+        </select>
+    </div>
+    }
+
+    function generateMexicoOptions() {
+        return <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+        <select style={{ ...styles.inputBox, ...styles.inputBox2Sections, ...styles.selectBox }} value={location_region} name="location_region" onChange={setStudyInfoInputState}>
+            <option>Select State/Province</option>
+            {formInputData.state_province_mexico.map(mexico => <option>{mexico}</option>)}
+        </select>
+    </div>
+    }
+
+    function generateUSOptions() {
+        return <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
+        <select style={{ ...styles.inputBox, ...styles.inputBox2Sections, ...styles.selectBox }} value={location_region} name="location_region" onChange={setStudyInfoInputState}>
+            <option>Select State/Province</option>
+            {formInputData.state_province_us.map(us => <option>{us}</option>)}
+        </select>
+    </div>
+    }
     // function generateTextTaxonomyOptions(taxonomy: string) {
 
     //     const containerStyle = 'margin-top: .5rem; margin-bottom: .5rem;';
@@ -875,16 +917,40 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     // submits form
     function submitForm(targetPage: string) {
         document.getElementById('page' + targetPage).style.display = 'block';
-        console.log(formData);
 
-        props.addData({
-            variables: {
-                common_name: "f", source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastname_author,
-                 taxonomy: formData.studyInfo.taxonomy,
-                location_region: formData.studyInfo.location_region, location_specific: formData.studyInfo.location_specific,
-                prey_kingdom: "prey_kingdom_to_be_implemented", diet_type: "diet_type_to_be_implemented"
+        if (preySubmissions.length > 0) {
+            for (let i = 0; i < preySubmissions.length; i++) {
+                props.addData({
+                    variables: {
+                        common_name: formData.studyInfo.common_name, scientific_name: formData.studyInfo.scientific_name, subspecies: formData.studyInfo.subspecies, family: formData.studyInfo.family, source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastname_author,
+                        taxonomy: formData.studyInfo.taxonomy, longitude_dd: formData.studyInfo.longitude_dd, latitude_dd: formData.studyInfo.latitude_dd, altitude_max_m: formData.studyInfo.altitude_max_m, altitude_mean_m: formData.studyInfo.altitude_mean_m, altitude_min_m: formData.studyInfo.altitude_min_m,
+                        location_region: formData.studyInfo.location_region, location_specific: formData.studyInfo.location_specific, habitat_type: formData.studyInfo.habitat_type, observation_month_begin: formData.studyInfo.observation_month_begin, observation_month_end: formData.studyInfo.observation_month_begin,
+                        observation_year_begin: formData.studyInfo.observation_year_begin, observation_year_end: formData.studyInfo.observation_year_end, observation_season: formData.studyInfo.observation_season, analysis_number: formData.analysisInfo.analysis_number, prey_kingdom: preySubmissions[i].submission.prey_kingdom, 
+                        prey_phylum: preySubmissions[i].submission.prey_phylum, prey_order: preySubmissions[i].submission.prey_order, prey_suborder: preySubmissions[i].submission.prey_suborder, prey_family: preySubmissions[i].submission.prey_family, prey_genus: preySubmissions[i].submission.prey_genus, 
+                        prey_scientific_name: preySubmissions[i].submission.prey_scientific_name, inclusive_prey_taxon: preySubmissions[i].submission.inclusive_prey_taxon, prey_name_ITIS_ID: formData.dietInfo.prey_name_ITIS_ID, prey_name_status: formData.dietInfo.prey_name_status, 
+                        prey_stage: preySubmissions[i].submission.prey_stage, prey_part: preySubmissions[i].submission.prey_part, prey_common_name: preySubmissions[i].submission.prey_common_name, fraction_diet: preySubmissions[i].submission.fraction_diet, diet_type: formData.analysisInfo.diet_type,
+                        item_sample_size: formData.analysisInfo.item_sample_size, bird_sample_size: formData.analysisInfo.bird_sample_size, sites: formData.analysisInfo.sites, study_type: formData.analysisInfo.study_type, notes: formData.dietInfo.notes, 
+                        entered_by: formData.studyInfo.entered_by, doi: formData.studyInfo.doi, sex: formData.analysisInfo.sex, age_class: formData.analysisInfo.age_class, within_study_data_source: formData.analysisInfo.within_study_data_source,
+                        table_fig_number: formData.analysisInfo.table_fig_number, title: formData.studyInfo.title, lastname_author: formData.studyInfo.lastname_author, year: formData.studyInfo.year, journal: formData.studyInfo.journal
+                    }
+                });
             }
-        });
+        } else {
+            props.addData({
+                variables: {
+                    common_name: formData.studyInfo.common_name, scientific_name: formData.studyInfo.scientific_name, subspecies: formData.studyInfo.subspecies, family: formData.studyInfo.family, source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.year + ", " + formData.studyInfo.lastname_author,
+                    taxonomy: formData.studyInfo.taxonomy, longitude_dd: formData.studyInfo.longitude_dd, latitude_dd: formData.studyInfo.latitude_dd, altitude_max_m: formData.studyInfo.altitude_max_m, altitude_mean_m: formData.studyInfo.altitude_mean_m, altitude_min_m: formData.studyInfo.altitude_min_m,
+                    location_region: formData.studyInfo.location_region, location_specific: formData.studyInfo.location_specific, habitat_type: formData.studyInfo.habitat_type, observation_month_begin: formData.studyInfo.observation_month_begin, observation_month_end: formData.studyInfo.observation_month_begin,
+                    observation_year_begin: formData.studyInfo.observation_year_begin, observation_year_end: formData.studyInfo.observation_year_end, observation_season: formData.studyInfo.observation_season, analysis_number: formData.analysisInfo.analysis_number, prey_kingdom: formData.dietInfo.prey_kingdom, 
+                    prey_phylum: formData.dietInfo.prey_phylum, prey_order: formData.dietInfo.prey_order, prey_suborder: formData.dietInfo.prey_suborder, prey_family: formData.dietInfo.prey_family, prey_genus: formData.dietInfo.prey_genus, 
+                    prey_scientific_name: formData.dietInfo.prey_scientific_name, inclusive_prey_taxon: formData.dietInfo.inclusive_prey_taxon, prey_name_ITIS_ID: formData.dietInfo.prey_name_ITIS_ID, prey_name_status: formData.dietInfo.prey_name_status, 
+                    prey_stage: formData.dietInfo.prey_stage, prey_part: formData.dietInfo.prey_part, prey_common_name: formData.dietInfo.prey_common_name, fraction_diet: formData.dietInfo.fraction_diet, diet_type: formData.analysisInfo.diet_type,
+                    item_sample_size: formData.analysisInfo.item_sample_size, bird_sample_size: formData.analysisInfo.bird_sample_size, sites: formData.analysisInfo.sites, study_type: formData.analysisInfo.study_type, notes: formData.dietInfo.notes, 
+                    entered_by: formData.studyInfo.entered_by, doi: formData.studyInfo.doi, sex: formData.analysisInfo.sex, age_class: formData.analysisInfo.age_class, within_study_data_source: formData.analysisInfo.within_study_data_source,
+                    table_fig_number: formData.analysisInfo.table_fig_number, title: formData.studyInfo.title, lastname_author: formData.studyInfo.lastname_author, year: formData.studyInfo.year, journal: formData.studyInfo.journal
+                }
+            });
+        }
     }
 
     return (
@@ -1015,9 +1081,10 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             </div>
                             <div className="field" style={styles.noMarginBottom}>
                                 <label className="label" style={styles.questionTextSize}>Specify State/Province</label>
-                                <div className="control" style={styles.inputBoxSpacing}>
-                                    <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Specify Area" value={location_region} name="location_region" onChange={setStudyInfoInputState} />
-                                </div>
+                                {location_region === "Canada" ? generateCanadaOptions() : location_region === "Mexico" ? generateMexicoOptions() :
+                                location_region === "Australia" ? generateAustraliaOptions() : location_region === "USA" ? generateUSOptions() : <div className="control" style={styles.inputBoxSpacing}>
+                                <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Specify Area" value={location_region} name="location_region" onChange={setStudyInfoInputState} />
+                            </div>}
                             </div>
                         </div>
                         <p style={styles.questionTextSize}>If <span style={styles.green}>no</span>, select a region.</p>
@@ -1027,17 +1094,17 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                                 <div className="select is-success" style={{ ...styles.inputBoxSpacing, ...styles.noMargin }}>
                                     <select style={{ ...styles.inputBox, ...styles.inputBox2Sections, ...styles.selectBox }} value={location_region} name="location_region" onChange={setStudyInfoInputState}>
                                         <option>Select Region</option>
-                                        <option>Midwest</option>
-                                        <option>Southeast</option>
-                                        <option>Northeast</option>
+                                        {formInputData.regions.map(region => <option>{region}</option>)}
                                     </select>
                                 </div>
                             </div>
                             <div className="field" style={styles.noMarginBottom}>
                                 <label className="label" style={styles.questionTextSize}>Other (if other regions not applicable)</label>
-                                <div className="control" style={styles.inputBoxSpacing}>
+                                {location_region === "" ? <div className="control" style={styles.inputBoxSpacing}>
                                     <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Specify Area" value={location_region} name="location_region" onChange={setStudyInfoInputState} />
-                                </div>
+                                </div> : <div className="control" style={styles.inputBoxSpacing}>
+                                    <input className="input" style={{ ...styles.inputBox, ...styles.inputBox2Sections }} type="text" placeholder="Specify Area" name="location_region" />
+                                </div>}
                             </div>
                         </div>
                     </div>
@@ -1385,6 +1452,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         {inclusive_prey_taxon === "Species" ? generateSuborderOptions() : null}
                         {inclusive_prey_taxon === "Species" ? generateFamilyOptions() : null}
                         {inclusive_prey_taxon === "Species" ? generateGenusOptions() : null}
+                        {inclusive_prey_taxon === "Species" ? generateSpeciesOptions() : null}
 
                         {/* {inclusive_prey_taxon === "Phylum" && (prey_kingdom === "" || prey_kingdom === "Unknown" || prey_kingdom === "Non-biological" || prey_kingdom === "Select a Kingdom") ? generatePhylumOptions(formInputData.phylums, true) :
                             inclusive_prey_taxon === "Phylum" && prey_kingdom === "Animalia" ? generatePhylumOptions(formInputData.animalia_phylums) :
@@ -1721,18 +1789,18 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p>{preySubmissions.length > 0 ? "Suborder: " + preySubmissions.map(submission => (submission.prey_suborder === "" ? "Does not apply" : submission.prey_suborder)) : prey_suborder === "" ? "Suborder: Does not apply" : "Suborder: " + prey_suborder}</p>
                         <p>{preySubmissions.length > 0 ? "Family: " + preySubmissions.map(submission => (submission.prey_family === "" ? "Does not apply" : submission.prey_family)) : prey_family === "" ? "Family: Does not apply" : "Family: " + prey_family}</p>
                         <p>{preySubmissions.length > 0 ? "Genus: " + preySubmissions.map(submission => (submission.prey_genus === "" ? "Does not apply" : submission.prey_genus)) : prey_genus === "" ? "Genus: Does not apply" : "Genus: " + prey_genus}</p>
-                        <p>{preySubmissions.length > 0 ? "Species: " + preySubmissions.map(submission => (submission.prey_common_name === "" ? "Does not apply" : submission.prey_common_name)) : prey_common_name === "" ? "Species: Does not apply" : "Species: " + prey_common_name}</p>
+                        <p>{preySubmissions.length > 0 ? "Species: " + preySubmissions.map(submission => (submission.prey_scientific_name === "" ? "Does not apply" : submission.prey_scientific_name)) : prey_scientific_name === "" ? "Species: Does not apply" : "Species: " + prey_scientific_name}</p>
 
                         <p style={{ ...styles.questionTextSize }}>2. Percent of the diet?</p>
-                        <p>{preySubmissions.length > 0 ? "% diet: " + preySubmissions.map(submission => submission.fraction_diet) : fraction_diet}</p>
+                        <p>{preySubmissions.length > 0 ? "% diet: " + preySubmissions.map(submission => submission.fraction_diet) : "% diet: " + fraction_diet}</p>
                         <p style={{ ...styles.questionTextSize }}>3. Does the value entered above reflect the % of the diet for all members of this prey name (inclusive), or only those members of the prey name that weren’t identified more finely (not inclusive)?</p>
                         <p>{preySubmissions.length > 0 ? preySubmissions.map(submission => submission.all_prey_diet_yn) : all_prey_diet_yn}</p>
                         <p style={{ ...styles.questionTextSize }}>4. Does this prey entry refer to a particular life stage?</p>
-                        <p>{preySubmissions.length > 0 ? "Life Stage(s): " + preySubmissions.map(submission => submission.prey_stage) : prey_stage}</p>
+                        <p>{preySubmissions.length > 0 ? "Life Stage(s): " + preySubmissions.map(submission => submission.prey_stage) : "Life Stage(s): " + prey_stage}</p>
                         <p id="required" style={{ ...styles.questionTextSize }}>5. Does this prey entry refer to a particular prey part?<span style={styles.green}>*</span></p>
-                        <p>{preySubmissions.length > 0 ? "Prey Part(s): " + preySubmissions.map(submission => submission.prey_part) : prey_part}</p>
+                        <p>{preySubmissions.length > 0 ? "Prey Part(s): " + preySubmissions.map(submission => submission.prey_part) : "Prey Part(s): " + prey_part}</p>
                         <p style={{ ...styles.questionTextSize }}>6. If you have any miscellaneous notes about this prey item you may describe them here.</p>
-                        <p>{preySubmissions.length > 0 ? "Notes: " + preySubmissions.map(submission => submission.notes) : notes}</p>
+                        <p>{preySubmissions.length > 0 ? "Notes: " + preySubmissions.map(submission => submission.notes) : "Notes: " + notes}</p>
                     </div>
                 </div>
                 <hr style={styles.backgroundGreen} />
