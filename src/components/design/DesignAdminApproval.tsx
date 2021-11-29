@@ -252,7 +252,7 @@ export const DesignAdminApproval = (props: DesignAdminApprovalProps) => {
         study_type: formState.study_type,
         notes: formState.notes,
         entered_by: formState.entered_by,
-        source: formState.source,
+        source: formState.title + ", " + formState.journal + ", " + formState.year + ", " + formState.lastname_author,
         doi: formState.doi,
         sex: formState.sex,
         age_class: formState.age_class,
