@@ -361,8 +361,6 @@ export const DesignAdminApproval = (props: DesignAdminApprovalProps) => {
                         style={styles.inputBox}
                         type="text"
                         defaultValue={props.data[props.study_related_info[index + 1]]}
-                        // How to make onChange properly edit props.data instead
-                        // which is what I'm using rn to approve/deny
                         onChange={(e) => (formState[props.study_related_info[index + 1]] = e.target.value)}
                       />
                     </div>
