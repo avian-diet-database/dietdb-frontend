@@ -128,7 +128,10 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
           </p>
           {props.user.is_admin === "true" ? (
             <a
-              className={"navbar-item"}
+              className={
+                "navbar-item " +
+                (activeItemType === ItemType.ADMIN ? "is-active" : "")
+              }
               onClick={() => {
                 props.onAdminClick();
               }}
