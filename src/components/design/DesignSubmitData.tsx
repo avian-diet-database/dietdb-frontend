@@ -4,16 +4,23 @@ import { DesignGreenButton } from "../design/DesignGreenButton";
 import { DesignDots } from "../design/DesignDots";
 import { DesignErrorPage } from "./DesignErrorPage";
 import { formInputData } from "../data/formInputData";
-import { truncate } from "fs";
 
 interface DesignSubmitDataProps {
     addData: (options?: MutationFunctionOptions<any, Record<string, any>>) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
+    user: {
+        email: string,
+        full_name: string,
+        username: string,
+        is_verified: string,
+        is_admin: string
+    }
 }
 
 // removes specified HTMLElement
 export function remove(id: string) {
     document.getElementById(id).style.display = 'none';
 }
+
 
 export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     const studyInfoInitialState = {
@@ -585,7 +592,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             preySubmissions.push(submission)
             setPreySubmissions(preySubmissions);
 
-            console.log(preySubmissions)
             // console.log(preySubmissions[0].submission.prey_kingdom)
             const table = document.getElementById('prey-table');
             let diet_submission =
@@ -940,7 +946,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         prey_scientific_name: preySubmissions[i].prey_scientific_name, inclusive_prey_taxon: preySubmissions[i].inclusive_prey_taxon, prey_name_ITIS_ID: formData.dietInfo.prey_name_ITIS_ID, prey_name_status: formData.dietInfo.prey_name_status, 
                         prey_stage: preySubmissions[i].prey_stage.toString(), prey_part: preySubmissions[i].prey_part.toString(), prey_common_name: preySubmissions[i].prey_common_name, fraction_diet: preySubmissions[i].fraction_diet, diet_type: formData.analysisInfo.diet_type,
                         item_sample_size: Number(formData.analysisInfo.item_sample_size), bird_sample_size: Number(formData.analysisInfo.bird_sample_size), sites: formData.analysisInfo.sites, study_type: formData.analysisInfo.study_type, notes: formData.dietInfo.notes, 
-                        entered_by: formData.studyInfo.entered_by, doi: formData.studyInfo.doi, sex: formData.analysisInfo.sex, age_class: formData.analysisInfo.age_class, within_study_data_source: formData.analysisInfo.within_study_data_source,
+                        entered_by: props.user.username, doi: formData.studyInfo.doi, sex: formData.analysisInfo.sex, age_class: formData.analysisInfo.age_class, within_study_data_source: formData.analysisInfo.within_study_data_source,
                         table_fig_number: formData.analysisInfo.table_fig_number, title: formData.studyInfo.title, lastname_author: formData.studyInfo.lastname_author, year: Number(formData.studyInfo.year), journal: formData.studyInfo.journal, total_percent_diet: formData.dietInfo.total_percent_diet
                     }
                 });
@@ -956,7 +962,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     prey_scientific_name: formData.dietInfo.prey_scientific_name, inclusive_prey_taxon: formData.dietInfo.inclusive_prey_taxon, prey_name_ITIS_ID: formData.dietInfo.prey_name_ITIS_ID, prey_name_status: formData.dietInfo.prey_name_status, 
                     prey_stage: formData.dietInfo.prey_stage.toString(), prey_part: formData.dietInfo.prey_part.toString(), prey_common_name: formData.dietInfo.prey_common_name, fraction_diet: formData.dietInfo.fraction_diet, diet_type: formData.analysisInfo.diet_type,
                     item_sample_size: Number(formData.analysisInfo.item_sample_size), bird_sample_size: Number(formData.analysisInfo.bird_sample_size), sites: formData.analysisInfo.sites, study_type: formData.analysisInfo.study_type, notes: formData.dietInfo.notes, 
-                    entered_by: formData.studyInfo.entered_by, doi: formData.studyInfo.doi, sex: formData.analysisInfo.sex, age_class: formData.analysisInfo.age_class, within_study_data_source: formData.analysisInfo.within_study_data_source,
+                    entered_by: props.user.username, doi: formData.studyInfo.doi, sex: formData.analysisInfo.sex, age_class: formData.analysisInfo.age_class, within_study_data_source: formData.analysisInfo.within_study_data_source,
                     table_fig_number: formData.analysisInfo.table_fig_number, title: formData.studyInfo.title, lastname_author: formData.studyInfo.lastname_author, year: Number(formData.studyInfo.year), journal: formData.studyInfo.journal, total_percent_diet: formData.dietInfo.total_percent_diet
                 }
             });
