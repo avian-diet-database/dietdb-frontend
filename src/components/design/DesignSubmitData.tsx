@@ -161,21 +161,16 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
     const setStudyInfoInputState = (e: any) => {
         const { name, value } = e.target;
-
-        // change values to int, retrieved as string from form
-        if (name === ("observation_month_begin" || "observation_month_end" || "observation_year_begin" || "observation_year_end" || "item_sample_size" || "bird_sample_size" || "year")) {
-            // let val = Number(value)
-            setStudyInfoState(prevState => ({ ...prevState, [name]: parseInt(value) }));
-        } else {
-            setStudyInfoState(prevState => ({ ...prevState, [name]: value }));
-        }
-
+        
         if (name === "new_species_yn" ) {
             if (value === "yes") {
                 setStudyInfoState(prevState => ({ ...prevState, [name]: true }));
             } else {
                 setStudyInfoState(prevState => ({ ...prevState, [name]: false }));
             }
+        } else {
+            setStudyInfoState(prevState => ({ ...prevState, [name]: value }));
+
         }
         // if (name === "inclusive_prey_taxon") {
         //     // if (value !== ("Kingdom" || "Phylum" || "Class")) {
@@ -1380,9 +1375,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <div style={{ ...styles.inputBoxMultipleSectionContainer, ...styles.noMarginBottom }}>
                             <div className="field">
                                 <div className="select is-success" style={{ ...styles.inputBoxSpacing }}>
-                                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.inputBox2Sections }} value={within_study_data_source
-                                    } name="within_study_data_source
-                    " onChange={setAnalysisInfoInputState}>
+                                    <select style={{ ...styles.inputBox, ...styles.selectBox, ...styles.inputBox2Sections }} value={within_study_data_source} name="within_study_data_source" onChange={setAnalysisInfoInputState}>
                                         <option>Select Location</option>
                                         {formInputData.published_locations.map(published_location => <option>{published_location}</option>)}
                                     </select>
