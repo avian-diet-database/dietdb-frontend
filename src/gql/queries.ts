@@ -325,7 +325,7 @@ const GET_FILTERS_PRED = gql`
 const GET_PENDING_DIET = gql`
 query {
   getPendingDiet {
-    id
+    unique_id
     common_name
     scientific_name
     subspecies
@@ -368,6 +368,16 @@ query {
     notes
     entered_by
     source
+    table_fig_number
+    title
+    doi
+    sex
+    age_class
+    within_study_data_source
+    lastname_author
+    year
+    journal
+    total_percent_diet
   }
 }
 `; 
