@@ -21,7 +21,6 @@ export function remove(id: string) {
     document.getElementById(id).style.display = 'none';
 }
 
-
 export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     const studyInfoInitialState = {
         doi: '',
@@ -103,6 +102,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     const [prey_part, setPreyPart] = useState([]);
     const [prey_stage, setPreyStage] = useState([]);
     const [observation_season, setObservationSeason] = useState([]);
+    const [auth, setAuth] = useState(false);
 
     const taxonstudyInfoInitialState = {
         prey_common_name: '',
