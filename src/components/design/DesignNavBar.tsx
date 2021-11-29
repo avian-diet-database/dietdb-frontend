@@ -74,7 +74,10 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
               setMobileActive(false);
               props.onAboutClick();
             }}
-            className={"navbar-item"}
+            className={
+              "navbar-item " +
+              (activeItemType === ItemType.ABOUT ? "is-active" : "")
+            }
           >
             About
           </a>
@@ -107,19 +110,22 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
               setMobileActive(false);
               props.onSubmitDataClick();
             }}
-            className={"navbar-item"}
+            className={
+              "navbar-item " +
+              (activeItemType === ItemType.SUBMIT ? "is-active" : "")
+            }
           >
             Submit Data
           </a>
         </div>
         <div className="navbar-end">
-          <a className={"navbar-item"}>
+          <p className={"navbar-item"}>
             {props.user.full_name === "" ? (
               <p>Welcome!</p>
             ) : (
               <p>Welcome, {props.user.full_name}!</p>
             )}
-          </a>
+          </p>
           {props.user.is_admin === "true" ? (
             <a
               className={"navbar-item"}
@@ -130,14 +136,19 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
               <p>Admin</p>
             </a>
           ) : null}
-          <a className={"navbar-item"}>
+          <a
+            className={
+              "navbar-item " +
+              (activeItemType === ItemType.LOGIN ? "is-active" : "")
+            }
+          >
             {props.user.full_name === "" ? (
               <p
                 onClick={() => {
                   props.onLoginClick();
                 }}
               >
-                Login (Note: THIS IS DEV ENVIRONMENT!!)
+                Login
               </p>
             ) : (
               <p
