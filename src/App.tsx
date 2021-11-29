@@ -10,16 +10,18 @@ import { LogicAdminDashboard } from "./components/logic/LogicAdminDashboard";
 import { LogicSubmitData } from "./components/logic/LogicSubmitData";
 import { ItemType, ActiveItemVar, ActiveItemTypeVar } from "./cache";
 import { useReactiveVar } from "@apollo/client";
+import { userInfo } from "os";
+
 
 function App() {
-  const activeItemType = useReactiveVar(ActiveItemTypeVar);
-  const [user, setUser] = useState({
+   const [user, setUser] = useState({
     full_name: "",
     username: "",
     email: "",
     is_verified: "",
     is_admin: "",
   });
+  const activeItemType = useReactiveVar(ActiveItemTypeVar);
 
   return (
     <div>
@@ -102,7 +104,7 @@ function App() {
             {/* // Login page */}
             {activeItemType === ItemType.LOGIN ? <LogicLogin setUser={setUser}/> : null}
             {activeItemType === ItemType.ADMIN ? <LogicAdminDashboard /> : null}
-            {activeItemType === ItemType.SUBMIT ? <LogicSubmitData /> : null}
+            {activeItemType === ItemType.SUBMIT ? <LogicSubmitData user={user} /> : null}
           </div>
         </div>
       </section>
