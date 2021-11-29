@@ -2,7 +2,7 @@ import { FetchResult, MutationFunctionOptions } from "@apollo/client";
 import React, { ReactChild, ReactElement, useState } from "react";
 import { DesignGreenButton } from "../design/DesignGreenButton";
 import { DesignDots } from "../design/DesignDots";
-import { DesignErrorPage } from "./DesignErrorPage";
+import { DesignErrorPopup } from "./DesignErrorPopup";
 import { formInputData } from "../data/formInputData";
 import { truncate } from "fs";
 
@@ -322,6 +322,17 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             boxShadow: '2px 2px 2px 2px lightgrey'
 
         },
+        formContainerPg7: {
+            display: 'none',
+            backgroundColor: 'white',
+            width: '70%',
+            textAlign: 'center' as 'center',
+            margin: '15%',
+            position: 'absolute' as 'absolute',
+            top: '15%',
+            borderRadius: '4px',
+            boxShadow: '2px 2px 2px 2px lightgrey'
+        },
         displayFlex: {
             display: 'flex',
         },
@@ -507,13 +518,32 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         switch (command) {
             case 'reset':
                 setStudyInfoState({ ...studyInfoInitialState });
+                setAnalysisInfoState({ ...analysisInfoInitialState});
+                setDietInfoState({...dietInfoInitialState});
                 break;
             case 'sameAnalysis':
-            // use setState to revert other sections of form back to initial state
+                setAnalysisInfoState({ ...analysisInfoInitialState});
+                setDietInfoState({...dietInfoInitialState});
+                break;
         }
 
         document.getElementById('page' + currentPage).style.display = 'none';
         document.getElementById('page' + targetPage).style.display = 'block';
+    }
+
+    function numCheckedBoxes(id: string) {
+        let checkboxes = document.getElementsByName(id)
+        let checkboxesChecked = [];
+        // loop over them all
+        for (let i = 0; i < checkboxes.length; i++) {
+            // And stick the checked ones onto an array
+            let box = checkboxes[i] as HTMLInputElement;
+            if (box.checked) {
+                checkboxesChecked.push(box.value);
+            }
+        }
+
+        return checkboxesChecked.length
     }
 
     // get checked values and set them
@@ -522,7 +552,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         let checkboxesChecked = [];
         // loop over them all
         for (let i = 0; i < checkboxes.length; i++) {
-            // And stick the checked ones onto an array...
+            // And stick the checked ones onto an array
             let box = checkboxes[i] as HTMLInputElement;
             if (box.checked) {
                 checkboxesChecked.push(box.value);
@@ -532,6 +562,44 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         // set values
         setVarState(checkboxesChecked);
     }
+
+    function validateStudyInfoPg1() {
+        if (doi === '' && (title === '' || journal === '' || year === undefined || lastname_author === '')) {
+            document.getElementById('page7').style.display = 'block'
+        } else {
+            movePgToPg('1', '2');
+        }
+    }
+
+    function validateStudyInfoPg2() {
+        if (scientific_name === '' || location_region === '' || location_specific === '' || lat_long_yn === '' || elevation_yn === '' || numCheckedBoxes('habitat') === 0 || observation_year_end === undefined || numCheckedBoxes('observation-season') === 0) {
+            document.getElementById('page7').style.display = 'block'
+        } else if (new_species_yn === true && (scientific_name === '' || common_name === '' || family === '' || taxonomy === '')) {
+            document.getElementById('page7').style.display = 'block'
+        } else if (lat_long_yn === 'yes' && (longitude_dd === '' || latitude_dd === '')) {
+            document.getElementById('page7').style.display = 'block'
+        } else if (elevation_yn === 'yes' && (altitude_max_m === '' || altitude_mean_m === '' || altitude_min_m === '')) {
+            document.getElementById('page7').style.display = 'block'
+        } else {
+            movePgToPg('2', '3');
+        }
+    }
+
+    function validateAnalysisInfoPg3() {
+        if (diet_type === '' || study_type === '') {
+            document.getElementById('page7').style.display = 'block'
+        } else {
+            movePgToPg('3', '4');
+        }
+    }
+
+    function validateDietInfoPg4() {
+        if (prey_common_name === '') {
+            document.getElementById('page7').style.display = 'block'
+        } else {
+            movePgToPg('4', '5');
+        }
+    } 
 
     // function setHabitatStates(length: number) {
     //     let i;
@@ -1007,7 +1075,8 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         </div>
                     </div>
                 </div>
-                <div style={styles.singleButton} onClick={() => movePgToPg('1', '2')}>
+                <div style={styles.singleButton} onClick={() => 
+                    {validateStudyInfoPg1()}}>
                     <DesignDots
                         page='1'
                         marginRight='32%'
@@ -1225,23 +1294,23 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p id="required" style={{ ...styles.questionTextSize }}>9. What time of year were data collected relative to the avian life cycle in that location? <span style={styles.green}>*</span></p>
                         <div className="control" style={styles.inputBoxSpacing}>
                             <label className="checkbox" style={styles.checkboxSpacing}>
-                                <input id="observation-season" value="breeding-season" type="checkbox" />
+                                <input id="observation-season" name="observation-season" value="breeding-season" type="checkbox" />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Breeding Season</span>
                             </label>
                             <label className="checkbox" style={styles.checkboxSpacing}>
-                                <input id="observation-season" value="non-breeding-season" type="checkbox" />
+                                <input id="observation-season" name="observation-season" value="non-breeding-season" type="checkbox" />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Non-Breeding Season</span>
                             </label>
                             <label className="checkbox" style={styles.checkboxSpacing}>
-                                <input id="observation-season" value="pre-breeding-migration" type="checkbox" />
+                                <input id="observation-season" name="observation-season" value="pre-breeding-migration" type="checkbox" />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Pre-Breeding Migration</span>
                             </label>
                             <label className="checkbox" style={styles.checkboxSpacing}>
-                                <input id="observation-season" value="post-breeding-migration" type="checkbox" />
+                                <input id="observation-season" name="observation-season" value="post-breeding-migration" type="checkbox" />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Post-Breeding Migration</span>
                             </label>
                             <label className="checkbox">
-                                <input id="observation-season" value="unspecified" type="checkbox" />
+                                <input id="observation-season" name="observation-season" value="unspecified" type="checkbox" />
                                 <span style={{ ...styles.radioButtonTextSpacing, ...styles.questionTextSize }}>Unspecified</span>
                             </label>
                         </div>
@@ -1250,7 +1319,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 <div style={styles.doubleButton}>
                     <div onClick={() => {
                         movePgToPg('2', '1');
-                        getCheckedBoxes('observation-season', setObservationSeason)
+                        
                     }}>
                         <DesignGreenButton
                             buttonText={'Back'}
@@ -1263,8 +1332,9 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         />
                     </div>
                     <div onClick={() => {
-                        movePgToPg('2', '3');
                         getCheckedBoxes("habitat", setHabitatType);
+                        getCheckedBoxes('observation-season', setObservationSeason);
+                        validateStudyInfoPg2();
                     }}>
                         <DesignGreenButton
                             buttonText={'Next'}
@@ -1402,7 +1472,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                             page='3'
                         />
                     </div>
-                    <div onClick={() => movePgToPg('3', '4')}>
+                    <div onClick={() => validateAnalysisInfoPg3()}>
                         <DesignGreenButton
                             buttonText={'Next'}
                             className={'next-pg-3'}
@@ -1709,9 +1779,9 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         />
                     </div>
                     <div onClick={() => {
-                        movePgToPg('4', '5');
                         getCheckedBoxes("prey-part", setPreyPart);
                         getCheckedBoxes("prey-stage", setPreyStage);
+                        validateDietInfoPg4();
                         //setDietInfo();
                     }}>
                         <DesignGreenButton
@@ -1836,7 +1906,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 </div>
             </div>
             <div id="page6" style={styles.formContainerPg6}>
-                <div style={styles.checkmark}>[put checkmark here]</div>
+                {/* <div style={styles.checkmark}>[put checkmark here]</div> */}
                 <p style={styles.formSuccessTitle}>Form Successfully Submitted!</p>
                 <div style={styles.popupButton} onClick={() => movePgToPg('6', '1', 'sameAnalysis')}>
                     <DesignGreenButton
@@ -1848,6 +1918,15 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                     <DesignGreenButton
                         buttonText={'Done'}
                         className={'done-pg-6'}
+                    />
+                </div>
+            </div>
+            <div id="page7" style={styles.formContainerPg7}>
+            <p style={styles.formSuccessTitle}>Please fill out required fields!</p>
+                <div style={styles.popupButton} onClick={() => remove('page7')}>
+                    <DesignGreenButton
+                        buttonText={'Confirm'}
+                        className={'confirm'}
                     />
                 </div>
             </div>

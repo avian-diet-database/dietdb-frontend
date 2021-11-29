@@ -145,8 +145,6 @@ mutation CreatePendingDiet(
         lastname_author: $lastname_author
         year: $year
         journal: $journal
-        total_percent_diet: $total_percent_diet
-        new_species: $new_species
     )
 }
 `;
