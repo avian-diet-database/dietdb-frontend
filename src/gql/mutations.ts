@@ -154,7 +154,7 @@ mutation CreatePendingDiet(
 const APPROVE_PENDING_DIET = gql`
 mutation ApprovePendingDiet(
     $common_name: String!
-    $scientific_name: String
+    $scientific_name: String!
     $subspecies: String
     $family: String
     $taxonomy: String
@@ -205,7 +205,7 @@ mutation ApprovePendingDiet(
     $year: Int
     $journal: String
     $total_percent_diet: Float
-    $unique_id: Int
+    $unique_id: Int!
     ) {
     approvePendingDiet(           
         common_name: $common_name
@@ -268,7 +268,7 @@ mutation ApprovePendingDiet(
 const DENY_PENDING_DIET = gql`
 mutation DenyPendingDiet(
     $common_name: String!
-    $scientific_name: String
+    $scientific_name: String!
     $subspecies: String
     $family: String
     $taxonomy: String
@@ -319,7 +319,7 @@ mutation DenyPendingDiet(
     $year: Int
     $journal: String
     $total_percent_diet: Float
-    $unique_id: Int
+    $unique_id: Int!
     ) {
     denyPendingDiet(           
         common_name: $common_name
