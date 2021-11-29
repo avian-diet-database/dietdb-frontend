@@ -347,7 +347,6 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
         setAnalyisData(analysis_info)
         setDietData(diet_info)
         setViewData(data);
-        console.log(data);
         // console.log("this data:" + approval_data.doi);
         setIsAdminApprovalPage(true);
     }
