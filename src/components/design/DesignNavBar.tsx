@@ -102,15 +102,17 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
           >
             Diet by Prey
           </a>
-          <a
-            onClick={() => {
-              setMobileActive(false);
-              props.onSubmitDataClick();
-            }}
-            className={"navbar-item"}
-          >
-            Submit Data
-          </a>
+          {props.user.full_name === "" ? null : (
+            <a
+              onClick={() => {
+                setMobileActive(false);
+                props.onSubmitDataClick();
+              }}
+              className={"navbar-item"}
+            >
+              Submit Data
+            </a>
+          )}
         </div>
         <div className="navbar-end">
           <a className={"navbar-item"}>
@@ -137,7 +139,7 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
                   props.onLoginClick();
                 }}
               >
-                Login (Note: THIS IS DEV ENVIRONMENT!!)
+                Login
               </p>
             ) : (
               <p
