@@ -16,12 +16,10 @@ export const LogicAdminDashboard = () => {
 
     if (data) {
         pendingData = data.getPendingDiet;
-        console.log(pendingData);
     }
 
     if (approval_data) {
         approvalData = approval_data.getApprovalHistory;
-        console.log(approvalData);
     }
 
     return DesignAdminDashboard({
