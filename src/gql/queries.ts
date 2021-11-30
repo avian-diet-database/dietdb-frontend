@@ -1,5 +1,7 @@
 import { gql } from "@apollo/client";
 
+// FALL 2020 QUERIES
+
 const GET_PREY_OF = gql`
   query GetPreyOf(
     $name: String!
@@ -322,6 +324,188 @@ const GET_FILTERS_PRED = gql`
   }
 `;
 
+// FALL 2021 NEW QUERIES FOR DATA SUBMISSION, ADMIN DASHBOARD, AUTHENTICATION
+
+const GET_PENDING_DIET = gql`
+query {
+  getPendingDiet {
+    unique_id
+    common_name
+    scientific_name
+    subspecies
+    family
+    taxonomy
+    longitude_dd
+    latitude_dd
+    altitude_min_m
+    altitude_max_m
+    altitude_mean_m
+    location_region
+    location_specific
+    habitat_type
+    observation_month_begin
+    observation_month_end
+    observation_year_begin
+    observation_year_end
+    observation_season
+    analysis_number
+    prey_kingdom
+    prey_phylum
+    prey_class
+    prey_order
+    prey_suborder
+    prey_family
+    prey_genus
+    prey_scientific_name
+    inclusive_prey_taxon
+    prey_name_ITIS_ID
+    prey_name_status
+    prey_stage
+    prey_part
+    prey_common_name
+    fraction_diet
+    diet_type
+    item_sample_size
+    bird_sample_size
+    sites
+    study_type
+    notes
+    entered_by
+    source
+    doi
+    sex
+    age_class
+    within_study_data_source
+    table_fig_number
+    title
+    lastname_author
+    source_year
+    journal
+    total_percent_diet
+  
+  }
+}
+`; 
+
+const GET_APPROVAL_HISTORY = gql`
+query {
+  getApprovalHistory {
+    unique_id
+    common_name
+    scientific_name
+    subspecies
+    family
+    taxonomy
+    longitude_dd
+    latitude_dd
+    altitude_min_m
+    altitude_max_m
+    altitude_mean_m
+    location_region
+    location_specific
+    habitat_type
+    observation_month_begin
+    observation_month_end
+    observation_year_begin
+    observation_year_end
+    observation_season
+    analysis_number
+    prey_kingdom
+    prey_phylum
+    prey_class
+    prey_order
+    prey_suborder
+    prey_family
+    prey_genus
+    prey_scientific_name
+    inclusive_prey_taxon
+    prey_name_ITIS_ID
+    prey_name_status
+    prey_stage
+    prey_part
+    prey_common_name
+    fraction_diet
+    diet_type
+    item_sample_size
+    bird_sample_size
+    sites
+    study_type
+    notes
+    entered_by
+    source
+    doi
+    sex
+    age_class
+    within_study_data_source
+    table_fig_number
+    title
+    lastname_author
+    source_year
+    journal
+    total_percent_diet
+    state
+  }
+}
+`
+
+const GET_PENDING_DIET_SKELETON = gql`
+query {
+  getPendingDiet {
+    common_name
+    source
+    subspecies
+    taxonomy
+    location_region
+    location_specific
+    prey_kingdom
+    diet_type
+  }
+}
+`; 
+
+const GET_USERS = gql`
+query {
+  getUsers {
+    full_name
+    username
+    email
+    password
+    admin_password
+    is_verified
+    is_admin
+  }
+}
+`; 
+
+const GET_USER_BY_EMAIL = gql`
+query($email: String!) {
+  getUserByEmail(
+    email: $email
+  ) {
+    full_name
+    username
+    email
+    password
+    is_verified
+    is_admin
+  }
+}
+`;
+
+const GET_USER_BY_EMAIL_AND_SECURITY_QUESTION = gql`
+query($email: String!, $security_question: String!) {
+  getUserByEmailAndSecurityQuestion(email: $email, security_question: $security_question) {
+    full_name
+    username
+    email
+    password
+    is_verified
+    is_admin
+    security_question
+  }
+}
+`;
+
 export {
   GET_AUTOCOMPLETE_PRED,
   GET_AUTOCOMPLETE_PREY,
@@ -331,9 +515,15 @@ export {
   GET_PREY_OF,
   GET_PREY_OF_SOURCES,
   GET_PRED_OF_SOURCES,
+  GET_PENDING_DIET,
+  GET_APPROVAL_HISTORY,
+  GET_PENDING_DIET_SKELETON,
   ITEM_PAGE_PRED,
   ITEM_PAGE_PREY,
   RECORDS_PER_DECADE,
   RECORDS_PER_SEASON,
   RECORDS_PER_DIET_TYPE,
+  GET_USERS,
+  GET_USER_BY_EMAIL,
+  GET_USER_BY_EMAIL_AND_SECURITY_QUESTION,
 };
