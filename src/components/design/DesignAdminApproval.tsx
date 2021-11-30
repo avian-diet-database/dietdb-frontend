@@ -1,5 +1,7 @@
 import React from "react";
 import { DesignLargeGreenButton } from "./DesignLargeGreenButton";
+import { DesignGreenButton } from "./DesignGreenButton";
+import { remove } from "./DesignSubmitData";
 import { APPROVE_PENDING_DIET, DENY_PENDING_DIET } from "../../gql/mutations";
 import { useMutation, useQuery } from "@apollo/client";
 
@@ -151,6 +153,36 @@ export const DesignAdminApproval = (props: DesignAdminApprovalProps) => {
     questionListMargin: {
       marginTop: "1rem",
     },
+    formSuccessTitle: {
+      fontSize: '30px',
+      fontWeight: 900,
+      margin: '3rem',
+  },formContainerApproved: {
+    display: 'none',
+    backgroundColor: 'white',
+    width: '70%',
+    textAlign: 'center' as 'center',
+    margin: '15%',
+    position: 'absolute' as 'absolute',
+    top: '15%',
+    borderRadius: '4px',
+    boxShadow: '2px 2px 2px 2px lightgrey'
+},formContainerDenied: {
+  display: 'none',
+  backgroundColor: 'white',
+  width: '70%',
+  textAlign: 'center' as 'center',
+  margin: '15%',
+  position: 'absolute' as 'absolute',
+  top: '15%',
+  borderRadius: '4px',
+  boxShadow: '2px 2px 2px 2px lightgrey'
+},
+  popupButton: {
+      padding: '2rem',
+      display: 'flex',
+      justifyContent: 'center',
+  },
   };
 
   const studyRelatedInfoQuestions = [
@@ -266,6 +298,9 @@ export const DesignAdminApproval = (props: DesignAdminApprovalProps) => {
         unique_id: formState.unique_id,
       },
     });
+
+    document.getElementById('approved_state').style.display = 'block'
+
   }
 
   function deny() {
@@ -326,6 +361,9 @@ export const DesignAdminApproval = (props: DesignAdminApprovalProps) => {
         unique_id: formState.unique_id,
       },
     });
+
+    document.getElementById('denied_state').style.display = 'block'
+
   }
 
   const formState = JSON.parse(JSON.stringify(props.data));
@@ -431,6 +469,25 @@ export const DesignAdminApproval = (props: DesignAdminApprovalProps) => {
           </button>
         </div>
       </div>
+      <div id="approved_state" style={styles.formContainerApproved}>
+            <p style={styles.formSuccessTitle}>Successfully Approved!</p>
+                <div style={styles.popupButton} onClick={() => remove('approved_state')}>
+                    <DesignGreenButton
+                        buttonText={'Confirm'}
+                        className={'confirm'}
+                    />
+                </div>
+            </div>
+
+            <div id="denied_state" style={styles.formContainerDenied}>
+            <p style={styles.formSuccessTitle}>Successfully Denied!</p>
+                <div style={styles.popupButton} onClick={() => remove('denied_state')}>
+                    <DesignGreenButton
+                        buttonText={'Confirm'}
+                        className={'confirm'}
+                    />
+                </div>
+            </div>
     </div>
   );
 };

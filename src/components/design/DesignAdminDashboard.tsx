@@ -56,7 +56,7 @@ export interface DesignAdminDashboardProps {
         age_class: string
         within_study_data_source: string
         lastname_author: string
-        year: number
+        source_year: number
         journal: string
         total_percent_diet: number
     }[],
@@ -111,7 +111,7 @@ export interface DesignAdminDashboardProps {
         age_class: string
         within_study_data_source: string
         lastname_author: string
-        year: number
+        source_year: number
         journal: string
         total_percent_diet: number
         state: string
@@ -291,7 +291,7 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
             1: "doi",
             2: "title",
             3: "journal",
-            4: "year",
+            4: "source_year",
             5: "lastname_author",
             6: "scientific_name",
             7: "common_name",

@@ -86,7 +86,7 @@ mutation CreatePendingDiet(
     $table_fig_number: String
     $title: String
     $lastname_author: String
-    $year: Int
+    $source_year: Int
     $journal: String
     $total_percent_diet: Float
     $new_species: Boolean!
@@ -143,7 +143,7 @@ mutation CreatePendingDiet(
         table_fig_number: $table_fig_number
         title: $title
         lastname_author: $lastname_author
-        year: $year
+        source_year: $source_year
         journal: $journal
     )
 }
@@ -200,7 +200,7 @@ mutation ApprovePendingDiet(
     $table_fig_number: String
     $title: String
     $lastname_author: String
-    $year: Int
+    $source_year: Int
     $journal: String
     $total_percent_diet: Float
     $unique_id: Int!
@@ -255,7 +255,7 @@ mutation ApprovePendingDiet(
         table_fig_number: $table_fig_number
         title: $title
         lastname_author: $lastname_author
-        year: $year
+        source_year: $source_year
         journal: $journal
         total_percent_diet: $total_percent_diet
         unique_id: $unique_id
@@ -314,7 +314,7 @@ mutation DenyPendingDiet(
     $table_fig_number: String
     $title: String
     $lastname_author: String
-    $year: Int
+    $source_year: Int
     $journal: String
     $total_percent_diet: Float
     $unique_id: Int!
@@ -369,7 +369,7 @@ mutation DenyPendingDiet(
         table_fig_number: $table_fig_number
         title: $title
         lastname_author: $lastname_author
-        year: $year
+        source_year: $source_year
         journal: $journal
         total_percent_diet: $total_percent_diet
         unique_id: $unique_id

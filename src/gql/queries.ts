@@ -379,7 +379,7 @@ query {
     table_fig_number
     title
     lastname_author
-    year
+    source_year
     journal
     total_percent_diet
   
@@ -440,7 +440,7 @@ query {
     table_fig_number
     title
     lastname_author
-    year
+    source_year
     journal
     total_percent_diet
     state
