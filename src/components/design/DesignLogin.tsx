@@ -4,6 +4,7 @@ import { GET_USER_BY_EMAIL } from "../../gql/queries";
 import { LogicSignup } from "../logic/LogicSignup";
 import { LogicResetPassword } from "../logic/LogicResetPassword";
 import bcrypt from "bcryptjs";
+import { ActiveItemTypeVar, ActiveItemVar, ItemType } from "../../cache";
 
 interface DesignLoginProps {
   setUser: any;
@@ -79,6 +80,9 @@ export const DesignLogin = (props: DesignLoginProps) => {
                 is_verified: data.getUserByEmail.is_verified,
                 is_admin: data.getUserByEmail.is_admin,
               });
+              ActiveItemVar("");
+              ActiveItemTypeVar(ItemType.NA);
+              document.body.scrollIntoView();
             } else {
               setLoginFailed(true);
             }

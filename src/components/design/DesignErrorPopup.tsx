@@ -7,7 +7,7 @@ interface DesignErrorPopup {
   message: string,
 }
 
-export const DesignDots = (props: DesignErrorPopup) => {
+export const DesignErrorPopup = (props: DesignErrorPopup) => {
   const container = {
     width: '550px',
     minHeight: '350px',
@@ -36,8 +36,8 @@ export const DesignDots = (props: DesignErrorPopup) => {
         <p>{props.message}</p>
         <div onClick={() => remove('error-message')}>
             <DesignGreenButton 
-                buttonText={'Try Again'}
-                className={'try-again'}
+                buttonText={'Confirm'}
+                className={'confirm'}
             />
         </div>
     </div>)
