@@ -105,18 +105,20 @@ export const DesignNavBar = (props: DesignNavBarProps) => {
           >
             Diet by Prey
           </a>
-          <a
-            onClick={() => {
-              setMobileActive(false);
-              props.onSubmitDataClick();
-            }}
-            className={
-              "navbar-item " +
-              (activeItemType === ItemType.SUBMIT ? "is-active" : "")
-            }
-          >
-            Submit Data
-          </a>
+          {props.user.full_name === "" ? null : (
+            <a
+              onClick={() => {
+                setMobileActive(false);
+                props.onSubmitDataClick();
+              }}
+              className={
+                "navbar-item " +
+                (activeItemType === ItemType.SUBMIT ? "is-active" : "")
+              }
+            >
+              Submit Data
+            </a>
+          )}
         </div>
         <div className="navbar-end">
           <p className={"navbar-item"}>
