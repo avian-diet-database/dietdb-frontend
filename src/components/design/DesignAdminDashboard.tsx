@@ -486,7 +486,7 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                         </p>
                     </div>
                     <div style={styles.pendingTableContent}>
-                        <div style={styles.pendingTableColNameContainer}>
+                    <div style={styles.pendingTableColNameContainer}>
                             <p
                                 style={{
                                     ...styles.pendingTableColName,
@@ -506,10 +506,18 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                             <p
                                 style={{
                                     ...styles.pendingTableColName,
+                                    ...styles.pendingYearTitle,
+                                }}
+                            >
+                                Year
+                            </p>
+                            <p
+                                style={{
+                                    ...styles.pendingTableColName,
                                     ...styles.pendingSpeciesTitle,
                                 }}
                             >
-                                Title
+                                Bird Species
                             </p>
                             <p
                                 style={{
@@ -517,7 +525,7 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                                     ...styles.pendingYearTitle,
                                 }}
                             >
-                                Year
+                                Total % Diet
                             </p>
                             <p
                                 style={{
@@ -599,7 +607,7 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                         </p>
                     </div>
                     <div style={styles.pendingTableContent}>
-                        <div style={styles.pendingTableColNameContainer}>
+                    <div style={styles.pendingTableColNameContainer}>
                             <p
                                 style={{
                                     ...styles.pendingTableColName,
@@ -619,10 +627,18 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                             <p
                                 style={{
                                     ...styles.pendingTableColName,
+                                    ...styles.pendingYearTitle,
+                                }}
+                            >
+                                Year
+                            </p>
+                            <p
+                                style={{
+                                    ...styles.pendingTableColName,
                                     ...styles.pendingSpeciesTitle,
                                 }}
                             >
-                                Title
+                                Bird Species
                             </p>
                             <p
                                 style={{
@@ -630,7 +646,7 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                                     ...styles.pendingYearTitle,
                                 }}
                             >
-                                Year
+                                Total % Diet
                             </p>
                             <p
                                 style={{
@@ -649,22 +665,22 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                                     <div>
                                         <div style={styles.pendingTableColNameContainer}>
                                             <p style={{width:'120px', overflowWrap: 'anywhere' }}>{data.analysis_number}</p>
-                                            <p style={styles.approvalAuthorTitle}>
+                                            <p style={styles.pendingAuthorTitle}>
                                                 {data.source.split(",")[0]}
                                             </p>
-                                            <p style={styles.approvalYearTitle}>
+                                            <p style={styles.pendingYearTitle}>
                                                 {data.source.split(",")[2]}
                                             </p>
-                                            <p style={styles.approvalSpeciesTitle}>
+                                            <p style={styles.pendingSpeciesTitle}>
                                                 {data.scientific_name}
                                             </p>
-                                            <p style={styles.approvalYearTitle}>
+                                            <p style={styles.pendingYearTitle}>
                                                 {data.total_percent_diet}
                                             </p>
                                             <p style={styles.pendingUserTitle}>
                                                 {data.entered_by}
                                             </p>
-                                            <p style={styles.green}>
+                                            <p style={{color: 'rgb(1, 182, 132)', overflowWrap: 'anywhere', width: '75px'}}>
                                                 {data.state}
                                             </p>
                                         </div>
