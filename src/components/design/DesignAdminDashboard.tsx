@@ -439,10 +439,10 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                                         <div style={styles.pendingTableColNameContainer}>
                                             <p style={{width:'120px', overflowWrap: 'anywhere' }}>{data.analysis_number}</p>
                                             <p style={styles.pendingAuthorTitle}>
-                                                {data.source.split(",")[0]}
+                                                {data.lastname_author}
                                             </p>
                                             <p style={styles.pendingYearTitle}>
-                                                {data.source.split(",")[2]}
+                                                {data.source_year}
                                             </p>
                                             <p style={styles.pendingSpeciesTitle}>
                                                 {data.scientific_name}
@@ -544,10 +544,10 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                                         <div style={styles.pendingTableColNameContainer}>
                                         <p style={{width:'120px', overflowWrap: 'anywhere' }}>{data.analysis_number}</p>
                                             <p style={styles.pendingAuthorTitle}>
-                                                {data.source.split(",")[0]}
+                                                {data.lastname_author}
                                             </p>
                                             <p style={styles.pendingYearTitle}>
-                                                {data.source.split(",")[2]}
+                                                {data.source_year}
                                             </p>
                                             <p style={styles.pendingSpeciesTitle}>
                                                 {data.scientific_name}
@@ -666,10 +666,10 @@ export const DesignAdminDashboard = (props: DesignAdminDashboardProps) => {
                                         <div style={styles.pendingTableColNameContainer}>
                                             <p style={{width:'120px', overflowWrap: 'anywhere' }}>{data.analysis_number}</p>
                                             <p style={styles.pendingAuthorTitle}>
-                                                {data.source.split(",")[0]}
+                                                {data.lastname_author}
                                             </p>
                                             <p style={styles.pendingYearTitle}>
-                                                {data.source.split(",")[2]}
+                                                {data.source_year}
                                             </p>
                                             <p style={styles.pendingSpeciesTitle}>
                                                 {data.scientific_name}
