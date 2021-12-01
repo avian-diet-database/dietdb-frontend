@@ -187,26 +187,26 @@ export const DesignAdminApproval = (props: DesignAdminApprovalProps) => {
 
   const studyRelatedInfoQuestions = [
     "1. Do you have a study with quantitative data on avian diet? (DOI)",
-    "1. Do you have a study with quantitative data on avian diet? (Title)",
-    "1. Do you have a study with quantitative data on avian diet? (Journal)",
-    "1. Do you have a study with quantitative data on avian diet? (Year)",
-    "1. Do you have a study with quantitative data on avian diet? (Last Name of First Author)",
+    "(Title)",
+    "(Journal)",
+    "(Year)",
+    "(Last Name of First Author)",
     "2. What bird species are you entering diet data for? (Scientific Name)",
-    "2. What bird species are you entering diet data for? (New Species - Common Name)",
-    "2. What bird species are you entering diet data for? (New Species - Family)",
-    "2. What bird species are you entering diet data for? (New Species - Taxonomy)",
+    "(New Species - Common Name)",
+    "(New Species - Family)",
+    "(New Species - Taxonomy)",
     "3. Was the data collected from within a single state, province, or country?",
     "4. What was the specific location name?",
     "5. Are lat-long coordinates provided for the study location? (Latitude)",
-    "5. Are lat-long coordinates provided for the study location? (Longitude)",
+    "(Longitude)",
     "6. Is elevational information provided for this study? (Minimum Elevation)",
-    "6. Is elevational information provided for this study? (Maximum Elevation)",
-    "6. Is elevational information provided for this study? (Mean Elevation)",
+    "(Maximum Elevation)",
+    "(Mean Elevation)",
     "7. In what type of habitat was the study conducted?",
     "8. When was the diet data for this species in this study collected? (Month - Beginning of Study)",
-    "8. When was the diet data for this species in this study collected? (Year - Beginning of Study)",
-    "8. When was the diet data for this species in this study collected? (Month - End of Study)",
-    "8. When was the diet data for this species in this study collected? (Year - End of Study)",
+    "(Year - Beginning of Study)",
+    "(Month - End of Study)",
+    "(Year - End of Study)",
     "9. What time of year were data collected relative to the avian life cycle in that location?",
   ];
 
@@ -219,7 +219,7 @@ export const DesignAdminApproval = (props: DesignAdminApprovalProps) => {
     "6. Does this analysis refer to a particular sex?",
     "7. Does this analysis refer to a particular age class?",
     "8. Please describe where in the published study you obtained the information for this diet analysis. (Within Study Data Source)",
-    "8. Please describe where in the published study you obtained the information for this diet analysis. (Table/Fig Number)",
+    "(Table/Fig Number)",
   ];
 
   const dietInfoQuestions = [
