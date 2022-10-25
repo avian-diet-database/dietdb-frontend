@@ -506,6 +506,24 @@ query($email: String!, $security_question: String!) {
 }
 `;
 
+
+//Post-edits-1 2022
+const GET_SCIENTIFIC_NAMES = gql`
+query {
+  getScientificNames {
+    sci_name
+  }
+}
+`;
+
+const GET_PREY_NAMES = gql`
+query {
+  getPreyNames {
+    name
+  }
+}
+`;
+
 export {
   GET_AUTOCOMPLETE_PRED,
   GET_AUTOCOMPLETE_PREY,
@@ -526,4 +544,6 @@ export {
   GET_USERS,
   GET_USER_BY_EMAIL,
   GET_USER_BY_EMAIL_AND_SECURITY_QUESTION,
+  GET_SCIENTIFIC_NAMES,
+  GET_PREY_NAMES,
 };
