@@ -118,9 +118,10 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
     const setTaxonState = (e: any) => {
 
+        //prey taxonomic classification takes on prey name value, so if name changes, taxonomic levels need to reset
         if (e.target.name === "prey_common_name") {
-            const { name, value } = e.target;
-            setTaxon(prevState => ({ ...prevState, [name]: value}));
+            const value  = e.target.value;
+            setTaxon({...taxonstudyLevelsInfoInitialState, ['prey_common_name']: value});
             setDietInfoState(prevState => ({...prevState, ['inclusive_prey_taxon']: ''}))
         }
         const { name, value } = e.target;
@@ -154,7 +155,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         setDietInfoState(prevState => ({ ...prevState, [name]: value }));
     }
 
-    //when user makes changes to taxon level, old choices in sub-levels remain if not reset
+    //Taxon classifcation takes on prey_common_name. when user makes changes to taxon classifcation, old choices in sub-levels are reset
     const setAndResetDietInfoInputState = (e: any) => {
 
         const { name, value } = e.target;
@@ -186,7 +187,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 break;
         }
 
-        // setTaxon(prevState => ({ ...prevState, ...taxonstudyLevelsInfoInitialState }))
         setDietInfoState(prevState => ({ ...prevState, [name]: value }));
     }
 
@@ -556,13 +556,21 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         let checkboxes = document.getElementsByName(id)
         // loop over them all
         for (let i = 0; i < checkboxes.length; i++) {
-            // And stick the checked ones onto an array
+
             let box = checkboxes[i] as HTMLInputElement;
             box.checked = false;
         }
 
         // set values
         setVarState([]);
+    }
+
+    function resetAllPreyRadio() {
+        let radios = document.getElementsByName('all_prey_diet_yn')
+        for (let i = 0; i < radios.length; i++) {
+            let radio = radios[i] as HTMLInputElement
+            radio.checked = false;
+        }
     }
 
     function validateStudyInfoPg1() {
@@ -654,7 +662,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             let total = total_percent_diet + parseFloat(prey_fraction_diet);
 
             setTotalPercentDiet(total);
-            console.log(total_percent_diet)
 
             let prey_table_id = (Math.random() * 10000)
 
@@ -678,7 +685,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             }
 
             preySubmissions.push(submission)
-
             setPreySubmissions(preySubmissions);
 
 
@@ -701,6 +707,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             // reset prey submission form
             setTaxon({ ...taxonstudyInfoInitialState });
             setDietInfoState({ ...dietInfoInitialState, ['total_percent_diet']: total_percent_diet });
+            resetAllPreyRadio();
             resetCheckedBoxes("prey-part", setPreyPart);
             resetCheckedBoxes("prey-stage", setPreyStage);
         }
@@ -946,10 +953,6 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 <div style={styles.form}>
                     <div id="question1">
                         <p id="required" style={{ ...styles.questionTextSize }}>1. If you know the DOI for your published study with <strong>quantitative</strong> data on avian diet, enter it here <span style={styles.green}>*</span></p>
-                        <div className="control" style={styles.inputBoxSpacing}>
-                            <input className="input" style={styles.inputBox} type="text" placeholder="Enter DOI" value={doi} name="doi" onChange={setStudyInfoInputState} />
-                        </div>
-                        <p style={styles.questionTextSize}>If <span style={styles.green}>not</span>, please fill out the relevant information below.</p>
                         <div style={styles.inputBoxMultipleSectionContainer}>
                             <div className="field">
                                 <label className="label" style={styles.questionTextSize}>Title</label>
@@ -976,6 +979,12 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                                 </div>
                             </div>
                         </div>
+
+                        <p style={styles.questionTextSize}>If <span style={styles.green}>not</span>, please fill out the relevant information below.</p>
+                        <div className="control" style={styles.inputBoxSpacing}>
+                            <input className="input" style={styles.inputBox} type="text" placeholder="Enter DOI" value={doi} name="doi" onChange={setStudyInfoInputState} />
+                        </div>
+
                     </div>
                 </div>
                 <div style={styles.singleButton} onClick={() => { validateStudyInfoPg1() }}>
