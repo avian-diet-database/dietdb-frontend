@@ -117,7 +117,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
     const setTaxonState = (e: any) => {
 
-        //prey taxonomic classification takes on prey name value, so if name changes, taxonomic levels need to reset
+        //prey taxonomic classification takes on prey_common_name value, so if name changes, taxonomic levels need to reset
         if (e.target.name === "prey_common_name") {
             const value  = e.target.value;
             setTaxon({...taxonstudyLevelsInfoInitialState, ['prey_common_name']: value});
@@ -154,7 +154,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         setDietInfoState(prevState => ({ ...prevState, [name]: value }));
     }
 
-    //Taxon classifcation takes on prey_common_name. when user makes changes to taxon classifcation, old choices in sub-levels are reset
+    //Taxon classifcation takes on prey_common_name also when user makes changes to taxon classifcation, old choices in sub-levels are reset
     const setAndResetDietInfoInputState = (e: any) => {
 
         const { name, value } = e.target;
@@ -512,6 +512,8 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         resetAnalysisRelatedRadios();
         setDietInfoState({ ...dietInfoInitialState });
         setTaxon({ ...taxonstudyInfoInitialState });
+        resetCheckedBoxes('prey-part', setPreyPart);
+        resetCheckedBoxes('prey-stage', setPreyStage);
         setPreySubmissions([]);
         resetPreyTable();
         setPreyPart([]);
@@ -524,6 +526,8 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         resetAnalysisRelatedRadios();
         setDietInfoState({ ...dietInfoInitialState });
         setTaxon({ ...taxonstudyInfoInitialState });
+        resetCheckedBoxes('prey-part', setPreyPart);
+        resetCheckedBoxes('prey-stage', setPreyStage);
         setPreySubmissions([]);
         resetPreyTable();
         setPreyPart([]);
@@ -571,6 +575,21 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         setVarState(checkboxesChecked);
     }
 
+    function checkBoxes(name: string, checkOn: string[]) {
+        let potentialChecks = document.getElementsByName(name)
+
+        for (let i = 0; i < potentialChecks.length; i++) {
+            let box = potentialChecks[i] as HTMLInputElement;
+            if(checkOn.includes(potentialChecks[i].getAttribute('value'))) {
+                box.checked = true;
+            }
+            else {
+                //If previously checked
+                box.checked = false;
+            }
+        }
+    }
+
     function resetCheckedBoxes(id: string, setVarState: any) {
         let checkboxes = document.getElementsByName(id)
         // loop over them all
@@ -590,6 +609,19 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         for (let i = 0; i < radios.length; i++) {
             let radio = radios[i] as HTMLInputElement
             radio.checked = false;
+        }
+    }
+
+    function markRadios(name: string, checkOn: string) {
+        let radios = document.getElementsByName(name)
+
+        for (let i = 0; i < radios.length; i++) {
+            let radio = radios[i] as HTMLInputElement
+            if (radios[i].getAttribute('value') === checkOn) {
+                radio.checked = true;
+            } else {
+                radio.checked = false;
+            }
         }
     }
 
@@ -678,6 +710,11 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             ['fraction_diet']: removedSubmission.fraction_diet as string, ['all_prey_diet_yn']: removedSubmission.all_prey_diet_yn as string,
             ['notes']: removedSubmission.notes as string
         }))
+        markRadios('all_prey_diet_yn',removedSubmission.all_prey_diet_yn)
+        setPreyPart(removedSubmission.prey_part)
+        checkBoxes('prey-part',removedSubmission.prey_part)
+        setPreyStage(removedSubmission.prey_stage)
+        checkBoxes('prey-stage',removedSubmission.prey_stage)
 
 
     }
@@ -1602,7 +1639,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>8. When was the diet data for this species in this study collected? <span style={styles.green}>*</span></p>
                         <p>{'Month (Beginning of Study): ' + observation_month_begin + '; Year (Beginning of Study): ' + observation_year_begin + '; Month (End of Study): ' + observation_month_end + '; Year (End of Study): ' + observation_year_end}</p>
                         <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>9. What time of year were data collected relative to the avian life cycle in that location? <span style={styles.green}>*</span></p>
-                        <p><b>Time of Year: </b>{observation_season}</p>
+                        <p>Time of Year: {observation_season}</p>
                     </div>
                 </div>
                 <hr style={styles.backgroundGreen} />

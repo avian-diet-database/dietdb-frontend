@@ -21,8 +21,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const httpLink = new HttpLink({
   // Backend uri for dev (CloudApps namespace: pichhim)
-  //uri: "http://dev-backend-pichhim.apps.cloudapps.unc.edu/graphql"
-  uri: "http://localhost:4000/graphql"
+  uri: "http://dev-backend-pichhim.apps.cloudapps.unc.edu/graphql"
   // Backend uri for prod
   // uri: "https://back-end-dept-dietdatabase.cloudapps.unc.edu/graphql",
 });
