@@ -88,10 +88,11 @@ Follow the [Gitflow Workflow](https://www.atlassian.com/git/tutorials/comparing-
 - Muyan Pan (Fall 2020)
 - Eden Chou (Fall 2021)
 - Pich Him (Fall 2021)
+- Kevin Le (Fall 2022)
 
 ### Backend
 - Thomas Le (Fall 2020)
-- Kevin Le (Fall 2020)
+- Kevin Le (Fall 2021)
 - Pich Him (Fall 2021)
 
 ## 7. TODO
