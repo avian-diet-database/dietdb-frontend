@@ -119,9 +119,9 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
         //prey taxonomic classification takes on prey_common_name value, so if name changes, taxonomic levels need to reset
         if (e.target.name === "prey_common_name") {
-            const value  = e.target.value;
-            setTaxon({...taxonstudyLevelsInfoInitialState, ['prey_common_name']: value});
-            setDietInfoState(prevState => ({...prevState, ['inclusive_prey_taxon']: ''}))
+            const value = e.target.value;
+            setTaxon({ ...taxonstudyLevelsInfoInitialState, ['prey_common_name']: value });
+            setDietInfoState(prevState => ({ ...prevState, ['inclusive_prey_taxon']: '' }))
         }
         const { name, value } = e.target;
         setTaxon(prevState => ({ ...prevState, [name]: value }));
@@ -141,7 +141,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     const [{ inclusive_prey_taxon, fraction_diet,
         all_prey_diet_yn, notes,
         prey_name_ITIS_ID,
-        prey_name_status,}, setDietInfoState] = useState(dietInfoInitialState);
+        prey_name_status, }, setDietInfoState] = useState(dietInfoInitialState);
 
 
     const setAnalysisInfoInputState = (e: any) => {
@@ -506,8 +506,8 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     function resetAll() {
         setStudyInfoState({ ...studyInfoInitialState });
         resetStudyRelatedRadios();
-        resetCheckedBoxes('habitat',setHabitatType)
-        resetCheckedBoxes('observation-season',setObservationSeason)
+        resetCheckedBoxes('habitat', setHabitatType)
+        resetCheckedBoxes('observation-season', setObservationSeason)
         setAnalysisInfoState({ ...analysisInfoInitialState });
         resetAnalysisRelatedRadios();
         setDietInfoState({ ...dietInfoInitialState });
@@ -538,7 +538,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
     function resetPreyTable() {
         let rows = document.getElementsByName('prey-table-row');
         //html live list, start from back
-        for (let i = (rows.length - 1); i > -1 ; i--) {
+        for (let i = (rows.length - 1); i > -1; i--) {
             rows[i].remove()
         }
     }
@@ -580,7 +580,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
         for (let i = 0; i < potentialChecks.length; i++) {
             let box = potentialChecks[i] as HTMLInputElement;
-            if(checkOn.includes(potentialChecks[i].getAttribute('value'))) {
+            if (checkOn.includes(potentialChecks[i].getAttribute('value'))) {
                 box.checked = true;
             }
             else {
@@ -689,11 +689,10 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
         setPreySubmissions(preySubmissions)
         element.remove()
 
-        if (removedSubmission.fraction_diet !== '') {
-            let total = total_percent_diet.current - parseFloat(removedSubmission.fraction_diet);
+        let total = total_percent_diet.current - parseFloat(removedSubmission.fraction_diet);
 
-            total_percent_diet.current = total;
-        }
+        total_percent_diet.current = total;
+
 
 
 
@@ -710,25 +709,24 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
             ['fraction_diet']: removedSubmission.fraction_diet as string, ['all_prey_diet_yn']: removedSubmission.all_prey_diet_yn as string,
             ['notes']: removedSubmission.notes as string
         }))
-        markRadios('all_prey_diet_yn',removedSubmission.all_prey_diet_yn)
+        markRadios('all_prey_diet_yn', removedSubmission.all_prey_diet_yn)
         setPreyPart(removedSubmission.prey_part)
-        checkBoxes('prey-part',removedSubmission.prey_part)
+        checkBoxes('prey-part', removedSubmission.prey_part)
         setPreyStage(removedSubmission.prey_stage)
-        checkBoxes('prey-stage',removedSubmission.prey_stage)
+        checkBoxes('prey-stage', removedSubmission.prey_stage)
 
 
     }
 
     function addPreyEntry() {
-        if (prey_common_name === "") {
+        if (prey_common_name === "" || fraction_diet === "") {
             document.getElementById('page7').style.display = 'block'
         } else {
 
-            if (fraction_diet !== '') {
-                let total = total_percent_diet.current + parseFloat(fraction_diet);
+            let total = total_percent_diet.current + parseFloat(fraction_diet);
 
-                total_percent_diet.current = total;
-            }
+            total_percent_diet.current = total;
+
 
             let prey_table_id = (Math.random() * 10000)
 
@@ -762,7 +760,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 <p style='width: 100px; overflow-wrap: break-word'>${fraction_diet}</p>
                 <p style='width: 275px; overflow-wrap: break-word'>${prey_stage}</p>
                 <p style='width: 320px; overflow-wrap: break-word'>${prey_part}</p>
-                <p id='edit_${prey_table_id}' style='width: 320px; overflow-wrap: break-word'>Edit</p>
+                <p style='width: 100px; overflow-wrap: break-word' id='edit_${prey_table_id}' style='width: 320px; overflow-wrap: break-word'>Edit</p>
              </div>
              <hr style="background-color: #01B684; margin: 0" />`
             let diet_container = document.createElement('div');
@@ -773,12 +771,12 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
             // reset prey submission form
             setTaxon({ ...taxonstudyInfoInitialState });
-            setDietInfoState({ ...dietInfoInitialState});
+            setDietInfoState({ ...dietInfoInitialState });
             resetRadios('all_prey_diet_yn');
             resetCheckedBoxes('prey-part', setPreyPart);
             resetCheckedBoxes('prey-stage', setPreyStage);
 
-            
+
         }
     }
 
@@ -978,7 +976,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         common_name: formData.studyInfo.common_name, new_species: formData.studyInfo.new_species_yn, scientific_name: formData.studyInfo.scientific_name, subspecies: formData.studyInfo.subspecies, family: formData.studyInfo.family, source: formData.studyInfo.title + ", " + formData.studyInfo.journal + ", " + formData.studyInfo.source_year + ", " + formData.studyInfo.lastname_author,
                         taxonomy: formData.studyInfo.taxonomy, longitude_dd: formData.studyInfo.longitude_dd, latitude_dd: formData.studyInfo.latitude_dd, altitude_max_m: formData.studyInfo.altitude_max_m, altitude_mean_m: formData.studyInfo.altitude_mean_m, altitude_min_m: formData.studyInfo.altitude_min_m,
                         location_region: formData.studyInfo.location_state_province === '' ? formData.studyInfo.location_region : formData.studyInfo.location_state_province, location_specific: formData.studyInfo.location_specific, habitat_type: formData.studyInfo.habitat_type.toString(), observation_month_begin: (formData.studyInfo.observation_month_begin === '' ? null : parseInt(formData.studyInfo.observation_month_begin)), observation_month_end: (formData.studyInfo.observation_month_end === '' ? null : parseInt(formData.studyInfo.observation_month_end)),
-                        observation_year_begin: (formData.studyInfo.observation_year_begin === '' ? null :parseInt(formData.studyInfo.observation_year_begin)), observation_year_end: (formData.studyInfo.observation_year_end === '' ? null : parseInt(formData.studyInfo.observation_year_end)), observation_season: formData.studyInfo.observation_season.toString(), analysis_number: formData.analysisInfo.analysis_number, prey_kingdom: preySubmissions[i].prey_kingdom,
+                        observation_year_begin: (formData.studyInfo.observation_year_begin === '' ? null : parseInt(formData.studyInfo.observation_year_begin)), observation_year_end: (formData.studyInfo.observation_year_end === '' ? null : parseInt(formData.studyInfo.observation_year_end)), observation_season: formData.studyInfo.observation_season.toString(), analysis_number: formData.analysisInfo.analysis_number, prey_kingdom: preySubmissions[i].prey_kingdom,
                         prey_phylum: preySubmissions[i].prey_phylum, prey_order: preySubmissions[i].prey_order, prey_suborder: preySubmissions[i].prey_suborder, prey_family: preySubmissions[i].prey_family, prey_genus: preySubmissions[i].prey_genus,
                         prey_scientific_name: preySubmissions[i].prey_scientific_name, inclusive_prey_taxon: preySubmissions[i].inclusive_prey_taxon, prey_name_ITIS_ID: formData.dietInfo.prey_name_ITIS_ID, prey_name_status: formData.dietInfo.prey_name_status,
                         prey_stage: preySubmissions[i].prey_stage.toString(), prey_part: preySubmissions[i].prey_part.toString(), prey_common_name: preySubmissions[i].prey_common_name, fraction_diet: preySubmissions[i].fraction_diet, diet_type: formData.analysisInfo.diet_type,
@@ -1021,7 +1019,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                 </div>
                 <div style={styles.form}>
                     <div id="question1">
-                        <p id="required" style={{ ...styles.questionTextSize }}>1. Enter the <strong>title</strong>, <strong>journal</strong>, <strong>source year</strong>, and <strong>author last name</strong> of your quantatative published study on avian diet. <span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize }}>1. Enter the <strong>title</strong>, <strong>journal</strong>, <strong>source year</strong>, and <strong>first author last name</strong> of your quantatative published study on avian diet. <span style={styles.green}>*</span></p>
                         <div style={styles.inputBoxMultipleSectionContainer}>
                             <div className="field">
                                 <div className="control" style={styles.inputBoxSpacing}>
@@ -1516,13 +1514,13 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
 
                     </div>
                     <div id="diet-question2">
-                        <p id="required" style={{ ...styles.questionTextSize }}>2. Percent of the diet?</p>
+                        <p id="required" style={{ ...styles.questionTextSize }}>2. Percent of the diet? <span style={styles.green}>*</span></p>
                         <div className="control" style={styles.inputBoxSpacing}>
                             <input className="input" style={{ ...styles.inputBox }} type="text" placeholder="Enter Value" value={fraction_diet} name="fraction_diet" onChange={setDietInfoInputState} />
                         </div>
                     </div>
                     <div id="diet-question3">
-                        <p style={{ ...styles.questionTextSize }}>3. Does the value entered above reflect the % of the diet for all members of this prey name (inclusive), or only those members of the prey name that weren’t identified more finely (not inclusive)?</p>
+                        <p style={{ ...styles.questionTextSize }}>3. Does the value entered above reflect the % of the diet for all members of this prey name (inclusive), or only those members of the prey name that weren’t identified more finely (not inclusive)? For example, an entry for "Coleoptera spp." would NOT be inclusive if there were also diet records for other members of Coleoptera listed in the analysis, whereas "Coleoptera" by itself IS inclusive if no other members are listed.</p>
                         <div className="control" style={styles.inputBoxSpacing}>
                             <label className="radio" style={styles.radioButtonSpacing}>
                                 <input type="radio" value="yes" name="all_prey_diet_yn" onChange={setDietInfoInputState} />
@@ -1622,23 +1620,23 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         </div>
                     </div>
                     <div>
-                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold" }}>1. Relevant study information (title, journal, source year, author last name) and DOI if provided<span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold" }}>1. Relevant study information (title, journal, source year, first author last name) and DOI if provided<span style={styles.green}>*</span></p>
                         <p>{doi === '' ? 'Title: ' + title + '; Journal: ' + journal + '; Year: ' + source_year + '; Last Name of First Author: ' + lastname_author : 'Title: ' + title + '; Journal: ' + journal + '; Year: ' + source_year + '; Last Name of First Author: ' + lastname_author + '; DOI: ' + doi}</p>
-                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>2. What bird species are you entering diet data for? <span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold" }}>2. What bird species are you entering diet data for? <span style={styles.green}>*</span></p>
                         <p>{new_species_yn === true ? 'Scientific Name: ' + scientific_name + '; Common Name: ' + common_name + '; Family: ' + family + '; Taxonomy: ' + taxonomy : 'Scientific Name: ' + scientific_name}</p>
-                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>3. Was the data collected from within a single state, province, or country? <span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold" }}>3. Was the data collected from within a single state, province, or country? <span style={styles.green}>*</span></p>
                         <p>{'Location: ' + (location_state_province === '' ? location_region : location_state_province)}</p>
-                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>4. What was the specific location name? <span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold" }}>4. What was the specific location name? <span style={styles.green}>*</span></p>
                         <p>Location name: {location_specific}</p>
-                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>5. Are lat-long coordinates provided for the study location? <span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold" }}>5. Are lat-long coordinates provided for the study location? <span style={styles.green}>*</span></p>
                         <p>{lat_long_yn === 'no' ? 'No lat-long coordinates provided' : 'Latitude: ' + latitude_dd + '; Longitude: ' + longitude_dd}</p>
-                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>6. Is elevational information provided for this study? <span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold" }}>6. Is elevational information provided for this study? <span style={styles.green}>*</span></p>
                         <p>{elevation_yn === 'no' ? 'No elevational information provided' : 'Minimum Elevation: ' + altitude_min_m + '; Maximum Elevation: ' + altitude_max_m + '; Mean Elevation: ' + altitude_mean_m}</p>
-                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>7. In what type of habitat was the study conducted? <span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold" }}>7. In what type of habitat was the study conducted? <span style={styles.green}>*</span></p>
                         <p>{'Habitat type: ' + habitat_type}</p>
-                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>8. When was the diet data for this species in this study collected? <span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold" }}>8. When was the diet data for this species in this study collected? <span style={styles.green}>*</span></p>
                         <p>{'Month (Beginning of Study): ' + observation_month_begin + '; Year (Beginning of Study): ' + observation_year_begin + '; Month (End of Study): ' + observation_month_end + '; Year (End of Study): ' + observation_year_end}</p>
-                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>9. What time of year were data collected relative to the avian life cycle in that location? <span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold" }}>9. What time of year were data collected relative to the avian life cycle in that location? <span style={styles.green}>*</span></p>
                         <p>Time of Year: {observation_season}</p>
                     </div>
                 </div>
@@ -1651,21 +1649,21 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         </div>
                     </div>
                     <div>
-                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>1. How was the diet data quantified? <span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold" }}>1. How was the diet data quantified? <span style={styles.green}>*</span></p>
                         <p>{'Quantification: ' + diet_type}</p>
-                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>2. How was the diet data collected? <span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold" }}>2. How was the diet data collected? <span style={styles.green}>*</span></p>
                         <p>{'Method: ' + study_type}</p>
-                        <p style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>3. What is the total number of diet items this analysis is based on? Leave blank if unknown.</p>
+                        <p style={{ ...styles.questionTextSize, fontWeight: "bold" }}>3. What is the total number of diet items this analysis is based on? Leave blank if unknown.</p>
                         <p>{'# diet items: ' + item_sample_size}</p>
-                        <p style={{ ...styles.questionTextSize, fontWeight: "bold"}}>4. How many individual birds is this analysis based on? Leave blank if unknown.</p>
+                        <p style={{ ...styles.questionTextSize, fontWeight: "bold" }}>4. How many individual birds is this analysis based on? Leave blank if unknown.</p>
                         <p>{'# birds: ' + bird_sample_size}</p>
-                        <p style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>5. How many distinct sites or localities are represented in this analysis? Leave blank if unknown.</p>
+                        <p style={{ ...styles.questionTextSize, fontWeight: "bold" }}>5. How many distinct sites or localities are represented in this analysis? Leave blank if unknown.</p>
                         <p>{'# distinct sites/localities: ' + sites}</p>
-                        <p style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>6. Does this analysis refer to a particular sex?</p>
+                        <p style={{ ...styles.questionTextSize, fontWeight: "bold" }}>6. Does this analysis refer to a particular sex?</p>
                         <p>{sex_yn === 'yes' ? 'Sex: ' + sex : 'Analysis does not refer to a particular sex'}</p>
-                        <p style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>7. Does this analysis refer to a particular age class?</p>
+                        <p style={{ ...styles.questionTextSize, fontWeight: "bold" }}>7. Does this analysis refer to a particular age class?</p>
                         <p>{age_class_yn === 'yes' ? 'Age Class: ' + age_class : 'Analysis does not refer to a particular age class'}</p>
-                        <p style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>8. Please describe where in the published study you obtained the information for this diet analysis.</p>
+                        <p style={{ ...styles.questionTextSize, fontWeight: "bold" }}>8. Please describe where in the published study you obtained the information for this diet analysis.</p>
                         <p>{'Location: ' + within_study_data_source
                             + '; Table/Figure Number: ' + table_fig_number}</p>
                     </div>
@@ -1679,7 +1677,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         </div>
                     </div>
                     <div>
-                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>1. Prey Name and Taxonomic Level <span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold" }}>1. Prey Name and Taxonomic Level <span style={styles.green}>*</span></p>
                         <p>{preySubmissions.length > 0 ? 'Prey Name: ' + preySubmissions.map(submission => submission.prey_common_name) + '; Taxonomic Level: ' + preySubmissions.map(submission => submission.inclusive_prey_taxon) : 'Prey Name: ' + prey_common_name + '; Taxonomic Level: ' + inclusive_prey_taxon}</p>
                         <p>{preySubmissions.length > 0 ? "Kingdom: " + preySubmissions.map(submission => (submission.prey_kingdom === "" ? "Does not apply" : submission.prey_kingdom)) : prey_kingdom === "" ? "Kingdom: Does not apply" : "Kingdom: " + prey_kingdom}</p>
                         <p>{preySubmissions.length > 0 ? "Phylum: " + preySubmissions.map(submission => (submission.prey_phylum === "" ? "Does not apply" : submission.prey_phylum)) : prey_phylum === "" ? "Phylum: Does not apply" : "Phylum: " + prey_phylum}</p>
@@ -1690,15 +1688,15 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         <p>{preySubmissions.length > 0 ? "Genus: " + preySubmissions.map(submission => (submission.prey_genus === "" ? "Does not apply" : submission.prey_genus)) : prey_genus === "" ? "Genus: Does not apply" : "Genus: " + prey_genus}</p>
                         <p>{preySubmissions.length > 0 ? "Species: " + preySubmissions.map(submission => (submission.prey_scientific_name === "" ? "Does not apply" : submission.prey_scientific_name)) : prey_scientific_name === "" ? "Species: Does not apply" : "Species: " + prey_scientific_name}</p>
 
-                        <p style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>2. Percent of the diet?</p>
+                        <p style={{ ...styles.questionTextSize, fontWeight: "bold" }}>2. Percent of the diet?</p>
                         <p>{preySubmissions.length > 0 ? "% diet: " + preySubmissions.map(submission => submission.fraction_diet) : "% diet: " + fraction_diet}</p>
-                        <p style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>3. Does the value entered above reflect the % of the diet for all members of this prey name (inclusive), or only those members of the prey name that weren’t identified more finely (not inclusive)?</p>
+                        <p style={{ ...styles.questionTextSize, fontWeight: "bold" }}>3. Does the value entered above reflect the % of the diet for all members of this prey name (inclusive), or only those members of the prey name that weren’t identified more finely (not inclusive)?</p>
                         <p>{preySubmissions.length > 0 ? preySubmissions.map(submission => submission.all_prey_diet_yn) : all_prey_diet_yn}</p>
-                        <p style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>4. Does this prey entry refer to a particular life stage?</p>
+                        <p style={{ ...styles.questionTextSize, fontWeight: "bold" }}>4. Does this prey entry refer to a particular life stage?</p>
                         <p>{preySubmissions.length > 0 ? "Life Stage(s): " + preySubmissions.map(submission => submission.prey_stage) : "Life Stage(s): " + prey_stage}</p>
-                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>5. Does this prey entry refer to a particular prey part?<span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize, fontWeight: "bold" }}>5. Does this prey entry refer to a particular prey part?<span style={styles.green}>*</span></p>
                         <p>{preySubmissions.length > 0 ? "Prey Part(s): " + preySubmissions.map(submission => submission.prey_part) : "Prey Part(s): " + prey_part}</p>
-                        <p style={{ ...styles.questionTextSize, fontWeight: "bold"  }}>6. If you have any miscellaneous notes about this prey item you may describe them here.</p>
+                        <p style={{ ...styles.questionTextSize, fontWeight: "bold" }}>6. If you have any miscellaneous notes about this prey item you may describe them here.</p>
                         <p>{preySubmissions.length > 0 ? "Notes: " + preySubmissions.map(submission => submission.notes) : "Notes: " + notes}</p>
                     </div>
                 </div>
