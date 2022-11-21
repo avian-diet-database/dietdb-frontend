@@ -1248,7 +1248,7 @@ export const DesignSubmitData = (props: DesignSubmitDataProps) => {
                         </div>
                     </div>
                     <div id="question8">
-                        <p id="required" style={{ ...styles.questionTextSize }}>8. When was the diet data for this species in this study collected? <span style={styles.green}>*</span></p>
+                        <p id="required" style={{ ...styles.questionTextSize }}>8. When was the diet data for this species in this study collected? (If you know the beginning or ending month of data collection, please enter it as a number between 1-12.) <span style={styles.green}>*</span></p>
                         <div style={styles.inputBoxMultipleSectionContainer}>
                             <div className="field" style={styles.noMarginBottom}>
                                 <label className="label" style={styles.questionTextSize}>Month (Beginning of Study)</label>
