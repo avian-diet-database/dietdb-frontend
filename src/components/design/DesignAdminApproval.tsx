@@ -223,7 +223,7 @@ export const DesignAdminApproval = (props: DesignAdminApprovalProps) => {
   ];
 
   const dietInfoQuestions = [
-    "Prey Name",
+    "1. Prey Name",
     "Taxonomic Level",
     "Kingdom",
     "Phylum",
